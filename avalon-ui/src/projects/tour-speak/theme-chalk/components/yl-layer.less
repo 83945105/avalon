@@ -1,0 +1,207 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@layer-prefix-cls: ~"@{css-prefix}layer";
+
+.@{layer-prefix-cls}-mask-bg {
+  background-color: transparent;
+}
+
+.@{layer-prefix-cls}-content {
+  position: absolute;
+  top: 47px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+
+  & .el-input__inner {
+    border-radius: 3px;
+  }
+
+  .el-input-group--append .el-input__inner,
+  .el-input-group__prepend {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  & .el-form-item__label {
+    padding: 0 0 0 0;
+  }
+
+  &.is-scroll-v {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &.is-button {
+    bottom: 56px;
+  }
+
+  &-statistics {
+    position: absolute;
+    top: 52px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #E5E5E5;
+  }
+
+  &-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border-right: 1px solid #E5E5E5;
+  }
+
+  &-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    &-inner {
+      position: absolute;
+      top: 52px;
+      left: 0;
+      right: 0;
+      bottom: 62px;
+      border-top: 1px solid #ebeef5;
+    }
+  }
+}
+
+.@{layer-prefix-cls}-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 15px;
+  text-align: right;
+
+  &.tal {
+    text-align: left;
+  }
+
+  &.tac {
+    text-align: center;
+  }
+
+  &.is-border-top {
+    border-top: 1px solid #e5e5e5;
+  }
+}
+
+.@{layer-prefix-cls}-list-main {
+  border: 1px solid #E5E5E5;
+}
+
+.@{layer-prefix-cls}-paging {
+  padding: 5px;
+  text-align: center;
+
+  .mixin-pager;
+
+  & .el-pagination {
+    padding: 0;
+  }
+}
+
+.@{layer-prefix-cls}-tree {
+  position: absolute;
+  top: 47px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &-left {
+    float: left;
+    width: 20%;
+    height: 100%;
+    .mixin-border-box;
+    background-color: @tree-bg;
+
+    & .el-tree-node__content:hover {
+      background-color: @tree-hover-bg;
+    }
+
+    & .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+      background-color: @tree-current-bg;
+      color: @tree-current-color;
+    }
+
+    & .el-tree {
+      background: @tree-bg;
+    }
+  }
+  &-type {
+    &-default {
+      & .yl-layer-tree-left {
+        background-color: #f9f9f9;
+        border-right: 1px solid #E5E5E5;
+      }
+    }
+
+    &-primary {
+      & .yl-layer-tree-left {
+        background-color: #f1f8fd;
+        border-right: 1px solid #d6e0ec;
+      }
+    }
+  }
+
+  &-content {
+    .mixin-border-box;
+    float: left;
+    width: 40%;
+    height: 100%;
+    position: relative;
+    border-right: @tree-border-color;
+    border-left: @tree-border-color;
+  }
+
+  &-right {
+    float: left;
+    height: 100%;
+    width: 40%;
+    position: relative;
+    .mixin-border-box;
+
+    &.is-border {
+      &-left {
+        border-left: @tree-border-color;
+      }
+    }
+  }
+
+  & .layer-tree-title {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    background-color: #F3F3F3;
+    border-bottom: @tree-border-color;
+  }
+
+  & .layer-tree-content {
+    & .list-main {
+      position: absolute;
+      top: 94px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-top: 1px solid #ebeef5;
+    }
+  }
+}
+
+.@{layer-prefix-cls}-progress {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  &-mask {
+    background-color: rgba(255, 255, 255, .5);
+  }
+}

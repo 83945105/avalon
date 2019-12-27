@@ -1,0 +1,20 @@
+@import "../common/mixin.less";
+
+@global-loading-bar-prefix-cls: ~"@{global-css-prefix}loading-bar";
+
+.@{global-loading-bar-prefix-cls} {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 11;
+  opacity: 0;
+  transition: opacity .5s;
+  height: @global-loading-bar-height;
+
+  &-inner {
+    height: @global-loading-bar-height;
+    background-color: @global-loading-bar-bg;
+    transition: width .2s linear;
+  }
+}

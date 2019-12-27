@@ -1,0 +1,383 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@list-prefix-cls: ~"@{css-prefix}list";
+
+.@{list-prefix-cls}-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 300px;
+}
+
+.@{list-prefix-cls}-right {
+  .mixin-border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  border-left: 1px solid #E5E5E5;
+
+  &.is-border-bottom {
+    border-bottom: 1px solid #ebeef5;
+  }
+
+  &-content {
+    .mixin-border-box;
+    .mixin-scroll(auto, hidden);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 62px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  &-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background-color: #F9F9F9;
+    border-top: @list-inner-border;
+  }
+}
+
+.@{list-prefix-cls}-main {
+  position: absolute;
+  top: 62px;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  padding: 0;
+  background-color: @list-bg;
+
+  &.is-button {
+    bottom: 56px;
+  }
+
+  &.list-single {
+    top: 89px;
+  }
+
+  &.list-operation {
+    top: 52px;
+  }
+
+  & .list-overflow-tooltip {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    bottom: 1px;
+    right: 0;
+    padding: 12px 0;
+  }
+
+  &.is-border {
+    border: 1px solid #e5e5e5;
+  }
+
+  &.is-tools-bar {
+    .@{list-prefix-cls}-main-inner {
+      top: 38px;
+    }
+  }
+
+  &.is-paging-size {
+    & .@{list-prefix-cls}-main-inner {
+      bottom: 62px;
+    }
+
+    &-large {
+      & .@{list-prefix-cls}-main-inner {
+        bottom: 72px;
+      }
+    }
+
+    &-small {
+      & .@{list-prefix-cls}-main-inner {
+        bottom: 52px;
+      }
+    }
+
+    &-mini {
+      & .@{list-prefix-cls}-main-inner {
+        bottom: 42px;
+      }
+    }
+  }
+
+  &-inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &.is-full {
+      border-top: none;
+      bottom: 0;
+    }
+
+    &.is-border {
+      border-top: @list-inner-border;;
+    }
+  }
+
+  &-paging {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: @list-paging-bg;
+  }
+}
+
+.@{list-prefix-cls}-module-main {
+  .mixin-border-box;
+  position: absolute;
+  top: 62px;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  background-color: @list-bg;
+
+  &-inner {
+    position: absolute;
+    top: 0;
+    bottom: 73px;
+    left: 0;
+    right: 0;
+    .mixin-scroll(hidden, auto);
+  }
+
+  &-paging {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: @list-paging-bg;
+  }
+}
+
+.@{list-prefix-cls}-module {
+  & > li {
+    margin-bottom: 15px;
+    min-height: 140px;
+    border: 1px solid #e5e5e5;
+
+    & .list-module {
+      &-title {
+        overflow: hidden;
+        padding: 8px 10px;
+        border-bottom: 1px dotted #dddddd;
+        background-color: #f9f9f9;
+
+        & .title-left {
+          float: left;
+          height: 30px;
+          line-height: 30px;
+        }
+
+        & .title-right {
+          float: right;
+        }
+      }
+
+      &-row {
+        clear: both;
+        padding: 5px 0;
+      }
+
+      &-label {
+        float: left;
+        color: #999999;
+      }
+
+      &-content {
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.@{list-prefix-cls}-module-one {
+  max-height: 236px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 15px;
+  .mixin-border-radius(3px);
+  border: 1px solid #e5e5e5;
+  background-color: #FFFFFF;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & .module-one {
+    &-top {
+      width: 100%;
+      padding: 0 10px;
+      .mixin-border-box;
+      background-color: #e7f0f7;
+
+      &-left {
+        float: left;
+        height: 36px;
+        line-height: 36px;
+        color: #333333;
+      }
+
+      &-right {
+        float: right;
+        padding: 3px 0;
+      }
+    }
+
+    &-left {
+      min-height: 140px;
+      max-height: 200px;
+      width: 65%;
+      float: left;
+      padding: 6px 10px;
+      .mixin-wordwrap;
+      .mixin-scroll(hidden, auto);
+      .mixin-border-box;
+    }
+
+    &-right {
+      position: absolute;
+      top: 36px;
+      bottom: 0;
+      left: 65%;
+      width: 35%;
+      min-height: 140px;
+      max-height: 200px;
+      .mixin-border-box;
+
+      & .module-one-right {
+        &-title {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 14px;
+          padding: 0 10px;
+          background-color: #F7F7F7;
+
+          & > div {
+            width: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+          }
+        }
+
+        &-content {
+          min-height: 140px;
+          max-height: 240px;
+          margin-left: 35px;
+          padding: 10px 8px;
+          overflow-y: auto;
+          .mixin-border-box;
+        }
+      }
+    }
+  }
+}
+
+.@{list-prefix-cls}-module-ul {
+  & > li {
+    width: 10%;
+    padding: 5px 10px;
+    float: left;
+    .mixin-border-box;
+  }
+}
+
+.@{list-prefix-cls}-ul {
+  & > li {
+    width: 25%;
+    padding: 0 8px;
+    margin-bottom: 16px;
+    float: left;
+    .mixin-border-box;
+  }
+}
+
+.@{list-prefix-cls}-button-ul {
+  & > li {
+    height: 32px;
+    width: 31.33%;
+    margin: 5px 1%;
+    float: left;
+    position: relative;
+    .mixin-border-radius(4px);
+    background-color: #27ae60;
+    color: #FFFFFF;
+
+    & .button-ul {
+      &-left {
+        float: left;
+        height: 32px;
+        line-height: 32px;
+        width: 75%;
+        padding: 0 8px;
+        .mixin-border-box;
+        .mixin-ellipsis;
+      }
+
+      &-right {
+        float: left;
+        width: 25%;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        cursor: pointer;
+        .mixin-border-box;
+        .mixin-border-radius(0 4px 4px 0);
+        background-color: #1a944d;
+        color: #ffffff;
+
+        &:active {
+          opacity: .6;
+        }
+      }
+    }
+  }
+}
+
+.@{list-prefix-cls}-average {
+  &.is-col {
+    &-4 {
+      & > li {
+        width: 23%;
+      }
+    }
+
+    &-5 {
+      & > li {
+        width: 18%;
+      }
+    }
+
+    &-6 {
+      & > li {
+        width: 14.66%;
+      }
+    }
+  }
+
+  & > li {
+    float: left;
+    margin: 10px 1% 0;
+  }
+}

@@ -1,0 +1,25 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@paging-prefix-cls: ~"@{css-prefix}paging";
+
+.@{paging-prefix-cls} {
+  &.size-large {
+    padding: 25px;
+  }
+
+  &.size-small {
+    padding: 15px;
+  }
+
+  &.size-mini {
+    padding: 10px;
+  }
+
+  .mixin-pager;
+
+  &-more {
+    padding: 15px;
+    text-align: center;
+  }
+}

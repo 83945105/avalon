@@ -1,0 +1,38 @@
+@import "../common/mixin.less";
+
+@global-no-data-prefix-cls: ~"@{global-css-prefix}no-data";
+
+.@{global-no-data-prefix-cls} {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  line-height: 1.4;
+
+  & .el-table__empty-text {
+    line-height: 1.4;
+  }
+
+  &.is-full {
+    position: fixed
+  }
+
+  &-picture {
+    height: @global-no-data-picture-height;
+    width: @global-no-data-picture-width;
+  }
+
+  &-text {
+    color: @global-no-data-text-color;
+
+    &.is-margin-top {
+      margin-top: @global-no-data-text-margin-top;
+    }
+  }
+
+  &-button {
+    margin-top: @global-no-data-button-margin-top;
+  }
+}

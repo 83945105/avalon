@@ -1,0 +1,167 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@form-prefix-cls: ~"@{css-prefix}form";
+
+.label-width(@n, @i:10) when (@i <= @n) {
+  .common-wp-@{i} {
+    width: (0% + @i);
+  }
+  .mixin-width(@n, (@i + 5));
+}
+
+.@{form-prefix-cls}-view {
+
+  &.is-hidden {
+    & > li {
+      overflow: hidden;
+    }
+  }
+
+  &.label-width {
+    &-4 > li > .view-left {
+      width: 80px;
+    }
+
+    &-5 > li > .view-left {
+      width: 90px;
+    }
+
+    &-6 > li > .view-left {
+      width: 110px;
+    }
+
+    &-7 > li > .view-left {
+      width: 120px;
+    }
+
+    &-8 > li > .view-left {
+      width: 130px;
+    }
+
+    &-9 > li > .view-left {
+      width: 140px;
+    }
+
+    &-10 > li > .view-left {
+      width: 150px;
+    }
+
+    &-11 > li > .view-left {
+      width: 160px;
+    }
+
+    &-12 > li > .view-left {
+      width: 170px;
+    }
+
+    &-13 > li > .view-left {
+      width: 180px;
+    }
+  }
+
+  & > li {
+    padding-bottom: 12px;
+    overflow: hidden;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    & > .view-left {
+      display: block;
+      float: left;
+      text-align: right;
+      color: #888888;
+      line-height: 24px;
+
+      &.font-width-4 {
+        width: 80px;
+      }
+
+      &.font-width-5 {
+        width: 90px;
+      }
+
+      &.font-width-6 {
+        width: 110px;
+      }
+
+      &.font-width-7 {
+        width: 120px;
+      }
+    }
+
+    & > .view-right {
+      .mixin-wordwrap;
+      margin-top: 2px;
+      color: #333333;
+    }
+
+    & > .view-right.no-margin {
+      margin-top: 0;
+    }
+  }
+
+  &.left-float {
+    & > li {
+      float: left;
+    }
+  }
+
+  &.size-mini {
+    & > li {
+      padding-bottom: 5px;
+
+      & > .view-left {
+        line-height: 28px;
+      }
+    }
+  }
+
+  &.size-small {
+    & > li {
+      & > .view-left {
+        line-height: 32px;
+      }
+
+      & > .view-right {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+.@{form-prefix-cls}-group {
+  padding: 15px;
+  border: 1px solid #E5E5E5;
+
+  &-title {
+    font-weight: bold;
+    margin-left: 15px;
+    padding: 0 8px;
+  }
+}
+
+.@{form-prefix-cls}-edit-one {
+  margin-top: 8px;
+
+  & .edit-one {
+    &-left {
+      float: left;
+    }
+
+    &-right {
+      float: left;
+      margin-left: 5px;
+
+      &.is-button-margin > .we-button {
+        margin-bottom: 1px;
+      }
+    }
+  }
+
+  &-tree {
+    border: 1px solid #e5e5e5;
+  }
+}

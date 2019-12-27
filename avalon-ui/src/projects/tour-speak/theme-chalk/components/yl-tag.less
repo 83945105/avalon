@@ -1,0 +1,29 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@tag-prefix-cls: ~"@{css-prefix}tag";
+
+.@{tag-prefix-cls} {
+  padding: 6px 8px;
+
+  &.is-radius {
+    border-radius: 3px;
+  }
+
+  &-size {
+    &-small {
+      padding: 4px 6px;
+    }
+
+    &-mini {
+      padding: 2px 4px;
+    }
+  }
+
+  &-type {
+    &-info {
+      border: 1px solid #E5E5E5;
+      background-color: #f9f9f9;
+    }
+  }
+}

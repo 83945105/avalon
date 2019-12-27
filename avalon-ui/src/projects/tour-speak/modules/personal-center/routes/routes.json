@@ -1,0 +1,18 @@
+[
+  {
+    "path": "personal-center",
+    "name": "PersonalCenter",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "personal-center",
+        "value": "PersonalCenter"
+      }
+    }
+  }
+]

@@ -1,0 +1,46 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@tab-prefix-cls: ~"@{css-prefix}tab";
+
+.@{tab-prefix-cls} {
+  &-main {
+    position: absolute;
+    top: 47px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  position: relative;
+  height: 40px;
+  border-bottom: 2px solid #e5e5e5;
+
+  &-title {
+    z-index: 2;
+
+    & > li {
+      height: 40px;
+      line-height: 38px;
+      padding: 0 15px;
+      float: left;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+
+      &.is-selected {
+        border-bottom: 2px solid #03a9f4;
+        color: #03a9f4;
+      }
+    }
+  }
+
+  &-content {
+    position: absolute;
+    top: 99px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .mixin-scroll(hidden, auto);
+    padding: 15px 15px;
+  }
+}

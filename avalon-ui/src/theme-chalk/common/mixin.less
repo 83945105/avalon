@@ -1,0 +1,299 @@
+@import "var.less";
+
+/*去除内外边距和列表样式*/
+.mixin-default-body {
+  height: 100%;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.6;
+  color: @global-default-color;
+  .mixin-default-margin-padding;
+}
+
+.mixin-default-margin-padding {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+}
+
+.mixin-default-h {
+  .mixin-default-margin-padding;
+  font-size: 100%;
+  font-weight: normal;
+}
+
+.mixin-default-text {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  outline: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.mixin-default-ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  & li {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+}
+
+.mixin-default-link {
+  color: @global-link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: @global-link-color-hover;
+  }
+
+  &.selected {
+    color: @global-link-color;
+  }
+
+  &.disabled {
+    color: @global-link-color-disabled;
+  }
+}
+
+.mixin-default-button {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  outline: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.mixin-scrollbar {
+  &::-webkit-scrollbar {
+    width: @global-scrollbar-width;
+    height: @global-scrollbar-height;
+  }
+
+  &::-webkit-scrollbar-button:vertical {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-corner,
+  &::-webkit-scrollbar-track {
+    background-color: @global-scrollbar-track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: @global-scrollbar-radius;
+    background-color: @global-scrollbar-color;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: @global-scrollbar-hover-color;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical:active {
+    background-color: @global-scrollbar-active-color;
+  }
+}
+
+.mixin-scrollbar-custom(
+  @scrollbar-width,
+  @scrollbar-height,
+  @scrollbar-radius,
+  @scrollbar-track-color,
+  @scrollbar-color-bg,
+  @scrollbar-hover-color,
+  @scrollbar-active-color) {
+  &::-webkit-scrollbar {
+    width: @scrollbar-width;
+    height: @scrollbar-height;
+  }
+
+  &::-webkit-scrollbar-button:vertical {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-corner,
+  &::-webkit-scrollbar-track {
+    background-color: @scrollbar-track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: @scrollbar-radius;
+    background-color: @scrollbar-color-bg;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: @scrollbar-hover-color;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical:active {
+    background-color: @scrollbar-active-color;
+  }
+}
+
+.mixin-wordwrap {
+  //word-break: break-all;
+  table-layout: fixed;
+  word-break: break-all;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.mixin-wordwrap-no-hidden {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens:auto;
+}
+
+.mixin-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.mixin-border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.mixin-vertical {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+
+.mixin-horizontal-vertical {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mixin-clr {
+  clear: both;
+}
+
+.mixin-clear {
+  clear: both;
+  font-size: 0;
+  margin: 0;
+  padding: 0;
+  height: 0;
+  line-height: 0;
+}
+
+.mixin-scroll(@x, @y) {
+  overflow-x: @x;
+  overflow-y: @y;
+}
+
+.mixin-select-state(@state-type) {
+  -moz-user-select: @state-type;
+  -webkit-user-select: @state-type;
+  user-select: @state-type;
+}
+
+.mixin-border-radius(@radius-num) {
+  -webkit-border-radius: @radius-num;
+  -moz-border-radius: @radius-num;
+  border-radius: @radius-num;
+}
+
+.mixin-width(@n, @i:10) when (@i <= @n) {
+  .common-wp-@{i} {
+    width: (0% + @i);
+  }
+  .mixin-width(@n, (@i + 5));
+}
+
+.mixin-pager {
+  & .el-pager li {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin: 0 2px;
+    padding: 0 2px;
+    min-width: 28px;
+    font-weight: normal;
+    border: 1px solid #dcdfe6;
+  }
+
+  & .el-pager li:hover,
+  & .el-pager li.active + li:hover {
+    border: 1px solid #409EFF;
+  }
+
+  & .el-pager li.active {
+    border: 1px solid #409EFF;
+    background-color: #409EFF;
+    color: #FFFFFF;
+  }
+
+  & .el-pager li.active + li {
+    border: 1px solid #dcdfe6;
+  }
+}
+
+.mixin-size {
+  &.size {
+    &-large {
+      padding: 20px;
+    }
+
+    &-small {
+      padding: 10px;
+    }
+
+    &-mini {
+      padding: 5px;
+    }
+  }
+
+  &-size {
+    &-large {
+      padding: 20px;
+    }
+
+    &-small {
+      padding: 10px;
+    }
+
+    &-mini {
+      padding: 5px;
+    }
+  }
+}
+
+.mixin-el-tree(@tree-bg; @tree-hover-bg; @tree-current-bg; @tree-current-color; @tree-padding) {
+  & .el-tree-node__content{
+    padding: @tree-padding;
+    &:hover {
+      background-color: @tree-hover-bg;
+    }
+  }
+
+  & .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+    background-color: @tree-current-bg;
+    color: @tree-current-color;
+
+    & .we-button-type-text {
+      color: @tree-current-color;
+    }
+
+    & .we-icon {
+      color: @tree-current-color;
+    }
+  }
+
+  & .el-tree {
+    background: @tree-bg;
+  }
+}

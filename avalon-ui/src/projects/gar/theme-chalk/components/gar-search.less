@@ -1,0 +1,144 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@search-prefix-cls: ~"@{css-prefix}search";
+
+.@{search-prefix-cls}-bar {
+  position: relative;
+  padding: 0;
+  background-color: #FFFFFF;
+
+  &-size {
+    padding: 15px;
+
+    &-large {
+      padding: 20px;
+    }
+
+    &-small {
+      padding: 10px;
+    }
+
+    &-mini {
+      padding: 5px;
+    }
+  }
+
+  &-list {
+    & li {
+      float: left;
+      overflow: hidden;
+      padding-left: 15px;
+      .mixin-border-box;
+
+      &.spacing{
+        padding-left: 10px;
+      }
+      &:first-child {
+        padding-left: 0;
+      }
+      & .list-left {
+        line-height: 32px;
+        float: left;
+        text-align: right;
+      }
+      & .list-right {
+        overflow: hidden;
+        & .el-input{
+          font-size: 14px;
+        }
+      }
+    }
+    &.size-default{
+      & .list-left {
+        line-height: 40px;
+      }
+    }
+  }
+
+  &.is-multi {
+    padding: 7px 0;
+
+    & li {
+      width: 20%;
+      margin: 6px 0;
+      padding: 0;
+
+      & .list-left {
+        line-height: 28px;
+        float: left;
+        text-align: right;
+        font-size: 12px;
+
+        &.list-label-4 {
+          width: 70px;
+        }
+        &.list-label-5 {
+          width: 85px;
+        }
+      }
+      & .list-right {
+        overflow: hidden;
+        padding-right: 20px;
+      }
+
+      &:nth-child(5n+0) .list-right {
+        padding-right: 0;
+      }
+    }
+
+    &.cop6{
+      & li {
+        width: 16.66%;
+      }
+    }
+    & .list-right {
+      overflow: hidden;
+
+      & .el-input{
+        font-size: 12px;
+      }
+    }
+    & .search-edit-link {
+      height: 22px;
+      width: 20px;
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+      color: #2199ed;
+    }
+    & .search-edit-link:active {
+      opacity: .6;
+    }
+  }
+
+  &.is-multi-small {
+    & li {
+      width: 25%;
+      padding-left: 0;
+      padding-bottom: 12px;
+
+      & .list-left {
+        line-height: 32px;
+
+        &.list-label-4 {
+          width: 70px;
+        }
+        &.list-label-5 {
+          width: 85px;
+        }
+      }
+      & .list-right {
+        overflow: hidden;
+        padding-right: 20px;
+      }
+
+      &:nth-child(4n+0) .list-right {
+        padding-right: 0;
+      }
+    }
+    & .list-right {
+      overflow: hidden;
+    }
+  }
+}

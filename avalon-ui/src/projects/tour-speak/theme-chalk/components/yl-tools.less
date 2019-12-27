@@ -1,0 +1,54 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@tools-prefix-cls: ~"@{css-prefix}tools";
+
+.@{tools-prefix-cls}-bar {
+  padding: 4px 0;
+  background-color: @tools-bar-bg;
+  border-top: @tools-bar-border;
+  border-bottom: @tools-bar-border;
+
+  & .we-button{
+    padding: 6px 10px;
+  }
+}
+
+.@{tools-prefix-cls}-sub-bar{
+  padding: 15px 15px 12px;
+
+  &-left{
+    float: left;
+    & .is-content{
+      line-height: 28px;
+      float: left;
+    }
+  }
+  &-right{
+    float: left;
+    margin-right: 20px;
+    & .is-content{
+      line-height: 28px;
+      float: left;
+      .mixin-ellipsis;
+      max-width: 70%;
+      margin-left: 10px;
+    }
+    & .is-button{
+      float: left;
+    }
+
+    &.is-right{
+      float: right;
+      margin-right: inherit;
+
+      & .is-content{
+        float: right;
+        margin-right: 10px;
+      }
+      & .is-button{
+        float: right;
+      }
+    }
+  }
+}

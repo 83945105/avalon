@@ -1,0 +1,21 @@
+[
+  {
+    "id": "A",
+    "name": "帮助",
+    "value": "Helper",
+    "iconName": "helper",
+    "useTab": true,
+    "tabKey": "A",
+    "tabLabel": "帮助",
+    "tabName": "Helper",
+    "cacheInTab": false,
+    "initOpenInTab": false,
+    "closableInTab": false,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "Helper",
+    "routeValues": [
+      "Helper"
+    ]
+  }
+]

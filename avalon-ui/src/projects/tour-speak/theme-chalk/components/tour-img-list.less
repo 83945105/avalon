@@ -1,0 +1,138 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@img-list-prefix-cls: ~"@{css-prefix}img";
+
+.@{img-list-prefix-cls} {
+  &-main {
+    padding: 0 .5%;
+  }
+
+  &-list {
+    & > li {
+      .mixin-border-box;
+      float: left;
+      width: 23%;
+      margin: 5px 1% 15px;
+      padding: 6px;
+      cursor: pointer;
+      border: 1px solid #e5e5e5;
+
+      &:hover {
+        box-shadow: 0 0 10px #CCCCCC;
+      }
+    }
+  }
+
+  &-inner {
+    position: relative;
+
+    & > img {
+      display: block;
+      width: 100%;
+      height: 160px;
+    }
+
+    &-status {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, .5);
+
+      &-fc {
+        &-1 {
+          color: #CCCCCC;
+        }
+
+        &-2 {
+          color: #58c8ff;
+        }
+
+        &-3 {
+          color: #78ff58;
+        }
+
+        &-4 {
+          color: #ff8d8d;
+        }
+      }
+    }
+
+    &-info {
+      &-title {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        color: #333333;
+      }
+
+      &-one {
+        padding-bottom: 3px;
+
+        & .info-one {
+          &-title {
+            color: #999999;
+          }
+
+          &-content {
+            color: #333333;
+          }
+        }
+      }
+    }
+  }
+
+  &-full {
+    margin: 0 15px;
+
+    &-list {
+      & > li {
+        padding: 20px 0;
+        border-bottom: 1px dotted #e5e5e5;
+      }
+
+      &-left {
+        float: left;
+        margin-right: 15px;
+
+        & > img {
+          display: block;
+          width: 220px;
+          height: 140px;
+        }
+      }
+
+      &-right {
+        overflow: hidden;
+      }
+
+      &-info {
+        &-title {
+          margin-top: 8px;
+
+          & .title-left {
+            float: left;
+            max-width: 80%;
+            font-size: 16px;
+            line-height: 28px;
+            color: @color-primary;
+            cursor: pointer;
+          }
+
+          & .title-right {
+            float: right;
+          }
+        }
+
+        &-one {
+          margin-top: 10px;
+          .mixin-border-box;
+        }
+      }
+    }
+  }
+}

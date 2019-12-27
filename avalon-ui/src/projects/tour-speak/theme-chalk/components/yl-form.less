@@ -1,0 +1,268 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@form-prefix-cls: ~"@{css-prefix}form";
+
+.label-view-width(@n, @i:4 ) when (@i <= @n) {
+  &-@{i} > li > .view-left {
+    width: (15px * (@i - 4px) + 72px);
+  }
+  .label-view-width(@n, (@i + 1));
+}
+
+.label-width(@n, @i:4 ) when (@i <= @n) {
+  &-@{i} > li > .@{form-prefix-cls}-left {
+    width: (15px * (@i - 4px) + 72px);
+  }
+  .label-width(@n, (@i + 1));
+}
+
+.@{form-prefix-cls}-el {
+  & .el-input__inner {
+    border-radius: 3px;
+  }
+
+  .el-input-group--append .el-input__inner,
+  .el-input-group__prepend {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  & .el-form-item__label {
+    padding: 0 0 0 0;
+  }
+}
+
+.@{form-prefix-cls}-view {
+
+  &.is-hidden {
+    & > li {
+      overflow: hidden;
+    }
+  }
+
+  &.label-width {
+    .label-view-width(15);
+  }
+
+  & > li {
+    padding-bottom: 12px;
+    overflow: hidden;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &.view-clr{
+      clear: both;
+      padding: 0;
+    }
+
+    & > .view-left {
+      display: block;
+      float: left;
+      text-align: right;
+      color: #888888;
+      line-height: 28px;
+    }
+
+    & > .view-right {
+      .mixin-wordwrap;
+      //margin-top: 1px;
+      color: #333333;
+      line-height: 28px;
+    }
+
+    & > .view-right.no-margin {
+      margin-top: 0;
+    }
+  }
+
+  &.left-float {
+    & > li {
+      float: left;
+    }
+  }
+
+  &.size-mini {
+    & > li {
+      & > .view-left {
+        line-height: 28px;
+      }
+      & > .view-right {
+        line-height: 28px;
+      }
+    }
+  }
+
+  &.size-small {
+    & > li {
+      & > .view-left {
+        line-height: 32px;
+      }
+      & > .view-right {
+        line-height: 32px;
+      }
+    }
+  }
+
+  &.size-large {
+    & > li {
+      & > .view-left {
+        line-height: 40px;
+      }
+      & > .view-right {
+        line-height: 40px;
+      }
+    }
+  }
+
+  &-input {
+    & > li {
+      padding-bottom: 8px;
+
+      & > .view-left {
+        line-height: 24px;
+        font-size: 12px;
+      }
+
+      & > .view-right {
+        margin-top: 0;
+
+        & .el-input--mini .el-input__inner {
+          height: 24px;
+          line-height: 24px;
+          font-size: 12px;
+        }
+
+        & > .el-cascader--mini {
+          line-height: 24px;
+        }
+      }
+    }
+  }
+}
+
+.@{form-prefix-cls}-group {
+  padding: 15px;
+  border: 1px solid #E5E5E5;
+
+  &-title {
+    font-weight: bold;
+    margin-left: 15px;
+    padding: 0 8px;
+  }
+}
+
+.@{form-prefix-cls}-inline {
+  & .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    float: left;
+    display: block;
+    margin-right: 0;
+  }
+
+  & .el-form-item__label {
+    float: left !important;
+  }
+
+  & .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    margin-bottom: 14px;
+  }
+
+  & .el-form-item__content {
+    float: left;
+    width: calc(100% - 80px);
+    display: block;
+  }
+}
+
+.@{form-prefix-cls} {
+  &.label-width {
+    .label-width(15);
+  }
+
+  &-col {
+    &-2 {
+      & > li {
+        float: left;
+        width: 50%;
+      }
+    }
+
+    &-4 {
+      & > li {
+        float: left;
+        width: 25%;
+      }
+    }
+  }
+
+  &-left {
+    display: block;
+    float: left;
+    text-align: right;
+    height: 36px;
+    line-height: 36px;
+    color: #888888;
+  }
+
+  &-right {
+    .mixin-wordwrap;
+    overflow-x: hidden;
+    height: 36px;
+    line-height: 36px;
+    color: #333333;
+
+    &.is-scroll-auto {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    &.is-img {
+      & img {
+        max-width: 100%;
+      }
+    }
+
+    &.is-height-auto {
+      height: auto;
+      line-height: 1.6;
+    }
+  }
+
+  &.is-hidden {
+    & > li {
+      overflow: hidden;
+    }
+  }
+
+  &-size {
+    &-small {
+      & > li {
+        & .@{form-prefix-cls}-left {
+          height: 32px;
+          line-height: 32px;
+        }
+
+        & .@{form-prefix-cls}-right {
+          height: 32px;
+          line-height: 32px;
+        }
+      }
+    }
+
+    &-mini {
+      & > li {
+        & .@{form-prefix-cls}-left {
+          height: 28px;
+          line-height: 28px;
+        }
+
+        & .@{form-prefix-cls}-right {
+          height: 28px;
+          line-height: 28px;
+        }
+      }
+    }
+  }
+}

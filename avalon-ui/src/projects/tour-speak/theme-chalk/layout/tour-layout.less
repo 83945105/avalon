@@ -1,0 +1,167 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+body {
+  background-color: #F5F5F5;
+}
+
+@layout-prefix-cls: ~"@{css-prefix}layout";
+
+.@{layout-prefix-cls} {
+  &-main {
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  &-right {
+    &-title {
+      font-size: 18px;
+      padding: 15px 15px 0;
+      color: #333333;
+      .mixin-border-box;
+    }
+
+    & .el-input__inner {
+      border-radius: 3px;
+    }
+
+    .el-input-group--append .el-input__inner,
+    .el-input-group__prepend {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    & .el-form-item__label {
+      padding: 0 0 0 0;
+    }
+  }
+
+  &-list-top {
+    padding: 15px 15px 0;
+    background-color: #FFFFFF;
+
+    &.is-system {
+      padding: 5px 5px 0;
+    }
+  }
+
+  &-tree-left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 190px;
+    padding: 15px 10px;
+    .mixin-scroll(hidden, auto);
+    background-color: @tree-bg;
+    border-right: @tree-border-color;
+
+    & .el-tree-node__content:hover {
+      background-color: @tree-hover-bg;
+    }
+
+    & .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+      background-color: @tree-current-bg;
+      color: @tree-current-color;
+    }
+
+    & .el-tree {
+      background: @tree-bg;
+    }
+
+    &.no-padding {
+      padding: 0;
+    }
+  }
+
+  &-tree-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 211px;
+    right: 0;
+  }
+
+  &-content-left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    background-color: @content-list-bg;
+    border-right: @content-list-border-color;
+
+    & .content-left {
+      &-title {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px;
+        font-weight: bold;
+        background-color: #EEEEEE;
+        color: #333333;
+      }
+
+      &-list li {
+        height: 46px;
+        line-height: 46px;
+        padding: 0 10px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: @content-list-hover-bg;
+        }
+
+        &.is-selected {
+          background-color: @content-list-current-bg;
+          color: @content-list-current-color;
+        }
+      }
+    }
+  }
+
+  &-content-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 201px;
+    right: 0;
+
+    & .content-right-title {
+      height: 46px;
+      line-height: 46px;
+      font-size: 14px;
+      padding: 0 10px;
+
+      & .fc-important {
+        color: #d83800;
+      }
+    }
+  }
+
+  &-list {
+    &-left {
+      position: absolute;
+      top: 15px;
+      bottom: 15px;
+      left: 15px;
+      right: 350px;
+
+      &.is-border {
+        border: @list-inner-border;
+
+        &-right {
+          border-right: @list-inner-border;
+        }
+      }
+    }
+
+    &-right {
+      position: absolute;
+      top: 15px;
+      bottom: 15px;
+      right: 15px;
+      width: 350px;
+      .mixin-border-box;
+    }
+  }
+}

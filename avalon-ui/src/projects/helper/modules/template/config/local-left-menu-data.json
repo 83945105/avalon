@@ -1,0 +1,179 @@
+[
+  {
+    "id": "1",
+    "name": "首页",
+    "value": "Home",
+    "iconName": "el-icon-message",
+    "useTab": true,
+    "tabKey": "1",
+    "tabLabel": "首页",
+    "tabName": "Home",
+    "cacheInTab": false,
+    "initOpenInTab": true,
+    "closableInTab": false,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "Home",
+    "routeValues": [
+      "Home"
+    ]
+  },
+  {
+    "id": "2",
+    "name": "表格",
+    "value": "Table",
+    "iconName": "el-icon-document",
+    "useTab": true,
+    "tabKey": "2",
+    "tabLabel": "表格",
+    "tabName": "Table",
+    "cacheInTab": false,
+    "initOpenInTab": false,
+    "closableInTab": true,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "Table",
+    "routeValues": [
+      "Table"
+    ],
+    "children": [
+      {
+        "id": "2-1",
+        "name": "ElementUI表格",
+        "value": "ElementUITable",
+        "iconName": "el-icon-message",
+        "useTab": true,
+        "tabKey": "2-1",
+        "tabLabel": "ElementUI表格",
+        "tabName": "ElementUITable",
+        "cacheInTab": false,
+        "initOpenInTab": false,
+        "closableInTab": true,
+        "lazyInTab": false,
+        "disabledInTab": false,
+        "clickToRouteValue": "ElementUITable",
+        "routeValues": [
+          "ElementUITable"
+        ]
+      },
+      {
+        "id": "2-2",
+        "name": "ElementUI表格单元格可编辑",
+        "value": "ElementUITableCellEdit",
+        "iconName": "el-icon-message",
+        "useTab": true,
+        "tabKey": "2-2",
+        "tabLabel": "ElementUI表格单元格可编辑",
+        "tabName": "ElementUITableCellEdit",
+        "cacheInTab": false,
+        "initOpenInTab": false,
+        "closableInTab": true,
+        "lazyInTab": false,
+        "disabledInTab": false,
+        "clickToRouteValue": "ElementUITableCellEdit",
+        "routeValues": [
+          "ElementUITableCellEdit"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "树",
+    "value": "Tree",
+    "iconName": "el-icon-setting",
+    "useTab": true,
+    "tabKey": "3",
+    "tabLabel": "树",
+    "tabName": "Tree",
+    "cacheInTab": false,
+    "initOpenInTab": false,
+    "closableInTab": true,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "Tree",
+    "routeValues": [
+      "Tree"
+    ],
+    "children": [
+      {
+        "id": "3-1",
+        "name": "ElementUI树",
+        "value": "ElementUITree",
+        "iconName": "el-icon-setting",
+        "useTab": true,
+        "tabKey": "3-1",
+        "tabLabel": "ElementUI树",
+        "tabName": "ElementUITree",
+        "cacheInTab": false,
+        "initOpenInTab": false,
+        "closableInTab": true,
+        "lazyInTab": false,
+        "disabledInTab": false,
+        "clickToRouteValue": "ElementUITree",
+        "routeValues": [
+          "ElementUITree"
+        ]
+      },
+      {
+        "id": "3-2",
+        "name": "ElementUI异步树",
+        "value": "ElementUITreeAsync",
+        "iconName": "el-icon-setting",
+        "useTab": true,
+        "tabKey": "3-2",
+        "tabLabel": "ElementUI异步树",
+        "tabName": "ElementUITreeAsync",
+        "cacheInTab": false,
+        "initOpenInTab": false,
+        "closableInTab": true,
+        "lazyInTab": false,
+        "disabledInTab": false,
+        "clickToRouteValue": "ElementUITreeAsync",
+        "routeValues": [
+          "ElementUITreeAsync"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "App",
+    "value": "App",
+    "iconName": "el-icon-mobile-phone",
+    "useTab": true,
+    "tabKey": "4",
+    "tabLabel": "App",
+    "tabName": "App",
+    "cacheInTab": false,
+    "initOpenInTab": false,
+    "closableInTab": true,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "App",
+    "routeValues": [
+      "App"
+    ],
+    "children": [
+      {
+        "id": "4-1",
+        "name": "H5调用摄像头/相册",
+        "value": "H5CallCameraAndAlbum",
+        "iconName": "el-icon-setting",
+        "useTab": true,
+        "tabKey": "4-1",
+        "tabLabel": "H5调用摄像头/相册",
+        "tabName": "H5CallCameraAndAlbum",
+        "cacheInTab": false,
+        "initOpenInTab": false,
+        "closableInTab": true,
+        "lazyInTab": false,
+        "disabledInTab": false,
+        "clickToRouteValue": "H5CallCameraAndAlbum",
+        "routeValues": [
+          "H5CallCameraAndAlbum"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1",
+    "name": "首页",
+    "value": "Home",
+    "iconName": "home",
+    "useTab": true,
+    "tabKey": "1",
+    "tabLabel": "首页",
+    "tabName": "Home",
+    "cacheInTab": false,
+    "initOpenInTab": true,
+    "closableInTab": false,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "Home",
+    "routeValues": [
+      "Home"
+    ]
+  }
+]

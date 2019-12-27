@@ -1,0 +1,43 @@
+{
+  "developer": {
+    "Alipay": {
+      "path": "alipay",
+      "name": "Alipay",
+      "props": false,
+      "componentModule": "template",
+      "componentName": "Alipay",
+      "children": {
+        "AlipayComputerWebsite": {
+          "path": "alipay-computer-website",
+          "name": "AlipayComputerWebsite",
+          "props": false,
+          "componentModule": "template",
+          "componentName": "AlipayComputerWebsite"
+        },
+        "AlipayQrCode": {
+          "path": "alipay-qr-code",
+          "name": "AlipayQrCode",
+          "props": false,
+          "componentModule": "template",
+          "componentName": "AlipayQrCode"
+        }
+      }
+    },
+    "WeChat": {
+      "path": "weChat",
+      "name": "WeChat",
+      "props": false,
+      "componentModule": "template",
+      "componentName": "WeChat",
+      "children": {
+        "WeChatQrCode": {
+          "path": "weChat-qr-code",
+          "name": "WeChatQrCode",
+          "props": false,
+          "componentModule": "template",
+          "componentName": "WeChatQrCode"
+        }
+      }
+    }
+  }
+}

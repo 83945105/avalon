@@ -1,0 +1,34 @@
+[
+  {
+    "path": "my-course",
+    "name": "MyCourse",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "my-course",
+        "value": "MyCourse"
+      }
+    }
+  },
+  {
+    "path": "my-course-details/:courseId",
+    "name": "MyCourseDetails",
+    "props": {
+      "default": true
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "course-center",
+        "value": "CourseDetails"
+      }
+    }
+  }
+]

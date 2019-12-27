@@ -1,0 +1,53 @@
+{
+  "getTableCellEditRows": {
+    "code": 0,
+    "resultInfo": {
+      "resultCode": "SUCCESS",
+      "messageCode": 0,
+      "message": "success",
+      "exceptionMessage": null,
+      "resultDetails": null,
+      "error": false,
+      "type": 1,
+      "success": true,
+      "fail": false
+    },
+    "limit": null,
+    "rows": [
+      {
+        "canEdit1": "666",
+        "canEdit2": 1,
+        "canEdit3": "A",
+        "name": "不可编辑"
+      },
+      {
+        "canEdit1": "233",
+        "canEdit2": 2,
+        "canEdit3": "B",
+        "name": "不可编辑"
+      },
+      {
+        "canEdit1": "888",
+        "canEdit2": 3,
+        "canEdit3": "C",
+        "name": "不可编辑"
+      }
+    ],
+    "record": {},
+    "records": {}
+  },
+  "handleSaveTableCellEdit": {
+    "code": 0,
+    "resultInfo": {
+      "resultCode": "SUCCESS",
+      "messageCode": 0,
+      "message": "success",
+      "exceptionMessage": null,
+      "resultDetails": null,
+      "error": false,
+      "type": 1,
+      "success": true,
+      "fail": false
+    }
+  }
+}

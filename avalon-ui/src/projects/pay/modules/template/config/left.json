@@ -1,0 +1,40 @@
+[
+  {
+    "label": "首页",
+    "name": "Home",
+    "iconName": "home",
+    "open": true,
+    "closable": true,
+    "cache": false,
+    "isShow": true
+  },
+  {
+    "label": "支付宝",
+    "name": "Alipay",
+    "iconName": "alipay",
+    "children": [
+      {
+        "label": "电脑网站支付",
+        "name": "AlipayComputerWebsite",
+        "iconName": "edit"
+      },
+      {
+        "label": "二维码支付",
+        "name": "AlipayQrCode",
+        "iconName": "hdds-supplier-manage"
+      }
+    ]
+  },
+  {
+    "label": "微信",
+    "name": "WeChat",
+    "iconName": "wechat",
+    "children": [
+      {
+        "label": "二维码支付",
+        "name": "WeChatQrCode",
+        "iconName": "edit"
+      }
+    ]
+  }
+]

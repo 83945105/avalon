@@ -1,0 +1,11 @@
+[
+  {
+    "label": "消息",
+    "name": "Message",
+    "closable": true
+  },
+  {
+    "label": "帮助中心",
+    "pageName": "Help"
+  }
+]

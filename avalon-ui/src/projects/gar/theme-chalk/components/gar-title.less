@@ -1,0 +1,42 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@title-prefix-cls: ~"@{css-prefix}title";
+
+.title-theme(@title-bg; @title-color;) {
+  background-color: @title-bg;
+  color: @title-color;
+}
+
+.@{title-prefix-cls} {
+  height: 40px;
+  padding: 0 10px;
+  .title-theme(@title-bg; @title-color);
+
+  &.is-border {
+    border-bottom: @title-border-color;
+  }
+
+  &-type {
+    &-primary {
+      .title-theme(@title-primary-bg; @title-primary-color);
+
+      &.is-border {
+        border-bottom: @title-primary-border-color;
+      }
+    }
+  }
+
+  &-left {
+    line-height: 40px;
+    float: left;
+  }
+
+  &-right {
+    float: right;
+
+    &.is-margin {
+      margin-top: 7px;
+    }
+  }
+}

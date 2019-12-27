@@ -1,0 +1,30 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@tree-prefix-cls: ~"@{css-prefix}tree";
+
+.@{tree-prefix-cls} {
+  .mixin-el-tree(transparent; @tree-hover-bg; @tree-current-bg; @tree-current-color; @tree-padding);
+}
+
+.@{tree-prefix-cls}-custom {
+  & .custom-tree-node {
+    width: 99%;
+    position: relative;
+    padding-right: 1%;
+
+    &-left {
+      float: left;
+      padding: 7px 0;
+
+      & .el-checkbox {
+        margin-right: 5px !important;
+      }
+    }
+
+    &-right {
+      float: right;
+      padding: 2px 0;
+    }
+  }
+}

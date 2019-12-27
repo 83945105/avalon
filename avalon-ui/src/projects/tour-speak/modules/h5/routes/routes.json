@@ -1,0 +1,34 @@
+[
+  {
+    "path": "sign-in/:courseId",
+    "name": "SignIn",
+    "props": {
+      "default": true
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "h5",
+        "value": "SignIn"
+      }
+    }
+  },
+  {
+    "path": "course-interact/:courseId",
+    "name": "CourseInteract",
+    "props": {
+      "default": true
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "h5",
+        "value": "CourseInteract"
+      }
+    }
+  }
+]

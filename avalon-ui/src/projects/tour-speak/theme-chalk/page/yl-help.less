@@ -1,0 +1,147 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@help-prefix-cls: ~"@{css-prefix}help";
+
+.@{help-prefix-cls} {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #f7f7f7;
+  .mixin-scroll(hidden, auto);
+
+  &-main {
+    width: 1080px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  &-left {
+    float: left;
+    width: 160px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #F9F9F9;
+  }
+
+  &-right {
+    float: right;
+    width: calc(1080px - 160px);
+    padding: 0 20px;
+    min-height: 600px;
+    background-color: #FFFFFF;
+    .mixin-border-box;
+  }
+
+  &-menu {
+    &-title {
+      font-size: 16px;
+      font-weight: bold;
+      padding: 25px 0 10px;
+    }
+
+    & > li {
+      .mixin-border-box;
+      cursor: pointer;
+      height: 42px;
+      line-height: 42px;
+      font-size: 14px;
+
+      &:hover {
+        color: #37a3ef;
+      }
+
+      &.is-selected {
+        color: #37a3ef;
+      }
+    }
+  }
+
+  &-nav {
+    font-size: 16px;
+    padding: 15px 0;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e5e5;
+    color: #999999;
+
+    &-left {
+      float: left;
+    }
+
+    &-right {
+      float: right;
+    }
+  }
+
+  &-list {
+    &-one {
+      position: relative;
+      padding: 25px 0 30px;
+      border-bottom: 1px solid #E5E5E5;
+
+      &-inner {
+        width: 94%;
+
+        &-title {
+          font-size: 16px;
+          font-weight: bold;
+
+          & > span {
+            cursor: pointer;
+
+            &:hover {
+              color: #37a3ef;
+            }
+          }
+        }
+
+        &-content {
+          margin-top: 10px;
+          overflow: hidden;
+          height: 22px;
+
+          &.is-open {
+            height: auto;
+            overflow: auto;
+          }
+
+          & img {
+            max-width: 100%;
+          }
+        }
+
+        &-date {
+          color: #999999;
+          margin-top: 10px;
+        }
+      }
+
+      &-fold {
+        width: 6%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        cursor: pointer;
+
+        & > i {
+          position: absolute;
+          top: 55px;
+          left: 50%;
+          font-weight: bold;
+          transform: translateX(-50%) rotate(0deg);
+          transition: all .2s;
+
+          &.is-rotate {
+            transform: translateX(-50%) rotate(180deg);
+          }
+        }
+      }
+    }
+
+  }
+}

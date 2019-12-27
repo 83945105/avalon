@@ -1,0 +1,78 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@goods-prefix-cls: ~"@{css-prefix}goods";
+
+.@{goods-prefix-cls} {
+  &-one {
+    margin-bottom: 15px;
+  }
+
+  &-img {
+    display: block;
+    width: 260px;
+    height: 260px;
+  }
+
+  &-left {
+    float: left;
+    margin-right: 10px;
+  }
+
+  &-right {
+    overflow: hidden;
+  }
+
+  &-color {
+    font-weight: bold;
+    margin: 0 0.5% 0;
+  }
+
+  &-type {
+    &-list {
+      &.col {
+        &-3 {
+          & > li {
+            width: 32.33%;
+            margin: 6px 0.5% 0;
+          }
+        }
+
+        &-4 {
+          & li {
+            width: 23%;
+            margin: 6px 1% 0;
+          }
+        }
+
+        &-5 {
+          & li {
+            width: 19%;
+            margin: 6px 0.5% 0;
+          }
+        }
+      }
+
+      & > li {
+        .mixin-border-box;
+        padding: 10px;
+        float: left;
+        border-radius: 3px;
+        background-color: #f9f9f9;
+        border: 1px solid #e5e5e5;
+      }
+    }
+
+    &-stock {
+      &-left {
+        float: left;
+        line-height: 28px;
+        .mixin-ellipsis;
+      }
+
+      &-right {
+        float: right;
+      }
+    }
+  }
+}

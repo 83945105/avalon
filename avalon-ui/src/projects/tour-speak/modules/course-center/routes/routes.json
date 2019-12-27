@@ -1,0 +1,50 @@
+[
+  {
+    "path": "course-center",
+    "name": "CourseCenter",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "course-center",
+        "value": "CourseCenter"
+      }
+    }
+  },
+  {
+    "path": "course-center-details/:courseId",
+    "name": "CourseCenterDetails",
+    "props": {
+      "default": true
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "course-center",
+        "value": "CourseDetails"
+      }
+    }
+  },
+  {
+    "path": "course-manage-details/:courseId",
+    "name": "CourseManageDetails",
+    "props": {
+      "default": true
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "course-manage",
+        "value": "CourseDetails"
+      }
+    }
+  }
+]

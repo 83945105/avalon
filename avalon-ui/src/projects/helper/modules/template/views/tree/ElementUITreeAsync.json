@@ -1,0 +1,91 @@
+{
+  "getTreeAsyncRootRows": {
+    "code": 0,
+    "resultInfo": {
+      "resultCode": "SUCCESS",
+      "messageCode": 0,
+      "message": "success",
+      "exceptionMessage": null,
+      "resultDetails": null,
+      "error": false,
+      "type": 1,
+      "success": true,
+      "fail": false
+    },
+    "limit": null,
+    "rows": [
+      {
+        "id": "1",
+        "name": "根节点1",
+        "childCount": 1
+      },
+      {
+        "id": "2",
+        "name": "根节点2",
+        "childCount": 0
+      },
+      {
+        "id": "3",
+        "name": "根节点3",
+        "childCount": 2
+      },
+      {
+        "id": "4",
+        "name": "根节点4",
+        "childCount": 4
+      },
+      {
+        "id": "5",
+        "name": "根节点5",
+        "childCount": 10
+      }
+    ],
+    "record": {},
+    "records": {}
+  },
+  "getTreeAsyncChildNodes": {
+    "code": 0,
+    "resultInfo": {
+      "resultCode": "SUCCESS",
+      "messageCode": 0,
+      "message": "success",
+      "exceptionMessage": null,
+      "resultDetails": null,
+      "error": false,
+      "type": 1,
+      "success": true,
+      "fail": false
+    },
+    "limit": null,
+    "rows": [
+      {
+        "id": "1-1",
+        "name": "子节点1",
+        "childCount": 1
+      },
+      {
+        "id": "1-2",
+        "name": "子节点2",
+        "childCount": 0
+      },
+      {
+        "id": "1-3",
+        "name": "子节点3",
+        "disabled": true,
+        "childCount": 2
+      },
+      {
+        "id": "1-4",
+        "name": "子节点4",
+        "childCount": 4
+      },
+      {
+        "id": "1-5",
+        "name": "子节点5",
+        "childCount": 10
+      }
+    ],
+    "record": {},
+    "records": {}
+  }
+}

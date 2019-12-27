@@ -1,0 +1,38 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@progress-prefix-cls: ~"@{css-prefix}progress";
+
+.@{progress-prefix-cls} {
+  position: relative;
+  height: 40px;
+
+  &-inner {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &-bar {
+    display: inline-block;
+
+    & > .el-progress-bar {
+      padding-right: 0;
+    }
+
+    & > .el-progress__text {
+      display: none;
+    }
+  }
+
+  &-info {
+    display: inline-block;
+
+    &-inner {
+      float: left;
+      font-size: 16px;
+      height: 17px;
+    }
+  }
+}

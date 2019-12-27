@@ -1,0 +1,52 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@aside-prefix-cls: ~"@{css-prefix}aside-float-bar";
+
+.@{aside-prefix-cls} {
+  position: fixed;
+  bottom: 82px;
+  right: calc(((100% - 1080px) / 2) - 80px);
+  z-index: 10;
+
+  & > li {
+    height: 40px;
+    width: 40px;
+
+    & > .aside-float-top-btn {
+      height: 40px;
+      line-height: 40px;
+      width: 40px;
+      cursor: pointer;
+      .mixin-border-radius(40px);
+      font-size: 18px;
+      text-align: center;
+      border: 1px solid #e5e5e5;
+      background-color: #F5F5F5;
+      color: #999999;
+
+      &.type {
+        &-info {
+          border: 1px solid #e5e5e5;
+          background-color: #FFFFFF;
+          color: #999999;
+
+          &:hover {
+            background-color: #F9F9F9;
+            color: #666666;
+          }
+        }
+      }
+
+      &:hover {
+        border: 1px solid #d5d5d5;
+        background-color: #f0f0f0;
+        color: #666666;
+      }
+
+      &:active {
+        background-color: #F5F5F5;
+      }
+    }
+  }
+}

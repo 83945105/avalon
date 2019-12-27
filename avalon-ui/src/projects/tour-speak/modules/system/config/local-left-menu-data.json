@@ -1,0 +1,40 @@
+[
+  {
+    "id": "1",
+    "name": "学校管理",
+    "value": "SchoolManage",
+    "iconName": "tour-school",
+    "useTab": true,
+    "tabKey": "1",
+    "tabLabel": "学校管理",
+    "tabName": "SchoolManage",
+    "cacheInTab": false,
+    "initOpenInTab": true,
+    "closableInTab": false,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "SchoolManage",
+    "routeValues": [
+      "SchoolManage"
+    ]
+  },
+  {
+    "id": "2",
+    "name": "教师管理",
+    "value": "TeacherManage",
+    "iconName": "tour-teacher",
+    "useTab": true,
+    "tabKey": "3",
+    "tabLabel": "教师管理",
+    "tabName": "TeacherManage",
+    "cacheInTab": false,
+    "initOpenInTab": false,
+    "closableInTab": false,
+    "lazyInTab": false,
+    "disabledInTab": false,
+    "clickToRouteValue": "TeacherManage",
+    "routeValues": [
+      "TeacherManage"
+    ]
+  }
+]

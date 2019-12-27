@@ -1,0 +1,398 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@list-prefix-cls: ~"@{css-prefix}list";
+
+.@{list-prefix-cls}-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 300px;
+}
+
+.@{list-prefix-cls}-right {
+  .mixin-border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  border-left: 1px solid #E5E5E5;
+
+  &.is-border-bottom {
+    border-bottom: 1px solid #ebeef5;
+  }
+
+  &-content {
+    .mixin-border-box;
+    .mixin-scroll(auto, hidden);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 62px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  &-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background-color: #F9F9F9;
+    border-top: @list-inner-border;
+  }
+}
+
+.@{list-prefix-cls}-main {
+  position: absolute;
+  top: 224px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 0px;
+  background-color: @list-bg;
+
+  &.is-button {
+    bottom: 56px;
+  }
+
+  &.list-single {
+    top: 99px;
+  }
+
+  &.list-operation {
+    top: 52px;
+  }
+
+  &.is-border {
+    &-top {
+      border-top: 1px solid #E5E5E5;
+    }
+
+    &-bottom {
+      border-bottom: 1px solid #E5E5E5;
+    }
+  }
+
+  &-inner {
+    position: absolute;
+    top: 0;
+    bottom: 63px;
+    left: 0;
+    right: 0;
+    border-top: @list-inner-border;
+
+    &.is-border {
+      &-top {
+        border-top: 1px solid #E5E5E5;
+      }
+
+      &-bottom {
+        border-bottom: 1px solid #E5E5E5;
+      }
+    }
+
+    &.is-full {
+      border-top: none;
+      bottom: 0;
+    }
+
+    &.no-border {
+      border: none;
+
+      &-top {
+        border-top: none;
+      }
+
+      &-bottom {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &-paging {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: @list-paging-bg;
+    .mixin-pager;
+
+    &.size-large {
+      padding: 25px;
+    }
+
+    &.size-small {
+      padding: 15px;
+    }
+
+    &.size-mini {
+      padding: 10px;
+    }
+  }
+}
+
+.@{list-prefix-cls}-cell {
+  &-left {
+    float: left;
+    margin-right: 8px;
+
+    & > img {
+      display: block;
+      width: 80px;
+      height: 80px;
+
+      &.img-size-large {
+        width: 110px;
+        height: 110px;
+      }
+    }
+  }
+
+  &-right {
+    overflow: hidden;
+  }
+}
+
+.@{list-prefix-cls}-top {
+  .mixin-border-box;
+  overflow: hidden;
+  padding: 10px 10px 0;
+  border-bottom: 1px solid #E5E5E5;
+
+  &-content {
+    float: left;
+    width: 90%;
+    margin-right: 10px;
+
+    &.is-full {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+
+  &-footer {
+    overflow: hidden;
+  }
+}
+
+.@{list-prefix-cls}-half {
+  .mixin-border-box;
+  float: left;
+  width: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-right: 1px solid #DDDDDD;
+  border-top: 1px solid #DDDDDD;
+
+  &:last-child {
+    border-right: none;
+    left: 50%;
+  }
+
+  &-title {
+    padding: 7px;
+    background-color: #EEEEEE;
+    //background-color: tint(@color-primary, 93%);
+
+    & > .title-left {
+      float: left;
+      font-weight: bold;
+      line-height: 24px;
+    }
+
+    & > .title-right {
+      float: right;
+    }
+  }
+
+  &-inner {
+    position: absolute;
+    top: 42px;
+    bottom: 73px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #DDDDDD;
+
+    &.is-full {
+      border-top: none;
+    }
+  }
+
+  &-paging {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: @list-paging-bg;
+
+    &.size-large {
+      padding: 25px;
+    }
+
+    &.size-small {
+      padding: 15px;
+    }
+
+    &.size-mini {
+      padding: 10px;
+    }
+
+    & .el-pager li {
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      margin: 0 2px;
+      padding: 0 2px;
+      font-weight: normal;
+      border: 1px solid #dcdfe6;
+    }
+
+    & .el-pager li:hover,
+    & .el-pager li.active + li:hover {
+      border: 1px solid #409EFF;
+    }
+
+    & .el-pager li.active {
+      border: 1px solid #409EFF;
+      background-color: #409EFF;
+      color: #FFFFFF;
+    }
+
+    & .el-pager li.active + li {
+      border: 1px solid #dcdfe6;
+    }
+  }
+}
+
+.@{list-prefix-cls}-paging {
+  padding: 15px;
+  text-align: center;
+  background-color: @list-paging-bg;
+  .mixin-pager;
+
+  &.size-large {
+    padding: 20px;
+  }
+
+  &.size-small {
+    padding: 10px;
+  }
+
+  &.size-mini {
+    padding: 5px;
+  }
+}
+
+.@{list-prefix-cls}-column {
+  &-title {
+
+  }
+
+  &-main {
+    width: 101%;
+    overflow: hidden;
+  }
+
+  & > li {
+    .mixin-border-box;
+    float: left;
+    margin-right: 1%;
+  }
+
+  &-size {
+    &-small {
+      & > li {
+        height: 32px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  &-4 {
+    & > li {
+      width: 24%;
+    }
+  }
+
+  &-5 {
+    & > li {
+      width: 19%;
+    }
+  }
+
+  &-6 {
+    & > li {
+      width: 15.66%;
+    }
+  }
+
+  &-7 {
+    & > li {
+      width: 13.28%;
+    }
+  }
+}
+
+.list-module-type(@border-color; @bg) {
+  border: 1px solid @border-color;
+  .@{list-prefix-cls}-module-one-title {
+    background-color: @bg;
+  }
+}
+
+.@{list-prefix-cls}-module {
+  margin-bottom: 25px;
+
+  &-title {
+    font-size: 16px;
+    padding: 0 5px 5px;
+    font-weight: bold;
+  }
+
+  &-type {
+    &-success {
+      .list-module-type(#d1eac4; #ebf4e6);
+    }
+
+    &-fail {
+      .list-module-type(#f8c8c8; #f9ebeb);
+    }
+  }
+
+  &-one {
+    margin-bottom: 10px;
+
+    &-title {
+      padding: 8px 10px;
+      background-color: #F9F9F9;
+      border: 1px solid #e5e5e5;
+
+      &-left {
+        float: left;
+        margin-right: 10px;
+        line-height: 24px;
+      }
+
+      &-right {
+        float: left;
+      }
+    }
+
+    &-content {
+      padding: 10px;
+      border: 1px solid #e5e5e5;
+      border-top: none;
+    }
+  }
+}

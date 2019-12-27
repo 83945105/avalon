@@ -1,0 +1,111 @@
+{
+  "name": "vue3.0",
+  "version": "1.0.0",
+  "description": "Vue Frame For Vue-Cli-3.0",
+  "author": "83945105 <18606167809@163.com>",
+  "private": true,
+  "files": [
+    "packages",
+    "public",
+    "src"
+  ],
+  "scripts": {
+    "scan:component": "node config/scan.component.js",
+    "scan:config": "node config/scan.config.js",
+    "serve": "node config/scan.config.js && node config/scan.component.js && vue-cli-service serve",
+    "build": "node config/scan.config.js && node config/scan.component.js && vue-cli-service build",
+    "packages": "node config/build-packages.js",
+    "lint": "vue-cli-service lint",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "driver.js": "^0.9.5",
+    "element-ui": "^2.6.1",
+    "jquery": "^3.4.1",
+    "particles.js": "^2.0.0",
+    "qrcode": "^1.3.3",
+    "register-service-worker": "^1.6.2",
+    "vant": "^1.6.11",
+    "vue": "^2.6.6",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^7.0.0",
+    "vue-quill-editor": "^3.0.6",
+    "vue-router": "^3.0.1",
+    "vuedraggable": "^2.20.0",
+    "vuex": "^3.0.1",
+    "weview": "^0.9.0-dev"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.4",
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-e2e-nightwatch": "^3.5.0",
+    "@vue/cli-plugin-pwa": "^3.5.0",
+    "@vue/cli-plugin-typescript": "^3.5.0",
+    "@vue/cli-plugin-unit-jest": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "ts-jest": "^23.0.0",
+    "typescript": "^3.2.1",
+    "vue-template-compiler": "^2.5.21",
+    "shelljs": "^0.7.6",
+    "uglifyjs-webpack-plugin": "^1.1.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/prettier",
+      "@vue/typescript"
+    ],
+    "rules": {}
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "vue",
+      "ts",
+      "tsx"
+    ],
+    "transform": {
+      "^.+\\.vue$": "vue-jest",
+      ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ],
+    "testMatch": [
+      "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
+    ],
+    "testURL": "http://localhost/",
+    "globals": {
+      "ts-jest": {
+        "babelConfig": true
+      }
+    }
+  }
+}

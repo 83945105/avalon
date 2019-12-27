@@ -1,0 +1,31 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@paging-prefix-cls: ~"@{css-prefix}paging";
+
+.@{paging-prefix-cls} {
+  padding: 15px;
+  .mixin-size;
+  .mixin-pager;
+}
+
+.@{paging-prefix-cls}-infinite {
+  &.is-absolute {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &-inner {
+    padding: 15px;
+    .mixin-size;
+
+    &.size-height {
+      &-small {
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+  }
+}

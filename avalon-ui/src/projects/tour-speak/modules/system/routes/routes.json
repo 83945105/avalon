@@ -1,0 +1,50 @@
+[
+  {
+    "path": "school-manage",
+    "name": "SchoolManage",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "system",
+        "value": "SchoolManage"
+      }
+    }
+  },
+  {
+    "path": "teacher-manage",
+    "name": "TeacherManage",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "system",
+        "value": "TeacherManage"
+      }
+    }
+  },
+  {
+    "path": "subject-manage",
+    "name": "SubjectManage",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": true
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "system",
+        "value": "SubjectManage"
+      }
+    }
+  }
+]

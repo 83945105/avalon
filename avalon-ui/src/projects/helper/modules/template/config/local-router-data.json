@@ -1,0 +1,136 @@
+[
+  {
+    "path": "table",
+    "name": "Table",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": false
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "template",
+        "value": "Table"
+      }
+    },
+    "children": [
+      {
+        "path": "element-ui-table",
+        "name": "ElementUITable",
+        "props": {
+          "default": false
+        },
+        "meta": {
+          "cache": false
+        },
+        "components": {
+          "default": {
+            "subModuleValue": "template",
+            "value": "ElementUITable"
+          }
+        }
+      },
+      {
+        "path": "element-ui-table-edit",
+        "name": "ElementUITableCellEdit",
+        "props": {
+          "default": false
+        },
+        "meta": {
+          "cache": false
+        },
+        "components": {
+          "default": {
+            "subModuleValue": "template",
+            "value": "ElementUITableCellEdit"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "path": "tree",
+    "name": "Tree",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": false
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "template",
+        "value": "Tree"
+      }
+    },
+    "children": [
+      {
+        "path": "element-ui-tree",
+        "name": "ElementUITree",
+        "props": {
+          "default": false
+        },
+        "meta": {
+          "cache": false
+        },
+        "components": {
+          "default": {
+            "subModuleValue": "template",
+            "value": "ElementUITree"
+          }
+        }
+      },
+      {
+        "path": "element-ui-tree-async",
+        "name": "ElementUITreeAsync",
+        "props": {
+          "default": false
+        },
+        "meta": {
+          "cache": false
+        },
+        "components": {
+          "default": {
+            "subModuleValue": "template",
+            "value": "ElementUITreeAsync"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "path": "app",
+    "name": "App",
+    "props": {
+      "default": false
+    },
+    "meta": {
+      "cache": false
+    },
+    "components": {
+      "default": {
+        "subModuleValue": "template",
+        "value": "App"
+      }
+    },
+    "children": [
+      {
+        "path": "h5-call-camera-and-album",
+        "name": "H5CallCameraAndAlbum",
+        "props": {
+          "default": false
+        },
+        "meta": {
+          "cache": false
+        },
+        "components": {
+          "default": {
+            "subModuleValue": "template",
+            "value": "H5CallCameraAndAlbum"
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,337 @@
+@import "../common/var.less";
+@import "../../../../theme-chalk/common/mixin.less";
+
+@message-prefix-cls: ~"@{css-prefix}message";
+
+.@{message-prefix-cls}-main {
+
+}
+
+.@{message-prefix-cls}-module {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFFFFF;
+
+  &-header {
+    overflow: hidden;
+    padding: 15px 0;
+    border-bottom: 1px dotted #e5e5e5;
+
+    & .message-module-header-left {
+      float: left;
+      line-height: 32px;
+      font-size: 16px;
+      color: #333333;
+      margin-left: -4px;
+    }
+
+    & .message-module-header-right {
+      float: right;
+      margin-right: 4px;
+    }
+  }
+
+  &-content {
+    position: absolute;
+    top: 63px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 0;
+    .mixin-scroll(hidden, scroll);
+  }
+}
+
+.@{message-prefix-cls} {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &-search {
+    padding: 15px 0;
+
+    &-left {
+      float: left;
+      width: 40%;
+
+      & .search-left-text {
+        float: left;
+        width: 300px;
+      }
+
+      & .search-left-button {
+        float: left;
+        margin-left: 10px;
+      }
+    }
+
+    &-right {
+      float: right;
+      text-align: right;
+    }
+  }
+
+  &-list-main {
+    position: absolute;
+    top: 62px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: @message-content-bg;
+    border-top: @message-content-border-color;
+
+    & .list-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 62px;
+      right: 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      &-inner {
+        width: 1000px;
+        padding-left: 8px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  &-list {
+    & > li {
+      margin: 20px 0;
+      min-height: 100px;
+      cursor: pointer;
+      padding: 1px;
+      background-color: @message-list-bg;
+      border: @message-list-border-color;
+      //box-shadow: @message-list-box-shadow;
+      &:hover {
+        border-color: @message-list-border-color-hover;
+      }
+
+      & li:last-child {
+        border-bottom: 1px solid transparent;
+      }
+
+      & .message-list-header {
+        .mixin-ellipsis;
+        padding: 8px 12px;
+        font-size: 16px;
+        overflow: hidden;
+        background-color: @message-list-header-bg;
+        color: @message-list-header-text-color;
+
+        & .message-title {
+          width: 100%;
+          line-height: 28px;
+        }
+
+        &.is-tools {
+          & .message-title {
+            float: left;
+            width: 70%;
+          }
+
+          & .message-button {
+            float: right;
+            width: 25%;
+            text-align: right;
+          }
+        }
+      }
+
+      & .message-list-content {
+        .mixin-ellipsis;
+        position: relative;
+        padding: 20px 12px;
+        overflow: hidden;
+      }
+
+      & .message-list-footer {
+        overflow: hidden;
+        padding: 8px 12px;
+        border-top: @message-list-footer-border;
+
+        & .footer-info {
+          & span {
+            padding-right: 10px;
+          }
+
+          & span:last-child {
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &-paging {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: @message-content-bg;
+  }
+
+  &-view {
+    width: 1000px;
+    margin: 0 auto;
+
+    &-inner {
+      padding: 15px;
+      border: 1px solid #e5e5e5
+    }
+
+    &-left {
+      float: left;
+      width: 72%;
+    }
+
+    &-right {
+      float: right;
+      width: 26%;
+    }
+
+    &-title {
+      font-size: 20px;
+      color: #333333;
+    }
+
+    &-info {
+      padding: 10px 10px;
+      margin: 15px 0 15px;
+      overflow: hidden;
+      background-color: #f9f9f9;
+
+      & li {
+        width: 22%;
+        padding-right: 3%;
+        float: left;
+        .mixin-ellipsis;
+
+        & span {
+          color: #666666;
+        }
+      }
+
+      &.col-3 {
+        & li {
+          width: 30.33%;
+          padding-right: 3%;
+        }
+      }
+    }
+
+    &-reply {
+      border-top: 1px solid #e5e5e5;
+
+      &-main {
+        & > .reply-main-title {
+          font-size: 16px;
+          padding: 10px 0;
+          margin-top: 30px;
+        }
+
+        & > .reply-main-content {
+          position: relative;
+          min-height: 300px;
+        }
+      }
+
+      & li {
+        border-bottom: 1px solid #e5e5e5;
+        //border-top: none;
+        background-color: #f9f9f9;
+
+        & .reply-left {
+          float: left;
+          width: 100px;
+          padding: 15px;
+          text-align: center;
+
+          & .reply-face {
+            width: 64px;
+            height: 64px;
+            display: block;
+            margin: 0 auto;
+            padding: 3px;
+            border: 1px solid #EEEEEE;
+            background-color: #FFFFFF;
+            .mixin-border-radius(64px);
+
+            & > img {
+              width: 100%;
+              height: 100%;
+              .mixin-border-radius(64px);
+            }
+          }
+
+          & .reply-user {
+            margin-top: 5px;
+            .mixin-ellipsis;
+          }
+        }
+
+        & .reply-right {
+          min-height: 120px;
+          overflow: hidden;
+          padding: 15px;
+          position: relative;
+          background-color: #FFFFFF;
+
+          &-content {
+            margin-bottom: 38px;
+          }
+
+          &-bottom {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+
+  &-enclosure {
+    width: 400px;
+    height: 260px;
+    .mixin-scroll(hidden, auto);
+
+    & li {
+      padding: 5px 10px;
+      overflow: hidden;
+      height: 30px;
+      line-height: 30px;
+
+      &:nth-child(2n) {
+        background-color: #f9f9f9;
+      }
+
+      & .enclosure-left {
+        float: left;
+        width: 74%;
+        .mixin-ellipsis;
+      }
+
+      & .enclosure-right {
+        float: right;
+        width: 24%;
+        text-align: right;
+
+        & a {
+          color: @color-primary;
+        }
+      }
+    }
+  }
+}

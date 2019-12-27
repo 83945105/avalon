@@ -1,0 +1,17 @@
+{
+  "vue": {
+    "value": "Vue",
+    "devUrl": "https://www.unpkg.com/vue@2.5.16/dist/vue.js",
+    "prodUrl": "https://www.unpkg.com/vue@2.5.16/dist/vue.min.js"
+  },
+  "element-ui": {
+    "value": "ELEMENT",
+    "devUrl": "https://unpkg.com/element-ui@2.4.11/lib/index.js",
+    "prodUrl": "https://unpkg.com/element-ui@2.4.11/lib/index.js"
+  },
+  "weview": {
+    "value": "weview",
+    "devUrl": "https://unpkg.com/weview@0.8.7-dev/lib/index.js",
+    "prodUrl": "https://unpkg.com/weview@0.8.7-dev/lib/index.js"
+  }
+}
