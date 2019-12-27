@@ -4,7 +4,7 @@
 #      defaultZone: http://localhost:8888/eureka/
 spring:
   application:
-    name: gar-service
+    name: avalon-cloud-admin-service
   cloud:
     config:
       uri: http://localhost:8888/

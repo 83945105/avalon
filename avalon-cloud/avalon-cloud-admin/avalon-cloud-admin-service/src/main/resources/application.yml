@@ -1,8 +1,4 @@
 #开发环境配置
-server:
-  servlet:
-    # 访问根路径
-    context-path: /gar
 web:
   #文件上传路径
   upload-path: D:/dms_V1.0.0.20190428_beta/project/client/dist/DMS_FILES/
