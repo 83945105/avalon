@@ -1,0 +1,60 @@
+# 支付宝
+alipay:
+  # 支付地址
+  url: https://openapi.alipaydev.com/gateway.do
+  # 支付宝服务器主动通知商户服务器地址(ip+port+contentPath),HTTP/HTTPS开头字符串
+  notify_server_path: http://112.84.90.119:${server.port}/pay
+  # 同步返回地址，HTTP/HTTPS开头字符串
+  return_url: http://j7z45s.natappfree.cc/pay/view/template#/alipay/alipay-computer-website
+  # 支付宝分配给开发者的应用ID
+  app_id: 2016091600524579
+  app_private_key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKpx9we3zIgs1A1Qg8KDRM2A/a0Aw27fZzd2CVJqlcYtt/ZgdRxsubwNx/wGETnXJU9nIy36mElBch9dHdKKa9uJlUMtZyp1q1ohw1PGrzq5o/PgOlt10mimJhPj/JI8Ysa6IpWwMjCdumYARZKftS4xNIVVh9asZ438+SEVodAnjQ5gUEaQ+Kjk5lQ+0eIZLdRN83/i8Ojh2yDvyRhBO3TIVVyeetnay2xO7rvmMmnghodzVv4KzhRtE1DjuL6X4V4CbYWTs9jt6CVxg0gP8O0IgnqCG0xHJ9M9vYBWZbcTfWQfrNHn+m353twLnsInVVK1NLgRBrNNP2xj4953xbAgMBAAECggEBAJhA03gY7vlefIMXCqbXteN9+Pt2j5a9VgoOSHwGnfuRMkQXDay85MBSN9erW8P26K04szfRnnTDJlYXb+Lu5cdoZ5pAz6k4XwhTkUnV6KzF4o9dMjRQ/SU1lxBkSlv+CqfY/e6AOG0cvO/U969dwTrW6+fOZzti+1ZZIIQnkUJ1ALjzoX0GGVjR1BWrm6gIffbKUBOHbNb5TorpozjM8gqC4YHwwmhlzCtJUGU4MPat9GGwoE+VRkTDO2j79u9/M7/F0tzdh1/RXIE88/dE5Yflq4N2noSbuwDdOwBCocxwxvN8NcKU3pFzS1e4i+RYUYCJkHEVIaHHAHM8VQ53ToECgYEA5YsYrvz755CBg5lnRZzc4r25zbDQIxrfXs4t1eKMLEjZBkCEJzTgVzlfIyMvQXWLUWhlMcY7NUN+7O5PTZQ+Mq0g7Zw1Cb3c1J9sH/LLRcJBclyUJEf6y8yjaOUF71XTvddM4EdMsIk8WREWTTgfCebKEnBiWxo6M8Yk7O0gIGECgYEA4gKYTTKCaKEzBczEqHv5hyAyaBX0GBW3Tl384hUcmIqDCBl42R7Sqy2SPaIviZlexi8TnZxpSBsDIYMHbZnic7Vlde1e9DFcJUMwkiR8VJtE5SSxAckymDOYHQd+xeuDEU2AX9Bk5l123QcnioLOg1UzHDgAV0yLxDWDa6aVxjsCgYBykuNXNN9nzjFXRpLNpGZ8psa/bKn3W8pyv+cRA2uEDziEbl+IUlRINVLPbxh/S/SmRb19Ar068N3B1ZGv33bMRK5S681td19qociOidn8j+Gq+5rWITeF0jcefHJh7C0sbPLqX6xf0aBVtLm1AXY8sv3aBk6Rup2iihyURifrAQKBgQC9A4CN5zUK/e1m51Z8tZn8uR+OzvViAx9XSeFIznEo3YYyCuN3aYC0KhuIsg/hmsOZKRvVj065P+YBa8yVi8HIFSdyVX845+LxQtznC95y/5vBq0rhfHt0sImBlZgfPBRULyWye902j2nt9aLLAxRk36cr7WXTnK+y+zIaoKnXqwKBgAOwSgexXdfJ0+D5uLChdoZDbp9j7TUX30/D7UTc6bTHYoIqVwc9gCeU8TCXdw5iNinoglaO+fn/atYAKW4hB4kQsaB1exKdA3xXmmSFDybD15hCSFq8KU0Wtfnh+djojK1Nb/DcvLTVUBNQA66m9Y83XyxpcpGywqM+JRVhYIYx
+  alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApAGGENh8jSnlrG7nylJRca0nHXtl+KuoLxmyHkh4qYLwUcKNHESM3Pl19OdPoqWPZvyRosObcTyIN2nNz3VonYR3mHKQ9AkFUIIrLhTwE4MhaKMPNtQUtdh7elvs7IISKl0DUebrlFVfBdYbp1A6MNDM+Hip9B4pnZy3HuhmwZoqUqThw8rVeQbQEhm5Q4gSRffxsQJSqS55zcmWtXzS1DSb/U4evRfn0IOUn9vDZ1gCPLPL2bPbJD4etKeisPnOdWkFO/VqE3/6Bd1Nh3FLmgA+zBTNzNU/MtGsQ0U+AU0wLLn6b3NZjomOzBHwiLRIIPoc2L7xz04VrkwETWh5PQIDAQAB
+  # 仅支持JSON
+  format: json
+  # 请求使用的编码格式，如utf-8,gbk,gb2312等
+  charset: UTF-8
+  # 商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2
+  sign_type: RSA2
+  seller_uid: 2088102175887083
+  # 支付超时时间 毫秒
+  time_out: 60000
+  # 交易查询轮询间隔 毫秒
+  trade_query_polling_interval: 5000
+  # 是否记录PC网页支付流水
+  enabled_record_computer_website_pay_flow: true
+  # 是否记录二维码支付流水
+  enabled_record_qr_code_pay_flow: true
+# 微信支付
+weChatPay:
+  # 公众号ID
+  app_id: wxc5a50ac9b9726777
+  # 商户号
+  mch_id: 1514398471
+  # api秘钥
+  key: 670b14728ad9902aecba32e22fa4f6bd
+  # 证书路径
+  cert_path: D:\git_repertory\spring-cloud-frame\wechatpay\apiclient_cert.p12
+  # 微信支付服务器主动通知商户服务器地址(ip+port+contentPath),HTTP/HTTPS开头字符串
+  notify_server_path: http://112.84.90.119:${server.port}/pay
+  # 调用微信支付的终端IP
+  spbill_create_ip: 112.84.90.119
+  # 支付超时时间 毫秒
+  time_out: 60000
+  # 交易查询轮询间隔 毫秒
+  trade_query_polling_interval: 5000
+  # 是否记录二维码支付流水
+  enabled_record_qr_code_pay_flow: true
+
+feign:
+  pay:
+    alipay:
+      pay-business-api-service-name: ${spring.application.name}
+      pay-business-api-service-path: /api-pay-business
+      computer-website-api-service-name: ${spring.application.name}
+      computer-website-api-service-path: /api-pay-alipay-computer-website
+      qr-code-api-service-name: /api-pay-business
+      qr-code-api-service-path: /api-pay-alipay-qr-code
+    we-chat-pay:
+      qr-code-api-service-name: pay-service
+      qr-code-api-service-path: /api-pay-weChatPay-qr-code

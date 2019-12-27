@@ -1,0 +1,14 @@
+#集成mybatis
+mybatis:
+  # mapper文件路径,不使用该方式
+  #mapper-locations: classpath:XX/*.xml
+  # 给指定包下的实体类简化名称
+  #type-aliases-package:
+  # mybatis-config.xml配置文件的路径
+  #config-location:
+  # 扫描typeHandlers的包
+  #type-handlers-package:
+  # 检查配置文件是否存在
+  check-config-location: false
+  # 设置执行模式（SIMPLE, REUSE, BATCH），默认为SIMPLE
+  executor-type: simple
