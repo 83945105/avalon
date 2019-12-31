@@ -32,10 +32,10 @@
         <junit.surefire.version>2.19</junit.surefire.version>
         <mysql-connector-java.version>5.1.45</mysql-connector-java.version>
         <mssql-jdbc.version>6.4.0.jre8</mssql-jdbc.version>
-        <druid.version>1.1.8</druid.version>
         <mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
 
-        <alibaba.fastjson>1.2.62</alibaba.fastjson>
+        <alibaba.druid.version>1.1.8</alibaba.druid.version>
+        <alibaba.fastjson.version>1.2.62</alibaba.fastjson.version>
 
         <esotericsoftware.reflectasm.version>1.11.3</esotericsoftware.reflectasm.version>
 
@@ -73,7 +73,12 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
+                <version>${alibaba.druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${alibaba.fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>

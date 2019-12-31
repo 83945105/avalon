@@ -1,10 +1,18 @@
 package pub.avalonframework.common.utils;
 
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.util.TypeUtils;
+import com.esotericsoftware.reflectasm.FieldAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
+import pub.avalonframework.common.beans.BeanPropertyInfo;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * Bean utils.
@@ -16,11 +24,44 @@ public class BeanUtils {
     private BeanUtils() {
     }
 
-    private static final Map<Class, MethodAccess> CLASS_METHOD_ACCESS_CACHE = new ConcurrentHashMap<>();
+    private final static Map<Class, FieldAccess> CLASS_FIELD_ACCESS_CACHE = new ConcurrentHashMap<>();
 
-    private static final Map<Class, Map<String, BeanPropertyInfo>> CLASS_BEAN_PROPERTY_INFO_CACHE = new ConcurrentHashMap<>();
+    private final static Map<Class, MethodAccess> CLASS_METHOD_ACCESS_CACHE = new ConcurrentHashMap<>();
 
-    private static MethodAccess getMethodAccess(Class clazz) {
+    private final static Map<Class, Map<String, BeanPropertyInfo>> CLASS_BEAN_PROPERTY_INFO_CACHE = new ConcurrentHashMap<>();
+
+    public static List<String> getPropertyNames(Class clazz, boolean parentProperty) {
+        if (clazz == null) {
+            return null;
+        }
+        List<String> propertyNames = new ArrayList<>();
+        Class parentClass = parentProperty ? Object.class : clazz.getSuperclass();
+        for (Class cla = clazz; cla != parentClass; cla = cla.getSuperclass()) {
+            Field[] fields = cla.getDeclaredFields();
+            for (Field field : fields) {
+                propertyNames.add(field.getName());
+            }
+        }
+        return propertyNames;
+    }
+
+    public static List<String> getPropertyNames(Class clazz) {
+        return getPropertyNames(clazz, false);
+    }
+
+    public static FieldAccess getFieldAccess(Class clazz) {
+        if (clazz == null) {
+            return null;
+        }
+        FieldAccess fieldAccess = CLASS_FIELD_ACCESS_CACHE.get(clazz);
+        if (fieldAccess == null) {
+            fieldAccess = FieldAccess.get(clazz);
+            CLASS_FIELD_ACCESS_CACHE.put(clazz, fieldAccess);
+        }
+        return fieldAccess;
+    }
+
+    public static MethodAccess getMethodAccess(Class clazz) {
         if (clazz == null) {
             return null;
         }
@@ -32,22 +73,7 @@ public class BeanUtils {
         return methodAccess;
     }
 
-    private static BeanPropertyInfo initPropertyInfo(Class clazz, Field field) {
-        BeanPropertyInfo beanPropertyInfo = new BeanPropertyInfo();
-        String name = field.getName();
-        beanPropertyInfo.setName(name);
-        beanPropertyInfo.setField(field);
-        beanPropertyInfo.setType(field.getType());
-        boolean isBoolean = field.getType() == boolean.class;
-        beanPropertyInfo.setBoolean(isBoolean);
-        String getterMethodName = getGetterMethodName(name, isBoolean);
-        beanPropertyInfo.setGetterMethodName(getterMethodName);
-        String setterMethodName = getSetterMethodName(name);
-        beanPropertyInfo.setSetterMethodName(setterMethodName);
-        return beanPropertyInfo;
-    }
-
-    private static BeanPropertyInfo getBeanPropertyInfo(Class clazz, String propertyName) {
+    public static BeanPropertyInfo getBeanPropertyInfo(Class clazz, String propertyName) {
         if (clazz == null || propertyName == null || propertyName.trim().length() == 0) {
             return null;
         }
@@ -57,7 +83,7 @@ public class BeanUtils {
             for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
                 Field[] fields = clazz.getDeclaredFields();
                 for (Field field : fields) {
-                    nameBeanPropertyInfoMap.put(field.getName(), initPropertyInfo(clazz, field));
+                    nameBeanPropertyInfoMap.put(field.getName(), new BeanPropertyInfo(field));
                 }
             }
             CLASS_BEAN_PROPERTY_INFO_CACHE.put(clazz, nameBeanPropertyInfoMap);
@@ -155,69 +181,34 @@ public class BeanUtils {
             methodAccess.invoke(javaBean, beanPropertyInfo.getSetterMethodName(), propertyValue);
             return;
         }
-        methodAccess.invoke(javaBean, beanPropertyInfo.getSetterMethodName(), propertyValue);
+        methodAccess.invoke(javaBean, beanPropertyInfo.getSetterMethodName(), TypeUtils.cast(propertyValue, beanPropertyInfo.getType(), ParserConfig.getGlobalInstance()));
     }
 
-    private static class BeanPropertyInfo {
-
-        private String name;
-
-        private Field field;
-
-        private boolean isBoolean;
-
-        private Class type;
-
-        private String getterMethodName;
-
-        private String setterMethodName;
-
-        public String getName() {
-            return name;
+    public static Map<String, Object> getProperties(Object javaBean, boolean parentProperty, Function<Object, Boolean> filter) {
+        List<String> propertyNames = getPropertyNames(javaBean.getClass(), parentProperty);
+        if (propertyNames == null) {
+            return null;
         }
-
-        public void setName(String name) {
-            this.name = name;
+        Map<String, Object> map = new LinkedHashMap<>(propertyNames.size());
+        Object value;
+        for (String propertyName : propertyNames) {
+            value = getProperty(javaBean, propertyName);
+            if (filter.apply(value)) {
+                map.put(propertyName, value);
+            }
         }
+        return map;
+    }
 
-        public Field getField() {
-            return field;
-        }
+    public static Map<String, Object> getProperties(Object javaBean) {
+        return getProperties(javaBean, false, val -> true);
+    }
 
-        public void setField(Field field) {
-            this.field = field;
-        }
+    public static Map<String, Object> getProperties(Object javaBean, boolean parentProperty) {
+        return getProperties(javaBean, parentProperty, val -> true);
+    }
 
-        public boolean isBoolean() {
-            return isBoolean;
-        }
-
-        public void setBoolean(boolean aBoolean) {
-            isBoolean = aBoolean;
-        }
-
-        public Class getType() {
-            return type;
-        }
-
-        public void setType(Class type) {
-            this.type = type;
-        }
-
-        public String getGetterMethodName() {
-            return getterMethodName;
-        }
-
-        public void setGetterMethodName(String getterMethodName) {
-            this.getterMethodName = getterMethodName;
-        }
-
-        public String getSetterMethodName() {
-            return setterMethodName;
-        }
-
-        public void setSetterMethodName(String setterMethodName) {
-            this.setterMethodName = setterMethodName;
-        }
+    public static Map<String, Object> getProperties(Object javaBean, Function<Object, Boolean> filter) {
+        return getProperties(javaBean, false, filter);
     }
 }
