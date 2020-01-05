@@ -1,4 +1,4 @@
-package pub.avalonframework.core.beans;
+package pub.avalonframework.database;
 
 /**
  * The pagination.

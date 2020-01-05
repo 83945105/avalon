@@ -34,6 +34,8 @@
         <mssql-jdbc.version>6.4.0.jre8</mssql-jdbc.version>
         <mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
 
+        <apache.velocity.version>1.7</apache.velocity.version>
+
         <alibaba.druid.version>1.1.8</alibaba.druid.version>
         <alibaba.fastjson.version>1.2.62</alibaba.fastjson.version>
 
@@ -49,16 +51,19 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
                 <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.surefire</groupId>
                 <artifactId>surefire-junit47</artifactId>
                 <version>${junit.surefire.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
@@ -70,6 +75,13 @@
                 <artifactId>mssql-jdbc</artifactId>
                 <version>${mssql-jdbc.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${apache.velocity.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
@@ -80,6 +92,7 @@
                 <artifactId>fastjson</artifactId>
                 <version>${alibaba.fastjson.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
