@@ -1,8 +1,8 @@
 package pub.avalonframework.shiro.service.impl;
 
 import org.apache.shiro.web.util.WebUtils;
+import pub.avalonframework.security.core.api.config.HttpConfiguration;
 import pub.avalonframework.security.core.api.config.SecurityConfiguration;
-import pub.avalonframework.security.core.api.config.http.HttpConfiguration;
 import pub.avalonframework.security.core.api.service.WebService;
 
 import javax.servlet.ServletRequest;
@@ -25,7 +25,7 @@ public class ShiroWebServiceImpl implements WebService {
 
     @Override
     public boolean isAjaxRequest(ServletRequest request, ServletResponse response, SecurityConfiguration securityConfiguration) {
-        HttpConfiguration httpConfiguration = securityConfiguration.getHttpConfiguration();
+        HttpConfiguration httpConfiguration = securityConfiguration.getHttp();
         if (httpConfiguration == null) {
             return false;
         }

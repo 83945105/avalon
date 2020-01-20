@@ -14,7 +14,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pub.avalonframework.redis.core.RedisTemplate;
+import pub.avalonframework.redis.spring.core.RedisTemplate;
 import pub.avalonframework.security.core.beans.IncorrectPrincipalTypeException;
 import pub.avalonframework.security.core.beans.Principal;
 import pub.avalonframework.shiro.session.mgt.RedisSession;

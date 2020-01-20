@@ -34,18 +34,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import pub.avalonframework.redis.core.RedisTemplate;
-import pub.avalonframework.redis.serializer.GenericToStringSerializer;
-import pub.avalonframework.redis.serializer.Jackson2JsonRedisSerializer;
+import pub.avalonframework.redis.core.api.config.RedisConfiguration;
+import pub.avalonframework.redis.spring.core.RedisTemplate;
+import pub.avalonframework.redis.spring.serializer.GenericToStringSerializer;
+import pub.avalonframework.redis.spring.serializer.Jackson2JsonRedisSerializer;
 import pub.avalonframework.security.core.api.beans.CacheType;
 import pub.avalonframework.security.core.api.beans.IncorrectCacheTypeException;
-import pub.avalonframework.security.core.api.config.SecurityConfiguration;
-import pub.avalonframework.security.core.api.config.authentication.AuthenticationConfiguration;
-import pub.avalonframework.security.core.api.config.cache.EhCacheConfiguration;
-import pub.avalonframework.security.core.api.config.cache.RedisCacheConfiguration;
-import pub.avalonframework.security.core.api.config.cache.RedisSessionConfiguration;
-import pub.avalonframework.security.core.api.config.filter.FilterConfiguration;
-import pub.avalonframework.security.core.api.config.http.HttpConfiguration;
+import pub.avalonframework.security.core.api.config.*;
 import pub.avalonframework.security.core.api.service.LoginAuthenticationService;
 import pub.avalonframework.security.core.api.service.ResourceAuthenticationService;
 import pub.avalonframework.security.core.api.service.WebService;
@@ -103,12 +98,14 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     @ConditionalOnBean(SecurityConfiguration.class)
     @ConditionalOnMissingBean(Realm.class)
     public Realm realm(LoginAuthenticationService loginAuthenticationService) {
+        AuthenticationConfiguration authenticationConfiguration = this.securityConfiguration.getAuthentication();
+        AuthorizationConfiguration authorizationConfiguration = this.securityConfiguration.getAuthorization();
         ShiroRealm shiroRealm = new ShiroRealm(this.securityConfiguration, loginAuthenticationService);
         shiroRealm.setCachingEnabled(true);
-        shiroRealm.setAuthenticationCachingEnabled(this.securityConfiguration.getAuthenticationCacheEnabled());
-        shiroRealm.setAuthenticationCacheName(this.securityConfiguration.getAuthenticationCacheName());
-        shiroRealm.setAuthorizationCachingEnabled(this.securityConfiguration.getAuthorizationCacheEnabled());
-        shiroRealm.setAuthorizationCacheName(this.securityConfiguration.getAuthorizationCacheName());
+        shiroRealm.setAuthenticationCachingEnabled(authenticationConfiguration.getCacheEnabled());
+        shiroRealm.setAuthenticationCacheName(authenticationConfiguration.getCacheName());
+        shiroRealm.setAuthorizationCachingEnabled(authorizationConfiguration.getCacheEnabled());
+        shiroRealm.setAuthorizationCacheName(authorizationConfiguration.getCacheName());
         return shiroRealm;
     }
 
@@ -122,9 +119,9 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     @ConditionalOnMissingBean(Cookie.class)
     public Cookie cookie() {
         SimpleCookie cookie = new SimpleCookie();
-        HttpConfiguration httpConfiguration = this.securityConfiguration.getHttpConfiguration();
-        cookie.setName(httpConfiguration.getSessionIdName());
-        cookie.setMaxAge(Integer.valueOf(httpConfiguration.getCookieMaxAge() + ""));
+        SessionConfiguration sessionConfiguration = this.securityConfiguration.getSession();
+        cookie.setName(sessionConfiguration.getSessionIdName());
+        cookie.setMaxAge(Integer.valueOf(sessionConfiguration.getCookieMaxAge() + ""));
         cookie.setHttpOnly(true);
         return cookie;
     }
@@ -132,19 +129,19 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     @Bean
     @ConditionalOnMissingBean(SessionValidationScheduler.class)
     public SessionValidationScheduler sessionValidationScheduler() {
-        HttpConfiguration httpConfiguration = this.securityConfiguration.getHttpConfiguration();
+        SessionConfiguration sessionConfiguration = this.securityConfiguration.getSession();
         ExecutorServiceSessionValidationScheduler scheduler = new ExecutorServiceSessionValidationScheduler();
-        scheduler.setInterval(httpConfiguration.getSessionValidationInterval());
+        scheduler.setInterval(sessionConfiguration.getSessionValidationInterval());
         return scheduler;
     }
 
     private RedisTemplate<String, Object, String, Object> sessionRedisTemplate() {
-        RedisSessionConfiguration redisSessionConfiguration = this.securityConfiguration.getRedisConfiguration().getRedisSessionConfiguration();
+        RedisConfiguration redisConfiguration = this.securityConfiguration.getSession().getRedis();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisSessionConfiguration.getHostName());
-        redisStandaloneConfiguration.setPort(redisSessionConfiguration.getPort());
-        redisStandaloneConfiguration.setDatabase(redisSessionConfiguration.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisSessionConfiguration.getPassword()));
+        redisStandaloneConfiguration.setHostName(redisConfiguration.getHostName());
+        redisStandaloneConfiguration.setPort(redisConfiguration.getPort());
+        redisStandaloneConfiguration.setDatabase(redisConfiguration.getDatabase());
+        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisConfiguration.getPassword()));
         return new RedisTemplate<>
                 (
                         new JedisConnectionFactory(redisStandaloneConfiguration),
@@ -163,13 +160,13 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
             case EHCACHE:
                 EnterpriseCacheSessionDAO enterpriseCacheSessionDAO = new EnterpriseCacheSessionDAO();
                 enterpriseCacheSessionDAO.setSessionIdGenerator(sessionIdGenerator);
-                enterpriseCacheSessionDAO.setActiveSessionsCacheName(this.securityConfiguration.getActiveSessionCacheName());
+                enterpriseCacheSessionDAO.setActiveSessionsCacheName(this.securityConfiguration.getSession().getSessionCacheName());
                 return enterpriseCacheSessionDAO;
             case REDIS:
-                HttpConfiguration httpConfiguration = this.securityConfiguration.getHttpConfiguration();
+                SessionConfiguration sessionConfiguration = this.securityConfiguration.getSession();
                 RedisSessionDAO redisSessionDAO = new RedisSessionDAO(sessionRedisTemplate());
                 redisSessionDAO.setSessionIdGenerator(sessionIdGenerator);
-                redisSessionDAO.setExpire(httpConfiguration.getSessionTimeout());
+                redisSessionDAO.setExpire(sessionConfiguration.getSessionTimeout());
                 return redisSessionDAO;
             default:
                 throw new IncorrectCacheTypeException(securityConfiguration.getCacheType(), ShiroSpringBootConfiguration.class, null);
@@ -179,11 +176,11 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     @Bean
     @ConditionalOnMissingBean(SessionManager.class)
     public SessionManager sessionManager(SessionValidationScheduler sessionValidationScheduler, SessionDAO sessionDAO, Cookie sessionIdCookie) {
-        HttpConfiguration httpConfiguration = this.securityConfiguration.getHttpConfiguration();
+        SessionConfiguration sessionConfiguration = this.securityConfiguration.getSession();
         switch (this.securityConfiguration.getCacheType()) {
             case EHCACHE:
                 SeparationWebSessionManager separationSessionManager = new SeparationWebSessionManager();
-                separationSessionManager.setGlobalSessionTimeout(httpConfiguration.getSessionTimeout());
+                separationSessionManager.setGlobalSessionTimeout(sessionConfiguration.getSessionTimeout());
                 separationSessionManager.setSessionValidationScheduler(sessionValidationScheduler);
                 separationSessionManager.setDeleteInvalidSessions(true);
                 separationSessionManager.setSessionValidationSchedulerEnabled(true);
@@ -193,7 +190,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
                 return separationSessionManager;
             case REDIS:
                 RedisWebSessionManager redisWebSessionManager = new RedisWebSessionManager();
-                redisWebSessionManager.setGlobalSessionTimeout(httpConfiguration.getSessionTimeout());
+                redisWebSessionManager.setGlobalSessionTimeout(sessionConfiguration.getSessionTimeout());
                 redisWebSessionManager.setSessionValidationScheduler(sessionValidationScheduler);
                 redisWebSessionManager.setDeleteInvalidSessions(true);
                 redisWebSessionManager.setSessionValidationSchedulerEnabled(true);
@@ -222,12 +219,12 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     }
 
     private RedisTemplate<String, SimpleAuthenticationInfo, Object, Object> authenticationRedisTemplate() {
-        RedisCacheConfiguration redisCacheConfiguration = this.securityConfiguration.getRedisConfiguration().getRedisCacheConfiguration();
+        RedisConfiguration redisConfiguration = this.securityConfiguration.getAuthentication().getRedis();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisCacheConfiguration.getHostName());
-        redisStandaloneConfiguration.setPort(redisCacheConfiguration.getPort());
-        redisStandaloneConfiguration.setDatabase(redisCacheConfiguration.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisCacheConfiguration.getPassword()));
+        redisStandaloneConfiguration.setHostName(redisConfiguration.getHostName());
+        redisStandaloneConfiguration.setPort(redisConfiguration.getPort());
+        redisStandaloneConfiguration.setDatabase(redisConfiguration.getDatabase());
+        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisConfiguration.getPassword()));
         return new RedisTemplate<>
                 (
                         new JedisConnectionFactory(redisStandaloneConfiguration),
@@ -240,12 +237,12 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     }
 
     private RedisTemplate<String, SimpleAuthorizationInfo, Object, Object> authorizationRedisTemplate() {
-        RedisCacheConfiguration redisCacheConfiguration = this.securityConfiguration.getRedisConfiguration().getRedisCacheConfiguration();
+        RedisConfiguration redisConfiguration = this.securityConfiguration.getAuthorization().getRedis();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisCacheConfiguration.getHostName());
-        redisStandaloneConfiguration.setPort(redisCacheConfiguration.getPort());
-        redisStandaloneConfiguration.setDatabase(redisCacheConfiguration.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisCacheConfiguration.getPassword()));
+        redisStandaloneConfiguration.setHostName(redisConfiguration.getHostName());
+        redisStandaloneConfiguration.setPort(redisConfiguration.getPort());
+        redisStandaloneConfiguration.setDatabase(redisConfiguration.getDatabase());
+        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisConfiguration.getPassword()));
         return new RedisTemplate<>
                 (
                         new JedisConnectionFactory(redisStandaloneConfiguration),
@@ -262,7 +259,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     public CacheManager cacheManager() {
         switch (this.securityConfiguration.getCacheType()) {
             case EHCACHE:
-                EhCacheConfiguration ehCacheConfiguration = this.securityConfiguration.getEhCacheConfiguration();
+                EhCacheConfiguration ehCacheConfiguration = this.securityConfiguration.getEhCache();
                 EhCacheManager ehCacheManager = new EhCacheManager();
                 if (ehCacheConfiguration.getCacheManagerConfigFile() != null) {
                     ehCacheManager.setCacheManagerConfigFile(ehCacheConfiguration.getCacheManagerConfigFile());
@@ -271,9 +268,9 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
             case REDIS:
                 return new RedisCacheManager
                         (
-                                this.securityConfiguration.getAuthenticationCacheName(),
+                                this.securityConfiguration.getAuthentication().getCacheName(),
                                 authenticationRedisTemplate(),
-                                this.securityConfiguration.getAuthorizationCacheName(),
+                                this.securityConfiguration.getAuthorization().getCacheName(),
                                 authorizationRedisTemplate(),
                                 -1
                         );
@@ -312,7 +309,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
      * 该过滤器不可以使用 @Bean 注册到spring容器, 这将会导致 ShiroFilterFactoryBean 内注册的过滤器 SpringShiroFilter 失效
      */
     private Filter formAuthenticationFilter(WebService webService, LoginAuthenticationService loginAuthenticationService) {
-        AuthenticationConfiguration authenticationConfiguration = this.securityConfiguration.getAuthenticationConfiguration();
+        AuthenticationConfiguration authenticationConfiguration = this.securityConfiguration.getAuthentication();
         AjaxFormAuthenticationFilter ajaxFormAuthenticationFilter = new AjaxFormAuthenticationFilter(webService, loginAuthenticationService, this.securityConfiguration);
         ajaxFormAuthenticationFilter.setUsernameParam(authenticationConfiguration.getUsernameKey());
         ajaxFormAuthenticationFilter.setPasswordParam(authenticationConfiguration.getPasswordKey());
@@ -333,7 +330,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
     @ConditionalOnMissingBean(ShiroFilterFactoryBean.class)
     public ShiroFilterFactoryBean shiroFilterFactoryBean(WebService webService, LoginAuthenticationService loginAuthenticationService, ResourceAuthenticationService resourceAuthenticationService, SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        FilterConfiguration filterConfiguration = this.securityConfiguration.getFilterConfiguration();
+        FilterConfiguration filterConfiguration = this.securityConfiguration.getFilter();
         String formFilterName = filterConfiguration.getFormFilterName();
         shiroFilterFactoryBean.setLoginUrl(filterConfiguration.getLoginUrl());
         shiroFilterFactoryBean.setUnauthorizedUrl(filterConfiguration.getUnauthorizedUrl());
@@ -363,11 +360,11 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
             logger.info("Shiro release resource: " + releaseResource);
         }
         logger.info("====================================================================================================");
-        String pageUrl = this.securityConfiguration.getAuthenticationConfiguration().getPageUrl();
+        String pageUrl = this.securityConfiguration.getAuthentication().getPageUrl();
         if (pageUrl != null && pageUrl.trim().length() > 0) {
             filterChainDefinitionMap.put(pageUrl, "anon");
         }
-        String url = this.securityConfiguration.getAuthenticationConfiguration().getUrl();
+        String url = this.securityConfiguration.getAuthentication().getUrl();
         if (url != null && url.trim().length() > 0) {
             filterChainDefinitionMap.put(url, formFilterName + ",anon");
         }

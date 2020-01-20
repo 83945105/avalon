@@ -2,7 +2,7 @@ package pub.avalonframework.shiro.cache;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
-import pub.avalonframework.redis.core.RedisTemplate;
+import pub.avalonframework.redis.spring.core.RedisTemplate;
 
 import java.util.Collection;
 import java.util.Set;

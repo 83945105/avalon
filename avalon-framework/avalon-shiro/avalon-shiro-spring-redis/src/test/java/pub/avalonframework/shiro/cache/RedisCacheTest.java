@@ -3,9 +3,9 @@ package pub.avalonframework.shiro.cache;
 import org.junit.jupiter.api.*;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import pub.avalonframework.redis.core.RedisTemplate;
-import pub.avalonframework.redis.serializer.GenericToStringSerializer;
-import pub.avalonframework.redis.serializer.Jackson2JsonRedisSerializer;
+import pub.avalonframework.redis.spring.core.RedisTemplate;
+import pub.avalonframework.redis.spring.serializer.GenericToStringSerializer;
+import pub.avalonframework.redis.spring.serializer.Jackson2JsonRedisSerializer;
 import pub.avalonframework.shiro.beans.Session;
 
 import java.util.Collection;

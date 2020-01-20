@@ -40,7 +40,7 @@ public class GarServiceImpl extends DefaultGarServiceImpl {
         }
         Map<String, Object> map = new HashMap<>(4);
         HttpSession session = RequestUtils.getCurrentHttpSession();
-        map.put("sessionIdName", securityConfiguration.getHttpConfiguration().getSessionIdName());
+        map.put("sessionIdName", securityConfiguration.getSession().getSessionIdName());
         map.put("sessionIdValue", session.getId());
         map.put("user", principal);
         Collection<String> roleValues = principal.getRoleIdentifierSet();

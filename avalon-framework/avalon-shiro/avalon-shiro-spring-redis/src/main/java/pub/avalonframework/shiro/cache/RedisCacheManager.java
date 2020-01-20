@@ -5,7 +5,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.AbstractCacheManager;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
-import pub.avalonframework.redis.core.RedisTemplate;
+import pub.avalonframework.redis.spring.core.RedisTemplate;
 
 /**
  * @author baichao

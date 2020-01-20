@@ -8,7 +8,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import pub.avalonframework.security.core.api.config.SecurityConfiguration;
-import pub.avalonframework.security.core.api.config.http.HttpConfiguration;
+import pub.avalonframework.security.core.api.config.SessionConfiguration;
 import pub.avalonframework.security.core.api.service.LoginAuthenticationService;
 import pub.avalonframework.security.core.api.service.WebService;
 import pub.avalonframework.security.core.beans.Principal;
@@ -70,9 +70,9 @@ public class ShiroLoginAuthenticationServiceImpl implements LoginAuthenticationS
             return;
         }
         Serializable sessionId = session.getId();
-        HttpConfiguration httpConfiguration = securityConfiguration.getHttpConfiguration();
-        String sessionIdName = httpConfiguration.getSessionIdName();
-        Long cookieMaxAge = httpConfiguration.getCookieMaxAge();
+        SessionConfiguration sessionConfiguration = securityConfiguration.getSession();
+        String sessionIdName = sessionConfiguration.getSessionIdName();
+        Long cookieMaxAge = sessionConfiguration.getCookieMaxAge();
         Cookie cookie = new Cookie(sessionIdName, sessionId.toString());
         cookie.setMaxAge(cookieMaxAge == null ? 0 : cookieMaxAge.intValue());
         cookie.setPath("/");
@@ -92,9 +92,9 @@ public class ShiroLoginAuthenticationServiceImpl implements LoginAuthenticationS
             return;
         }
         Serializable sessionId = session.getId();
-        HttpConfiguration httpConfiguration = securityConfiguration.getHttpConfiguration();
-        String sessionIdName = httpConfiguration.getSessionIdName();
-        Long cookieMaxAge = httpConfiguration.getCookieMaxAge();
+        SessionConfiguration sessionConfiguration = securityConfiguration.getSession();
+        String sessionIdName = sessionConfiguration.getSessionIdName();
+        Long cookieMaxAge = sessionConfiguration.getCookieMaxAge();
         Cookie cookie = new Cookie(sessionIdName, sessionId.toString());
         cookie.setMaxAge(cookieMaxAge == null ? 0 : cookieMaxAge.intValue());
         cookie.setPath("/");
@@ -136,7 +136,7 @@ public class ShiroLoginAuthenticationServiceImpl implements LoginAuthenticationS
 
     @Override
     public void onAccessDenied(WebService webService, HttpServletRequest request, HttpServletResponse response, String loginUrl, SecurityConfiguration securityConfiguration) {
-        String url = securityConfiguration.getAuthenticationConfiguration().getPageUrl();
+        String url = securityConfiguration.getAuthentication().getPageUrl();
         webService.redirectTo(request, response, url, null, true, securityConfiguration);
     }
 }

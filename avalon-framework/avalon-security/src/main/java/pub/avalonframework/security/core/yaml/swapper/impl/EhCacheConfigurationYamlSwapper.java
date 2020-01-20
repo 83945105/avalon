@@ -1,8 +1,8 @@
 package pub.avalonframework.security.core.yaml.swapper.impl;
 
-import pub.avalonframework.security.core.api.config.cache.EhCacheConfiguration;
-import pub.avalonframework.security.core.yaml.config.cache.YamlEhCacheConfiguration;
-import pub.avalonframework.security.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.security.core.api.config.EhCacheConfiguration;
+import pub.avalonframework.security.core.yaml.config.YamlEhCacheConfiguration;
 
 /**
  * @author baichao

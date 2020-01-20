@@ -23,9 +23,9 @@ import pub.avalonframework.cloud.gar.utils.Md5Utils;
 import pub.avalonframework.cloud.gar.utils.RequestUtils;
 import pub.avalonframework.cloud.gar.utils.TableUtils;
 import pub.avalonframework.core.beans.MessageConstant;
+import pub.avalonframework.security.core.api.config.AuthenticationConfiguration;
 import pub.avalonframework.security.core.api.config.SecurityConfiguration;
-import pub.avalonframework.security.core.api.config.authentication.AuthenticationConfiguration;
-import pub.avalonframework.security.core.api.config.http.HttpConfiguration;
+import pub.avalonframework.security.core.api.config.SessionConfiguration;
 import pub.avalonframework.security.core.api.service.LoginAuthenticationService;
 import pub.avalonframework.security.core.api.service.WebService;
 import pub.avalonframework.security.core.beans.Principal;
@@ -109,9 +109,9 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
             return;
         }
         Serializable sessionId = session.getId();
-        HttpConfiguration httpConfiguration = securityConfiguration.getHttpConfiguration();
-        String sessionIdName = httpConfiguration.getSessionIdName();
-        Long cookieMaxAge = httpConfiguration.getCookieMaxAge();
+        SessionConfiguration sessionConfiguration = securityConfiguration.getSession();
+        String sessionIdName = sessionConfiguration.getSessionIdName();
+        Long cookieMaxAge = sessionConfiguration.getCookieMaxAge();
         Cookie cookie = new Cookie(sessionIdName, sessionId.toString());
         cookie.setMaxAge(cookieMaxAge == null ? 0 : cookieMaxAge.intValue());
         cookie.setPath("/");
@@ -139,9 +139,9 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
             return;
         }
         Serializable sessionId = session.getId();
-        HttpConfiguration httpConfiguration = securityConfiguration.getHttpConfiguration();
-        String sessionIdName = httpConfiguration.getSessionIdName();
-        Long cookieMaxAge = httpConfiguration.getCookieMaxAge();
+        SessionConfiguration sessionConfiguration = securityConfiguration.getSession();
+        String sessionIdName = sessionConfiguration.getSessionIdName();
+        Long cookieMaxAge = sessionConfiguration.getCookieMaxAge();
         Cookie cookie = new Cookie(sessionIdName, sessionId.toString());
         cookie.setMaxAge(cookieMaxAge == null ? 0 : cookieMaxAge.intValue());
         cookie.setPath("/");
@@ -151,7 +151,7 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
 
         ModelView modelView = new ModelView(0, ResultUtil.createSuccess("登录成功"));
         Map<String, Object> map = new HashMap<>(3);
-        map.put("sessionIdName", securityConfiguration.getHttpConfiguration().getSessionIdName());
+        map.put("sessionIdName", securityConfiguration.getSession().getSessionIdName());
         map.put("sessionIdValue", sessionId.toString());
         map.put("user", user);
         modelView.setRecords(map);
@@ -217,7 +217,7 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
             }
 
         }
-        AuthenticationConfiguration authenticationConfiguration = securityConfiguration.getAuthenticationConfiguration();
+        AuthenticationConfiguration authenticationConfiguration = securityConfiguration.getAuthentication();
         if (StringUtil.isEmpty(url)) {
             url = authenticationConfiguration.getPageUrl();
         }
@@ -245,7 +245,7 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
             }
         }
         if (StringUtil.isEmpty(url)) {
-            url = securityConfiguration.getAuthenticationConfiguration().getPageUrl();
+            url = securityConfiguration.getAuthentication().getPageUrl();
         }
         webService.redirectTo(request, response, url, null, true, securityConfiguration);
     }

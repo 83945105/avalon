@@ -1,11 +1,6 @@
 package pub.avalonframework.security.core.api.config;
 
 import pub.avalonframework.security.core.api.beans.CacheType;
-import pub.avalonframework.security.core.api.config.authentication.AuthenticationConfiguration;
-import pub.avalonframework.security.core.api.config.cache.EhCacheConfiguration;
-import pub.avalonframework.security.core.api.config.cache.RedisConfiguration;
-import pub.avalonframework.security.core.api.config.filter.FilterConfiguration;
-import pub.avalonframework.security.core.api.config.http.HttpConfiguration;
 
 /**
  * Security configuration.
@@ -18,25 +13,17 @@ public class SecurityConfiguration {
 
     private CacheType cacheType;
 
-    private Boolean authenticationCacheEnabled;
+    private HttpConfiguration http;
 
-    private Boolean authorizationCacheEnabled;
+    private SessionConfiguration session;
 
-    private String authenticationCacheName;
+    private AuthenticationConfiguration authentication;
 
-    private String authorizationCacheName;
+    private AuthorizationConfiguration authorization;
 
-    private String activeSessionCacheName;
+    private EhCacheConfiguration ehCache;
 
-    private HttpConfiguration httpConfiguration;
-
-    private AuthenticationConfiguration authenticationConfiguration;
-
-    private EhCacheConfiguration ehCacheConfiguration;
-
-    private RedisConfiguration redisConfiguration;
-
-    private FilterConfiguration filterConfiguration;
+    private FilterConfiguration filter;
 
     public Boolean getEnabled() {
         return enabled;
@@ -54,83 +41,51 @@ public class SecurityConfiguration {
         this.cacheType = cacheType;
     }
 
-    public Boolean getAuthenticationCacheEnabled() {
-        return authenticationCacheEnabled;
+    public HttpConfiguration getHttp() {
+        return http;
     }
 
-    public void setAuthenticationCacheEnabled(Boolean authenticationCacheEnabled) {
-        this.authenticationCacheEnabled = authenticationCacheEnabled;
+    public void setHttp(HttpConfiguration http) {
+        this.http = http;
     }
 
-    public Boolean getAuthorizationCacheEnabled() {
-        return authorizationCacheEnabled;
+    public SessionConfiguration getSession() {
+        return session;
     }
 
-    public void setAuthorizationCacheEnabled(Boolean authorizationCacheEnabled) {
-        this.authorizationCacheEnabled = authorizationCacheEnabled;
+    public void setSession(SessionConfiguration session) {
+        this.session = session;
     }
 
-    public String getAuthenticationCacheName() {
-        return authenticationCacheName;
+    public AuthenticationConfiguration getAuthentication() {
+        return authentication;
     }
 
-    public void setAuthenticationCacheName(String authenticationCacheName) {
-        this.authenticationCacheName = authenticationCacheName;
+    public void setAuthentication(AuthenticationConfiguration authentication) {
+        this.authentication = authentication;
     }
 
-    public String getAuthorizationCacheName() {
-        return authorizationCacheName;
+    public AuthorizationConfiguration getAuthorization() {
+        return authorization;
     }
 
-    public void setAuthorizationCacheName(String authorizationCacheName) {
-        this.authorizationCacheName = authorizationCacheName;
+    public void setAuthorization(AuthorizationConfiguration authorization) {
+        this.authorization = authorization;
     }
 
-    public String getActiveSessionCacheName() {
-        return activeSessionCacheName;
+    public EhCacheConfiguration getEhCache() {
+        return ehCache;
     }
 
-    public void setActiveSessionCacheName(String activeSessionCacheName) {
-        this.activeSessionCacheName = activeSessionCacheName;
+    public void setEhCache(EhCacheConfiguration ehCache) {
+        this.ehCache = ehCache;
     }
 
-    public HttpConfiguration getHttpConfiguration() {
-        return httpConfiguration;
+    public FilterConfiguration getFilter() {
+        return filter;
     }
 
-    public void setHttpConfiguration(HttpConfiguration httpConfiguration) {
-        this.httpConfiguration = httpConfiguration;
-    }
-
-    public AuthenticationConfiguration getAuthenticationConfiguration() {
-        return authenticationConfiguration;
-    }
-
-    public void setAuthenticationConfiguration(AuthenticationConfiguration authenticationConfiguration) {
-        this.authenticationConfiguration = authenticationConfiguration;
-    }
-
-    public EhCacheConfiguration getEhCacheConfiguration() {
-        return ehCacheConfiguration;
-    }
-
-    public void setEhCacheConfiguration(EhCacheConfiguration ehCacheConfiguration) {
-        this.ehCacheConfiguration = ehCacheConfiguration;
-    }
-
-    public RedisConfiguration getRedisConfiguration() {
-        return redisConfiguration;
-    }
-
-    public void setRedisConfiguration(RedisConfiguration redisConfiguration) {
-        this.redisConfiguration = redisConfiguration;
-    }
-
-    public FilterConfiguration getFilterConfiguration() {
-        return filterConfiguration;
-    }
-
-    public void setFilterConfiguration(FilterConfiguration filterConfiguration) {
-        this.filterConfiguration = filterConfiguration;
+    public void setFilter(FilterConfiguration filter) {
+        this.filter = filter;
     }
 }

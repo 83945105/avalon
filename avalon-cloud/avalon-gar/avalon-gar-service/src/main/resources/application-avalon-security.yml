@@ -5,17 +5,12 @@ spring:
       enabled: true
       # 缓存类型: EHCACHE、REDIS
       cache-type: REDIS
-      # 是否打开认证缓存, 一般不打开
-      authentication-cache-enabled: false
-      # 是否打开授权缓存, 一般打开
-      authorization-cache-enabled: true
-      # 认证缓存名 如果使用ehcache 则配置文件相关name应保持一致
-      authentication-cache-name: authenticationCache
-      # 授权缓存名 如果使用ehcache 则配置文件相关name应保持一致
-      authorization-cache-name: authorizationCache
-      # 会话缓存名 如果使用ehcache 则配置文件相关name应保持一致
-      active-session-cache-name: activeSessionCache
       http:
+        # 用于鉴别是否是ajax请求的请求头key
+        ajax-header-identification-key: X-Requested-With
+        # 用于鉴别是否是ajax请求的请求头value
+        ajax-header-identification-value: XMLHttpRequest
+      session:
         # 用于获取用户sessionId的cookie名
         session-id-name: token
         # session校验周期
@@ -24,11 +19,18 @@ spring:
         session-time-out: 86400000
         # cookie有效时间 默认-1
         cookie-max-age: 86400000
-        # 用于鉴别是否是ajax请求的请求头key
-        ajax-header-identification-key: X-Requested-With
-        # 用于鉴别是否是ajax请求的请求头value
-        ajax-header-identification-value: XMLHttpRequest
+        # 会话缓存名 如果使用ehcache 则配置文件相关name应保持一致
+        session-cache-name: activeSessionCache
+        # redis 配置, 仅当cache-type为redis时有效
+        redis:
+          hose-name: localhost
+          port: 6379
+          database: 0
       authentication:
+        # 是否打开认证缓存, 一般不打开
+        cache-enabled: false
+        # 认证缓存名 如果使用ehcache 则配置文件相关name应保持一致
+        cache-name: authenticationCache
         # 登录用户名key,一般为username
         user-name-key: username
         # 登录用户密码key,一般为password
@@ -42,28 +44,25 @@ spring:
         page-url: /view/login
         # 登录成功跳转地址
         success-url: /view/home
+        # redis 配置, 仅当cache-type为redis时有效
+        redis:
+          hose-name: localhost
+          port: 6379
+          database: 0
+      authorization:
+        # 是否打开授权缓存, 一般打开
+        cache-enabled: true
+        # 授权缓存名 如果使用ehcache 则配置文件相关name应保持一致
+        cache-name: authorizationCache
+        # redis 配置, 仅当cache-type为redis时有效
+        redis:
+          hose-name: localhost
+          port: 6379
+          database: 0
       # ehcache 配置, 仅当cache-type为ehcache时有效
       ehcache:
         # ehcache配置文件路径
         cache-manager-config-file: classpath:ehcache/shiro-ehcache.xml
-      # redis 配置, 仅当cache-type为redis时有效
-      redis:
-        # session存储
-        session:
-          # 地址
-          hostname: localhost
-          # 端口
-          port: 6379
-          # 库号
-          database: 0
-        # 缓存
-        cache:
-          # 地址
-          hostname: localhost
-          # 端口
-          port: 6379
-          # 库号
-          database: 0
       filter:
         login-url: /login
         unauthorized-url: /view/noAuthority

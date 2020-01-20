@@ -1,11 +1,7 @@
 package pub.avalonframework.security.core.yaml.config;
 
+import pub.avalonframework.core.yaml.config.YamlConfiguration;
 import pub.avalonframework.security.core.api.beans.CacheType;
-import pub.avalonframework.security.core.yaml.config.authentication.YamlAuthenticationConfiguration;
-import pub.avalonframework.security.core.yaml.config.cache.YamlEhCacheConfiguration;
-import pub.avalonframework.security.core.yaml.config.cache.YamlRedisConfiguration;
-import pub.avalonframework.security.core.yaml.config.filter.YamlFilterConfiguration;
-import pub.avalonframework.security.core.yaml.config.http.YamlHttpConfiguration;
 
 /**
  * @author baichao
@@ -16,25 +12,17 @@ public class YamlSecurityConfiguration implements YamlConfiguration {
 
     private CacheType cacheType;
 
-    private Boolean authenticationCacheEnabled;
+    private YamlHttpConfiguration http;
 
-    private Boolean authorizationCacheEnabled;
+    private YamlSessionConfiguration session;
 
-    private String authenticationCacheName;
+    private YamlAuthenticationConfiguration authentication;
 
-    private String authorizationCacheName;
+    private YamlAuthorizationConfiguration authorization;
 
-    private String activeSessionCacheName;
+    private YamlEhCacheConfiguration ehCache;
 
-    private YamlHttpConfiguration httpConfiguration;
-
-    private YamlAuthenticationConfiguration authenticationConfiguration;
-
-    private YamlEhCacheConfiguration ehCacheConfiguration;
-
-    private YamlRedisConfiguration redisConfiguration;
-
-    private YamlFilterConfiguration filterConfiguration;
+    private YamlFilterConfiguration filter;
 
     public Boolean getEnabled() {
         return enabled;
@@ -52,83 +40,51 @@ public class YamlSecurityConfiguration implements YamlConfiguration {
         this.cacheType = cacheType;
     }
 
-    public Boolean getAuthenticationCacheEnabled() {
-        return authenticationCacheEnabled;
+    public YamlHttpConfiguration getHttp() {
+        return http;
     }
 
-    public void setAuthenticationCacheEnabled(Boolean authenticationCacheEnabled) {
-        this.authenticationCacheEnabled = authenticationCacheEnabled;
+    public void setHttp(YamlHttpConfiguration http) {
+        this.http = http;
     }
 
-    public Boolean getAuthorizationCacheEnabled() {
-        return authorizationCacheEnabled;
+    public YamlSessionConfiguration getSession() {
+        return session;
     }
 
-    public void setAuthorizationCacheEnabled(Boolean authorizationCacheEnabled) {
-        this.authorizationCacheEnabled = authorizationCacheEnabled;
+    public void setSession(YamlSessionConfiguration session) {
+        this.session = session;
     }
 
-    public String getAuthenticationCacheName() {
-        return authenticationCacheName;
+    public YamlAuthenticationConfiguration getAuthentication() {
+        return authentication;
     }
 
-    public void setAuthenticationCacheName(String authenticationCacheName) {
-        this.authenticationCacheName = authenticationCacheName;
+    public void setAuthentication(YamlAuthenticationConfiguration authentication) {
+        this.authentication = authentication;
     }
 
-    public String getAuthorizationCacheName() {
-        return authorizationCacheName;
+    public YamlAuthorizationConfiguration getAuthorization() {
+        return authorization;
     }
 
-    public void setAuthorizationCacheName(String authorizationCacheName) {
-        this.authorizationCacheName = authorizationCacheName;
+    public void setAuthorization(YamlAuthorizationConfiguration authorization) {
+        this.authorization = authorization;
     }
 
-    public String getActiveSessionCacheName() {
-        return activeSessionCacheName;
+    public YamlEhCacheConfiguration getEhCache() {
+        return ehCache;
     }
 
-    public void setActiveSessionCacheName(String activeSessionCacheName) {
-        this.activeSessionCacheName = activeSessionCacheName;
+    public void setEhCache(YamlEhCacheConfiguration ehCache) {
+        this.ehCache = ehCache;
     }
 
-    public YamlHttpConfiguration getHttpConfiguration() {
-        return httpConfiguration;
+    public YamlFilterConfiguration getFilter() {
+        return filter;
     }
 
-    public void setHttpConfiguration(YamlHttpConfiguration httpConfiguration) {
-        this.httpConfiguration = httpConfiguration;
-    }
-
-    public YamlAuthenticationConfiguration getAuthenticationConfiguration() {
-        return authenticationConfiguration;
-    }
-
-    public void setAuthenticationConfiguration(YamlAuthenticationConfiguration authenticationConfiguration) {
-        this.authenticationConfiguration = authenticationConfiguration;
-    }
-
-    public YamlEhCacheConfiguration getEhCacheConfiguration() {
-        return ehCacheConfiguration;
-    }
-
-    public void setEhCacheConfiguration(YamlEhCacheConfiguration ehCacheConfiguration) {
-        this.ehCacheConfiguration = ehCacheConfiguration;
-    }
-
-    public YamlRedisConfiguration getRedisConfiguration() {
-        return redisConfiguration;
-    }
-
-    public void setRedisConfiguration(YamlRedisConfiguration redisConfiguration) {
-        this.redisConfiguration = redisConfiguration;
-    }
-
-    public YamlFilterConfiguration getFilterConfiguration() {
-        return filterConfiguration;
-    }
-
-    public void setFilterConfiguration(YamlFilterConfiguration filterConfiguration) {
-        this.filterConfiguration = filterConfiguration;
+    public void setFilter(YamlFilterConfiguration filter) {
+        this.filter = filter;
     }
 }

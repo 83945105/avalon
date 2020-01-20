@@ -8,8 +8,9 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import pub.avalonframework.redis.beans.IllustratedHandbook;
 import pub.avalonframework.redis.beans.Pikachu;
-import pub.avalonframework.redis.serializer.GenericToStringSerializer;
-import pub.avalonframework.redis.serializer.Jackson2JsonRedisSerializer;
+import pub.avalonframework.redis.spring.core.RedisTemplate;
+import pub.avalonframework.redis.spring.serializer.GenericToStringSerializer;
+import pub.avalonframework.redis.spring.serializer.Jackson2JsonRedisSerializer;
 
 /**
  * Created by 白超 on 2019/11/27.

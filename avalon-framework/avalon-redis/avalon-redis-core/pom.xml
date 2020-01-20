@@ -11,4 +11,16 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>pub.avalonframework</groupId>
+            <artifactId>avalon-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 </project>

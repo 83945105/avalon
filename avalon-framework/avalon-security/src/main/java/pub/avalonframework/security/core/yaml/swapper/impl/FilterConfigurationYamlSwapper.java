@@ -1,8 +1,8 @@
 package pub.avalonframework.security.core.yaml.swapper.impl;
 
-import pub.avalonframework.security.core.api.config.filter.FilterConfiguration;
-import pub.avalonframework.security.core.yaml.config.filter.YamlFilterConfiguration;
-import pub.avalonframework.security.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.security.core.api.config.FilterConfiguration;
+import pub.avalonframework.security.core.yaml.config.YamlFilterConfiguration;
 
 import java.util.Collections;
 import java.util.Set;

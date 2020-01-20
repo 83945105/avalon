@@ -17,8 +17,8 @@ import pub.avalonframework.cloud.gar.model.AutResourceModel;
 import pub.avalonframework.cloud.gar.utils.GarUtils;
 import pub.avalonframework.cloud.gar.utils.TableUtils;
 import pub.avalonframework.core.beans.MessageConstant;
+import pub.avalonframework.security.core.api.config.FilterConfiguration;
 import pub.avalonframework.security.core.api.config.SecurityConfiguration;
-import pub.avalonframework.security.core.api.config.filter.FilterConfiguration;
 import pub.avalonframework.security.core.api.service.ResourceAuthenticationService;
 import pub.avalonframework.security.core.api.service.WebService;
 
@@ -94,7 +94,7 @@ public class GarResourceAuthenticationServiceImpl implements ResourceAuthenticat
             if (webService.isAjaxRequest(request, response, securityConfiguration)) {
                 HTTP_MESSAGE_CONVERTER.write(new ExceptionView(0, ResultUtil.createNoAuthority(MessageConstant.EXCEPTION_NO_AUTHENTICATION_MESSAGE)), MediaType.APPLICATION_JSON, outputMessage);
             } else {
-                FilterConfiguration filterConfiguration = securityConfiguration.getFilterConfiguration();
+                FilterConfiguration filterConfiguration = securityConfiguration.getFilter();
                 request.getRequestDispatcher(filterConfiguration.getUnauthorizedUrl()).forward(request, response);
             }
         } catch (IOException | ServletException e) {

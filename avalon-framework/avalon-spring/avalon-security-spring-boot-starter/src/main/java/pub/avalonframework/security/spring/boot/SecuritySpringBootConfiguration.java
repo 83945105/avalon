@@ -1,24 +1,13 @@
 package pub.avalonframework.security.spring.boot;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import pub.avalonframework.security.core.api.config.SecurityConfiguration;
-import pub.avalonframework.security.core.api.config.authentication.AuthenticationConfiguration;
-import pub.avalonframework.security.core.api.config.cache.EhCacheConfiguration;
-import pub.avalonframework.security.core.api.config.cache.RedisConfiguration;
-import pub.avalonframework.security.core.api.config.filter.FilterConfiguration;
-import pub.avalonframework.security.core.api.config.http.HttpConfiguration;
+import pub.avalonframework.security.core.api.config.*;
 import pub.avalonframework.security.core.yaml.swapper.impl.*;
-import pub.avalonframework.security.spring.boot.authentication.SpringBootAuthenticationConfigurationProperties;
-import pub.avalonframework.security.spring.boot.cache.SpringBootEhCacheConfigurationProperties;
-import pub.avalonframework.security.spring.boot.cache.SpringBootRedisCacheConfigurationProperties;
-import pub.avalonframework.security.spring.boot.cache.SpringBootRedisConfigurationProperties;
-import pub.avalonframework.security.spring.boot.cache.SpringBootRedisSessionConfigurationProperties;
-import pub.avalonframework.security.spring.boot.filter.SpringBootFilterConfigurationProperties;
-import pub.avalonframework.security.spring.boot.http.SpringBootHttpConfigurationProperties;
 
 /**
  * Security spring boot configuration.
@@ -27,71 +16,91 @@ import pub.avalonframework.security.spring.boot.http.SpringBootHttpConfiguration
  */
 @Configuration
 @EnableConfigurationProperties({
-        SpringBootRootConfigurationProperties.class,
         SpringBootHttpConfigurationProperties.class,
+        SpringBootSessionConfigurationProperties.class,
         SpringBootAuthenticationConfigurationProperties.class,
+        SpringBootAuthorizationConfigurationProperties.class,
         SpringBootEhCacheConfigurationProperties.class,
-        SpringBootRedisConfigurationProperties.class,
-        SpringBootRedisSessionConfigurationProperties.class,
-        SpringBootRedisCacheConfigurationProperties.class,
-        SpringBootFilterConfigurationProperties.class
+        SpringBootFilterConfigurationProperties.class,
+        SpringBootRootConfigurationProperties.class
 })
 public class SecuritySpringBootConfiguration implements EnvironmentAware {
 
-    private final SpringBootRootConfigurationProperties rootConfigurationProperties;
-
     private final SpringBootHttpConfigurationProperties httpConfigurationProperties;
+
+    private final SpringBootSessionConfigurationProperties sessionConfigurationProperties;
 
     private final SpringBootAuthenticationConfigurationProperties authenticationConfigurationProperties;
 
-    private final SpringBootEhCacheConfigurationProperties ehCacheConfigurationProperties;
+    private final SpringBootAuthorizationConfigurationProperties authorizationConfigurationProperties;
 
-    private final SpringBootRedisConfigurationProperties redisConfigurationProperties;
+    private final SpringBootEhCacheConfigurationProperties ehCacheConfigurationProperties;
 
     private final SpringBootFilterConfigurationProperties filterConfigurationProperties;
 
-    public SecuritySpringBootConfiguration(SpringBootRootConfigurationProperties rootConfigurationProperties, SpringBootHttpConfigurationProperties httpConfigurationProperties, SpringBootAuthenticationConfigurationProperties authenticationConfigurationProperties, SpringBootEhCacheConfigurationProperties ehCacheConfigurationProperties, SpringBootRedisConfigurationProperties redisConfigurationProperties, SpringBootFilterConfigurationProperties filterConfigurationProperties) {
-        this.rootConfigurationProperties = rootConfigurationProperties;
+    private final SpringBootRootConfigurationProperties rootConfigurationProperties;
+
+    public SecuritySpringBootConfiguration(SpringBootHttpConfigurationProperties httpConfigurationProperties, SpringBootSessionConfigurationProperties sessionConfigurationProperties, SpringBootAuthenticationConfigurationProperties authenticationConfigurationProperties, SpringBootAuthorizationConfigurationProperties authorizationConfigurationProperties, SpringBootEhCacheConfigurationProperties ehCacheConfigurationProperties, SpringBootFilterConfigurationProperties filterConfigurationProperties, SpringBootRootConfigurationProperties rootConfigurationProperties) {
         this.httpConfigurationProperties = httpConfigurationProperties;
+        this.sessionConfigurationProperties = sessionConfigurationProperties;
         this.authenticationConfigurationProperties = authenticationConfigurationProperties;
+        this.authorizationConfigurationProperties = authorizationConfigurationProperties;
         this.ehCacheConfigurationProperties = ehCacheConfigurationProperties;
-        this.redisConfigurationProperties = redisConfigurationProperties;
         this.filterConfigurationProperties = filterConfigurationProperties;
+        this.rootConfigurationProperties = rootConfigurationProperties;
     }
 
     @Bean
+    @ConditionalOnMissingBean(HttpConfiguration.class)
     public HttpConfiguration httpConfiguration() {
         return new HttpConfigurationYamlSwapper().swap(httpConfigurationProperties);
     }
 
     @Bean
+    @ConditionalOnMissingBean(SessionConfiguration.class)
+    public SessionConfiguration sessionConfiguration() {
+        return new SessionConfigurationYamlSwapper().swap(sessionConfigurationProperties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(AuthenticationConfiguration.class)
     public AuthenticationConfiguration authenticationConfiguration() {
         return new AuthenticationConfigurationYamlSwapper().swap(authenticationConfigurationProperties);
     }
 
     @Bean
+    @ConditionalOnMissingBean(AuthorizationConfiguration.class)
+    public AuthorizationConfiguration authorizationConfiguration() {
+        return new AuthorizationConfigurationYamlSwapper().swap(authorizationConfigurationProperties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(EhCacheConfiguration.class)
     public EhCacheConfiguration ehCacheConfiguration() {
         return new EhCacheConfigurationYamlSwapper().swap(ehCacheConfigurationProperties);
     }
 
     @Bean
-    public RedisConfiguration redisConfiguration() {
-        return new RedisConfigurationYamlSwapper().swap(redisConfigurationProperties);
-    }
-
-    @Bean
+    @ConditionalOnMissingBean(FilterConfiguration.class)
     public FilterConfiguration filterConfiguration() {
         return new FilterConfigurationYamlSwapper().swap(filterConfigurationProperties);
     }
 
     @Bean
-    public SecurityConfiguration securityConfiguration() {
+    @ConditionalOnMissingBean(SecurityConfiguration.class)
+    public SecurityConfiguration securityConfiguration(HttpConfiguration httpConfiguration,
+                                                       SessionConfiguration sessionConfiguration,
+                                                       AuthenticationConfiguration authenticationConfiguration,
+                                                       AuthorizationConfiguration authorizationConfiguration,
+                                                       EhCacheConfiguration ehCacheConfiguration,
+                                                       FilterConfiguration filterConfiguration) {
         SecurityConfiguration securityConfiguration = new RootConfigurationYamlSwapper().swap(rootConfigurationProperties);
-        securityConfiguration.setHttpConfiguration(httpConfiguration());
-        securityConfiguration.setAuthenticationConfiguration(authenticationConfiguration());
-        securityConfiguration.setEhCacheConfiguration(ehCacheConfiguration());
-        securityConfiguration.setRedisConfiguration(redisConfiguration());
-        securityConfiguration.setFilterConfiguration(filterConfiguration());
+        securityConfiguration.setHttp(httpConfiguration);
+        securityConfiguration.setSession(sessionConfiguration);
+        securityConfiguration.setAuthentication(authenticationConfiguration);
+        securityConfiguration.setAuthorization(authorizationConfiguration);
+        securityConfiguration.setEhCache(ehCacheConfiguration);
+        securityConfiguration.setFilter(filterConfiguration);
         return securityConfiguration;
     }
 
