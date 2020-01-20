@@ -137,14 +137,9 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
 
     private RedisTemplate<String, Object, String, Object> sessionRedisTemplate() {
         RedisConfiguration redisConfiguration = this.securityConfiguration.getSession().getRedis();
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisConfiguration.getHostName());
-        redisStandaloneConfiguration.setPort(redisConfiguration.getPort());
-        redisStandaloneConfiguration.setDatabase(redisConfiguration.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisConfiguration.getPassword()));
         return new RedisTemplate<>
                 (
-                        new JedisConnectionFactory(redisStandaloneConfiguration),
+                        redisConfiguration.buildRedisConnectionFactory(),
                         new Jackson2JsonRedisSerializer<>(Object.class),
                         new GenericToStringSerializer<>(String.class),
                         new Jackson2JsonRedisSerializer<>(Object.class),
@@ -220,14 +215,9 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
 
     private RedisTemplate<String, SimpleAuthenticationInfo, Object, Object> authenticationRedisTemplate() {
         RedisConfiguration redisConfiguration = this.securityConfiguration.getAuthentication().getRedis();
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisConfiguration.getHostName());
-        redisStandaloneConfiguration.setPort(redisConfiguration.getPort());
-        redisStandaloneConfiguration.setDatabase(redisConfiguration.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisConfiguration.getPassword()));
         return new RedisTemplate<>
                 (
-                        new JedisConnectionFactory(redisStandaloneConfiguration),
+                        redisConfiguration.buildRedisConnectionFactory(),
                         new Jackson2JsonRedisSerializer<>(Object.class),
                         new GenericToStringSerializer<>(String.class),
                         new Jackson2JsonRedisSerializer<>(SimpleAuthenticationInfo.class),
@@ -238,14 +228,9 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
 
     private RedisTemplate<String, SimpleAuthorizationInfo, Object, Object> authorizationRedisTemplate() {
         RedisConfiguration redisConfiguration = this.securityConfiguration.getAuthorization().getRedis();
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisConfiguration.getHostName());
-        redisStandaloneConfiguration.setPort(redisConfiguration.getPort());
-        redisStandaloneConfiguration.setDatabase(redisConfiguration.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(redisConfiguration.getPassword()));
         return new RedisTemplate<>
                 (
-                        new JedisConnectionFactory(redisStandaloneConfiguration),
+                        redisConfiguration.buildRedisConnectionFactory(),
                         new Jackson2JsonRedisSerializer<>(Object.class),
                         new GenericToStringSerializer<>(String.class),
                         new Jackson2JsonRedisSerializer<>(SimpleAuthorizationInfo.class),

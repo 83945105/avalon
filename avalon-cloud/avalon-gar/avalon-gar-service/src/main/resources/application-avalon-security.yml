@@ -23,7 +23,7 @@ spring:
         session-cache-name: activeSessionCache
         # redis 配置, 仅当cache-type为redis时有效
         redis:
-          hose-name: localhost
+          host-name: localhost
           port: 6379
           database: 0
       authentication:
@@ -46,7 +46,7 @@ spring:
         success-url: /view/home
         # redis 配置, 仅当cache-type为redis时有效
         redis:
-          hose-name: localhost
+          host-name: localhost
           port: 6379
           database: 0
       authorization:
@@ -56,7 +56,7 @@ spring:
         cache-name: authorizationCache
         # redis 配置, 仅当cache-type为redis时有效
         redis:
-          hose-name: localhost
+          host-name: localhost
           port: 6379
           database: 0
       # ehcache 配置, 仅当cache-type为ehcache时有效
