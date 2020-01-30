@@ -12,7 +12,7 @@ const Default = {
     }
 };
 
-export class Axios extends Ajax {
+export default class Axios extends Ajax {
 
     _axios = undefined;
 
@@ -249,7 +249,6 @@ export class Axios extends Ajax {
                 }
             }, opts.waitPromptTimeout);
         }
-        opts.params = deepMerge(params, opts.params);
         /*模拟开始*/
         if (opts.mock === true) {
             setTimeout(() => {

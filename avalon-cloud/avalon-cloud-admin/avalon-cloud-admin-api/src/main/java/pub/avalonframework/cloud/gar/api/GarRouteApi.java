@@ -22,7 +22,7 @@ import pub.avalonframework.cloud.gar.dc.RoutePut;
 @FeignClient(name = "${feign.gar.route-api-service-name:gar-service}", path = "${feign.gar.route-api-service-path:/api-gar-route}")
 public interface GarRouteApi {
 
-    String ROOT_PATH = "/api-gar-route";
+    String ROOT_PATH = "/gar/api-gar-route";
 
     /**
      * 根据子模块ID查询路由唯一标识符是否可用

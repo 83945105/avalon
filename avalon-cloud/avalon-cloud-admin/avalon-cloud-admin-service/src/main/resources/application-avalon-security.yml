@@ -31,7 +31,7 @@ spring:
         # 登录用户密码key,一般为password
         pass-word-key: password
         # 登录请求地址 微服务架构需要带上微服务前缀地址如：/route-gar
-        url: /api-gar/post/login
+        url: /gar/api-gar/post/login
         #  url: /route-gar/api-gar/post/login
         # 登录页面地址
         # 当未登录时访问页面,将根据访问根路径从zuul的数据库路由中进行匹配,匹配到对应微服务将重定向到对应微服务配置的登录地址
@@ -40,14 +40,12 @@ spring:
         # 登录成功跳转地址
         success-url: /view/home
         # redis 配置, 仅当cache-type为redis时有效
-        redis:
       authorization:
         # 是否打开授权缓存, 一般打开
         cache-enabled: true
         # 授权缓存名 如果使用ehcache 则配置文件相关name应保持一致
         cache-name: authorizationCache
         # redis 配置, 仅当cache-type为redis时有效
-        redis:
       # ehcache 配置, 仅当cache-type为ehcache时有效
       ehcache:
         # ehcache配置文件路径

@@ -21,7 +21,7 @@ import pub.avalonframework.cloud.gar.dc.AutRolePut;
 @FeignClient(name = "${feign.gar.role-api-service-name:gar-service}", path = "${feign.gar.role-api-service-path:/api-gar-role}")
 public interface GarRoleApi {
 
-    String ROOT_PATH = "/api-gar-role";
+    String ROOT_PATH = "/gar/api-gar-role";
 
     /**
      * 查询角色唯一标识符是否可用

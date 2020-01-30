@@ -1,8 +1,9 @@
-import Ajax from "./ajax.js";
+import Ajax, {GlobalAjaxOptions, replaceUrlParams} from "./ajax.js";
 import deepMerge from "../../../src/utils/deep-merge.js";
-import {GlobalAjaxOptions, nameReplaceUrlParams, replaceUrlParams} from "./ajax.js";
 import {$Message} from "../../message/index.js";
 import merge from "../../../src/utils/merge.js";
+import {isFunction} from "../../../src/utils/util";
+import {Encoder, encoderParams, encoderUrl, spliceUrlParams} from "./ajax";
 
 const jquery = require('jquery');
 
@@ -21,13 +22,17 @@ export default class JQuery extends Ajax {
     }
 
     get(url, params, options) {
-        //使用父类方法进行参数校验
         super.get(url, params, options);
-        //合并生成新的配置
+        if (isFunction(url)) {
+            url = url({});
+        }
+        url = encoderUrl(url);
+        if (isFunction(params)) {
+            params = params({});
+        }
+        url = spliceUrlParams(url, params);
+
         let opts = deepMerge(Default, GlobalAjaxOptions, options);
-        //替换参数
-        url = replaceUrlParams(url, params);
-        //创建解析器
         let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
 
         let waitId = undefined;
@@ -91,11 +96,23 @@ export default class JQuery extends Ajax {
 
     post(url, params, options) {
         super.post(url, params, options);
+        if (isFunction(url)) {
+            url = url({});
+        }
+        url = encoderUrl(url);
+        if (isFunction(params)) {
+            params = params({encoder: Encoder});
+        }
+
         let opts = deepMerge(Default, GlobalAjaxOptions, options);
 
-        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
+        let contentType;
+        [contentType, params] = encoderParams(opts.headers['Content-Type'], params);
+        if (contentType) {
+            opts.headers['Content-Type'] = contentType;
+        }
 
-        url = nameReplaceUrlParams(url, params);
+        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
 
         let waitId = undefined;
         let instance = undefined;
@@ -158,11 +175,23 @@ export default class JQuery extends Ajax {
 
     put(url, params, options) {
         super.put(url, params, options);
+        if (isFunction(url)) {
+            url = url({});
+        }
+        url = encoderUrl(url);
+        if (isFunction(params)) {
+            params = params({encoder: Encoder});
+        }
+
         let opts = deepMerge(Default, GlobalAjaxOptions, options);
 
-        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
+        let contentType;
+        [contentType, params] = encoderParams(opts.headers['Content-Type'], params);
+        if (contentType) {
+            opts.headers['Content-Type'] = contentType;
+        }
 
-        url = nameReplaceUrlParams(url, params);
+        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
 
         let waitId = undefined;
         let instance = undefined;
@@ -225,11 +254,17 @@ export default class JQuery extends Ajax {
 
     delete(url, params, options) {
         super.delete(url, params, options);
+        if (isFunction(url)) {
+            url = url({});
+        }
+        url = encoderUrl(url);
+        if (isFunction(params)) {
+            params = params({});
+        }
+        url = spliceUrlParams(url, params);
+
         let opts = deepMerge(Default, GlobalAjaxOptions, options);
-
         let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
-
-        url = nameReplaceUrlParams(url, params);
 
         let waitId = undefined;
         let instance = undefined;
@@ -241,7 +276,6 @@ export default class JQuery extends Ajax {
                 }
             }, opts.waitPromptTimeout);
         }
-        opts.params = deepMerge(params, opts.params);
         /*模拟开始*/
         if (opts.mock === true) {
             setTimeout(() => {

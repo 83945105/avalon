@@ -22,7 +22,7 @@ import pub.avalonframework.cloud.gar.dc.MenuPut;
 @FeignClient(name = "${feign.gar.menu-api-service-name:gar-service}", path = "${feign.gar.menu-api-service-path:/api-gar-menu}")
 public interface GarMenuApi {
 
-    String ROOT_PATH = "/api-gar-menu";
+    String ROOT_PATH = "/gar/api-gar-menu";
 
     /**
      * 根据子模块ID查询菜单唯一标识符是否可用

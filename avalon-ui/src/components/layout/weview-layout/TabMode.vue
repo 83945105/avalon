@@ -18,8 +18,7 @@
 
 <script>
 
-    import {mapState} from 'vuex';
-    import {isArray, humpToString} from "../../../utils/util.js";
+    import {humpToString, isArray} from "../../../utils/util.js";
     import {Tab} from "../../../vuex-modules/frame-store.js";
     import {getRoutePathCache, setRoutePathCache} from "../../frame/router/src/route.js";
 
@@ -51,7 +50,8 @@
             data: {
                 immediate: true,
                 handler(val) {
-                    this.setTabs(val);
+                    // 如果外部绑定的选项卡数据发生改变, 则重新初始化
+                    this.initTabs(val);
                 }
             },
             // 观测当前路由
@@ -75,13 +75,35 @@
                 }
             },
             tabRows(val, oldValue) {
-                // tabRows一旦初始化进数据,不再观测
-                if (isArray(oldValue) && oldValue.length > 0) return;
                 this.resetCurrentTab();
             }
         },
 
         methods: {
+            /**
+             * 初始化选项卡数据
+             * @param tabs
+             */
+            initTabs(tabs = []) {
+                if (!isArray(tabs) || tabs.length === 0) return;
+                let tabRows = [];
+                // 找到需要默认打开的选项卡
+                // 匹配规则, 以包含当前路由的第一个
+                tabs.forEach(tab => {
+                    if (!(tab instanceof Tab)) {
+                        throw new Error('initTabs tab 必须是 Tab类型...');
+                    }
+                    // 初始化需要在选项卡中打开 且 菜单指向的路由不包含当前路由
+                    if (tab.initOpen === true) {
+                        tabRows.push(tab);
+                    }
+                });
+                this.tabs = tabs;
+                this.tabRows = tabRows;
+            },
+            /**
+             * 重置当前选中的选项卡
+             */
             resetCurrentTab() {
                 if (this.tabRows === void 0) return;
                 // 能执行到这里说明已经初始化过tabs了,哪怕是个[]
@@ -111,9 +133,13 @@
                         return;
                     }
                 }
-                //throw new Error(`未找到路由:[${this.name}]对应的选项卡`);
             },
-            // 激活选项卡路由
+            /**
+             * 激活选项卡路由
+             * @param routerEnabled
+             * @param name
+             * @param tab
+             */
             enableRouter(routerEnabled, name, tab) {
                 for (let propName in routerEnabled) {
                     if (routerEnabled[propName] === true) {
@@ -126,9 +152,14 @@
                 tab.name = name;
                 //TODO 可以扩展tab属性,实现选项卡名称变为子路由
             },
+            /**
+             * 路由跳转
+             * @param routerEnabled
+             */
             routerToEnabled(routerEnabled) {
                 for (let name in routerEnabled) {
                     if (routerEnabled[name] === true) {
+                        if (this.$route.name === name) return;
                         const path = getRoutePathCache(name);
                         if (path === void 0) {
                             this.$router.push({name: name});
@@ -140,23 +171,11 @@
                 }
                 throw new Error(`未找到可以跳转的路由`);
             },
-            setTabs(tabs = []) {
-                if (!isArray(tabs) || tabs.length === 0) return;
-                let tabRows = [];
-                // 找到需要默认打开的选项卡
-                // 匹配规则, 以包含当前路由的第一个
-                tabs.forEach(tab => {
-                    if (!(tab instanceof Tab)) {
-                        throw new Error('setTabs tab 必须是 Tab类型...');
-                    }
-                    // 初始化需要在选项卡中打开 且 菜单指向的路由不包含当前路由
-                    if (tab.initOpen === true) {
-                        tabRows.push(tab);
-                    }
-                });
-                this.tabs = tabs;
-                this.tabRows = tabRows;
-            },
+            /**
+             * 点击选项卡事件
+             * 由于element-ui选项卡只能拿到name, 需要通过缓存
+             * @param pane
+             */
             handleClickTabPane(pane) {
                 let name = pane.name;
                 let len = this.tabRows.length;

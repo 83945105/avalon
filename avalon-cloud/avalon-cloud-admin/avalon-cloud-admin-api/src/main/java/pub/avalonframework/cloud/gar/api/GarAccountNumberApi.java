@@ -16,7 +16,7 @@ import pub.avalon.holygrail.response.views.DataView;
 @FeignClient(name = "${feign.gar.account-number-api-service-name:gar-service}", path = "${feign.gar.account-number-api-service-path:/api-gar-account-number}")
 public interface GarAccountNumberApi {
 
-    String ROOT_PATH = "/api-gar-account-number";
+    String ROOT_PATH = "/gar/api-gar-account-number";
 
     /**
      * 根据用户名密码获取账号信息

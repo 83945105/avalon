@@ -19,7 +19,7 @@ import pub.avalonframework.cloud.gar.dc.AutObjectGet;
 @FeignClient(name = "${feign.gar.object-api-service-name:gar-service}", path = "${feign.gar.object-api-service-path:/api-gar-object}")
 public interface GarObjectApi {
 
-    String ROOT_PATH = "/api-gar-object";
+    String ROOT_PATH = "/gar/api-gar-object";
 
     /**
      * 获取表格配置

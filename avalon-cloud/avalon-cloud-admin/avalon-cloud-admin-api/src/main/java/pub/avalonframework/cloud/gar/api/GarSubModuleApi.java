@@ -21,7 +21,7 @@ import pub.avalonframework.cloud.gar.dc.SubModulePut;
 @FeignClient(name = "${feign.gar.sub-module-api-service-name:gar-service}", path = "${feign.gar.sub-module-api-service-path:/api-gar-sub-module}")
 public interface GarSubModuleApi {
 
-    String ROOT_PATH = "/api-gar-sub-module";
+    String ROOT_PATH = "/gar/api-gar-sub-module";
 
     /**
      * 查询子模块唯一标识符是否可用

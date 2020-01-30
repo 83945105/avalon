@@ -37,9 +37,7 @@ public final class SessionConfigurationYamlSwapper implements YamlSwapper<YamlSe
         String sessionCacheName = data.getSessionCacheName();
         configuration.setSessionCacheName(sessionCacheName == null ? DEFAULT_ACTIVE_SESSION_CACHE_NAME : sessionCacheName);
         RedisConfiguration redis = data.getRedis();
-        if (redis != null) {
-            configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
-        }
+        configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
         return configuration;
     }
 
@@ -58,9 +56,7 @@ public final class SessionConfigurationYamlSwapper implements YamlSwapper<YamlSe
         String sessionCacheName = yamlConfiguration.getSessionCacheName();
         configuration.setSessionCacheName(sessionCacheName == null ? DEFAULT_ACTIVE_SESSION_CACHE_NAME : sessionCacheName);
         YamlRedisConfiguration redis = yamlConfiguration.getRedis();
-        if (redis != null) {
-            configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
-        }
+        configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
         return configuration;
     }
 }

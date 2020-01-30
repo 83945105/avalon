@@ -21,7 +21,7 @@ import pub.avalonframework.cloud.gar.dc.AutResourcePut;
 @FeignClient(name = "${feign.gar.resource-api-service-name:gar-service}", path = "${feign.gar.resource-api-service-path:/api-gar-resource}")
 public interface GarResourceApi {
 
-    String ROOT_PATH = "/api-gar-resource";
+    String ROOT_PATH = "/gar/api-gar-resource";
 
     /**
      * 条件查询资源集合

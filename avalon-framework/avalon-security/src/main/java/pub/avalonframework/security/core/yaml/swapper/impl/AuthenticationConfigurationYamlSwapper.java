@@ -34,9 +34,7 @@ public final class AuthenticationConfigurationYamlSwapper implements YamlSwapper
         String cacheName = data.getCacheName();
         configuration.setCacheName(cacheName == null ? DEFAULT_CACHE_NAME : cacheName);
         RedisConfiguration redis = data.getRedis();
-        if (redis != null) {
-            configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
-        }
+        configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
         String usernameKey = data.getUsernameKey();
         configuration.setUsernameKey(usernameKey == null ? DEFAULT_USERNAME_KEY : usernameKey);
         String passwordKey = data.getPasswordKey();
@@ -58,9 +56,7 @@ public final class AuthenticationConfigurationYamlSwapper implements YamlSwapper
         String cacheName = yamlConfiguration.getCacheName();
         configuration.setCacheName(cacheName == null ? DEFAULT_CACHE_NAME : cacheName);
         YamlRedisConfiguration redis = yamlConfiguration.getRedis();
-        if (redis != null) {
-            configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
-        }
+        configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
         String usernameKey = yamlConfiguration.getUsernameKey();
         configuration.setUsernameKey(usernameKey == null ? DEFAULT_USERNAME_KEY : usernameKey);
         String passwordKey = yamlConfiguration.getPasswordKey();

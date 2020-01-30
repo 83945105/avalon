@@ -25,9 +25,7 @@ public final class AuthorizationConfigurationYamlSwapper implements YamlSwapper<
         String cacheName = data.getCacheName();
         configuration.setCacheName(cacheName == null ? DEFAULT_CACHE_NAME : cacheName);
         RedisConfiguration redis = data.getRedis();
-        if (redis != null) {
-            configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
-        }
+        configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
         return configuration;
     }
 
@@ -40,9 +38,7 @@ public final class AuthorizationConfigurationYamlSwapper implements YamlSwapper<
         String cacheName = yamlConfiguration.getCacheName();
         configuration.setCacheName(cacheName == null ? DEFAULT_CACHE_NAME : cacheName);
         YamlRedisConfiguration redis = yamlConfiguration.getRedis();
-        if (redis != null) {
-            configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
-        }
+        configuration.setRedis(new RedisConfigurationYamlSwapper().swap(redis));
         return configuration;
     }
 }

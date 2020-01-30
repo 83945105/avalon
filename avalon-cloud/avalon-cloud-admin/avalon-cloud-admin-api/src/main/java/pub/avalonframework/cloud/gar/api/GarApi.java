@@ -14,7 +14,7 @@ import pub.avalon.holygrail.response.views.DataView;
 @FeignClient(name = "${feign.gar.gar-api-service-name:gar-service}", path = "${feign.gar.gar-api-service-path:/api-gar}")
 public interface GarApi {
 
-    String ROOT_PATH = "/api-gar";
+    String ROOT_PATH = "/gar/api-gar";
 
     /**
      * 判断是否在线

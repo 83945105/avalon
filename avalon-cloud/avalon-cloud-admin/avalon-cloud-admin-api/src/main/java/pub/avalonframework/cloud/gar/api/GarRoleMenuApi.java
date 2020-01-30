@@ -19,7 +19,7 @@ import pub.avalonframework.cloud.gar.dc.AutRoleMenuGet;
 @FeignClient(name = "${feign.gar.role-menu-api-service-name:gar-service}", path = "${feign.gar.role-menu-api-service-path:/api-gar-role-menu}")
 public interface GarRoleMenuApi {
 
-    String ROOT_PATH = "/api-gar-role-menu";
+    String ROOT_PATH = "/gar/api-gar-role-menu";
 
     /**
      * 条件查询角色菜单数据

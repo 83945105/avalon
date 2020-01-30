@@ -19,7 +19,7 @@ import pub.avalonframework.cloud.gar.dc.RouteViewTemplateGet;
 @FeignClient(name = "${feign.gar.route-view-template-api-service-name:gar-service}", path = "${feign.gar.route-view-template-api-service-path:/api-gar-route-view-template}")
 public interface GarRouteViewTemplateApi {
 
-    String ROOT_PATH = "/api-gar-route-view-template";
+    String ROOT_PATH = "/gar/api-gar-route-view-template";
 
     /**
      * 根据路由视图ID条件查询路由视图模板数据

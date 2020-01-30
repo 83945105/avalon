@@ -22,7 +22,7 @@ import pub.avalonframework.cloud.gar.dc.TemplatePut;
 @FeignClient(name = "${feign.gar.template-api-service-name:gar-service}", path = "${feign.gar.template-api-service-path:/api-gar-template}")
 public interface GarTemplateApi {
 
-    String ROOT_PATH = "/api-gar-template";
+    String ROOT_PATH = "/gar/api-gar-template";
 
     /**
      * 根据子模块ID查询模板唯一标识符是否可用

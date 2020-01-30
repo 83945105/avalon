@@ -31,9 +31,6 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import pub.avalonframework.redis.core.api.config.RedisConfiguration;
 import pub.avalonframework.redis.spring.core.RedisTemplate;
 import pub.avalonframework.redis.spring.serializer.GenericToStringSerializer;
@@ -51,13 +48,9 @@ import pub.avalonframework.shiro.service.impl.ShiroLoginAuthenticationServiceImp
 import pub.avalonframework.shiro.service.impl.ShiroResourceAuthenticationServiceImpl;
 import pub.avalonframework.shiro.service.impl.ShiroWebServiceImpl;
 import pub.avalonframework.shiro.session.mgt.eis.RedisSessionDAO;
-import pub.avalonframework.shiro.web.filter.authc.AjaxFormAuthenticationFilter;
-import pub.avalonframework.shiro.web.filter.authc.ResourceCheckFilter;
+import pub.avalonframework.shiro.spring.web.AvalonShiroFilterFactoryBean;
 import pub.avalonframework.shiro.web.session.mgt.RedisWebSessionManager;
 import pub.avalonframework.shiro.web.session.mgt.SeparationWebSessionManager;
-
-import javax.servlet.Filter;
-import java.util.*;
 
 /**
  * Shiro spring boot configuration.
@@ -290,72 +283,10 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
         return authorizationAttributeSourceAdvisor;
     }
 
-    /**
-     * 该过滤器不可以使用 @Bean 注册到spring容器, 这将会导致 ShiroFilterFactoryBean 内注册的过滤器 SpringShiroFilter 失效
-     */
-    private Filter formAuthenticationFilter(WebService webService, LoginAuthenticationService loginAuthenticationService) {
-        AuthenticationConfiguration authenticationConfiguration = this.securityConfiguration.getAuthentication();
-        AjaxFormAuthenticationFilter ajaxFormAuthenticationFilter = new AjaxFormAuthenticationFilter(webService, loginAuthenticationService, this.securityConfiguration);
-        ajaxFormAuthenticationFilter.setUsernameParam(authenticationConfiguration.getUsernameKey());
-        ajaxFormAuthenticationFilter.setPasswordParam(authenticationConfiguration.getPasswordKey());
-        ajaxFormAuthenticationFilter.setLoginUrl(authenticationConfiguration.getUrl());
-        ajaxFormAuthenticationFilter.setSuccessUrl(authenticationConfiguration.getSuccessUrl());
-        ajaxFormAuthenticationFilter.setCrossDomain(true);
-        return ajaxFormAuthenticationFilter;
-    }
-
-    /**
-     * 该过滤器不可以使用 @Bean 注册到spring容器, 这将会导致 ShiroFilterFactoryBean 内注册的过滤器 SpringShiroFilter 失效
-     */
-    private Filter resourceCheckFilter(WebService webService, ResourceAuthenticationService resourceAuthenticationService) {
-        return new ResourceCheckFilter(webService, resourceAuthenticationService, this.securityConfiguration);
-    }
-
     @Bean
     @ConditionalOnMissingBean(ShiroFilterFactoryBean.class)
     public ShiroFilterFactoryBean shiroFilterFactoryBean(WebService webService, LoginAuthenticationService loginAuthenticationService, ResourceAuthenticationService resourceAuthenticationService, SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        FilterConfiguration filterConfiguration = this.securityConfiguration.getFilter();
-        String formFilterName = filterConfiguration.getFormFilterName();
-        shiroFilterFactoryBean.setLoginUrl(filterConfiguration.getLoginUrl());
-        shiroFilterFactoryBean.setUnauthorizedUrl(filterConfiguration.getUnauthorizedUrl());
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String, Filter> filters = new LinkedHashMap<>();
-        filters.put(formFilterName, formAuthenticationFilter(webService, loginAuthenticationService));
-        filters.put("resourceCheckFilter", resourceCheckFilter(webService, resourceAuthenticationService));
-        shiroFilterFactoryBean.setFilters(filters);
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        if (!this.securityConfiguration.getEnabled()) {
-            filterChainDefinitionMap.put("/**", "anon");
-            shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-            return shiroFilterFactoryBean;
-        }
-        Set<String> releaseResources = new LinkedHashSet<>();
-        Set<String> serviceReleaseResources = resourceAuthenticationService.getReleaseResources(Collections.emptyMap(), this.securityConfiguration);
-        if (serviceReleaseResources != null && serviceReleaseResources.size() > 0) {
-            releaseResources.addAll(serviceReleaseResources);
-        }
-        Set<String> configurationReleaseResources = filterConfiguration.getReleaseResources();
-        if (configurationReleaseResources != null && configurationReleaseResources.size() > 0) {
-            releaseResources.addAll(configurationReleaseResources);
-        }
-        logger.info("====================================================================================================");
-        for (String releaseResource : releaseResources) {
-            filterChainDefinitionMap.put(releaseResource, "anon");
-            logger.info("Shiro release resource: " + releaseResource);
-        }
-        logger.info("====================================================================================================");
-        String pageUrl = this.securityConfiguration.getAuthentication().getPageUrl();
-        if (pageUrl != null && pageUrl.trim().length() > 0) {
-            filterChainDefinitionMap.put(pageUrl, "anon");
-        }
-        String url = this.securityConfiguration.getAuthentication().getUrl();
-        if (url != null && url.trim().length() > 0) {
-            filterChainDefinitionMap.put(url, formFilterName + ",anon");
-        }
-        filterChainDefinitionMap.put("/**", formFilterName + ",resourceCheckFilter");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
+        return new AvalonShiroFilterFactoryBean(securityConfiguration, securityManager, webService, loginAuthenticationService, resourceAuthenticationService);
     }
 
     @Override

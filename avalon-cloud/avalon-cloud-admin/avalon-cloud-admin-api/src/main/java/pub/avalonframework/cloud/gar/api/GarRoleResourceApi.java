@@ -19,7 +19,7 @@ import pub.avalonframework.cloud.gar.dc.AutRoleResourceGet;
 @FeignClient(name = "${feign.gar.role-resource-api-service-name:gar-service}", path = "${feign.gar.role-resource-api-service-path:/api-gar-role-resource}")
 public interface GarRoleResourceApi {
 
-    String ROOT_PATH = "/api-gar-role-resource";
+    String ROOT_PATH = "/gar/api-gar-role-resource";
 
     /**
      * 根据角色ID条件查询角色资源数据

@@ -21,7 +21,7 @@ import pub.avalonframework.cloud.gar.dc.ModulePut;
 @FeignClient(name = "${feign.gar.module-api-service-name:gar-service}", path = "${feign.gar.module-api-service-path:/api-gar-module}")
 public interface GarModuleApi {
 
-    String ROOT_PATH = "/api-gar-module";
+    String ROOT_PATH = "/gar/api-gar-module";
 
     /**
      * 根据模块ID查询模块数据

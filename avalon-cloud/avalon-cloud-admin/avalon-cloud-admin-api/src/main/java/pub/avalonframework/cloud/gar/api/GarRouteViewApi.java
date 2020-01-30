@@ -21,7 +21,7 @@ import pub.avalonframework.cloud.gar.dc.RouteViewPut;
 @FeignClient(name = "${feign.gar.route-view-api-service-name:gar-service}", path = "${feign.gar.route-view-api-service-path:/api-gar-route-view}")
 public interface GarRouteViewApi {
 
-    String ROOT_PATH = "/api-gar-route-view";
+    String ROOT_PATH = "/gar/api-gar-route-view";
 
     /**
      * 根据路由ID查询路由视图唯一标识符是否可用

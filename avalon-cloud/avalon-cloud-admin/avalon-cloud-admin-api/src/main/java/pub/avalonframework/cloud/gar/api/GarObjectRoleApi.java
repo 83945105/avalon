@@ -19,7 +19,7 @@ import pub.avalonframework.cloud.gar.dc.AutObjectRoleGet;
 @FeignClient(name = "${feign.gar.object-role-api-service-name:gar-service}", path = "${feign.gar.object-role-api-service-path:/api-gar-object-role}")
 public interface GarObjectRoleApi {
 
-    String ROOT_PATH = "/api-gar-object-role";
+    String ROOT_PATH = "/gar/api-gar-object-role";
 
     /**
      * 根据对象ID条件查询对象角色集合
