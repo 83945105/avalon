@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * 模块服务
  *
- * @author 白超
+ * @author baichao
  * @since 2018/7/11
  */
 public interface GarModuleService {

@@ -3,7 +3,7 @@ package pub.avalonframework.cloud.gar.entity;
 import pub.avalon.holygrail.response.beans.Status;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/7/24
  */
 public interface AutObject {

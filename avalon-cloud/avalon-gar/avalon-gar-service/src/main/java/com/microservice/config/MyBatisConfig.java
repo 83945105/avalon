@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2019/8/5
  */
 @Configuration

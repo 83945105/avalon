@@ -8,7 +8,7 @@ import pub.avalon.holygrail.response.views.DataView;
 /**
  * 网关权限路由接口
  *
- * @author 白超
+ * @author baichao
  * @date 2018/6/11
  */
 @FeignClient(name = "${feign.gar.gar-api-service-name:gar-service}", path = "${feign.gar.gar-api-service-path:/api-gar}")

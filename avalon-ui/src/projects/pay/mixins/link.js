@@ -1,7 +1,7 @@
 /*!
  * Title: 跳转
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2018/1/26
  * version: v1.0
  */

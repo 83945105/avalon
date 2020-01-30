@@ -3,7 +3,7 @@ package pub.avalonframework.cloud.gar.dc;
 import pub.avalon.holygrail.utils.StringUtil;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2019/4/3
  */
 public class AutObjectGet {

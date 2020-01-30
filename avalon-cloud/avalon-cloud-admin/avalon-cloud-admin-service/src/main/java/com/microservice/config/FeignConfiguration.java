@@ -12,7 +12,7 @@ import java.util.Enumeration;
 /**
  * 用于微服务之间使用Feign互相调用传递Headers
  *
- * @author 白超
+ * @author baichao
  * @date 2018/8/2
  */
 @Configuration

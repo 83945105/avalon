@@ -4,7 +4,7 @@ import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalonframework.cloud.gar.entity.Route;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/12/7
  */
 public class RoutePut extends Route {

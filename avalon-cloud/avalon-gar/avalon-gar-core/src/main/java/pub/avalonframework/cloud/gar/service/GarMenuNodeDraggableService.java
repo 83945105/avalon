@@ -7,7 +7,7 @@ import pub.avalonframework.cloud.gar.dc.MenuTreeNode;
 /**
  * 菜单节点拖拽
  *
- * @author 白超
+ * @author baichao
  * @date 2019/1/19
  */
 public interface GarMenuNodeDraggableService extends TreeNodeDraggable<MenuTreeNode, MenuDragParams> {

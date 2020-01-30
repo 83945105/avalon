@@ -4,7 +4,7 @@ import pub.avalon.holygrail.function.beans.TreeNode;
 import pub.avalonframework.cloud.gar.entity.Route;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2019/1/19
  */
 public class RouteTreeNode extends Route implements TreeNode<RouteTreeNode> {

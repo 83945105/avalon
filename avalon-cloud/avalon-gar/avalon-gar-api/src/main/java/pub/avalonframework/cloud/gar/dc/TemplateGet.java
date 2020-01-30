@@ -7,7 +7,7 @@ import pub.avalonframework.cloud.gar.entity.Template;
 import java.util.*;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/12/7
  */
 public class TemplateGet extends Template {

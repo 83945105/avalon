@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 错误处理
  *
- * @author 白超
+ * @author baichao
  * @date 2018-3-15
  */
 //@Controller

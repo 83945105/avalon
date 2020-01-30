@@ -3,7 +3,7 @@ package pub.avalon.pay.beans;
 import pub.avalon.beans.EnumMethods;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/12/23
  */
 public enum WeChatPayTradeStatus implements EnumMethods {

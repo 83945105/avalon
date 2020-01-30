@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/7/25
  */
 public interface GarObjectRoleService {

@@ -2,7 +2,7 @@ webpackJsonp([0],{"+U8T":function(e,t){},"1J5t":function(e,t,r){r("Gquc"),r("IsP
 /*!
  * Title: 状态管理
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/20
  * version: v1.0
  */
@@ -10,7 +10,7 @@ o.default.use(x.a);var L=new x.a.Store({modules:{userModule:b.a}}),C=r("GTdf");w
 /*!
  * Title:
  * Description: 路由管理
- * author: 白超
+ * author: baichao
  * date: 2017/12/5
  * version: v1.0
  */
@@ -18,7 +18,7 @@ o.default.use(s.a);var Ie=new s.a({routes:[{path:"/",redirect:{name:"Layout"}},{
 /*!
  * Title: 系统模块
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/5
  * version: v1.0
  */

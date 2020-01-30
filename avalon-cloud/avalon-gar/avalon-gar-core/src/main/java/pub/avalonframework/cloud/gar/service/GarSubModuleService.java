@@ -8,7 +8,7 @@ import pub.avalonframework.cloud.gar.entity.SubModule;
 import java.util.List;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/12/6
  */
 public interface GarSubModuleService {

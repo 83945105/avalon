@@ -4,10 +4,7 @@ import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalonframework.cloud.gar.entity.AutRole;
 
 /**
- * @author 白超
- * @version 1.0
- * @see
- * @since 2018/7/12
+ * @author baichao
  */
 public class AutRoleGet extends AutRole {
 

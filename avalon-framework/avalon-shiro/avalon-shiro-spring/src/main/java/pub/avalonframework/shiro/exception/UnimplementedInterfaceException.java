@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationException;
 /**
  * 未实现指定接口的异常
  *
- * @author 白超
+ * @author baichao
  * @date 2018/6/8
  */
 public class UnimplementedInterfaceException extends AuthenticationException {

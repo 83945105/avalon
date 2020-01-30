@@ -1,7 +1,7 @@
 /*!
  * Title: axios配置
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/7
  * version: v1.0
  */

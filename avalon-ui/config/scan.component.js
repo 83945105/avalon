@@ -1,7 +1,7 @@
 /*!
  * Title: 组件扫描
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2018/12/3
  * version: v1.0
  */

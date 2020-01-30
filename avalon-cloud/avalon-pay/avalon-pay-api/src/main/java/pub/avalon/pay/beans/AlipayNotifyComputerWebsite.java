@@ -5,8 +5,7 @@ import java.math.BigDecimal;
 /**
  * 支付宝异步通知-业务
  *
- * @author 白超
- * @date 2018/12/1
+ * @author baichao
  */
 public class AlipayNotifyComputerWebsite extends AlipayNotify {
 

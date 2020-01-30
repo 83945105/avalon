@@ -1,7 +1,7 @@
 /*!
  * Title: 用于对接微信相关的一些配置
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2018-3-31
  * version: v1.0
  */

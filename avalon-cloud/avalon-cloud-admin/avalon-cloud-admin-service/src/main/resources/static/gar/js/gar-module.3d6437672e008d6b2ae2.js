@@ -2,7 +2,7 @@ webpackJsonp([45,38,40,42],{"+6Em":function(e,t){e.exports=[]},"1ZU6":function(e
 /*!
  * Title: 状态管理
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/20
  * version: v1.0
  */
@@ -10,7 +10,7 @@ l.default.use(c.a);var p=new c.a.Store({modules:{frameModule:d.a,userModule:m.a,
 /*!
  * Title:
  * Description: 路由管理
- * author: 白超
+ * author: baichao
  * date: 2017/12/5
  * version: v1.0
  */
@@ -18,7 +18,7 @@ l.default.use(u.a);var E=[{path:"/403",name:"403",component:function(){return a.
 /*!
  * Title: 系统模块
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/5
  * version: v1.0
  */

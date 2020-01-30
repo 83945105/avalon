@@ -4,7 +4,7 @@ import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalonframework.cloud.gar.entity.MenuGroup;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/12/14
  */
 public class MenuGroupGet extends MenuGroup {

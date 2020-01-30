@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * 用于用户登录授权的Realm
  *
- * @author 白超
+ * @author baichao
  */
 public class ShiroRealm extends AuthorizingRealm {
 

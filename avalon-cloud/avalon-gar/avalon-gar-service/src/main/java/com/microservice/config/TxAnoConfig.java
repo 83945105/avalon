@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * 事务
  *
- * @author 白超
+ * @author baichao
  */
 @Configuration
 public class TxAnoConfig {

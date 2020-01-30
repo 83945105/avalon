@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * 微信支付异步通知-业务
  *
- * @author 白超
+ * @author baichao
  * @date 2019/1/3
  */
 public class WeChatPayNotifyQrCode {

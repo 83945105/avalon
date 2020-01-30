@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2019/11/26
  */
 public final class DeveloperAccountNumber implements AccountNumber {

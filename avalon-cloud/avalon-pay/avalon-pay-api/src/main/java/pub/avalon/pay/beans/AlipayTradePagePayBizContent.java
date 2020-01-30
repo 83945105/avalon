@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * 支付宝支付内容
  *
- * @author 白超
+ * @author baichao
  * @date 2018/12/1
  */
 public class AlipayTradePagePayBizContent {

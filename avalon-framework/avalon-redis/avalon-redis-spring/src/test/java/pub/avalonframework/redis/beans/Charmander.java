@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
- * Created by 白超 on 2019/12/3.
+ * @author baichao
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * 交易查询
  *
- * @author 白超
+ * @author baichao
  * @date 2018/12/17
  */
 public class AlipayTradeQuery {

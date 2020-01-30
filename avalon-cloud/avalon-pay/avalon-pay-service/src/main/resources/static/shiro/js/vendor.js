@@ -23,7 +23,7 @@ e.exports=function(e){return null!=e&&(n(e)||function(e){return"function"==typeo
 /*!
  * Title:
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2018/4/19
  * version: v1.0
  */
@@ -31,7 +31,7 @@ var p=[i.default,r.default,o.default,a.default,s.default,l.default,c.default,u.d
 /*!
  * Title: 用户
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/20
  * version: v1.0
  */

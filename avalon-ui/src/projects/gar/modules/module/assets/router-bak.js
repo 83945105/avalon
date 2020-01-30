@@ -1,7 +1,7 @@
 /*!
  * Title: 备用路由, 当本项目初始化无任何授权时导入本路由可以进行初始授权
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2018/12/17
  * version: v1.0
  */

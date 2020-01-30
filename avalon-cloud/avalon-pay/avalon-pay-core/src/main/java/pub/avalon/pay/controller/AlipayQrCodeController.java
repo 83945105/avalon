@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author 白超
+ * @author baichao
  * @date 2018/12/11
  */
 @RequestMapping("${feign.pay.alipay.qr-code-api-service-path:/api-pay-alipay-qr-code}")

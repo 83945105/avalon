@@ -1,7 +1,7 @@
 /*!
  * Title: 构建多页应用
  * Description:
- * author: 白超
+ * author: baichao
  * date: 2017/12/6
  * version: v1.0
  */
