@@ -14,6 +14,8 @@
 
     <modules>
         <module>avalon-cloud-admin</module>
+        <module>avalon-cloud-starter</module>
+        <module>avalon-cloud-test</module>
         <module>avalon-eureka-server</module>
         <module>avalon-gar</module>
         <!--<module>avalon-pay</module>-->
@@ -37,6 +39,11 @@
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>pub.avalonframework</groupId>
+                <artifactId>avalon-web-spring</artifactId>
+                <version>${avalon-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>pub.avalonframework</groupId>

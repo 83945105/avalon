@@ -173,7 +173,6 @@
             },
             /**
              * 点击选项卡事件
-             * 由于element-ui选项卡只能拿到name, 需要通过缓存
              * @param pane
              */
             handleClickTabPane(pane) {

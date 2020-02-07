@@ -23,6 +23,16 @@ public class AvalonException extends RuntimeException {
         this.exceptionMethod = exceptionMethod;
     }
 
+    public AvalonException(Class<?> exceptionClass, String exceptionMethodName, String message) {
+        super((exceptionClass == null ? "" : "Class: " + exceptionClass.getName() + " ") + (exceptionMethodName == null ? "" : "Method: " + exceptionMethodName + " ") + message);
+        this.exceptionClass = exceptionClass;
+    }
+
+    public AvalonException(Class<?> exceptionClass, String exceptionMethodName, String message, Throwable cause) {
+        super((exceptionClass == null ? "" : "Class: " + exceptionClass.getName() + " ") + (exceptionMethodName == null ? "" : "Method: " + exceptionMethodName + " ") + message, cause);
+        this.exceptionClass = exceptionClass;
+    }
+
     public Class<?> getExceptionClass() {
         return exceptionClass;
     }
