@@ -19,9 +19,6 @@ public class EntityMessageView<T> implements EntityView<T>, MessageView {
 
     private ResultInfo resultInfo;
 
-    public EntityMessageView() {
-    }
-
     public EntityMessageView(T entity, ResultInfo resultInfo) {
         this.entity = entity;
         this.resultInfo = resultInfo;

@@ -1,7 +1,5 @@
 package pub.avalonframework.core.beans;
 
-import java.lang.reflect.Method;
-
 /**
  * Serialization exception.
  *
@@ -9,11 +7,18 @@ import java.lang.reflect.Method;
  */
 public class SerializationException extends AvalonException {
 
-    public SerializationException(Class<?> exceptionClass, Method exceptionMethod) {
-        super(exceptionClass, exceptionMethod, "Serialization failed.");
+    public SerializationException() {
     }
 
-    public SerializationException(Class<?> exceptionClass, Method exceptionMethod, Throwable cause) {
-        super(exceptionClass, exceptionMethod, "Serialization failed.", cause);
+    public SerializationException(String message) {
+        super(message);
+    }
+
+    public SerializationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public SerializationException(Throwable cause) {
+        super(cause);
     }
 }

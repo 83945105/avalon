@@ -165,7 +165,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long deleteKeys(K... keys) {
         Long result = redisTemplate.delete(Arrays.asList(keys));
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -174,7 +174,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long deleteKeys(Collection<K> keys) {
         Long result = redisTemplate.delete(keys);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -183,10 +183,10 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public void expireKey(K key, long timeout, TimeUnit timeUnit) {
         Boolean success = redisTemplate.expire(key, timeout, timeUnit);
         if (success == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         if (!success) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is false.");
+            throw new OperationFailureException("result is false.");
         }
     }
 
@@ -194,10 +194,10 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public void expireKeyAt(K key, Date date) {
         Boolean success = redisTemplate.expireAt(key, date);
         if (success == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         if (!success) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is false.");
+            throw new OperationFailureException("result is false.");
         }
     }
 
@@ -205,7 +205,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long getKeyExpire(K key, TimeUnit timeUnit) {
         Long timeout = redisTemplate.getExpire(key, timeUnit);
         if (timeout == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return timeout;
     }
@@ -248,7 +248,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
             return objectMapper.readValue(toJSONString(value), typeReference);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new OperationFailureException(RedisTemplate.class, null, "case value fail.");
+            throw new OperationFailureException("case value fail.");
         }
     }
 
@@ -264,7 +264,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
             return objectMapper.readValue(toJSONString(value), valueType);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new OperationFailureException(RedisTemplate.class, null, "case value fail.");
+            throw new OperationFailureException("case value fail.");
         }
     }
 
@@ -323,7 +323,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long increment(K key, long delta) {
         Long value = redisTemplate.opsForValue().increment(key, delta);
         if (value == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "value is null.");
+            throw new OperationFailureException("value is null.");
         }
         return value;
     }
@@ -332,7 +332,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public double increment(K key, double delta) {
         Double value = redisTemplate.opsForValue().increment(key, delta);
         if (value == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "value is null.");
+            throw new OperationFailureException("value is null.");
         }
         return value;
     }
@@ -341,7 +341,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long decrement(K key, long delta) {
         Long value = redisTemplate.opsForValue().increment(key, -delta);
         if (value == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "value is null.");
+            throw new OperationFailureException("value is null.");
         }
         return value;
     }
@@ -350,7 +350,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public double decrement(K key, double delta) {
         Double value = redisTemplate.opsForValue().increment(key, -delta);
         if (value == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "value is null.");
+            throw new OperationFailureException("value is null.");
         }
         return value;
     }
@@ -359,7 +359,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long lAdd(K key, V value) {
         Long result = redisTemplate.opsForList().rightPush(key, value);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -383,7 +383,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long lSize(K key) {
         Long result = redisTemplate.opsForList().size(key);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -392,7 +392,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long lAddAll(K key, V... values) {
         Long result = redisTemplate.opsForList().rightPushAll(key, values);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -401,7 +401,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long lAddAll(K key, Collection<V> values) {
         Long result = redisTemplate.opsForList().rightPushAll(key, values);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -613,7 +613,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long sSize(K key) {
         Long result = redisTemplate.opsForSet().size(key);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -645,7 +645,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
     public long sAddAll(K key, V... values) {
         Long result = redisTemplate.opsForSet().add(key, values);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -663,7 +663,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
         }
         Long result = redisTemplate.opsForSet().remove(key, values);
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }
@@ -675,7 +675,7 @@ public class RedisTemplate<K, V, HK, HV> implements RedisOperations<K, V, HK, HV
         }
         Long result = redisTemplate.opsForSet().remove(key, values.toArray());
         if (result == null) {
-            throw new OperationFailureException(RedisTemplate.class, null, "result is null.");
+            throw new OperationFailureException("result is null.");
         }
         return result;
     }

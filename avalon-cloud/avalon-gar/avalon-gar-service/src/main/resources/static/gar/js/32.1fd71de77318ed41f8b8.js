@@ -1,1 +1,0 @@
-webpackJsonp([32],{"2VCo":function(e,t){},"8Rgk":function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("首页")])},staticRenderFns:[]};var a=n("C7Lr")({name:"Home"},r,!1,function(e){n("2VCo")},"data-v-4056b319",null);t.default=a.exports}});

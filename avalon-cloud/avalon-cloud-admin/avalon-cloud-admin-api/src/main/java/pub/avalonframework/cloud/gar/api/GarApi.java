@@ -4,6 +4,7 @@ import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pub.avalon.holygrail.response.views.DataView;
+import pub.avalonframework.web.spring.http.response.view.impl.DefaultMessageView;
 
 /**
  * 网关权限路由接口
@@ -24,7 +25,7 @@ public interface GarApi {
      */
     @RequestMapping(value = "/get/isOnline")
     @RequestLine("GET " + ROOT_PATH + "/get/isOnline")
-    DataView getIsOnline() throws Exception;
+    DefaultMessageView getIsOnline() throws Exception;
 
     /**
      * 获取当前在线信息

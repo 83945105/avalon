@@ -12,6 +12,9 @@ import pub.avalonframework.web.spring.http.response.view.MessageView;
 import pub.avalonframework.web.spring.http.response.view.ResponseView;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
@@ -37,7 +40,7 @@ public final class ResponseUtils {
         try {
             return OBJECT_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new ObjectToJsonException(ResponseUtils.class, "toJsonString", e.getMessage(), e);
+            throw new ObjectToJsonException(e.getMessage(), e);
         }
     }
 
@@ -45,7 +48,7 @@ public final class ResponseUtils {
         try {
             return OBJECT_MAPPER.readValue(json, clazz);
         } catch (IOException e) {
-            throw new JsonToObjectException(ResponseUtils.class, "jsonToObject", e.getMessage(), e);
+            throw new JsonToObjectException(e.getMessage(), e);
         }
     }
 
@@ -53,14 +56,12 @@ public final class ResponseUtils {
         try {
             return OBJECT_MAPPER.readValue(json, typeReference);
         } catch (IOException e) {
-            throw new JsonToObjectException(ResponseUtils.class, "jsonToObject", e.getMessage(), e);
+            throw new JsonToObjectException(e.getMessage(), e);
         }
     }
 
     private final static com.alibaba.fastjson.TypeReference<Map<String, String>> ROOT_TYPE_REFERENCE = new com.alibaba.fastjson.TypeReference<Map<String, String>>() {
     };
-
-    private final static String CLASS_KEY = "@class";
 
     private final static String RESULT_INFO_KEY = "resultInfo";
 
@@ -68,14 +69,12 @@ public final class ResponseUtils {
 
     private final static String ENTITY_KEY = "entity";
 
-    public static ResponseView jsonToResponseView(String json, Type parameterizedType) {
-        Map<String, String> rootElement = JSONObject.parseObject(json, ROOT_TYPE_REFERENCE);
-        ResponseView responseView;
-        try {
-            responseView = (ResponseView) Class.forName(rootElement.get(CLASS_KEY)).newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            throw new ResponseViewInstantiatedException(ResponseUtils.class, "jsonToResponseView", e.getMessage(), e);
+    public static ResponseView jsonToResponseView(String json, Type type, Type parameterizedType) {
+        if (type instanceof ParameterizedType) {
+            type = ((ParameterizedType) type).getRawType();
         }
+        ResponseView responseView = instantiateClassToResponseView((Class) type);
+        Map<String, String> rootElement = JSONObject.parseObject(json, ROOT_TYPE_REFERENCE);
         if (responseView instanceof MessageView) {
             ((MessageView) responseView).setResultInfo(rootElement.get(RESULT_INFO_KEY));
         }
@@ -86,6 +85,15 @@ public final class ResponseUtils {
             ((EntityView) responseView).setEntity(rootElement.get(ENTITY_KEY), parameterizedType);
         }
         return responseView;
+    }
+
+    private static ResponseView instantiateClassToResponseView(Class clazz) {
+        try {
+            Constructor constructor = clazz.getConstructors()[0];
+            return (ResponseView) constructor.newInstance(new Object[constructor.getParameterCount()]);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new ResponseViewInstantiatedException(e.getMessage(), e);
+        }
     }
 
     public static ResultInfo jsonToResultInfo(String json) {

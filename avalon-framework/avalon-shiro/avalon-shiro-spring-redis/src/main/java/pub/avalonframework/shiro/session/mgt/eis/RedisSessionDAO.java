@@ -307,7 +307,7 @@ public class RedisSessionDAO extends AbstractSessionDAO implements CacheManagerA
                                 .add((Principal) principal);
                         continue;
                     }
-                    throw new IncorrectPrincipalTypeException(principal.getClass(), RedisMutablePrincipalCollectionWrapper.class, null);
+                    throw new IncorrectPrincipalTypeException(principal.getClass());
                 }
             }
         }
@@ -344,7 +344,7 @@ public class RedisSessionDAO extends AbstractSessionDAO implements CacheManagerA
                         this.mutablePrincipalCollection.add(caseValue(principal, Principal.class), realmName);
                         continue;
                     }
-                    throw new IncorrectPrincipalTypeException(principal.getClass(), RedisMutablePrincipalCollectionWrapper.class, null);
+                    throw new IncorrectPrincipalTypeException(principal.getClass());
                 }
             }
         }

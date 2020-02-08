@@ -40,7 +40,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if (primaryPrincipal instanceof Map) {
             return ((Map) primaryPrincipal).get("id");
         }
-        throw new IncorrectPrincipalTypeException(primaryPrincipal.getClass(), ShiroRealm.class, null);
+        throw new IncorrectPrincipalTypeException(primaryPrincipal.getClass());
     }
 
     @Override

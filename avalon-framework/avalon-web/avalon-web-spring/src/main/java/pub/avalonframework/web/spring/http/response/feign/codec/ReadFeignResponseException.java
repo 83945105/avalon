@@ -2,26 +2,23 @@ package pub.avalonframework.web.spring.http.response.feign.codec;
 
 import pub.avalonframework.core.beans.AvalonException;
 
-import java.lang.reflect.Method;
-
 /**
- * @author 白超
+ * @author baichao
  */
 public class ReadFeignResponseException extends AvalonException {
 
-    public ReadFeignResponseException(Class<?> exceptionClass, Method exceptionMethod, String message) {
-        super(exceptionClass, exceptionMethod, message);
+    public ReadFeignResponseException() {
     }
 
-    public ReadFeignResponseException(Class<?> exceptionClass, Method exceptionMethod, String message, Throwable cause) {
-        super(exceptionClass, exceptionMethod, message, cause);
+    public ReadFeignResponseException(String message) {
+        super(message);
     }
 
-    public ReadFeignResponseException(Class<?> exceptionClass, String exceptionMethodName, String message) {
-        super(exceptionClass, exceptionMethodName, message);
+    public ReadFeignResponseException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public ReadFeignResponseException(Class<?> exceptionClass, String exceptionMethodName, String message, Throwable cause) {
-        super(exceptionClass, exceptionMethodName, message, cause);
+    public ReadFeignResponseException(Throwable cause) {
+        super(cause);
     }
 }

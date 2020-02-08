@@ -17,7 +17,6 @@
         <module>avalon-cloud-starter</module>
         <module>avalon-cloud-test</module>
         <module>avalon-eureka-server</module>
-        <module>avalon-gar</module>
         <!--<module>avalon-pay</module>-->
     </modules>
 

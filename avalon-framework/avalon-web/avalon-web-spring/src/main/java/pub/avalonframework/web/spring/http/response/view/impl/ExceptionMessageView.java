@@ -2,20 +2,17 @@ package pub.avalonframework.web.spring.http.response.view.impl;
 
 import pub.avalonframework.web.spring.http.response.ResultInfo;
 import pub.avalonframework.web.spring.http.response.utils.ResponseUtils;
+import pub.avalonframework.web.spring.http.response.view.ExceptionView;
 import pub.avalonframework.web.spring.http.response.view.MessageView;
 
 /**
- * The default message view.
+ * The exception message view.
  *
  * @author baichao
  */
-public class DefaultMessageView implements MessageView {
+public class ExceptionMessageView implements ExceptionView, MessageView {
 
     private ResultInfo resultInfo;
-
-    public DefaultMessageView(ResultInfo resultInfo) {
-        this.resultInfo = resultInfo;
-    }
 
     @Override
     public ResultInfo getResultInfo() {

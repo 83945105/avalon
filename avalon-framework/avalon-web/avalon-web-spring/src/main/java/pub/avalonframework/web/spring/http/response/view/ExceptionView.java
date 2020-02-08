@@ -1,10 +1,10 @@
 package pub.avalonframework.web.spring.http.response.view;
 
 /**
- * The response view.
+ * The exception view.
  *
  * @author baichao
  */
-public interface ResponseView {
+public interface ExceptionView extends ResponseView {
 
 }

@@ -34,10 +34,10 @@ public final class SecurityUtils {
         if (iterator.hasNext()) {
             securityService = iterator.next();
         } else {
-            throw new SpiNoneInstantiationException(SecurityService.class, SecurityUtils.class, null);
+            throw new SpiNoneInstantiationException(SecurityService.class);
         }
         if (iterator.hasNext()) {
-            throw new SpiDuplicateInstantiationException(securityService.getClass(), iterator.next().getClass(), SecurityService.class, SecurityUtils.class, null);
+            throw new SpiDuplicateInstantiationException(securityService.getClass(), iterator.next().getClass(), SecurityService.class);
         }
         logger.info("SPI SecurityUtils load class " + securityService.getClass().getName() + " for interface " + SecurityService.class.getName());
     }

@@ -43,6 +43,6 @@ public class RedisCacheManager extends AbstractCacheManager {
         if (name.equals(authorizationCacheName)) {
             return new RedisCache<>(authorizationRedisTemplate, name, expire);
         }
-        throw new IncorrectCacheException(name, RedisCacheManager.class, null);
+        throw new IncorrectCacheException(name);
     }
 }

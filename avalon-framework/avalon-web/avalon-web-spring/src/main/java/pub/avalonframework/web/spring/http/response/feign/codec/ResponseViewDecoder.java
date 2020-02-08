@@ -27,10 +27,10 @@ public class ResponseViewDecoder implements Decoder {
     @Override
     public Object decode(Response response, Type type) throws FeignException, IOException {
         if (isParameterizeResponseView(type)) {
-            return createResponse(response, ((ParameterizedType) type).getActualTypeArguments()[0]);
+            return createResponse(response, type, ((ParameterizedType) type).getActualTypeArguments()[0]);
         }
         if (isResponseView(type)) {
-            return createResponse(response, null);
+            return createResponse(response, type, null);
         }
         return decoder.decode(response, type);
     }
@@ -50,8 +50,8 @@ public class ResponseViewDecoder implements Decoder {
         return false;
     }
 
-    private ResponseView createResponse(Response response, Type parameterizedType) {
-        return ResponseUtils.jsonToResponseView(read(response), parameterizedType);
+    private ResponseView createResponse(Response response, Type type, Type parameterizedType) {
+        return ResponseUtils.jsonToResponseView(read(response), type, parameterizedType);
     }
 
     private String read(Response response) {
@@ -64,7 +64,7 @@ public class ResponseViewDecoder implements Decoder {
             }
             return sb.toString();
         } catch (IOException e) {
-            throw new ReadFeignResponseException(ResponseViewDecoder.class, "decode", e.getMessage(), e);
+            throw new ReadFeignResponseException(e.getMessage(), e);
         } finally {
             response.close();
         }

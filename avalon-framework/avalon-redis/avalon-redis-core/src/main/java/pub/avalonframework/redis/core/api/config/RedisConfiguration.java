@@ -111,7 +111,7 @@ public class RedisConfiguration {
                 }
                 return redisConnectionFactory;
             default:
-                throw new UnsupportedRedisImplException(redisImpl, RedisConfiguration.class, null);
+                throw new UnsupportedRedisImplException(redisImpl);
         }
     }
 }

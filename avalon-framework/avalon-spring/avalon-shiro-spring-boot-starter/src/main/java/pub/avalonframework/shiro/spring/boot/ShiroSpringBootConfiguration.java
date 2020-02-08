@@ -157,7 +157,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
                 redisSessionDAO.setExpire(sessionConfiguration.getSessionTimeout());
                 return redisSessionDAO;
             default:
-                throw new IncorrectCacheTypeException(securityConfiguration.getCacheType(), ShiroSpringBootConfiguration.class, null);
+                throw new IncorrectCacheTypeException(securityConfiguration.getCacheType());
         }
     }
 
@@ -187,7 +187,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
                 redisWebSessionManager.setSessionIdCookie(sessionIdCookie);
                 return redisWebSessionManager;
             default:
-                throw new IncorrectCacheTypeException(securityConfiguration.getCacheType(), ShiroSpringBootConfiguration.class, null);
+                throw new IncorrectCacheTypeException(securityConfiguration.getCacheType());
         }
     }
 
@@ -253,7 +253,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
                                 -1
                         );
             default:
-                throw new IncorrectCacheTypeException(securityConfiguration.getCacheType(), ShiroSpringBootConfiguration.class, null);
+                throw new IncorrectCacheTypeException(securityConfiguration.getCacheType());
         }
     }
 

@@ -1,7 +1,5 @@
 package pub.avalonframework.core.beans;
 
-import java.lang.reflect.Method;
-
 /**
  * Operation failure exception.
  *
@@ -9,11 +7,11 @@ import java.lang.reflect.Method;
  */
 public class OperationFailureException extends AvalonException {
 
-    public OperationFailureException(Class<?> exceptionClass, Method exceptionMethod) {
-        super(exceptionClass, exceptionMethod, "Operation failed.");
+    public OperationFailureException() {
+        super("Operation failed.");
     }
 
-    public OperationFailureException(Class<?> exceptionClass, Method exceptionMethod, String cause) {
-        super(exceptionClass, exceptionMethod, "Operation failed, cause: " + cause);
+    public OperationFailureException(String cause) {
+        super("Operation failed, cause: " + cause);
     }
 }
