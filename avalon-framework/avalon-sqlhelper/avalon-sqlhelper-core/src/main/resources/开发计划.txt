@@ -1,0 +1,28 @@
+一、增加合并行(group_concat)、合并列(concat)功能
+二、增加动态条件, 争取实现以下功能：
+    1、泛型优化,针对如：<M extends Model<M, MC, MO, MW, MS, MG>,
+                       MC extends ColumnModel<M, MC, MO, MW, MS, MG>,
+                       MO extends OnModel<M, MC, MO, MW, MS, MG>,
+                       MW extends WhereModel<M, MC, MO, MW, MS, MG>,
+                       MS extends SortModel<M, MC, MO, MW, MS, MG>,
+                       MG extends GroupModel<M, MC, MO, MW, MS, MG>>
+       的泛型类, new对象的时候,泛型可否使用泛型的一些可能存在的高级特性来实现嵌套传递,实现不需要声明这么多泛型类。
+    2、lambda优化, 将lambda编写sql方式支持拆分为一行行代码方式
+    3、支持非lambda查询方式, 实现传统方式查询如：使用工厂函数一次性创建出查询有可能用到的类,然后使用这些类进行创建相关查询条件,组合条件查询。
+三、where条件嵌套后, 改为只给予condition,给予mainTable参数,因为该mainTable参数模棱两可。
+四、新增如：pageQueryForColumn相关分页查询方法。
+五、新增处理字段功能，如：更新字段,将字段改为原始数值+1、原始数值+某字段。
+六、where条件支持子查询，如xx.id in (子查询)。
+七、新增配置类，用于配置工具各种参数如：
+    1、配置map集合key使用原始列名、驼峰列名、自定义规则。
+八、条件支持系统函数，如：xx.time > NOW()
+九、虚拟列支持计算、函数
+√ 十、where条件嵌套是否创建了太多了表参数?是否可以简化成最外成使用不定参设置?外层指定了表模型，内层默认提供主表参数是否合理?
+十一、支持group by having
+十二、from 支持子查询
+十三、支持配置输出大写sql
+十四、支持指定索引
+十五、流程添加if条件
+十六、全面支持子查询 包含且不限于： 子查询列、join子查询、from子查询、on子查询、where子查询
+十七、全面支持DISTINCT
+十八、全面支持sqlPart

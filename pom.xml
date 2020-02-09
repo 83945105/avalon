@@ -43,6 +43,8 @@
 
         <feign.version>9.7.0</feign.version>
 
+        <jansi.version>1.11</jansi.version>
+
         <holygrail.version>0.5.3-SNAPSHOT</holygrail.version>
         <sqlhelper-spring.version>1.1.2-SNAPSHOT</sqlhelper-spring.version>
     </properties>
@@ -120,6 +122,12 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-java8</artifactId>
                 <version>${feign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.fusesource.jansi</groupId>
+                <artifactId>jansi</artifactId>
+                <version>${jansi.version}</version>
             </dependency>
 
             <dependency>

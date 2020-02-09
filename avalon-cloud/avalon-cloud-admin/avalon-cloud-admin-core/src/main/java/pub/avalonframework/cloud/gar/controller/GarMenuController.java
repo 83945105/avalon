@@ -103,7 +103,8 @@ public class GarMenuController implements GarMenuApi {
                                 .or(mt.value().like(record.getLikeText())))
                         .and(mainTable.moduleId().equalTo(finalModuleId)))
                 .sort(table -> table.index().asc()));
-        return new EntityLimitMessageView<>(pageResultForBean.getResult(), pageResultForBean.getLimit(), new HttpResultInfo(HttpStatus.OK));
+//        return new EntityLimitMessageView<>(pageResultForBean.getResult(), pageResultForBean.getLimit(), new HttpResultInfo(HttpStatus.OK));
+        return null;
     }
 
     @Override
