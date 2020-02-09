@@ -1,5 +1,5 @@
-import Default from "../../data-parser/src/default.js";
-import {DefaultParserOptions} from "../../data-parser/src/parser.js";
+import Default from "../../response-parser/src/default.js";
+import {DefaultResponseParserOptions} from "../../response-parser/src/response-parser.js";
 import merge from "../../../src/utils/merge.js";
 import {isArray, isFormData, isFunction, isObject, isString} from "../../../src/utils/util.js";
 import deepClone from "../../../src/utils/deep-clone.js";
@@ -49,9 +49,9 @@ export const DefaultAjaxOptions = {
     showErrorPrompt: true,
     errorPromptText: '服务器繁忙...请稍后再试',
     responseType: 'json',
-    dataParserOptions: {
+    responseParserOptions: {
         use: Default,
-        options: merge({}, DefaultParserOptions)
+        options: merge({}, DefaultResponseParserOptions)
     }
 };
 

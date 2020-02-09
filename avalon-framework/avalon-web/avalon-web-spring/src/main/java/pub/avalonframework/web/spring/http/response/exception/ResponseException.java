@@ -1,13 +1,14 @@
 package pub.avalonframework.web.spring.http.response.exception;
 
 import pub.avalonframework.core.beans.AvalonException;
+import pub.avalonframework.web.spring.http.response.view.ExceptionView;
 
 /**
  * The response exception.
  *
  * @author baichao
  */
-public class ResponseException extends AvalonException {
+public abstract class ResponseException extends AvalonException {
 
     public ResponseException() {
     }
@@ -23,4 +24,6 @@ public class ResponseException extends AvalonException {
     public ResponseException(Throwable cause) {
         super(cause);
     }
+
+    public abstract ExceptionView transformToExceptionView();
 }

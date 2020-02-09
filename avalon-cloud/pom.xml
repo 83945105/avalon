@@ -41,6 +41,16 @@
             </dependency>
             <dependency>
                 <groupId>pub.avalonframework</groupId>
+                <artifactId>avalon-common-utils</artifactId>
+                <version>${avalon-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pub.avalonframework</groupId>
+                <artifactId>avalon-core</artifactId>
+                <version>${avalon-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pub.avalonframework</groupId>
                 <artifactId>avalon-web-spring</artifactId>
                 <version>${avalon-framework.version}</version>
             </dependency>

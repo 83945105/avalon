@@ -3,13 +3,12 @@ package pub.avalonframework.cloud.gar.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
-import pub.avalon.holygrail.response.utils.ResultUtil;
-import pub.avalon.holygrail.response.views.ExceptionView;
 import pub.avalon.sqlhelper.factory.MySqlDynamicEngine;
 import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
 import pub.avalonframework.cloud.gar.entity.AutResource;
@@ -21,6 +20,8 @@ import pub.avalonframework.security.core.api.config.FilterConfiguration;
 import pub.avalonframework.security.core.api.config.SecurityConfiguration;
 import pub.avalonframework.security.core.api.service.ResourceAuthenticationService;
 import pub.avalonframework.security.core.api.service.WebService;
+import pub.avalonframework.web.spring.http.response.HttpResultInfo;
+import pub.avalonframework.web.spring.http.response.view.impl.ExceptionMessageView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +93,7 @@ public class GarResourceAuthenticationServiceImpl implements ResourceAuthenticat
         HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
         try {
             if (webService.isAjaxRequest(request, response, securityConfiguration)) {
-                HTTP_MESSAGE_CONVERTER.write(new ExceptionView(0, ResultUtil.createNoAuthority(MessageConstant.EXCEPTION_NO_AUTHENTICATION_MESSAGE)), MediaType.APPLICATION_JSON, outputMessage);
+                HTTP_MESSAGE_CONVERTER.write(new ExceptionMessageView(new HttpResultInfo(HttpStatus.UNAUTHORIZED, MessageConstant.EXCEPTION_NO_AUTHENTICATION_MESSAGE)), MediaType.APPLICATION_JSON, outputMessage);
             } else {
                 FilterConfiguration filterConfiguration = securityConfiguration.getFilter();
                 request.getRequestDispatcher(filterConfiguration.getUnauthorizedUrl()).forward(request, response);

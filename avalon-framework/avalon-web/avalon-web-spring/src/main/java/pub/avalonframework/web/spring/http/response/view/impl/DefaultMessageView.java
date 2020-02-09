@@ -9,7 +9,7 @@ import pub.avalonframework.web.spring.http.response.view.MessageView;
  *
  * @author baichao
  */
-public class DefaultMessageView implements MessageView {
+public final class DefaultMessageView implements MessageView {
 
     private ResultInfo resultInfo;
 

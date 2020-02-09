@@ -5,6 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pub.avalon.holygrail.response.views.DataView;
 import pub.avalonframework.web.spring.http.response.view.impl.DefaultMessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
+
+import java.util.Map;
 
 /**
  * 网关权限路由接口
@@ -35,7 +38,7 @@ public interface GarApi {
      */
     @RequestMapping(value = "/get/online")
     @RequestLine("GET " + ROOT_PATH + "/get/online")
-    DataView getOnline() throws Exception;
+    EntityMessageView<Map<String, Object>> getOnline() throws Exception;
 
     /**
      * 登出
@@ -45,6 +48,5 @@ public interface GarApi {
      */
     @RequestMapping(value = "/get/logout")
     @RequestLine("GET " + ROOT_PATH + "/get/logout")
-    DataView getLogout() throws Exception;
-
+    EntityMessageView<Map<String, Object>> getLogout() throws Exception;
 }

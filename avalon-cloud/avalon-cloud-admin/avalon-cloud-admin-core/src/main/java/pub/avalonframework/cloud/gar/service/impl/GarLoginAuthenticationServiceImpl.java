@@ -5,16 +5,12 @@ import org.apache.shiro.authc.pam.UnsupportedTokenException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.util.AntPathMatcher;
-import pub.avalon.holygrail.response.beans.ResultInfo;
-import pub.avalon.holygrail.response.utils.ResultUtil;
-import pub.avalon.holygrail.response.views.ExceptionView;
-import pub.avalon.holygrail.response.views.ModelView;
-import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
 import pub.avalonframework.cloud.gar.beans.DeveloperAccountNumber;
 import pub.avalonframework.cloud.gar.beans.DynamicRouteLocator;
@@ -22,6 +18,7 @@ import pub.avalonframework.cloud.gar.service.GarAccountNumberService;
 import pub.avalonframework.cloud.gar.utils.Md5Utils;
 import pub.avalonframework.cloud.gar.utils.RequestUtils;
 import pub.avalonframework.cloud.gar.utils.TableUtils;
+import pub.avalonframework.common.utils.StringUtils;
 import pub.avalonframework.core.beans.MessageConstant;
 import pub.avalonframework.security.core.api.config.AuthenticationConfiguration;
 import pub.avalonframework.security.core.api.config.SecurityConfiguration;
@@ -29,7 +26,11 @@ import pub.avalonframework.security.core.api.config.SessionConfiguration;
 import pub.avalonframework.security.core.api.service.LoginAuthenticationService;
 import pub.avalonframework.security.core.api.service.WebService;
 import pub.avalonframework.security.core.beans.Principal;
-import pub.avalonframework.shiro.exception.UnimplementedInterfaceException;
+import pub.avalonframework.web.spring.http.response.HttpResultInfo;
+import pub.avalonframework.web.spring.http.response.ResultInfo;
+import pub.avalonframework.web.spring.http.response.view.impl.DefaultMessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.ExceptionMessageView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -149,15 +150,13 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
 
         Principal user = RequestUtils.getPrincipal();
 
-        ModelView modelView = new ModelView(0, ResultUtil.createSuccess("登录成功"));
         Map<String, Object> map = new HashMap<>(3);
         map.put("sessionIdName", securityConfiguration.getSession().getSessionIdName());
         map.put("sessionIdValue", sessionId.toString());
         map.put("user", user);
-        modelView.setRecords(map);
         HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
         try {
-            HTTP_MESSAGE_CONVERTER.write(modelView, MediaType.APPLICATION_JSON, outputMessage);
+            HTTP_MESSAGE_CONVERTER.write(new EntityMessageView<>(map, new HttpResultInfo(HttpStatus.OK)), MediaType.APPLICATION_JSON, outputMessage);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -167,36 +166,34 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
     public void ajaxLoginFail(WebService webService, HttpServletRequest request, HttpServletResponse response, Exception e, SecurityConfiguration securityConfiguration) {
         ResultInfo resultInfo;
         if (e instanceof UnknownAccountException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_UNKNOWN_ACCOUNT_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_UNKNOWN_ACCOUNT_MESSAGE);
         } else if (e instanceof IncorrectCredentialsException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_INCORRECT_CREDENTIALS_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_INCORRECT_CREDENTIALS_MESSAGE);
         } else if (e instanceof UnsupportedTokenException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_UNSUPPORTED_TOKEN_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_UNSUPPORTED_TOKEN_MESSAGE);
         } else if (e instanceof LockedAccountException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_LOCKED_ACCOUNT_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_LOCKED_ACCOUNT_MESSAGE);
         } else if (e instanceof DisabledAccountException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_DISABLED_ACCOUNT_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_DISABLED_ACCOUNT_MESSAGE);
         } else if (e instanceof ExcessiveAttemptsException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_EXCESSIVE_ATTEMPTS_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_EXCESSIVE_ATTEMPTS_MESSAGE);
         } else if (e instanceof ConcurrentAccessException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_CONCURRENT_ACCESS_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_CONCURRENT_ACCESS_MESSAGE);
         } else if (e instanceof AccountException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_ACCOUNT_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_ACCOUNT_MESSAGE);
         } else if (e instanceof ExpiredCredentialsException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_EXPIRED_CREDENTIALS_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_EXPIRED_CREDENTIALS_MESSAGE);
         } else if (e instanceof CredentialsException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_CREDENTIALS_MESSAGE);
-        } else if (e instanceof UnimplementedInterfaceException) {
-            resultInfo = ResultUtil.createError(e.getMessage());
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_CREDENTIALS_MESSAGE);
         } else if (e instanceof AuthenticationException) {
-            resultInfo = ResultUtil.createFail(MessageConstant.EXCEPTION_AUTHENTICATION_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_AUTHENTICATION_MESSAGE);
         } else {
             e.printStackTrace();
-            resultInfo = ResultUtil.createError(MessageConstant.EXCEPTION_DEFAULT_MESSAGE);
+            resultInfo = new HttpResultInfo(HttpStatus.FORBIDDEN, MessageConstant.EXCEPTION_DEFAULT_MESSAGE);
         }
         HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
         try {
-            HTTP_MESSAGE_CONVERTER.write(new ExceptionView(0, resultInfo), MediaType.APPLICATION_JSON, outputMessage);
+            HTTP_MESSAGE_CONVERTER.write(new ExceptionMessageView(resultInfo), MediaType.APPLICATION_JSON, outputMessage);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -208,7 +205,7 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
     public void onAjaxAccessDenied(WebService webService, HttpServletRequest request, HttpServletResponse response, SecurityConfiguration securityConfiguration) {
         String url = null;
         String uri = request.getRequestURI();
-        if (!StringUtil.isEmpty(DynamicRouteLocator.DB_ROUTE_MAP)) {
+        if (!StringUtils.isEmpty(DynamicRouteLocator.DB_ROUTE_MAP)) {
             for (Map.Entry<String, DynamicRouteLocator.ZuulRoute> entry : DynamicRouteLocator.DB_ROUTE_MAP.entrySet()) {
                 if (PATH_MATCHER.match(entry.getKey(), uri)) {
                     url = entry.getValue().getLoginUrl();
@@ -218,15 +215,12 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
 
         }
         AuthenticationConfiguration authenticationConfiguration = securityConfiguration.getAuthentication();
-        if (StringUtil.isEmpty(url)) {
+        if (StringUtils.isEmpty(url)) {
             url = authenticationConfiguration.getPageUrl();
         }
         HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
-        Map<String, String> result = new HashMap<>(2);
-        result.put("loginPageUrl", url);
-        result.put("loginPostUrl", authenticationConfiguration.getUrl());
         try {
-            HTTP_MESSAGE_CONVERTER.write(new ExceptionView(0, ResultUtil.createNeedLogin(MessageConstant.EXCEPTION_NEED_LOGIN_MESSAGE), result), MediaType.APPLICATION_JSON, outputMessage);
+            HTTP_MESSAGE_CONVERTER.write(new DefaultMessageView(new HttpResultInfo(HttpStatus.PROXY_AUTHENTICATION_REQUIRED, MessageConstant.EXCEPTION_NEED_LOGIN_MESSAGE)), MediaType.APPLICATION_JSON, outputMessage);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -236,7 +230,7 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
     public void onAccessDenied(WebService webService, HttpServletRequest request, HttpServletResponse response, String loginUrl, SecurityConfiguration securityConfiguration) {
         String url = null;
         String uri = request.getRequestURI();
-        if (!StringUtil.isEmpty(DynamicRouteLocator.DB_ROUTE_MAP)) {
+        if (!StringUtils.isEmpty(DynamicRouteLocator.DB_ROUTE_MAP)) {
             for (Map.Entry<String, DynamicRouteLocator.ZuulRoute> entry : DynamicRouteLocator.DB_ROUTE_MAP.entrySet()) {
                 if (PATH_MATCHER.match(entry.getKey(), uri)) {
                     url = entry.getValue().getLoginUrl();
@@ -244,7 +238,7 @@ public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationSer
                 }
             }
         }
-        if (StringUtil.isEmpty(url)) {
+        if (StringUtils.isEmpty(url)) {
             url = securityConfiguration.getAuthentication().getPageUrl();
         }
         webService.redirectTo(request, response, url, null, true, securityConfiguration);

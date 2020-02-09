@@ -60,4 +60,25 @@ public interface ResultInfo {
      * @return Is error.
      */
     boolean isError();
+
+    /**
+     * Is proxy authentication required.
+     *
+     * @return Is proxy authentication required.
+     */
+    boolean isProxyAuthenticationRequired();
+
+    /**
+     * Is unauthorized.
+     *
+     * @return Is unauthorized.
+     */
+    boolean isUnauthorized();
+
+    /**
+     * Get response type.
+     *
+     * @return The response type.
+     */
+    ResponseType getResponseType();
 }

@@ -33,7 +33,7 @@ export default class JQuery extends Ajax {
         url = spliceUrlParams(url, params);
 
         let opts = deepMerge(Default, GlobalAjaxOptions, options);
-        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
+        let $parser = new opts.responseParserOptions.use(opts.responseParserOptions.options);
 
         let waitId = undefined;
         let instance = undefined;
@@ -112,7 +112,7 @@ export default class JQuery extends Ajax {
             opts.headers['Content-Type'] = contentType;
         }
 
-        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
+        let $parser = new opts.responseParserOptions.use(opts.responseParserOptions.options);
 
         let waitId = undefined;
         let instance = undefined;
@@ -191,7 +191,7 @@ export default class JQuery extends Ajax {
             opts.headers['Content-Type'] = contentType;
         }
 
-        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
+        let $parser = new opts.responseParserOptions.use(opts.responseParserOptions.options);
 
         let waitId = undefined;
         let instance = undefined;
@@ -264,7 +264,7 @@ export default class JQuery extends Ajax {
         url = spliceUrlParams(url, params);
 
         let opts = deepMerge(Default, GlobalAjaxOptions, options);
-        let $parser = new opts.dataParserOptions.use(opts.dataParserOptions.options);
+        let $parser = new opts.responseParserOptions.use(opts.responseParserOptions.options);
 
         let waitId = undefined;
         let instance = undefined;

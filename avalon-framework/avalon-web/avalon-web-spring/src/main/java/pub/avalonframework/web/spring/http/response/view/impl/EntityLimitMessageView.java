@@ -1,26 +1,29 @@
 package pub.avalonframework.web.spring.http.response.view.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import pub.avalonframework.database.Limit;
 import pub.avalonframework.web.spring.http.response.ResultInfo;
 import pub.avalonframework.web.spring.http.response.utils.ResponseUtils;
 import pub.avalonframework.web.spring.http.response.view.EntityView;
+import pub.avalonframework.web.spring.http.response.view.LimitView;
 import pub.avalonframework.web.spring.http.response.view.MessageView;
 
 import java.lang.reflect.Type;
 
 /**
- * The entity message view.
- *
  * @author baichao
  */
-public final class EntityMessageView<T> implements EntityView<T>, MessageView {
+public final class EntityLimitMessageView<T> implements EntityView<T>, LimitView, MessageView {
 
     private T entity;
 
+    private Limit limit;
+
     private ResultInfo resultInfo;
 
-    public EntityMessageView(T entity, ResultInfo resultInfo) {
+    public EntityLimitMessageView(T entity, Limit limit, ResultInfo resultInfo) {
         this.entity = entity;
+        this.limit = limit;
         this.resultInfo = resultInfo;
     }
 
@@ -42,6 +45,21 @@ public final class EntityMessageView<T> implements EntityView<T>, MessageView {
                 return type;
             }
         }));
+    }
+
+    @Override
+    public Limit getLimit() {
+        return limit;
+    }
+
+    @Override
+    public void setLimit(Limit limit) {
+        this.limit = limit;
+    }
+
+    @Override
+    public void setLimit(String limitJson) {
+        this.limit = ResponseUtils.jsonToLimit(limitJson);
     }
 
     @Override

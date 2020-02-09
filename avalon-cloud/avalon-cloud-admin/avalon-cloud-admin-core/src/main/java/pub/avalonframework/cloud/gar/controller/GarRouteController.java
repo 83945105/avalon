@@ -1,6 +1,7 @@
 package pub.avalonframework.cloud.gar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,8 @@ import pub.avalonframework.cloud.gar.model.*;
 import pub.avalonframework.cloud.gar.service.GarRouteNodeDraggableService;
 import pub.avalonframework.cloud.gar.service.GarRouteService;
 import pub.avalonframework.cloud.gar.utils.TableUtils;
+import pub.avalonframework.web.spring.http.response.HttpResultInfo;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -227,7 +230,7 @@ public class GarRouteController implements GarRouteApi {
 
     @Override
     @RequestMapping(value = "/get/routeTreeBySubModuleValue/{subModuleValue}")
-    public DataView getRouteTreeBySubModuleValue(@PathVariable String subModuleValue, String moduleId) throws Exception {
+    public EntityMessageView<List<RouteGet>> getRouteTreeBySubModuleValue(@PathVariable String subModuleValue, String moduleId) throws Exception {
         if (StringUtil.isEmpty(moduleId)) {
             ExceptionUtil.throwFailException("模块ID不能为空");
         }
@@ -256,7 +259,7 @@ public class GarRouteController implements GarRouteApi {
                 .sort(table -> table.index().asc()));
 
         if (StringUtil.isEmpty(routeList)) {
-            return DataViewUtil.getModelViewSuccess(new ArrayList<>(0));
+            return new EntityMessageView<>(Collections.emptyList(), new HttpResultInfo(HttpStatus.OK));
         }
 
         Set<String> routeIds = routeList.stream().map(Route::getId).collect(Collectors.toSet());
@@ -353,7 +356,7 @@ public class GarRouteController implements GarRouteApi {
         for (Route route : subRouteList) {
             routeCache.get(route.getParentId()).addSubRoute(route);
         }
-        return DataViewUtil.getModelViewSuccess(rootRouteList);
+        return new EntityMessageView<>(rootRouteList, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override

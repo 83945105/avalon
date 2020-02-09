@@ -24,7 +24,7 @@
 
     //使用Packages包下工具
     import Packages from '../../../../../../packages/index.js';
-    import {DataParser, $Message, Ajax, Message} from '../../../../../../packages/index.js';
+    import {ResponseParser, $Message, Ajax, Message} from '../../../../../../packages/index.js';
 
     Vue.use(Packages, {
         Ajax: {
@@ -34,8 +34,8 @@
                 mockTimeout: 1000,
                 baseURL: require('../../../../../../config/axios.js').getBaseUrl(),
                 withCredentials: true,//允许跨域携带cookie
-                dataParserOptions: {
-                    use: DataParser.DataView,
+                responseParserOptions: {
+                    use: ResponseParser.ResponseView,
                     options: {
                         needLoginOptions: {//需要登录
                             callback: (data, res) => {
@@ -44,11 +44,6 @@
                             }
                         },
                         noAuthorityOptions: {//无权限
-                            callback(data, res) {
-                                $Message(data.resultInfo.message);
-                            }
-                        },
-                        notFoundOptions: {//404
                             callback(data, res) {
                                 $Message(data.resultInfo.message);
                             }

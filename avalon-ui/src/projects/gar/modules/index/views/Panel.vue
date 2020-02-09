@@ -43,7 +43,7 @@
 
     //使用Packages包下工具
     import Packages from '../../../../../../packages/index.js';
-    import {DataParser, $Message, Ajax, Message} from '../../../../../../packages/index.js';
+    import {ResponseParser, $Message, Ajax, Message} from '../../../../../../packages/index.js';
 
     Vue.use(Packages, {
         Ajax: {
@@ -53,8 +53,8 @@
                 mockTimeout: 1000,
                 baseURL: require('../../../../../../config/axios.js').getBaseUrl(),
                 withCredentials: true,//允许跨域携带cookie
-                dataParserOptions: {
-                    use: DataParser.DataView,
+                responseParserOptions: {
+                    use: ResponseParser.ResponseView,
                     options: {
                         needLoginOptions: {//需要登录
                             callback: (data, res) => {
@@ -62,11 +62,6 @@
                             }
                         },
                         noAuthorityOptions: {//无权限
-                            callback(data, res) {
-                                $Message(data.resultInfo.message);
-                            }
-                        },
-                        notFoundOptions: {//404
                             callback(data, res) {
                                 $Message(data.resultInfo.message);
                             }
@@ -162,11 +157,12 @@
                 new Promise((resolve, reject) => {
                     this.$Ajax.get(ApiGarUrls.get.online)
                         .success(true, data => {
-                            this.user = data.records.user;
-                            resolve(data.records);
+                            this.user = data.user;
+                            resolve(data);
                         })
                         .needLogin(true, reject);
-                }).then(({user: {id: userId, username, mainShop, consignShops}, roles}) => {
+                }).then(({user: {id: userId, username}, roles}) => {
+                    console.log({user: {id: userId, username}, roles})
                     return new Promise((resolve, reject) => {
                         //判断是否有相关缓存
                         let exist = allCurrentCacheExist({key: userId});
@@ -197,7 +193,7 @@
                             // 当前用户没有角色, 清除当前用户主角色缓存
                             removeCache({key: primaryRoleCacheKey});
                             resolve({
-                                user: {id: userId, username, mainShop, consignShops},
+                                user: {id: userId, username},
                                 primaryRole: undefined,
                                 roles: []
                             });
@@ -214,7 +210,7 @@
                                 return;
                             }
                             resolve({
-                                user: {id: userId, username, mainShop, consignShops},
+                                user: {id: userId, username},
                                 primaryRole: this.primaryRole,
                                 roles: this.roles
                             });
@@ -236,7 +232,7 @@
                                     // 缓存主角色是当前用户已有角色
                                     this.primaryRole = new Role(this.roles[i]);
                                     resolve({
-                                        user: {id: userId, username, mainShop, consignShops},
+                                        user: {id: userId, username},
                                         primaryRole: this.primaryRole,
                                         roles: this.roles
                                     });
@@ -247,7 +243,7 @@
                             reject();
                         }
                     });
-                }).then(({user: {id: userId, username, mainShop, consignShops}, primaryRole, roles}) => {
+                }).then(({user: {id: userId, username}, primaryRole, roles}) => {
                     //登录成功
                     //处理数据
                     Promise.all([new Promise((resolve, reject) => {

@@ -1,20 +1,28 @@
-package pub.avalonframework.web.spring.http.response.view.impl;
+package pub.avalonframework.web.spring.http.response.exception.impl;
 
 import pub.avalonframework.web.spring.http.response.ResultInfo;
+import pub.avalonframework.web.spring.http.response.exception.ResponseException;
 import pub.avalonframework.web.spring.http.response.utils.ResponseUtils;
 import pub.avalonframework.web.spring.http.response.view.ExceptionView;
 import pub.avalonframework.web.spring.http.response.view.MessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.ExceptionMessageView;
 
 /**
- * The exception message view.
+ * The message exception.
  *
  * @author baichao
  */
-public final class ExceptionMessageView implements ExceptionView, MessageView {
+public class MessageException extends ResponseException implements MessageView {
 
     private ResultInfo resultInfo;
 
-    public ExceptionMessageView(ResultInfo resultInfo) {
+    public MessageException(ResultInfo resultInfo) {
+        super(resultInfo.getMessage());
+        this.resultInfo = resultInfo;
+    }
+
+    public MessageException(ResultInfo resultInfo, Throwable cause) {
+        super(resultInfo.getMessage(), cause);
         this.resultInfo = resultInfo;
     }
 
@@ -31,5 +39,10 @@ public final class ExceptionMessageView implements ExceptionView, MessageView {
     @Override
     public void setResultInfo(String resultInfoJson) {
         this.resultInfo = ResponseUtils.jsonToResultInfo(resultInfoJson);
+    }
+
+    @Override
+    public ExceptionView transformToExceptionView() {
+        return new ExceptionMessageView(this.resultInfo);
     }
 }

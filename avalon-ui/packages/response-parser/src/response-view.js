@@ -1,13 +1,12 @@
-import Parser from "./parser.js";
-import {MessageType} from "../../message/src/message.js";
+import ResponseParser from "./response-parser.js";
 import {$Message} from "../../message/index.js";
 import merge from "../../../src/utils/merge.js";
 import {isFunction} from "../../../src/utils/util.js";
 
-export default class DataView extends Parser {
+export default class ResponseView extends ResponseParser {
 
     newInstance(properties) {
-        return new DataView(properties);
+        return new ResponseView(properties);
     };
 
     executeBefore({data, response, message}) {
@@ -27,7 +26,7 @@ export default class DataView extends Parser {
     };
 
     fail(...args) {
-        merge(this._options.failOptions, Parser.argsMatch(args));
+        merge(this._options.failOptions, ResponseParser.argsMatch(args));
         return this;
     };
 
@@ -40,7 +39,7 @@ export default class DataView extends Parser {
     };
 
     error(...args) {
-        merge(this._options.errorOptions, Parser.argsMatch(args));
+        merge(this._options.errorOptions, ResponseParser.argsMatch(args));
         return this;
     };
 
@@ -52,34 +51,8 @@ export default class DataView extends Parser {
         isFunction(errorCallback) && errorCallback(data, response);
     };
 
-    info(...args) {
-        merge(this._options.infoOptions, Parser.argsMatch(args));
-        return this;
-    };
-
-    executeInfo({data, response, message}) {
-        let {close: infoClose, callback: infoCallback} = this._options.infoOptions;
-        if (infoClose !== true) {
-            $Message.info(merge({content: message}, this._options.infoOptions));
-        }
-        isFunction(infoCallback) && infoCallback(data, response);
-    };
-
-    warn(...args) {
-        merge(this._options.warnOptions, Parser.argsMatch(args));
-        return this;
-    };
-
-    executeWarn({data, response, message}) {
-        let {close: warnClose, callback: warnCallback} = this._options.warnOptions;
-        if (warnClose !== true) {
-            $Message.warn(merge({content: message}, this._options.warnOptions));
-        }
-        isFunction(warnCallback) && warnCallback(data, response);
-    };
-
     notSuccess(...args) {
-        merge(this._options.notSuccessOptions, Parser.argsMatch(args));
+        merge(this._options.notSuccessOptions, ResponseParser.argsMatch(args));
         return this;
     };
 
@@ -92,7 +65,7 @@ export default class DataView extends Parser {
     };
 
     needLogin(...args) {
-        merge(this._options.needLoginOptions, Parser.argsMatch(args));
+        merge(this._options.needLoginOptions, ResponseParser.argsMatch(args));
         return this;
     };
 
@@ -105,7 +78,7 @@ export default class DataView extends Parser {
     };
 
     noAuthority(...args) {
-        merge(this._options.noAuthorityOptions, Parser.argsMatch(args));
+        merge(this._options.noAuthorityOptions, ResponseParser.argsMatch(args));
         return this;
     };
 
@@ -115,19 +88,6 @@ export default class DataView extends Parser {
             $Message.open(merge({content: message}, this._options.noAuthorityOptions));
         }
         isFunction(noAuthorityCallback) && noAuthorityCallback(data, response);
-    };
-
-    notFound(...args) {
-        merge(this._options.notFoundOptions, Parser.argsMatch(args));
-        return this;
-    };
-
-    executeNotFound({data, response, message}) {
-        let {close: notFoundClose, callback: notFoundCallback} = this._options.notFoundOptions;
-        if (notFoundClose !== true) {
-            $Message.open(merge({content: message}, this._options.notFoundOptions));
-        }
-        isFunction(notFoundCallback) && notFoundCallback(data, response);
     };
 
     executeFinally({data, response, message}) {
@@ -153,45 +113,33 @@ export default class DataView extends Parser {
             document.body.removeChild(eLink);
         }
         if (!data.resultInfo) return;
-        let {message, type} = data.resultInfo;
-        this.executeBefore({data, response, message});
-        switch (type) {
-            case MessageType.SUCCESS:
-                this.executeSuccess({data, response, message});
+        let {entity = {}, resultInfo} = data;
+        let {message, responseType} = resultInfo;
+        this.executeBefore({data: entity, response, message});
+        switch (responseType) {
+            case "SUCCESS":
+                this.executeSuccess({data: entity, response, message});
                 break;
-            case MessageType.FAIL:
-                this.executeFail({data, response, message});
-                this.executeNotSuccess({data, response, message});
+            case "FAIL":
+                this.executeFail({data: entity, response, message});
+                this.executeNotSuccess({data: entity, response, message});
                 break;
-            case MessageType.WARN:
-                this.executeWarn({data, response, message});
-                this.executeNotSuccess({data, response, message});
+            case "ERROR":
+                this.executeError({data: entity, response, message});
+                this.executeNotSuccess({data: entity, response, message});
                 break;
-            case MessageType.INFO:
-                this.executeInfo({data, response, message});
-                this.executeNotSuccess({data, response, message});
+            case "PROXY_AUTHENTICATION_REQUIRED":
+                this.executeNeedLogin({data: entity, response, message});
+                this.executeNotSuccess({data: entity, response, message});
                 break;
-            case MessageType.ERROR:
-                this.executeError({data, response, message});
-                this.executeNotSuccess({data, response, message});
-                break;
-            case MessageType.NEED_LOGIN:
-                this.executeNeedLogin({data, response, message});
-                this.executeNotSuccess({data, response, message});
-                break;
-            case MessageType.NO_AUTHORITY:
-                this.executeNoAuthority({data, response, message});
-                this.executeNotSuccess({data, response, message});
-                break;
-            case MessageType.NOT_FOUND:
-                this.executeNotFound({data, response, message});
-                this.executeNotSuccess({data, response, message});
+            case "UNAUTHORIZED":
+                this.executeNoAuthority({data: entity, response, message});
+                this.executeNotSuccess({data: entity, response, message});
                 break;
             default:
-                throw new Error(`消息类型不正确,MessageType:${type}`);
+                throw new Error(`消息类型不正确,responseType:${responseType}`);
         }
-        this.executeFinally({data, response, message});
+        this.executeFinally({data: entity, response, message});
         return this;
     };
-
 }

@@ -12,6 +12,9 @@ import pub.avalonframework.cloud.gar.beans.RouteDragParams;
 import pub.avalonframework.cloud.gar.dc.RouteGet;
 import pub.avalonframework.cloud.gar.dc.RoutePost;
 import pub.avalonframework.cloud.gar.dc.RoutePut;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
+
+import java.util.List;
 
 /**
  * 路由接口
@@ -173,8 +176,8 @@ public interface GarRouteApi {
      */
     @RequestMapping(value = "/get/routeTreeBySubModuleValue/{subModuleValue}")
     @RequestLine("GET " + ROOT_PATH + "/get/routeTreeBySubModuleValue/{subModuleValue}?moduleId={moduleId}")
-    DataView getRouteTreeBySubModuleValue(@PathVariable("subModuleValue") @Param("subModuleValue") String subModuleValue,
-                                          @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
+    EntityMessageView<List<RouteGet>> getRouteTreeBySubModuleValue(@PathVariable("subModuleValue") @Param("subModuleValue") String subModuleValue,
+                                                                   @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
 
     /**
      * 新增路由

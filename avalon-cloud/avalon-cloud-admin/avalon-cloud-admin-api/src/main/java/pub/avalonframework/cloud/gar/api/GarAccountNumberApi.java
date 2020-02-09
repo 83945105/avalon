@@ -5,7 +5,10 @@ import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pub.avalon.holygrail.response.views.DataView;
+import pub.avalonframework.cloud.gar.beans.AccountNumber;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
+
+import java.util.Set;
 
 /**
  * 账户接口
@@ -28,8 +31,8 @@ public interface GarAccountNumberApi {
      */
     @RequestMapping(value = "/get/accountNumberByUsernameAndPassword/{username}/{password}")
     @RequestLine("GET " + ROOT_PATH + "/get/accountNumberByUsernameAndPassword/{username}/{password}")
-    DataView getAccountNumberByUsernameAndPassword(@PathVariable("username") @Param("username") String username,
-                                                   @PathVariable("password") @Param("password") String password) throws Exception;
+    EntityMessageView<AccountNumber> getAccountNumberByUsernameAndPassword(@PathVariable("username") @Param("username") String username,
+                                                                           @PathVariable("password") @Param("password") String password) throws Exception;
 
     /**
      * 根据账户ID获取账户拥有的角色标识符
@@ -40,7 +43,7 @@ public interface GarAccountNumberApi {
      */
     @RequestMapping(value = "/get/list/roleValueByAccountId/{accountId}")
     @RequestLine("GET " + ROOT_PATH + "/get/list/roleValueByAccountId/{accountId}")
-    DataView getListRoleValueByAccountId(@PathVariable("accountId") @Param("accountId") String accountId) throws Exception;
+    EntityMessageView<Set<String>> getListRoleValueByAccountId(@PathVariable("accountId") @Param("accountId") String accountId) throws Exception;
 
     /**
      * 根据账户ID、账户拥有的角色标识符获取账户拥有的资源地址
@@ -52,6 +55,6 @@ public interface GarAccountNumberApi {
      */
     @RequestMapping(value = "/get/list/resourceUrlByAccountIdAndRoleValues/{accountId}/{roleValues}")
     @RequestLine("GET " + ROOT_PATH + "/get/list/resourceUrlByAccountIdAndRoleValues/{accountId}/{roleValues}")
-    DataView getListResourceUrlByAccountIdAndRoleValues(@PathVariable("accountId") @Param("accountId") String accountId,
-                                                        @PathVariable("roleValues") @Param("roleValues") String roleValues) throws Exception;
+    EntityMessageView<Set<String>> getListResourceUrlByAccountIdAndRoleValues(@PathVariable("accountId") @Param("accountId") String accountId,
+                                                                              @PathVariable("roleValues") @Param("roleValues") String roleValues) throws Exception;
 }

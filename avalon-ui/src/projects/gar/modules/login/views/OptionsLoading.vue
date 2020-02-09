@@ -117,11 +117,11 @@
                 //获取用户信息
                 this.$Ajax.get(ApiGarUrls.get.online)
                     .success(true, data => {
-                        this.user = data.records.user;
+                        this.user = data.user;
                         // 缓存登录信息
                         const loginCacheKey = getLoginCacheKey();
                         setCache({key: loginCacheKey, data: JSON.stringify({userId: this.userId})});
-                        const roles = data.records.roles;
+                        const roles = data.roles;
                         //解析角色
                         const primaryRoleCacheKey = getPrimaryRoleCacheKey({key: this.userId});
                         if (!roles || roles.length === 0) {
@@ -177,7 +177,7 @@
                         this.getRouteTreeBySubModuleValue({
                             moduleId: ProjectConf.projectName,
                             subModuleValue: moduleName,
-                            successCallback: data => resolve(data.rows)
+                            successCallback: data => resolve(data)
                         });
                     }), new Promise((resolve, reject) => {
                         // 获取头部菜单信息
@@ -185,7 +185,7 @@
                             moduleId: ProjectConf.projectName,
                             subModuleValue: moduleName,
                             menuGroupType: 'HEADER_MENU',
-                            successCallback: data => resolve(data.rows)
+                            successCallback: data => resolve(data)
                         });
                     }), new Promise((resolve, reject) => {
                         // 获取左侧菜单信息
@@ -193,7 +193,7 @@
                             moduleId: ProjectConf.projectName,
                             subModuleValue: moduleName,
                             menuGroupType: 'LEFT_MENU',
-                            successCallback: data => resolve(data.rows)
+                            successCallback: data => resolve(data)
                         });
                     })]).then(([routeData, headerMenuData, leftMenuData]) => {
                         // 2：解析数据,设置各个模块数据缓存用于各个模块读取

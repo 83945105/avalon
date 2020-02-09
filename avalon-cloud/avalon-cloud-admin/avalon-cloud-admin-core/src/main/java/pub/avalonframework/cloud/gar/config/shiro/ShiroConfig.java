@@ -6,8 +6,6 @@ import pub.avalonframework.cloud.gar.service.impl.GarLoginAuthenticationServiceI
 import pub.avalonframework.cloud.gar.service.impl.GarResourceAuthenticationServiceImpl;
 import pub.avalonframework.security.core.api.service.LoginAuthenticationService;
 import pub.avalonframework.security.core.api.service.ResourceAuthenticationService;
-import pub.avalonframework.security.core.api.service.WebService;
-import pub.avalonframework.shiro.service.impl.ShiroWebServiceImpl;
 
 /**
  * Shiro整合
@@ -18,16 +16,13 @@ import pub.avalonframework.shiro.service.impl.ShiroWebServiceImpl;
 @Configuration
 public class ShiroConfig {
 
-    @Bean
-    public WebService webService() {
-        return new ShiroWebServiceImpl();
-    }
-
+    //TODO 待迁移至 AvalonCloudConfiguration
     @Bean
     public LoginAuthenticationService loginAuthenticationService() {
         return new GarLoginAuthenticationServiceImpl();
     }
 
+    //TODO 待迁移至 AvalonCloudConfiguration
     @Bean
     public ResourceAuthenticationService resourceAuthenticationService() {
         return new GarResourceAuthenticationServiceImpl();

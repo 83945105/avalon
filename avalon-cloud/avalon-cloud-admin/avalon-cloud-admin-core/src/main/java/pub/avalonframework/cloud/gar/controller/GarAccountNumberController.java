@@ -2,11 +2,11 @@ package pub.avalonframework.cloud.gar.controller;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pub.avalon.holygrail.response.utils.DataViewUtil;
-import pub.avalon.holygrail.response.utils.ExceptionUtil;
 import pub.avalon.holygrail.response.views.DataView;
 import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
@@ -14,6 +14,9 @@ import pub.avalonframework.cloud.gar.api.GarAccountNumberApi;
 import pub.avalonframework.cloud.gar.beans.AccountNumber;
 import pub.avalonframework.cloud.gar.service.GarAccountNumberService;
 import pub.avalonframework.cloud.gar.service.impl.DefaultGarAccountNumberServiceImpl;
+import pub.avalonframework.web.spring.http.response.HttpResultInfo;
+import pub.avalonframework.web.spring.http.response.exception.impl.FailMessageException;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,26 +38,26 @@ public class GarAccountNumberController implements GarAccountNumberApi, Initiali
 
     @Override
     @RequestMapping(value = "/get/accountNumberByUsernameAndPassword/{username}/{password}")
-    public DataView getAccountNumberByUsernameAndPassword(@PathVariable String username, @PathVariable String password) throws Exception {
+    public EntityMessageView<AccountNumber> getAccountNumberByUsernameAndPassword(@PathVariable String username, @PathVariable String password) throws Exception {
         AccountNumber row = this.accountNumberService.getAccountNumberByUsernameAndPassword(username, password);
         if (row == null) {
-            ExceptionUtil.throwFailException(40404, "账号不存在");
+            throw new FailMessageException("账号不存在");
         }
-        return DataViewUtil.getModelViewSuccess(row);
+        return new EntityMessageView<>(row, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override
     @RequestMapping(value = "/get/list/roleValueByAccountId/{accountId}")
-    public DataView getListRoleValueByAccountId(@PathVariable String accountId) throws Exception {
+    public EntityMessageView<Set<String>> getListRoleValueByAccountId(@PathVariable String accountId) throws Exception {
         Set<String> roleValues = this.accountNumberService.getListRoleValueByAccountId(accountId);
-        return DataViewUtil.getModelViewSuccess(roleValues);
+        return new EntityMessageView<>(roleValues, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override
     @RequestMapping(value = "/get/list/resourceUrlByAccountIdAndRoleValues/{accountId}/{roleValues}")
-    public DataView getListResourceUrlByAccountIdAndRoleValues(@PathVariable String accountId, @PathVariable String roleValues) throws Exception {
+    public EntityMessageView<Set<String>> getListResourceUrlByAccountIdAndRoleValues(@PathVariable String accountId, @PathVariable String roleValues) throws Exception {
         Set<String> resourceUrls = this.accountNumberService.getListResourceUrlByAccountIdAndRoleValues(accountId, StringUtil.isEmpty(roleValues) ? new HashSet<>() : new HashSet<>(Arrays.asList(roleValues.split(","))));
-        return DataViewUtil.getModelViewSuccess(resourceUrls);
+        return new EntityMessageView<>(resourceUrls, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override

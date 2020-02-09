@@ -1,6 +1,7 @@
 package pub.avalonframework.cloud.gar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import pub.avalon.holygrail.response.utils.ExceptionUtil;
 import pub.avalon.holygrail.response.views.DataView;
 import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalon.sqlhelper.factory.MySqlDynamicEngine;
+import pub.avalon.sqlhelper.spring.beans.PageResultForBean;
 import pub.avalon.sqlhelper.spring.beans.PageResultForMap;
 import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
 import pub.avalonframework.cloud.gar.api.GarMenuApi;
@@ -27,9 +29,12 @@ import pub.avalonframework.cloud.gar.model.*;
 import pub.avalonframework.cloud.gar.service.GarMenuNodeDraggableService;
 import pub.avalonframework.cloud.gar.service.GarMenuService;
 import pub.avalonframework.cloud.gar.utils.TableUtils;
+import pub.avalonframework.web.spring.http.response.HttpResultInfo;
+import pub.avalonframework.web.spring.http.response.exception.impl.FailMessageException;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityLimitMessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -55,50 +60,50 @@ public class GarMenuController implements GarMenuApi {
 
     @Override
     @RequestMapping(value = "/get/validateValueCanUseBySubModuleId/{value}/{subModuleId}")
-    public DataView getValidateValueCanUseBySubModuleId(@PathVariable String value, @PathVariable String subModuleId, String excludeValues, String moduleId) throws Exception {
+    public EntityMessageView<Boolean> getValidateValueCanUseBySubModuleId(@PathVariable String value, @PathVariable String subModuleId, String excludeValues, String moduleId) throws Exception {
         moduleId = TableUtils.getModuleId(moduleId, request);
         boolean canUse = this.menuService.getValidateValueCanUseBySubModuleId(moduleId, subModuleId, value, StringUtil.isEmpty(excludeValues) ? null : Arrays.asList(excludeValues.split(",")));
-        return DataViewUtil.getModelViewSuccess(Collections.singletonMap("canUse", canUse));
+        return new EntityMessageView<>(canUse, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override
     @RequestMapping(value = "/get/menuByMenuId/{menuId}")
-    public DataView getMenuByMenuId(@PathVariable String menuId, String moduleId) throws Exception {
+    public EntityMessageView<Menu> getMenuByMenuId(@PathVariable String menuId, String moduleId) throws Exception {
         String finalModuleId = TableUtils.getModuleId(moduleId, request);
-        Map<String, Object> menu = this.jdbcEngine.queryOne(MySqlDynamicEngine.query(MenuModel.class)
+        Menu menu = this.jdbcEngine.queryOne(Menu.class, MySqlDynamicEngine.query(MenuModel.class)
                 .where((condition, mainTable) -> condition.and(mainTable.moduleId().equalTo(finalModuleId).id().equalTo(menuId))));
         if (menu == null) {
-            ExceptionUtil.throwFailException(40404, "菜单不存在");
+            throw new FailMessageException("菜单不存在");
         }
-        return DataViewUtil.getModelViewSuccess(Collections.singletonMap("menu", menu));
+        return new EntityMessageView<>(menu, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override
     @RequestMapping(value = "/get/list/menu")
-    public DataView getListMenu(MenuGet record, String moduleId) throws Exception {
+    public EntityMessageView<List<Menu>> getListMenu(MenuGet record, String moduleId) throws Exception {
         String finalModuleId = TableUtils.getModuleId(moduleId, request);
-        List<Map<String, Object>> rows = this.jdbcEngine.queryForList(MySqlDynamicEngine.query(MenuModel.class)
+        List<Menu> rows = this.jdbcEngine.queryForList(Menu.class, MySqlDynamicEngine.query(MenuModel.class)
                 .where((condition, mainTable) -> condition
                         .and((cd, mt) -> cd.and(mt.name().like(record.getLikeText()))
                                 .or(mt.value().like(record.getLikeText())))
                         .and(mainTable.moduleId().equalTo(finalModuleId)))
                 .sort(table -> table.index().asc()));
-        return DataViewUtil.getModelViewSuccess(rows);
+        return new EntityMessageView<>(rows, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override
     @RequestMapping(value = "/get/pageList/menu")
-    public DataView getPageListMenu(MenuGet record, Integer currentPage, Integer pageSize, String moduleId) throws Exception {
+    public EntityLimitMessageView<List<Menu>> getPageListMenu(MenuGet record, Integer currentPage, Integer pageSize, String moduleId) throws Exception {
         String finalModuleId = TableUtils.getModuleId(moduleId, request);
         currentPage = (currentPage == null || currentPage < 1) ? 1 : currentPage;
         pageSize = (pageSize == null || pageSize < 1 || pageSize > 500) ? 1 : pageSize;
-        PageResultForMap pageResultForMap = this.jdbcEngine.pageQueryList(currentPage, pageSize, MySqlDynamicEngine.query(MenuModel.class)
+        PageResultForBean<Menu> pageResultForBean = this.jdbcEngine.pageQueryList(Menu.class, currentPage, pageSize, MySqlDynamicEngine.query(MenuModel.class)
                 .where((condition, mainTable) -> condition
                         .and((cd, mt) -> cd.and(mt.name().like(record.getLikeText()))
                                 .or(mt.value().like(record.getLikeText())))
                         .and(mainTable.moduleId().equalTo(finalModuleId)))
                 .sort(table -> table.index().asc()));
-        return DataViewUtil.getModelViewSuccess(pageResultForMap.getResult(), pageResultForMap.getLimit());
+        return new EntityLimitMessageView<>(pageResultForBean.getResult(), pageResultForBean.getLimit(), new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override
@@ -162,7 +167,7 @@ public class GarMenuController implements GarMenuApi {
 
     @Override
     @RequestMapping(value = "/get/menuTreeBySubModuleValueAndMenuGroupType/{subModuleValue}/{menuGroupType}")
-    public DataView getMenuTreeBySubModuleValueAndMenuGroupType(@PathVariable String subModuleValue, @PathVariable String menuGroupType, String moduleId) throws Exception {
+    public EntityMessageView<List<MenuGet>> getMenuTreeBySubModuleValueAndMenuGroupType(@PathVariable String subModuleValue, @PathVariable String menuGroupType, String moduleId) throws Exception {
         if (StringUtil.isEmpty(moduleId)) {
             ExceptionUtil.throwFailException("模块ID不能为空");
         }
@@ -196,7 +201,7 @@ public class GarMenuController implements GarMenuApi {
                 .sort(table -> table.index().asc()));
 
         if (menuGroupIds.size() == 0) {
-            return DataViewUtil.getModelViewSuccess(new ArrayList<>(0));
+            return new EntityMessageView<>(Collections.emptyList(), new HttpResultInfo(HttpStatus.OK));
         }
 
         String roleMenuTableName = TableUtils.getRoleMenuTableName(moduleId);
@@ -281,7 +286,7 @@ public class GarMenuController implements GarMenuApi {
         for (MenuGet subMenu : subMenus) {
             menuCache.get(subMenu.getParentId()).addSubMenu(subMenu);
         }
-        return DataViewUtil.getModelViewSuccess(rootMenus);
+        return new EntityMessageView<>(rootMenus, new HttpResultInfo(HttpStatus.OK));
     }
 
     @Override

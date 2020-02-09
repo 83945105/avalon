@@ -12,6 +12,11 @@ import pub.avalonframework.cloud.gar.beans.MenuDragParams;
 import pub.avalonframework.cloud.gar.dc.MenuGet;
 import pub.avalonframework.cloud.gar.dc.MenuPost;
 import pub.avalonframework.cloud.gar.dc.MenuPut;
+import pub.avalonframework.cloud.gar.entity.Menu;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityLimitMessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
+
+import java.util.List;
 
 /**
  * 菜单接口
@@ -36,10 +41,10 @@ public interface GarMenuApi {
      */
     @RequestMapping(value = "/get/validateValueCanUseBySubModuleId/{value}/{subModuleId}")
     @RequestLine("GET " + ROOT_PATH + "/get/validateValueCanUseBySubModuleId/{value}/{subModuleId}?excludeValues={excludeValues}&moduleId={moduleId}")
-    DataView getValidateValueCanUseBySubModuleId(@PathVariable("value") @Param("value") String value,
-                                                 @PathVariable("subModuleId") @Param("subModuleId") String subModuleId,
-                                                 @RequestParam("excludeValues") @Param("excludeValues") String excludeValues,
-                                                 @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
+    EntityMessageView<Boolean> getValidateValueCanUseBySubModuleId(@PathVariable("value") @Param("value") String value,
+                                                                   @PathVariable("subModuleId") @Param("subModuleId") String subModuleId,
+                                                                   @RequestParam("excludeValues") @Param("excludeValues") String excludeValues,
+                                                                   @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
 
     /**
      * 根据菜单ID获取菜单详情
@@ -51,8 +56,8 @@ public interface GarMenuApi {
      */
     @RequestMapping(value = "/get/menuByMenuId/{menuId}")
     @RequestLine("GET " + ROOT_PATH + "/get/menuByMenuId/{menuId}?moduleId={moduleId}")
-    DataView getMenuByMenuId(@PathVariable("menuId") @Param("menuId") String menuId,
-                             @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
+    EntityMessageView<Menu> getMenuByMenuId(@PathVariable("menuId") @Param("menuId") String menuId,
+                                            @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
 
     /**
      * 条件查询菜单集合
@@ -64,8 +69,8 @@ public interface GarMenuApi {
      */
     @RequestMapping(value = "/get/list/menu")
     @RequestLine("GET " + ROOT_PATH + "/get/list/menu?moduleId={moduleId}")
-    DataView getListMenu(@RequestParam("record") @QueryMap MenuGet record,
-                         @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
+    EntityMessageView<List<Menu>> getListMenu(@RequestParam("record") @QueryMap MenuGet record,
+                                              @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
 
     /**
      * 分页条件查询菜单集合
@@ -79,10 +84,10 @@ public interface GarMenuApi {
      */
     @RequestMapping(value = "/get/pageList/menu")
     @RequestLine("GET " + ROOT_PATH + "/get/pageList/menu?currentPage={currentPage}&pageSize={pageSize}&moduleId={moduleId}")
-    DataView getPageListMenu(@RequestParam("record") @QueryMap MenuGet record,
-                             @RequestParam("currentPage") @Param("currentPage") Integer currentPage,
-                             @RequestParam("pageSize") @Param("pageSize") Integer pageSize,
-                             @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
+    EntityLimitMessageView<List<Menu>> getPageListMenu(@RequestParam("record") @QueryMap MenuGet record,
+                                                       @RequestParam("currentPage") @Param("currentPage") Integer currentPage,
+                                                       @RequestParam("pageSize") @Param("pageSize") Integer pageSize,
+                                                       @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
 
     /**
      * 根据子模块ID条件查询菜单集合
@@ -142,9 +147,9 @@ public interface GarMenuApi {
      */
     @RequestMapping(value = "/get/menuTreeBySubModuleValueAndMenuGroupType/{subModuleValue}/{menuGroupType}")
     @RequestLine("GET " + ROOT_PATH + "/get/menuTreeBySubModuleValueAndMenuGroupType/{subModuleValue}/{menuGroupType}?moduleId={moduleId}")
-    DataView getMenuTreeBySubModuleValueAndMenuGroupType(@PathVariable("subModuleValue") @Param("subModuleValue") String subModuleValue,
-                                                         @PathVariable("menuGroupType") @Param("menuGroupType") String menuGroupType,
-                                                         @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
+    EntityMessageView<List<MenuGet>> getMenuTreeBySubModuleValueAndMenuGroupType(@PathVariable("subModuleValue") @Param("subModuleValue") String subModuleValue,
+                                                                                 @PathVariable("menuGroupType") @Param("menuGroupType") String menuGroupType,
+                                                                                 @RequestParam("moduleId") @Param("moduleId") String moduleId) throws Exception;
 
     /**
      * 新增菜单

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pub.avalonframework.database.Limit;
 import pub.avalonframework.web.spring.http.response.ResultInfo;
 import pub.avalonframework.web.spring.http.response.view.EntityView;
 import pub.avalonframework.web.spring.http.response.view.LimitView;
@@ -94,6 +95,10 @@ public final class ResponseUtils {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new ResponseViewInstantiatedException(e.getMessage(), e);
         }
+    }
+
+    public static Limit jsonToLimit(String json) {
+        return jsonToObject(json, Limit.class);
     }
 
     public static ResultInfo jsonToResultInfo(String json) {
