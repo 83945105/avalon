@@ -2,10 +2,10 @@ package $!{setting.packagePath};
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.builder.HavingSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.builder.OnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.builder.SortSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;
@@ -403,65 +403,65 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
         #end
     }
 
-    public static class Sql extends pub.avalonframework.sqlhelper.core.engine.builder.Sql<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, On, Column, Where, Group, Having, Sort> {
-        public Sql() {
+    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, On, Column, Where, Group, Having, Sort> {
+        public SqlBuilder() {
             super(TABLE_ALIAS);
         }
-        public Sql(String tableAlias) {
+        public SqlBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
 
-    public static class SqlJoin extends pub.avalonframework.sqlhelper.core.engine.builder.SqlJoin<On> {
-        public SqlJoin() {
+    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.builder.JoinBuilder<On> {
+        public JoinBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlJoin(String tableAlias) {
+        public JoinBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
 
-    public static class SqlColumn extends pub.avalonframework.sqlhelper.core.engine.builder.SqlColumn<Column> {
-        public SqlColumn() {
+    public static class ColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.ColumnBuilder<Column> {
+        public ColumnBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlColumn(String tableAlias) {
+        public ColumnBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
 
-    public static class SqlWhere extends pub.avalonframework.sqlhelper.core.engine.builder.SqlWhere<Where> {
-        public SqlWhere() {
+    public static class WhereBuilder extends pub.avalonframework.sqlhelper.core.builder.WhereBuilder<Where> {
+        public WhereBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlWhere(String tableAlias) {
+        public WhereBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
 
-    public static class SqlGroup extends pub.avalonframework.sqlhelper.core.engine.builder.SqlGroup<Group> {
-        public SqlGroup() {
+    public static class GroupBuilder extends pub.avalonframework.sqlhelper.core.builder.GroupBuilder<Group> {
+        public GroupBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlGroup(String tableAlias) {
+        public GroupBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
 
-    public static class SqlHaving extends pub.avalonframework.sqlhelper.core.engine.builder.SqlHaving<Having> {
-        public SqlHaving() {
+    public static class HavingBuilder extends pub.avalonframework.sqlhelper.core.builder.HavingBuilder<Having> {
+        public HavingBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlHaving(String tableAlias) {
+        public HavingBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
 
-    public static class SqlSort extends pub.avalonframework.sqlhelper.core.engine.builder.SqlSort<Sort> {
-        public SqlSort() {
+    public static class SortBuilder extends pub.avalonframework.sqlhelper.core.builder.SortBuilder<Sort> {
+        public SortBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlSort(String tableAlias) {
+        public SortBuilder(String tableAlias) {
             super(tableAlias);
         }
     }

@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
-import pub.avalonframework.sqlhelper.core.builder.SortSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.SortDatum;
 import pub.avalonframework.sqlhelper.core.data.TableSortDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;

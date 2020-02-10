@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.builder.ColumnSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.ColumnSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 

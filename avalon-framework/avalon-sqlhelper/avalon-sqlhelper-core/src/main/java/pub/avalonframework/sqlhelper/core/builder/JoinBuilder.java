@@ -1,0 +1,68 @@
+package pub.avalonframework.sqlhelper.core.builder;
+
+import pub.avalonframework.sqlhelper.core.beans.JoinType;
+import pub.avalonframework.sqlhelper.core.block.callback.CallbackJoinBlock;
+import pub.avalonframework.sqlhelper.core.block.helper.HelperJoinBlock;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlJoinBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.SqlJoinBean;
+import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
+import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
+import pub.avalonframework.sqlhelper.core.helper.*;
+import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
+import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author baichao
+ */
+public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoinBlock<JoinBuilder<TO>>, CallbackJoinBlock<TO, JoinBuilder<TO>> {
+
+    private TO onHelper;
+    private String tableAlias;
+
+    {
+        this.onHelper = HelperManager.findOnHelperClassFromAncestorsGenericType(this);
+    }
+
+    public JoinBuilder() {
+        this.tableAlias = this.onHelper.getTableAlias();
+    }
+
+    public JoinBuilder(String tableAlias) {
+        this.onHelper.setTableAlias(tableAlias);
+        this.tableAlias = tableAlias;
+    }
+
+    private List<AbstractSqlJoinBean> sqlJoinBeans = new ArrayList<>(1);
+
+    @Override
+    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
+            SO extends OnHelper<SO>,
+            SC extends ColumnHelper<SC>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> JoinBuilder<TO> join(JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+        this.sqlJoinBeans.add(new SqlJoinBean<>(this.onHelper, joinType, joinTableName, joinTableHelperClass, joinTableAlias, onJoinCallback));
+        return this;
+    }
+
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    public List<AbstractSqlJoinBean> getSqlJoinBeans() {
+        return sqlJoinBeans;
+    }
+
+    public List<JoinTableDatum> execute(SqlBuilderOptions sqlBuilderOptions) {
+        return execute(this, sqlBuilderOptions);
+    }
+
+    public static <FO extends OnHelper<FO>> List<JoinTableDatum> execute(JoinBuilder<FO> sqlJoin, SqlBuilderOptions sqlBuilderOptions) {
+        return sqlJoin.getSqlJoinBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderOptions)).collect(Collectors.toList());
+    }
+}

@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.rules.impl;
 
-import pub.avalonframework.sqlhelper.core.builder.AbstractComparisonSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
+import pub.avalonframework.sqlhelper.core.data.builder.AbstractComparisonSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.ToSqlPartBuilderComparisonOperator;
 

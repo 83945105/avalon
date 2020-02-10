@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
-import pub.avalonframework.sqlhelper.core.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.WhereDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.impl.*;

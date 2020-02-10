@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
-import pub.avalonframework.sqlhelper.core.builder.OnSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.OnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;

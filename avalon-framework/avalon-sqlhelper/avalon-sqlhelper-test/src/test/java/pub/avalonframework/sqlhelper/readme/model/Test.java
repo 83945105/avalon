@@ -3,10 +3,10 @@ package pub.avalonframework.sqlhelper.readme.model;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
+import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
 import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
-import pub.avalonframework.sqlhelper.core.engine.builder.SqlColumn;
-import pub.avalonframework.sqlhelper.core.engine.builder.SqlJoin;
-import pub.avalonframework.sqlhelper.core.engine.builder.SqlOn;
+import pub.avalonframework.sqlhelper.core.builder.ColumnBuilder;
+import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
 import pub.avalonframework.sqlhelper.readme.entity.RoleResourceHelper;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;
@@ -29,13 +29,13 @@ public class Test {
 
         SqlHelperEngine sqlEngine = new SqlHelperEngine<>(DatabaseType.MYSQL, "", RoleResourceHelper.class)
 
-                .sqlColumn(new SysUserHelper.SqlColumn())
+                .sqlColumn(new SysUserHelper.ColumnBuilder())
 
-                .sqlColumn(new SqlColumn<RoleResourceHelper.Column>() {
+                .sqlColumn(new ColumnBuilder<RoleResourceHelper.Column>() {
 
                 }.select(table -> table.id().primaryKey()))
 
-                .sqlColumn(new SqlColumn<RoleResourceHelper.Column>() {{
+                .sqlColumn(new ColumnBuilder<RoleResourceHelper.Column>() {{
 
                     if (true) {
                         select(table -> table.id().resourceName());
@@ -43,20 +43,20 @@ public class Test {
 
                 }})
 
-                .sqlColumn(new RoleResourceHelper.SqlColumn().select(table -> table.id().resourceId()))
-                .sqlColumn(new SqlColumn<SysUserHelper.Column>() {
+                .sqlColumn(new RoleResourceHelper.ColumnBuilder().select(table -> table.id().resourceId()))
+                .sqlColumn(new ColumnBuilder<SysUserHelper.Column>() {
                 }.select(table -> table.id().loginName()))
-                .sqlColumn(new RoleResourceHelper.SqlColumn() {{
+                .sqlColumn(new RoleResourceHelper.ColumnBuilder() {{
 
-                    column(SysUserHelper.class, table -> table.userName().userName(""));
-
-                }})
-
-                .sqlJoin(new SqlJoin<SysUserHelper.On>() {{
+                    select(SysUserHelper.class, table -> table.userName().userName(""));
 
                 }})
 
-                .sqlOn(new SqlOn<SysUserHelper.On>() {{
+                .sqlJoin(new JoinBuilder<SysUserHelper.On>() {{
+
+                }})
+
+                .sqlOn(new OnBuilder<SysUserHelper.On>() {{
 
 
                 }})
@@ -72,7 +72,7 @@ public class Test {
                 .select(table -> column)
                 .select(column)
                 .select(column, column, column, joinColumn)
-                .column(SysUserHelper.class, table -> joinColumn)
+                .select(SysUserHelper.class, table -> joinColumn)
 
                 .subQueryColumn("", parentTable -> {
                     return new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)

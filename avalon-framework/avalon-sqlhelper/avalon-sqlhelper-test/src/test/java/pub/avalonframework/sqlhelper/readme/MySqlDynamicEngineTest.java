@@ -167,7 +167,7 @@ public class MySqlDynamicEngineTest extends AbstractTest {
         //从产出的sql来看，我们只查询了主表的字段，那么如果我们想同时查询出连接表的字段该如何做呢？
         sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 //将column定位到连接表模型，指定要查询的列，注意，为了防止列名重复，必要字段请自行取别名，这里将连接表的主键id更名为userRoleId
-                .column(UserRoleHelper.class, table -> table.id("userRoleId").roleId().roleName())
+                .select(UserRoleHelper.class, table -> table.id("userRoleId").roleId().roleName())
                 //注意，如果指定了column、functionColumn(见下文)、virtualColumn(见下文)等
                 //将默认不会查询主表字段，此时如果你想查询出主表字段需手动声明，这里的写法(table -> table)表示查询出主表所有字段
                 .select(table -> table)

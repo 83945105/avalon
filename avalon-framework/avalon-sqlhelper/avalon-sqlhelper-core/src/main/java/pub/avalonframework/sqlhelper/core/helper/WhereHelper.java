@@ -1,11 +1,10 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
-import pub.avalonframework.sqlhelper.core.builder.SqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.builder.WhereSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
 import pub.avalonframework.sqlhelper.core.data.WhereDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;
@@ -31,28 +30,11 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
         this.whereSqlPartDatumBuilder.setTableAlias(tableAlias);
     }
 
-    /**
-     * 接收sql片段
-     *
-     * @param templateTableName  模板表名
-     * @param templateTableAlias 模板表别名
-     * @param sqlPart            sql片段
-     * @return {@link SqlPartDatumBuilder}
-     */
     protected WhereSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
         this.whereSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
         return this.whereSqlPartDatumBuilder;
     }
 
-    /**
-     * 接收数据
-     *
-     * @param templateTableName   模板表名
-     * @param templateTableAlias  模板表别名
-     * @param templateColumnName  模板列名
-     * @param templateColumnAlias 模板列别名
-     * @return {@link SqlPartDatumBuilder}
-     */
     protected WhereSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         this.whereSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
         return this.whereSqlPartDatumBuilder;
@@ -62,11 +44,6 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
         return this.whereSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
-    /**
-     * 设置Sql构建配置
-     *
-     * @param sqlBuilderOptions {@link SqlBuilderOptions}
-     */
     public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
         this.whereSqlPartDatumBuilder.setSqlBuilderOptions(sqlBuilderOptions);
     }

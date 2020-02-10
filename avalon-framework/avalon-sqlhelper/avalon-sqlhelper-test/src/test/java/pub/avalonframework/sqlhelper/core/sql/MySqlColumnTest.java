@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
-import pub.avalonframework.sqlhelper.core.engine.builder.SqlColumn;
+import pub.avalonframework.sqlhelper.core.builder.ColumnBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;
@@ -210,7 +210,7 @@ public class MySqlColumnTest {
     void Test_lambdaMultiColumn_assignColumnAlias() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table.id().loginName())
-                .column(UserRoleHelper.class, table -> table.id("userRoleId").roleId())
+                .select(UserRoleHelper.class, table -> table.id("userRoleId").roleId())
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.userId().equalTo(mainTable.id())))
                 .query();
@@ -224,7 +224,7 @@ public class MySqlColumnTest {
     @Test
     void Test_lambdaMultiColumn_default() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
-                .column(UserRoleHelper.class, table -> table)
+                .select(UserRoleHelper.class, table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.userId().equalTo(mainTable.id())))
                 .query();
@@ -327,7 +327,7 @@ public class MySqlColumnTest {
     @Test
     void Test_sqlColumn() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
-                .sqlColumn(new SqlColumn<SysUserHelper.Column>() {
+                .sqlColumn(new ColumnBuilder<SysUserHelper.Column>() {
                 }.select(table -> table.id().userName()))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`user_name` `userName` from `sys_user` SysUser", sqlBuilderResult.getPreparedStatementSql());
@@ -340,7 +340,7 @@ public class MySqlColumnTest {
     @Test
     void Test_sqlColumn_assignTableName() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, "sys_user_custom", SysUserHelper.class)
-                .sqlColumn(new SqlColumn<SysUserHelper.Column>() {
+                .sqlColumn(new ColumnBuilder<SysUserHelper.Column>() {
                 }.select(table -> table.id().userName()))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`user_name` `userName` from `sys_user_custom` SysUser", sqlBuilderResult.getPreparedStatementSql());
@@ -353,7 +353,7 @@ public class MySqlColumnTest {
     @Test
     void Test_sqlColumn_assignTableAlias() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class, "A")
-                .sqlColumn(new SqlColumn<SysUserHelper.Column>("A") {
+                .sqlColumn(new ColumnBuilder<SysUserHelper.Column>("A") {
                 }.select(table -> table.id().userName()))
                 .query();
         Assertions.assertEquals("select A.`id` `id`,A.`user_name` `userName` from `sys_user` A", sqlBuilderResult.getPreparedStatementSql());
@@ -366,7 +366,7 @@ public class MySqlColumnTest {
     @Test
     void Test_sqlColumn_logicalConditions() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class, "A")
-                .sqlColumn(new SqlColumn<SysUserHelper.Column>("A") {{
+                .sqlColumn(new ColumnBuilder<SysUserHelper.Column>("A") {{
                     if (true) {
                         select(table -> table.id("id"));
                     }

@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.core.utils;
 
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
+import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.cache.ClassCacheManager;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheConfigurationBuilder;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheManager;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheManagerBuilder;
 import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
-import pub.avalonframework.sqlhelper.core.engine.builder.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.spi.cache.Cache;
 
@@ -80,38 +80,38 @@ public class HelperManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends OnHelper<T>> T findOnHelperClassFromAncestorsGenericType(SqlJoin<T> sqlJoin) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlJoin.getClass(), OnHelper.class));
+    public static <T extends ColumnHelper<T>> T findColumnHelperClassFromAncestorsGenericType(ColumnBuilder<T> columnBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(columnBuilder.getClass(), ColumnHelper.class));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends OnHelper<T>> T findOnHelperClassFromAncestorsGenericType(SqlOn<T> sqlOn) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlOn.getClass(), OnHelper.class));
+    public static <T extends OnHelper<T>> T findOnHelperClassFromAncestorsGenericType(JoinBuilder<T> joinBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(joinBuilder.getClass(), OnHelper.class));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends ColumnHelper<T>> T findColumnHelperClassFromAncestorsGenericType(SqlColumn<T> sqlColumn) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlColumn.getClass(), ColumnHelper.class));
+    public static <T extends OnHelper<T>> T findOnHelperClassFromAncestorsGenericType(OnBuilder<T> onBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(onBuilder.getClass(), OnHelper.class));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends WhereHelper<T>> T findWhereHelperClassFromAncestorsGenericType(SqlWhere<T> sqlWhere) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlWhere.getClass(), WhereHelper.class));
+    public static <T extends WhereHelper<T>> T findWhereHelperClassFromAncestorsGenericType(WhereBuilder<T> whereBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(whereBuilder.getClass(), WhereHelper.class));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends GroupHelper<T>> T findGroupHelperClassFromAncestorsGenericType(SqlGroup<T> sqlGroup) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlGroup.getClass(), GroupHelper.class));
+    public static <T extends GroupHelper<T>> T findGroupHelperClassFromAncestorsGenericType(GroupBuilder<T> groupBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(groupBuilder.getClass(), GroupHelper.class));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends HavingHelper<T>> T findHavingHelperClassFromAncestorsGenericType(SqlHaving<T> sqlHaving) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlHaving.getClass(), HavingHelper.class));
+    public static <T extends HavingHelper<T>> T findHavingHelperClassFromAncestorsGenericType(HavingBuilder<T> havingBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(havingBuilder.getClass(), HavingHelper.class));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends SortHelper<T>> T findSortHelperClassFromAncestorsGenericType(SqlSort<T> sqlSort) {
-        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sqlSort.getClass(), SortHelper.class));
+    public static <T extends SortHelper<T>> T findSortHelperClassFromAncestorsGenericType(SortBuilder<T> sortBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(sortBuilder.getClass(), SortHelper.class));
     }
 
     private static Class getExpectAncestorsClassGenricType(Class clazz, Class<?> expectClass) {

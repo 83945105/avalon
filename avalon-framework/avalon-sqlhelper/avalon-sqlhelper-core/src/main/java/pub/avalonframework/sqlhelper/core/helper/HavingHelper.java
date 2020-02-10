@@ -2,10 +2,10 @@ package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
-import pub.avalonframework.sqlhelper.core.builder.HavingSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.HavingDatum;
 import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;

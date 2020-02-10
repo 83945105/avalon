@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
-import pub.avalonframework.sqlhelper.core.builder.GroupSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.GroupDatum;
 import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.GroupSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;
