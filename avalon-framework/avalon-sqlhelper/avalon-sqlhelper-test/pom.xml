@@ -25,6 +25,12 @@
         </dependency>
         <dependency>
             <groupId>pub.avalonframework</groupId>
+            <artifactId>avalon-sqlhelper-jdbc</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>pub.avalonframework</groupId>
             <artifactId>avalon-sqlhelper-generator</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

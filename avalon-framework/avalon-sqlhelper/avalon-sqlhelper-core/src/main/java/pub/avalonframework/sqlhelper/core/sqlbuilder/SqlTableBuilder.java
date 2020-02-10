@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.TableSqlBuilderResult
 /**
  * @author baichao
  */
-public interface TableSqlBuilder {
+public interface SqlTableBuilder {
 
     /**
      * copy table

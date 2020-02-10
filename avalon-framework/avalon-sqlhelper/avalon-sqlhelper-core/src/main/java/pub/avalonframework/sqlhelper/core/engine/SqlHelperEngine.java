@@ -9,21 +9,30 @@ import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.engine.builder.*;
 import pub.avalonframework.sqlhelper.core.engine.callback.JdbcCallbackEngine;
 import pub.avalonframework.sqlhelper.core.engine.callback.executor.CallbackEngineExecutor;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperCrudEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 /**
  * @author baichao
  */
-public final class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
+public class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
         TO extends OnHelper<TO>,
         TC extends ColumnHelper<TC>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>>
-        extends AbstractEngine<T, TO, TC, TW, TG, TH, TS>
-        implements JdbcEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>, SqlEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>, JdbcCallbackEngine<TO, TC, TW, TG, TH, TS, SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>> {
+
+        extends AbstractCrudEngine<T, TO, TC, TW, TG, TH, TS> implements
+
+        HelperCrudEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
+
+        SqlEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
+
+        JdbcCallbackEngine<TO, TC, TW, TG, TH, TS, SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
+
+        LimitEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>> {
 
     public SqlHelperEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
@@ -51,6 +60,24 @@ public final class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, 
 
     public SqlHelperEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
         super(databaseType, tableName, tableHelperClass, tableAlias, sqlBuilderOptions);
+    }
+
+    @Override
+    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> insert(ColumnHelper<?>... columnHelpers) {
+        ColumnHelper.execute(columnHelpers).forEach(this::addInsertTableColumnDatum);
+        return this;
+    }
+
+    @Override
+    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> select(ColumnHelper<?>... columnHelpers) {
+        ColumnHelper.execute(columnHelpers).forEach(this::addSelectTableColumnDatum);
+        return this;
+    }
+
+    @Override
+    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> update(ColumnHelper<?>... columnHelpers) {
+        ColumnHelper.execute(columnHelpers).forEach(this::addUpdateTableColumnDatum);
+        return this;
     }
 
     @Override
@@ -86,43 +113,6 @@ public final class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, 
     @Override
     public <FS extends SortHelper<FS>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlSort(SqlSort<FS> sqlSort) {
         SqlSort.execute(sqlSort, this.sqlBuilderOptions, () -> this);
-        return this;
-    }
-
-    @Override
-    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> column(ColumnHelper<?>... columnHelpers) {
-        ColumnHelper.execute(columnHelpers).forEach(tableColumnDatum -> {
-            this.addSelectTableColumnDatum(tableColumnDatum);
-            this.addInsertTableColumnDatum(tableColumnDatum);
-            this.addUpdateTableColumnDatum(tableColumnDatum);
-        });
-        return this;
-    }
-
-    @Override
-    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> select(ColumnHelper<?>... columnHelpers) {
-        ColumnHelper.execute(columnHelpers).forEach(this::addSelectTableColumnDatum);
-        return this;
-    }
-
-    @Override
-    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> insert(ColumnHelper<?>... columnHelpers) {
-        ColumnHelper.execute(columnHelpers).forEach(this::addInsertTableColumnDatum);
-        return this;
-    }
-
-    @Override
-    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> update(ColumnHelper<?>... columnHelpers) {
-        ColumnHelper.execute(columnHelpers).forEach(this::addUpdateTableColumnDatum);
-        return this;
-    }
-
-    @Override
-    public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> column(ColumnCallback<TC> columnCallback) {
-        TableColumnDatum tableColumnDatum = CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, columnCallback, this.sqlBuilderOptions);
-        this.addSelectTableColumnDatum(tableColumnDatum);
-        this.addInsertTableColumnDatum(tableColumnDatum);
-        this.addUpdateTableColumnDatum(tableColumnDatum);
         return this;
     }
 

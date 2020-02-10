@@ -2,12 +2,12 @@ package pub.avalonframework.sqlhelper.core.engine.builder;
 
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataProducer;
-import pub.avalonframework.sqlhelper.core.engine.WhereEngine;
+import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.AbstractSqlWhereBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlWhereBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlWhereBeanJoin;
 import pub.avalonframework.sqlhelper.core.engine.callback.WhereCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperWhereEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class SqlWhere<TW extends WhereHelper<TW>> implements WhereEngine<SqlWhere<TW>>, WhereCallbackEngine<TW, SqlWhere<TW>> {
+public abstract class SqlWhere<TW extends WhereHelper<TW>> implements HelperWhereEngine<SqlWhere<TW>>, WhereCallbackEngine<TW, SqlWhere<TW>> {
 
     private TW whereHelper;
     private String tableAlias;
@@ -71,18 +71,18 @@ public abstract class SqlWhere<TW extends WhereHelper<TW>> implements WhereEngin
         return sqlWhereBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FW extends WhereHelper<FW>> void execute(SqlWhere<FW> sqlWhere, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public static <FW extends WhereHelper<FW>> void execute(SqlWhere<FW> sqlWhere, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataProducer sqlDataProducer = supplier.get();
-        if (sqlDataProducer == null) {
+        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
+        if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlWhere.getSqlWhereBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataProducer::addTableWhereDatum));
+        sqlWhere.getSqlWhereBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableWhereDatum));
     }
 }

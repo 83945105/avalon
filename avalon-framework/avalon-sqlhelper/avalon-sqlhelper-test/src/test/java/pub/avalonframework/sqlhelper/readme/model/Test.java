@@ -29,18 +29,23 @@ public class Test {
 
         SqlHelperEngine sqlEngine = new SqlHelperEngine<>(DatabaseType.MYSQL, "", RoleResourceHelper.class)
 
+                .sqlColumn(new SysUserHelper.SqlColumn())
+
                 .sqlColumn(new SqlColumn<RoleResourceHelper.Column>() {
-                }.column(table -> table.id().primaryKey()))
+
+                }.select(table -> table.id().primaryKey()))
+
                 .sqlColumn(new SqlColumn<RoleResourceHelper.Column>() {{
 
                     if (true) {
-                        column(table -> table.id().resourceName());
+                        select(table -> table.id().resourceName());
                     }
 
                 }})
-                .sqlColumn(new RoleResourceHelper.SqlColumn().column(table -> table.id().resourceId()))
+
+                .sqlColumn(new RoleResourceHelper.SqlColumn().select(table -> table.id().resourceId()))
                 .sqlColumn(new SqlColumn<SysUserHelper.Column>() {
-                }.column(table -> table.id().loginName()))
+                }.select(table -> table.id().loginName()))
                 .sqlColumn(new RoleResourceHelper.SqlColumn() {{
 
                     column(SysUserHelper.class, table -> table.userName().userName(""));
@@ -56,17 +61,17 @@ public class Test {
 
                 }})
 
-                .column(
+                .select(
 
 
                 )
-                .column(table -> table.id().sqlPart("").resourceId())
-                .column(table -> table.id().id().id(""))
-                .column(SysUserHelper.class, table -> table.userName().userName("").id(GroupType.COUNT))
-                .column(SysUserHelper.class, "", table -> table.userName().userName(""))
-                .column(table -> column)
-                .column(column)
-                .column(column, column, column, joinColumn)
+                .select(table -> table.id().sqlPart("").resourceId())
+                .select(table -> table.id().id().id(""))
+                .select(SysUserHelper.class, table -> table.userName().userName("").id(GroupType.COUNT))
+                .select(SysUserHelper.class, "", table -> table.userName().userName(""))
+                .select(table -> column)
+                .select(column)
+                .select(column, column, column, joinColumn)
                 .column(SysUserHelper.class, table -> joinColumn)
 
                 .subQueryColumn("", parentTable -> {

@@ -3,21 +3,12 @@ package pub.avalonframework.sqlhelper.core.engine.callback;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.SubQueryColumnCallback;
-import pub.avalonframework.sqlhelper.core.engine.Engine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
  * @author baichao
  */
-public interface ColumnCallbackEngine<TC extends ColumnHelper<TC>, R> extends Engine {
-
-    /**
-     * use callback to add column sql data
-     *
-     * @param columnCallback {@link ColumnCallback}
-     * @return R
-     */
-    R column(ColumnCallback<TC> columnCallback);
+public interface ColumnCallbackEngine<TC extends ColumnHelper<TC>, R> extends CallbackEngine {
 
     /**
      * use callback to add select column sql data

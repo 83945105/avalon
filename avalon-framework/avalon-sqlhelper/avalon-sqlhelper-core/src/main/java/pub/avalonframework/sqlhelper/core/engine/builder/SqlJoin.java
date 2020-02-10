@@ -3,10 +3,10 @@ package pub.avalonframework.sqlhelper.core.engine.builder;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
-import pub.avalonframework.sqlhelper.core.engine.JoinEngine;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.AbstractSqlJoinBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlJoinBean;
 import pub.avalonframework.sqlhelper.core.engine.callback.JoinCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperJoinEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author baichao
  */
-public abstract class SqlJoin<TO extends OnHelper<TO>> implements JoinEngine<SqlJoin<TO>>, JoinCallbackEngine<TO, SqlJoin<TO>> {
+public abstract class SqlJoin<TO extends OnHelper<TO>> implements HelperJoinEngine<SqlJoin<TO>>, JoinCallbackEngine<TO, SqlJoin<TO>> {
 
     private TO onHelper;
     private String tableAlias;

@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.core.engine.builder;
 
 import pub.avalonframework.sqlhelper.core.callback.SortCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataProducer;
-import pub.avalonframework.sqlhelper.core.engine.SortEngine;
+import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.AbstractSqlSortBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlSortBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlSortBeanJoin;
 import pub.avalonframework.sqlhelper.core.engine.callback.SortCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperSortEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public class SqlSort<TS extends SortHelper<TS>> implements SortEngine<SqlSort<TS>>, SortCallbackEngine<TS, SqlSort<TS>> {
+public class SqlSort<TS extends SortHelper<TS>> implements HelperSortEngine<SqlSort<TS>>, SortCallbackEngine<TS, SqlSort<TS>> {
 
     private TS sortHelper;
     private String tableAlias;
@@ -70,18 +70,18 @@ public class SqlSort<TS extends SortHelper<TS>> implements SortEngine<SqlSort<TS
         return sqlSortBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FS extends SortHelper<FS>> void execute(SqlSort<FS> sqlSort, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public static <FS extends SortHelper<FS>> void execute(SqlSort<FS> sqlSort, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataProducer sqlDataProducer = supplier.get();
-        if (sqlDataProducer == null) {
+        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
+        if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlSort.getSqlSortBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataProducer::addTableSortDatum));
+        sqlSort.getSqlSortBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableSortDatum));
     }
 }

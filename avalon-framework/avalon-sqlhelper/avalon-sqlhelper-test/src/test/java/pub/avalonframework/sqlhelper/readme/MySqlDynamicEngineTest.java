@@ -37,7 +37,7 @@ public class MySqlDynamicEngineTest extends AbstractTest {
 //    @Test
     void TestByPrimaryKey() {
         //使用MySql动态引擎查询SysUserModel对应的表
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 //调用主键查询接口
                 .queryByPrimaryKey(arg());
         //TODO 你可以将产出的预编译sql和参数传入如Spring JDBC的JdbcTemplate相关方法中使用
@@ -51,16 +51,16 @@ public class MySqlDynamicEngineTest extends AbstractTest {
      */
 //    @Test
     void TestColumn() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 //指定查询表的id、userName字段并给userName字段取个别名userNameAlias
-                .column(table -> table.id().userName("userNameAlias"))
+                .select(table -> table.id().userName("userNameAlias"))
                 .queryByPrimaryKey(arg());
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`id` = ?");
 
-        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
+        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 //table表示查询所有字段，如果不指定任何column，默认也是这样
-                .column(table -> table)
+                .select(table -> table)
                 .queryByPrimaryKey(arg());
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`id` = ?");
@@ -71,8 +71,8 @@ public class MySqlDynamicEngineTest extends AbstractTest {
      */
 //    @Test
     void TestWhere() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
-                .column(table -> table.id().userName("userNameAlias"))
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .select(table -> table.id().userName("userNameAlias"))
                 //使用where条件,你将有俩个参数可用。
                 //condition - 条件，第一次可以调出and条件，之后可以调出or条件
                 //mainTable - 主表,也就是你操作的出发表，这里为对应SysUserModel对应的表
@@ -85,8 +85,8 @@ public class MySqlDynamicEngineTest extends AbstractTest {
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`user_name` like ?");
 
         //上面的例子只是一个条件，那么多条件查询该如何写呢
-        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
-                .column(table -> table.id().userName("userNameAlias"))
+        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         //添加一个and条件 userName 等于 1
                         .and(mainTable.userName().equalTo(arg("1"))
@@ -97,8 +97,8 @@ public class MySqlDynamicEngineTest extends AbstractTest {
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ?");
 
         //你也可以这么写
-        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
-                .column(table -> table.id().userName("userNameAlias"))
+        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         //添加一个and条件 userName 等于 1
                         .and(mainTable.userName().equalTo(arg("1")))
@@ -109,8 +109,8 @@ public class MySqlDynamicEngineTest extends AbstractTest {
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ?");
 
         //or条件
-        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
-                .column(table -> table.id().userName("userNameAlias"))
+        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         //添加一个and条件 userName 等于 1
                         .and(mainTable.userName().equalTo(arg("1")))
@@ -127,8 +127,8 @@ public class MySqlDynamicEngineTest extends AbstractTest {
      */
 //    @Test
     void TestWhereAndOr() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
-                .column(table -> table.id().userName("userNameAlias"))
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         // and条件继续使用lambda获取新的condition取名为cd(防止重名)、新的mainTable取名为mt
                         // 同样or条件也支持, 这里就不举例了
@@ -148,8 +148,8 @@ public class MySqlDynamicEngineTest extends AbstractTest {
      */
 //    @Test
     void TestJoin() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
-                .column(table -> table.id().userName("userNameAlias"))
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .select(table -> table.id().userName("userNameAlias"))
                 // 连接UserRoleModel对应的表 , 设置连接类型为inner , 或者直接使用innerJoin可以省略该参数
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         // 从lambda函数获取参数 on - on条件、joinTable - 当前连接表(UserRoleModel对应的表)、mainTable - 主表(SysUserModel对应的表)
@@ -165,12 +165,12 @@ public class MySqlDynamicEngineTest extends AbstractTest {
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id` where SysUser.`user_name` like ?");
 
         //从产出的sql来看，我们只查询了主表的字段，那么如果我们想同时查询出连接表的字段该如何做呢？
-        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
+        sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 //将column定位到连接表模型，指定要查询的列，注意，为了防止列名重复，必要字段请自行取别名，这里将连接表的主键id更名为userRoleId
                 .column(UserRoleHelper.class, table -> table.id("userRoleId").roleId().roleName())
                 //注意，如果指定了column、functionColumn(见下文)、virtualColumn(见下文)等
                 //将默认不会查询主表字段，此时如果你想查询出主表字段需手动声明，这里的写法(table -> table)表示查询出主表所有字段
-                .column(table -> table)
+                .select(table -> table)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.userId().equalTo(mainTable.id())))
                 .where((condition, mainTable) -> condition

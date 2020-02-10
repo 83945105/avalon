@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlBuilder implements SqlBuilder {
+public abstract class AbstractSqlCrudBuilder implements SqlCrudBuilder {
 
     private SqlData sqlData;
 
@@ -19,7 +19,7 @@ public abstract class AbstractSqlBuilder implements SqlBuilder {
 
     private SqlBuilderTemplate sqlBuilderTemplate;
 
-    public AbstractSqlBuilder(SqlData sqlData, SqlBuilderOptions sqlBuilderOptions) {
+    public AbstractSqlCrudBuilder(SqlData sqlData, SqlBuilderOptions sqlBuilderOptions) {
         this.sqlData = sqlData;
         this.sqlBuilderOptions = sqlBuilderOptions;
     }

@@ -2,13 +2,12 @@ package pub.avalonframework.sqlhelper.core.engine.callback;
 
 import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
-import pub.avalonframework.sqlhelper.core.engine.Engine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
  * @author baichao
  */
-public interface HavingCallbackEngine<TH extends HavingHelper<TH>, R> extends Engine {
+public interface HavingCallbackEngine<TH extends HavingHelper<TH>, R> extends CallbackEngine {
 
     /**
      * use callback to add having sql data

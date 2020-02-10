@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.engine;
+package pub.avalonframework.sqlhelper.core.engine.helper;
 
 import pub.avalonframework.sqlhelper.core.helper.SortHelper;
 
 /**
  * @author baichao
  */
-public interface SortEngine<R> extends Engine {
+public interface HelperSortEngine<R> extends HelperEngine {
 
     /**
      * add sort sql data

@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SelectSqlBuilderResul
 /**
  * @author baichao
  */
-public interface SelectSqlBuilder {
+public interface SqlSelectBuilder {
 
     /**
      * query

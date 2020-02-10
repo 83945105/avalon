@@ -2,12 +2,12 @@ package pub.avalonframework.sqlhelper.core.engine.builder;
 
 import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataProducer;
-import pub.avalonframework.sqlhelper.core.engine.HavingEngine;
+import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.AbstractSqlHavingBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlHavingBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlHavingBeanJoin;
 import pub.avalonframework.sqlhelper.core.engine.callback.HavingCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperHavingEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class SqlHaving<TH extends HavingHelper<TH>> implements HavingEngine<SqlHaving<TH>>, HavingCallbackEngine<TH, SqlHaving<TH>> {
+public abstract class SqlHaving<TH extends HavingHelper<TH>> implements HelperHavingEngine<SqlHaving<TH>>, HavingCallbackEngine<TH, SqlHaving<TH>> {
 
     private TH havingHelper;
     private String tableAlias;
@@ -71,18 +71,18 @@ public abstract class SqlHaving<TH extends HavingHelper<TH>> implements HavingEn
         return sqlHavingBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FW extends HavingHelper<FW>> void execute(SqlHaving<FW> sqlHaving, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public static <FW extends HavingHelper<FW>> void execute(SqlHaving<FW> sqlHaving, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataProducer sqlDataProducer = supplier.get();
-        if (sqlDataProducer == null) {
+        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
+        if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlHaving.getSqlHavingBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataProducer::addTableHavingDatum));
+        sqlHaving.getSqlHavingBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableHavingDatum));
     }
 }

@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.engine;
+package pub.avalonframework.sqlhelper.core.engine.helper;
 
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 /**
  * @author baichao
  */
-public interface OnEngine<R> extends Engine {
+public interface HelperOnEngine<R> extends HelperEngine {
 
     /**
      * add on sql data

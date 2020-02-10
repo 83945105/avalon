@@ -2,12 +2,12 @@ package pub.avalonframework.sqlhelper.core.engine.builder;
 
 import pub.avalonframework.sqlhelper.core.callback.OnCallback;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataProducer;
-import pub.avalonframework.sqlhelper.core.engine.OnEngine;
+import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.AbstractSqlOnBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlOnBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlOnBeanJoin;
 import pub.avalonframework.sqlhelper.core.engine.callback.OnCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperOnEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class SqlOn<TO extends OnHelper<TO>> implements OnEngine<SqlOn<TO>>, OnCallbackEngine<TO, SqlOn<TO>> {
+public abstract class SqlOn<TO extends OnHelper<TO>> implements HelperOnEngine<SqlOn<TO>>, OnCallbackEngine<TO, SqlOn<TO>> {
 
     private TO onHelper;
     private String tableAlias;
@@ -71,18 +71,18 @@ public abstract class SqlOn<TO extends OnHelper<TO>> implements OnEngine<SqlOn<T
         return sqlOnBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FO extends OnHelper<FO>> void execute(SqlOn<FO> sqlOn, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public static <FO extends OnHelper<FO>> void execute(SqlOn<FO> sqlOn, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataProducer sqlDataProducer = supplier.get();
-        if (sqlDataProducer == null) {
+        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
+        if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlOn.getSqlOnBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataProducer::addTableOnDatum));
+        sqlOn.getSqlOnBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableOnDatum));
     }
 }

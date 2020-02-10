@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.engine;
+package pub.avalonframework.sqlhelper.core.engine.helper;
 
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 /**
  * @author baichao
  */
-public interface HavingEngine<R> extends Engine {
+public interface HelperHavingEngine<R> extends HelperEngine {
 
     /**
      * add having sql data

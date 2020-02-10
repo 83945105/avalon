@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 /**
  * @author baichao
  */
-public interface SqlDataProducer {
+public interface SqlDataSelectProducer {
 
     /**
      * set sql builder options
@@ -42,20 +42,6 @@ public interface SqlDataProducer {
      * @param tableColumnDatum {@link TableColumnDatum}
      */
     void addSelectTableColumnDatum(TableColumnDatum tableColumnDatum);
-
-    /**
-     * add insert table column data
-     *
-     * @param tableColumnDatum {@link TableColumnDatum}
-     */
-    void addInsertTableColumnDatum(TableColumnDatum tableColumnDatum);
-
-    /**
-     * add update table column data
-     *
-     * @param tableColumnDatum {@link TableColumnDatum}
-     */
-    void addUpdateTableColumnDatum(TableColumnDatum tableColumnDatum);
 
     /**
      * add table where data

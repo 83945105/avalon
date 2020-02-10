@@ -1,13 +1,12 @@
 package pub.avalonframework.sqlhelper.core.engine.callback;
 
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
-import pub.avalonframework.sqlhelper.core.engine.Engine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
  * @author baichao
  */
-public interface GroupCallbackEngine<TG extends GroupHelper<TG>, R> extends Engine {
+public interface GroupCallbackEngine<TG extends GroupHelper<TG>, R> extends CallbackEngine {
 
     /**
      * use callback to add group sql data

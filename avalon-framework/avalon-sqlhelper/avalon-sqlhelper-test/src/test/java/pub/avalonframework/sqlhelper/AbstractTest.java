@@ -29,10 +29,10 @@ public abstract class AbstractTest {
         return arg(arg);
     }
 
-    protected void setSqlBuilder(SqlBuilderResult sqlBuilder, String sql) {
+    protected void setSqlBuilder(SqlBuilderResult sqlBuilderResult, String sql) {
         AbstractTest.argListList.add(new ArrayList<>());
         AbstractTest.sqlList.add(sql);
-        AbstractTest.sqlBuilderList.add(sqlBuilder);
+        AbstractTest.sqlBuilderList.add(sqlBuilderResult);
     }
 
     @BeforeAll
@@ -54,14 +54,14 @@ public abstract class AbstractTest {
 //        long nanoTime = System.nanoTime() - AbstractTest.nanoTime;
 //        System.out.println("nanoTime:" + nanoTime);
 
-        SqlBuilderResult sqlBuilder;
+        SqlBuilderResult sqlBuilderResult;
         for (int i = 0; i < AbstractTest.sqlBuilderList.size(); i++) {
-            sqlBuilder = AbstractTest.sqlBuilderList.get(i);
+            sqlBuilderResult = AbstractTest.sqlBuilderList.get(i);
             //产出预编译sql
-            String sql = sqlBuilder.getPreparedStatementSql();
+            String sql = sqlBuilderResult.getPreparedStatementSql();
             Assertions.assertEquals(AbstractTest.sqlList.get(i), sql);
             //产出预编译sql参数
-            List<Object> args = sqlBuilder.getPreparedStatementArgs();
+            List<Object> args = sqlBuilderResult.getPreparedStatementArgs();
             List<Object> argList = AbstractTest.argListList.get(i);
             Assertions.assertEquals(argList.size(), args.size());
             for (int j = 0; j < argList.size(); j++) {

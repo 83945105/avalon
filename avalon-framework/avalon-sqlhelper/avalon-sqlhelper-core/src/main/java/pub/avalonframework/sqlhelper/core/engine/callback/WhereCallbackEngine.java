@@ -2,13 +2,12 @@ package pub.avalonframework.sqlhelper.core.engine.callback;
 
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
-import pub.avalonframework.sqlhelper.core.engine.Engine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
  * @author baichao
  */
-public interface WhereCallbackEngine<TW extends WhereHelper<TW>, R> extends Engine {
+public interface WhereCallbackEngine<TW extends WhereHelper<TW>, R> extends CallbackEngine {
 
     /**
      * use callback to add where sql data

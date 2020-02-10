@@ -3,8 +3,9 @@ package pub.avalonframework.sqlhelper.core.engine.builder;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.callback.*;
-import pub.avalonframework.sqlhelper.core.engine.JdbcEngine;
+import pub.avalonframework.sqlhelper.core.engine.LimitEngine;
 import pub.avalonframework.sqlhelper.core.engine.callback.JdbcCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperCrudEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -16,7 +17,13 @@ public abstract class Sql<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> implements JdbcEngine<Sql<T, TO, TC, TW, TG, TH, TS>>, JdbcCallbackEngine<TO, TC, TW, TG, TH, TS, Sql<T, TO, TC, TW, TG, TH, TS>> {
+        TS extends SortHelper<TS>> implements
+
+        HelperCrudEngine<Sql<T, TO, TC, TW, TG, TH, TS>>,
+
+        JdbcCallbackEngine<TO, TC, TW, TG, TH, TS, Sql<T, TO, TC, TW, TG, TH, TS>>,
+
+        LimitEngine<Sql<T, TO, TC, TW, TG, TH, TS>> {
 
     private TO onHelper;
     private TC columnHelper;
@@ -35,11 +42,6 @@ public abstract class Sql<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
     }
 
     @Override
-    public Sql<T, TO, TC, TW, TG, TH, TS> column(ColumnHelper<?>... columnHelpers) {
-        return this;
-    }
-
-    @Override
     public Sql<T, TO, TC, TW, TG, TH, TS> select(ColumnHelper<?>... columnHelpers) {
         return null;
     }
@@ -52,11 +54,6 @@ public abstract class Sql<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
     @Override
     public Sql<T, TO, TC, TW, TG, TH, TS> update(ColumnHelper<?>... columnHelpers) {
         return null;
-    }
-
-    @Override
-    public Sql<T, TO, TC, TW, TG, TH, TS> column(ColumnCallback<TC> columnCallback) {
-        return this;
     }
 
     @Override

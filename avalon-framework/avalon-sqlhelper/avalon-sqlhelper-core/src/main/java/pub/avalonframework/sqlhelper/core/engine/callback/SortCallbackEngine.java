@@ -1,13 +1,12 @@
 package pub.avalonframework.sqlhelper.core.engine.callback;
 
 import pub.avalonframework.sqlhelper.core.callback.SortCallback;
-import pub.avalonframework.sqlhelper.core.engine.Engine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
  * @author baichao
  */
-public interface SortCallbackEngine<TS extends SortHelper<TS>, R> extends Engine {
+public interface SortCallbackEngine<TS extends SortHelper<TS>, R> extends CallbackEngine {
 
     /**
      * use callback to add sort sql data

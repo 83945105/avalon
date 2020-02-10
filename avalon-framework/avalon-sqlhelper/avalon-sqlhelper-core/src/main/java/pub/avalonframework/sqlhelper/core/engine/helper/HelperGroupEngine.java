@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.engine;
+package pub.avalonframework.sqlhelper.core.engine.helper;
 
 import pub.avalonframework.sqlhelper.core.helper.GroupHelper;
 
 /**
  * @author baichao
  */
-public interface GroupEngine<R> extends Engine {
+public interface HelperGroupEngine<R> extends HelperEngine {
 
     /**
      * add group sql data

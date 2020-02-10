@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.core.engine.builder;
 
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataProducer;
-import pub.avalonframework.sqlhelper.core.engine.GroupEngine;
+import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.AbstractSqlGroupBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlGroupBean;
 import pub.avalonframework.sqlhelper.core.engine.builder.beans.SqlGroupBeanJoin;
 import pub.avalonframework.sqlhelper.core.engine.callback.GroupCallbackEngine;
+import pub.avalonframework.sqlhelper.core.engine.helper.HelperGroupEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class SqlGroup<TG extends GroupHelper<TG>> implements GroupEngine<SqlGroup<TG>>, GroupCallbackEngine<TG, SqlGroup<TG>> {
+public abstract class SqlGroup<TG extends GroupHelper<TG>> implements HelperGroupEngine<SqlGroup<TG>>, GroupCallbackEngine<TG, SqlGroup<TG>> {
 
     private TG groupHelper;
     private String tableAlias;
@@ -70,18 +70,18 @@ public abstract class SqlGroup<TG extends GroupHelper<TG>> implements GroupEngin
         return sqlGroupBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FG extends GroupHelper<FG>> void execute(SqlGroup<FG> sqlGroup, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataProducer> supplier) {
+    public static <FG extends GroupHelper<FG>> void execute(SqlGroup<FG> sqlGroup, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataProducer sqlDataProducer = supplier.get();
-        if (sqlDataProducer == null) {
+        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
+        if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlGroup.getSqlGroupBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataProducer::addTableGroupDatum));
+        sqlGroup.getSqlGroupBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableGroupDatum));
     }
 }
