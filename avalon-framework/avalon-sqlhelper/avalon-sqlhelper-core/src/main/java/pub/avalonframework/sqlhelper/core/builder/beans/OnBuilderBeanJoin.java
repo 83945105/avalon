@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlOnBeanJoin<TO extends OnHelper<TO>,
+public final class OnBuilderBeanJoin<TO extends OnHelper<TO>,
         S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
         SO extends OnHelper<SO>,
         SC extends ColumnHelper<SC>,
         SW extends WhereHelper<SW>,
         SG extends GroupHelper<SG>,
         SH extends HavingHelper<SH>,
-        SS extends SortHelper<SS>> extends AbstractSqlOnBean {
+        SS extends SortHelper<SS>> extends AbstractOnBuilderBean {
 
     private TO onHelper;
 
@@ -27,7 +27,7 @@ public final class SqlOnBeanJoin<TO extends OnHelper<TO>,
 
     private OnJoinCallback<TO, SO> onJoinCallback;
 
-    public SqlOnBeanJoin(TO onHelper, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+    public OnBuilderBeanJoin(TO onHelper, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
         super(tableAlias);
         this.onHelper = onHelper;
         this.tableHelperClass = tableHelperClass;

@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlWhereBeanJoin<TW extends WhereHelper<TW>,
+public final class WhereBuilderBeanJoin<TW extends WhereHelper<TW>,
         S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
         SO extends OnHelper<SO>,
         SC extends ColumnHelper<SC>,
         SW extends WhereHelper<SW>,
         SG extends GroupHelper<SG>,
         SH extends HavingHelper<SH>,
-        SS extends SortHelper<SS>> extends AbstractSqlWhereBean {
+        SS extends SortHelper<SS>> extends AbstractWhereBuilderBean {
 
     private TW whereHelper;
 
@@ -27,7 +27,7 @@ public final class SqlWhereBeanJoin<TW extends WhereHelper<TW>,
 
     private WhereJoinCallback<TW, SW> whereJoinCallback;
 
-    public SqlWhereBeanJoin(TW whereHelper, Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
+    public WhereBuilderBeanJoin(TW whereHelper, Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
         super(tableAlias);
         this.whereHelper = whereHelper;
         this.tableHelperClass = tableHelperClass;

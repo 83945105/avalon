@@ -6,9 +6,9 @@ import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlJoinBean extends SqlBean {
+public abstract class AbstractJoinBuilderBean extends BuilderBean {
 
-    public AbstractSqlJoinBean(String tableAlias) {
+    public AbstractJoinBuilderBean(String tableAlias) {
         super(tableAlias);
     }
 

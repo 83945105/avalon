@@ -552,11 +552,29 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.builder.JoinBuilder<On> {
-        public JoinBuilder() {
+    public static class InsertColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder<Column> {
+        public InsertColumnBuilder() {
             super(TABLE_ALIAS);
         }
-        public JoinBuilder(String tableAlias) {
+        public InsertColumnBuilder(String tableAlias) {
+            super(tableAlias);
+        }
+    }
+
+    public static class SelectColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder<Column> {
+        public SelectColumnBuilder() {
+            super(TABLE_ALIAS);
+        }
+        public SelectColumnBuilder(String tableAlias) {
+            super(tableAlias);
+        }
+    }
+
+    public static class UpdateColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.UpdateColumnBuilder<Column> {
+        public UpdateColumnBuilder() {
+            super(TABLE_ALIAS);
+        }
+        public UpdateColumnBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
@@ -566,6 +584,15 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
             super(TABLE_ALIAS);
         }
         public ColumnBuilder(String tableAlias) {
+            super(tableAlias);
+        }
+    }
+
+    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.builder.JoinBuilder<On> {
+        public JoinBuilder() {
+            super(TABLE_ALIAS);
+        }
+        public JoinBuilder(String tableAlias) {
             super(tableAlias);
         }
     }

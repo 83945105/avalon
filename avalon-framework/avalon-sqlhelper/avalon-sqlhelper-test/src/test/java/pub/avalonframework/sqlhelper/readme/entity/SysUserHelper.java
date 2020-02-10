@@ -32,7 +32,7 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.O
      * primary key alias
      */
         public final static String PRIMARY_KEY_ALIAS = "id";
-    
+
             /**
      * 主键ID
      */
@@ -57,7 +57,7 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.O
      * 登录名 alias
      */
         public final static String LOGIN_NAME_ALIAS = "loginName";
-    
+
         /**
      * table columns
      */
@@ -466,11 +466,29 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.O
         }
     }
 
-    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.builder.JoinBuilder<On> {
-        public JoinBuilder() {
+    public static class InsertColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder<Column> {
+        public InsertColumnBuilder() {
             super(TABLE_ALIAS);
         }
-        public JoinBuilder(String tableAlias) {
+        public InsertColumnBuilder(String tableAlias) {
+            super(tableAlias);
+        }
+    }
+
+    public static class SelectColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder<Column> {
+        public SelectColumnBuilder() {
+            super(TABLE_ALIAS);
+        }
+        public SelectColumnBuilder(String tableAlias) {
+            super(tableAlias);
+        }
+    }
+
+    public static class UpdateColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.UpdateColumnBuilder<Column> {
+        public UpdateColumnBuilder() {
+            super(TABLE_ALIAS);
+        }
+        public UpdateColumnBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
@@ -480,6 +498,15 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.O
             super(TABLE_ALIAS);
         }
         public ColumnBuilder(String tableAlias) {
+            super(tableAlias);
+        }
+    }
+
+    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.builder.JoinBuilder<On> {
+        public JoinBuilder() {
+            super(TABLE_ALIAS);
+        }
+        public JoinBuilder(String tableAlias) {
             super(tableAlias);
         }
     }

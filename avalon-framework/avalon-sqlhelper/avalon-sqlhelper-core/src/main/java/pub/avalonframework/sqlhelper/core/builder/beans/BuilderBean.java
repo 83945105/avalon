@@ -3,11 +3,11 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 /**
  * @author baichao
  */
-public abstract class SqlBean {
+public abstract class BuilderBean {
 
     protected String tableAlias;
 
-    public SqlBean(String tableAlias) {
+    public BuilderBean(String tableAlias) {
         this.tableAlias = tableAlias;
     }
 

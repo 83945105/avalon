@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackGroupBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperGroupBlock;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlGroupBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlGroupBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlGroupBeanJoin;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -36,17 +36,17 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         this.tableAlias = tableAlias;
     }
 
-    private List<AbstractSqlGroupBean> sqlGroupBeans = new ArrayList<>(1);
+    private List<AbstractGroupBuilderBean> groupBuilderBeans = new ArrayList<>(1);
 
     @Override
     public GroupBuilder<TG> groupBy(GroupHelper<?>... groupHelpers) {
-        this.sqlGroupBeans.add(new SqlGroupBean<>(this.groupHelper, this.tableAlias).setGroupHelpers(groupHelpers));
+        this.groupBuilderBeans.add(new GroupBuilderBean<>(this.groupHelper, this.tableAlias).setGroupHelpers(groupHelpers));
         return this;
     }
 
     @Override
     public GroupBuilder<TG> groupBy(GroupCallback<TG> groupCallback) {
-        this.sqlGroupBeans.add(new SqlGroupBean<>(this.groupHelper, this.tableAlias).setGroupCallback(groupCallback));
+        this.groupBuilderBeans.add(new GroupBuilderBean<>(this.groupHelper, this.tableAlias).setGroupCallback(groupCallback));
         return this;
     }
 
@@ -58,7 +58,7 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> GroupBuilder<TG> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
-        this.sqlGroupBeans.add(new SqlGroupBeanJoin<>(tableHelperClass, tableAlias, groupCallback));
+        this.groupBuilderBeans.add(new GroupBuilderBeanJoin<>(tableHelperClass, tableAlias, groupCallback));
         return this;
     }
 
@@ -66,8 +66,8 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         return tableAlias;
     }
 
-    public List<AbstractSqlGroupBean> getSqlGroupBeans() {
-        return sqlGroupBeans;
+    public List<AbstractGroupBuilderBean> getGroupBuilderBeans() {
+        return groupBuilderBeans;
     }
 
     public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
@@ -82,6 +82,6 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlGroup.getSqlGroupBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableGroupDatum));
+        sqlGroup.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableGroupDatum));
     }
 }

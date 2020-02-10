@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlSortBean<TG extends SortHelper<TG>> extends AbstractSqlSortBean {
+public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSortBuilderBean {
 
     private TG sortHelper;
 
@@ -20,17 +20,17 @@ public final class SqlSortBean<TG extends SortHelper<TG>> extends AbstractSqlSor
 
     private SortCallback<TG> sortCallback;
 
-    public SqlSortBean(TG sortHelper, String tableAlias) {
+    public SortBuilderBean(TG sortHelper, String tableAlias) {
         super(tableAlias);
         this.sortHelper = sortHelper;
     }
 
-    public SqlSortBean<TG> setSortHelpers(SortHelper<?>[] sortHelpers) {
+    public SortBuilderBean<TG> setSortHelpers(SortHelper<?>[] sortHelpers) {
         this.sortHelpers = sortHelpers;
         return this;
     }
 
-    public SqlSortBean<TG> setSortCallback(SortCallback<TG> sortCallback) {
+    public SortBuilderBean<TG> setSortCallback(SortCallback<TG> sortCallback) {
         this.sortCallback = sortCallback;
         return this;
     }

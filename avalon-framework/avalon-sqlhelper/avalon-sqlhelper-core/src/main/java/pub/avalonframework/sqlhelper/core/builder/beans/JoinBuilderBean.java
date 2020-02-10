@@ -10,14 +10,14 @@ import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 /**
  * @author baichao
  */
-public final class SqlJoinBean<TO extends OnHelper<TO>,
+public final class JoinBuilderBean<TO extends OnHelper<TO>,
         S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
         SO extends OnHelper<SO>,
         SC extends ColumnHelper<SC>,
         SW extends WhereHelper<SW>,
         SG extends GroupHelper<SG>,
         SH extends HavingHelper<SH>,
-        SS extends SortHelper<SS>> extends AbstractSqlJoinBean {
+        SS extends SortHelper<SS>> extends AbstractJoinBuilderBean {
 
     private TO mainOnHelper;
 
@@ -29,7 +29,7 @@ public final class SqlJoinBean<TO extends OnHelper<TO>,
 
     private OnJoinCallback<TO, SO> onJoinCallback;
 
-    public SqlJoinBean(TO mainOnHelper, JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+    public JoinBuilderBean(TO mainOnHelper, JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
         super(joinTableAlias);
         this.mainOnHelper = mainOnHelper;
         this.joinType = joinType;

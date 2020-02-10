@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackSortBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperSortBlock;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlSortBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlSortBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlSortBeanJoin;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSortBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.SortCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -36,17 +36,17 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         this.tableAlias = tableAlias;
     }
 
-    private List<AbstractSqlSortBean> sqlSortBeans = new ArrayList<>(1);
+    private List<AbstractSortBuilderBean> sortBuilderBeans = new ArrayList<>(1);
 
     @Override
     public SortBuilder<TS> orderBy(SortHelper<?>... sortHelpers) {
-        this.sqlSortBeans.add(new SqlSortBean<>(this.sortHelper, this.tableAlias).setSortHelpers(sortHelpers));
+        this.sortBuilderBeans.add(new SortBuilderBean<>(this.sortHelper, this.tableAlias).setSortHelpers(sortHelpers));
         return this;
     }
 
     @Override
     public SortBuilder<TS> orderBy(SortCallback<TS> sortCallback) {
-        this.sqlSortBeans.add(new SqlSortBean<>(this.sortHelper, this.tableAlias).setSortCallback(sortCallback));
+        this.sortBuilderBeans.add(new SortBuilderBean<>(this.sortHelper, this.tableAlias).setSortCallback(sortCallback));
         return this;
     }
 
@@ -58,7 +58,7 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SortBuilder<TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
-        this.sqlSortBeans.add(new SqlSortBeanJoin<>(tableHelperClass, tableAlias, sortCallback));
+        this.sortBuilderBeans.add(new SortBuilderBeanJoin<>(tableHelperClass, tableAlias, sortCallback));
         return this;
     }
 
@@ -66,8 +66,8 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         return tableAlias;
     }
 
-    public List<AbstractSqlSortBean> getSqlSortBeans() {
-        return sqlSortBeans;
+    public List<AbstractSortBuilderBean> getSortBuilderBeans() {
+        return sortBuilderBeans;
     }
 
     public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
@@ -82,6 +82,6 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlSort.getSqlSortBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableSortDatum));
+        sqlSort.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableSortDatum));
     }
 }

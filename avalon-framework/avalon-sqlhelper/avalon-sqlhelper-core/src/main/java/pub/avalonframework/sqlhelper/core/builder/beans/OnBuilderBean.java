@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlOnBean<TO extends OnHelper<TO>> extends AbstractSqlOnBean {
+public final class OnBuilderBean<TO extends OnHelper<TO>> extends AbstractOnBuilderBean {
 
     private TO onHelper;
 
@@ -20,17 +20,17 @@ public final class SqlOnBean<TO extends OnHelper<TO>> extends AbstractSqlOnBean 
 
     private OnCallback<TO> onCallback;
 
-    public SqlOnBean(TO onHelper, String tableAlias) {
+    public OnBuilderBean(TO onHelper, String tableAlias) {
         super(tableAlias);
         this.onHelper = onHelper;
     }
 
-    public SqlOnBean<TO> setOnHelpers(OnHelper<?>[] onHelpers) {
+    public OnBuilderBean<TO> setOnHelpers(OnHelper<?>[] onHelpers) {
         this.onHelpers = onHelpers;
         return this;
     }
 
-    public SqlOnBean<TO> setOnCallback(OnCallback<TO> onCallback) {
+    public OnBuilderBean<TO> setOnCallback(OnCallback<TO> onCallback) {
         this.onCallback = onCallback;
         return this;
     }

@@ -12,19 +12,19 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlGroupBeanJoin<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
+public final class GroupBuilderBeanJoin<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
         TO extends OnHelper<TO>,
         TC extends ColumnHelper<TC>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractSqlGroupBean {
+        TS extends SortHelper<TS>> extends AbstractGroupBuilderBean {
 
     private Class<T> tableHelperClass;
 
     private GroupCallback<TG> groupCallback;
 
-    public SqlGroupBeanJoin(Class<T> tableHelperClass, String tableAlias, GroupCallback<TG> groupCallback) {
+    public GroupBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, GroupCallback<TG> groupCallback) {
         super(tableAlias);
         this.tableHelperClass = tableHelperClass;
         this.groupCallback = groupCallback;

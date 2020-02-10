@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlGroupBean extends SqlBean {
+public abstract class AbstractGroupBuilderBean extends BuilderBean {
 
-    public AbstractSqlGroupBean(String tableAlias) {
+    public AbstractGroupBuilderBean(String tableAlias) {
         super(tableAlias);
     }
 

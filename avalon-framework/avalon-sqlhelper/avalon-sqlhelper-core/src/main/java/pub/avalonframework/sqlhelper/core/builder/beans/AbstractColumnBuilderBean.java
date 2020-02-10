@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlColumnBean extends SqlBean {
+public abstract class AbstractColumnBuilderBean extends BuilderBean {
 
-    public AbstractSqlColumnBean(String tableAlias) {
+    public AbstractColumnBuilderBean(String tableAlias) {
         super(tableAlias);
     }
 

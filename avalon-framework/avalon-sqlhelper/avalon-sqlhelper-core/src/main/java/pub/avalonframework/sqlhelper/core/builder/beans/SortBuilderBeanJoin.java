@@ -12,19 +12,19 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlSortBeanJoin<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
+public final class SortBuilderBeanJoin<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
         TO extends OnHelper<TO>,
         TC extends ColumnHelper<TC>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractSqlSortBean {
+        TS extends SortHelper<TS>> extends AbstractSortBuilderBean {
 
     private Class<T> tableHelperClass;
 
     private SortCallback<TS> sortCallback;
 
-    public SqlSortBeanJoin(Class<T> tableHelperClass, String tableAlias, SortCallback<TS> sortCallback) {
+    public SortBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, SortCallback<TS> sortCallback) {
         super(tableAlias);
         this.tableHelperClass = tableHelperClass;
         this.sortCallback = sortCallback;

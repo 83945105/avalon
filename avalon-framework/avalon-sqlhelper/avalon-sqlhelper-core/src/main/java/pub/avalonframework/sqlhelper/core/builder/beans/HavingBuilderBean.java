@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlHavingBean<TH extends HavingHelper<TH>> extends AbstractSqlHavingBean {
+public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends AbstractHavingBuilderBean {
 
     private TH havingHelper;
 
@@ -20,17 +20,17 @@ public final class SqlHavingBean<TH extends HavingHelper<TH>> extends AbstractSq
 
     private HavingCallback<TH> havingCallback;
 
-    public SqlHavingBean(TH havingHelper, String tableAlias) {
+    public HavingBuilderBean(TH havingHelper, String tableAlias) {
         super(tableAlias);
         this.havingHelper = havingHelper;
     }
 
-    public SqlHavingBean<TH> setHavingHelpers(HavingHelper<?>[] havingHelpers) {
+    public HavingBuilderBean<TH> setHavingHelpers(HavingHelper<?>[] havingHelpers) {
         this.havingHelpers = havingHelpers;
         return this;
     }
 
-    public SqlHavingBean<TH> setHavingCallback(HavingCallback<TH> havingCallback) {
+    public HavingBuilderBean<TH> setHavingCallback(HavingCallback<TH> havingCallback) {
         this.havingCallback = havingCallback;
         return this;
     }

@@ -12,19 +12,19 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlColumnBeanJoin<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
+public final class ColumnBuilderBeanJoin<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
         TO extends OnHelper<TO>,
         TC extends ColumnHelper<TC>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractSqlColumnBean {
+        TS extends SortHelper<TS>> extends AbstractColumnBuilderBean {
 
     private Class<T> tableHelperClass;
 
     private ColumnCallback<TC> columnCallback;
 
-    public SqlColumnBeanJoin(Class<T> tableHelperClass, String tableAlias, ColumnCallback<TC> columnCallback) {
+    public ColumnBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, ColumnCallback<TC> columnCallback) {
         super(tableAlias);
         this.tableHelperClass = tableHelperClass;
         this.columnCallback = columnCallback;

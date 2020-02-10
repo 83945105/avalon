@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlColumnBean<TC extends ColumnHelper<TC>> extends AbstractSqlColumnBean {
+public final class ColumnBuilderBean<TC extends ColumnHelper<TC>> extends AbstractColumnBuilderBean {
 
     private TC columnHelper;
 
@@ -20,17 +20,17 @@ public final class SqlColumnBean<TC extends ColumnHelper<TC>> extends AbstractSq
 
     private ColumnCallback<TC> columnCallback;
 
-    public SqlColumnBean(TC columnHelper, String tableAlias) {
+    public ColumnBuilderBean(TC columnHelper, String tableAlias) {
         super(tableAlias);
         this.columnHelper = columnHelper;
     }
 
-    public SqlColumnBean<TC> setColumnHelpers(ColumnHelper<?>[] columnHelpers) {
+    public ColumnBuilderBean<TC> setColumnHelpers(ColumnHelper<?>[] columnHelpers) {
         this.columnHelpers = columnHelpers;
         return this;
     }
 
-    public SqlColumnBean<TC> setColumnCallback(ColumnCallback<TC> columnCallback) {
+    public ColumnBuilderBean<TC> setColumnCallback(ColumnCallback<TC> columnCallback) {
         this.columnCallback = columnCallback;
         return this;
     }

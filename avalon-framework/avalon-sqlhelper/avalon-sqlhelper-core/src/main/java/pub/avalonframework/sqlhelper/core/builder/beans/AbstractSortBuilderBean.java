@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlSortBean extends SqlBean {
+public abstract class AbstractSortBuilderBean extends BuilderBean {
 
-    public AbstractSqlSortBean(String tableAlias) {
+    public AbstractSortBuilderBean(String tableAlias) {
         super(tableAlias);
     }
 

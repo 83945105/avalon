@@ -27,11 +27,11 @@ public class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
 
         HelperCrudBlock<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
 
-        SqlEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
-
         CallbackCrudBlock<TC, TO, TW, TG, TH, TS, SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
 
-        LimitEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>> {
+        LimitEngine<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>>,
+
+        CrudBuilder<SqlHelperEngine<T, TO, TC, TW, TG, TH, TS>> {
 
     public SqlHelperEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
@@ -76,48 +76,6 @@ public class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
     @Override
     public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> update(ColumnHelper<?>... columnHelpers) {
         ColumnHelper.execute(columnHelpers).forEach(this::addUpdateTableColumnDatum);
-        return this;
-    }
-
-    @Override
-    public <FO extends OnHelper<FO>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlJoin(JoinBuilder<FO> joinBuilder) {
-        JoinBuilder.execute(joinBuilder, this.sqlBuilderOptions).forEach(this::addJoinTableDatum);
-        return this;
-    }
-
-    @Override
-    public <FO extends OnHelper<FO>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlOn(OnBuilder<FO> onBuilder) {
-        OnBuilder.execute(onBuilder, this.sqlBuilderOptions, () -> this);
-        return this;
-    }
-
-    @Override
-    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlColumn(ColumnBuilder<FC> columnBuilder) {
-        ColumnBuilder.execute(columnBuilder, this.sqlBuilderOptions, () -> this);
-        return this;
-    }
-
-    @Override
-    public <FW extends WhereHelper<FW>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlWhere(WhereBuilder<FW> whereBuilder) {
-        WhereBuilder.execute(whereBuilder, this.sqlBuilderOptions, () -> this);
-        return this;
-    }
-
-    @Override
-    public <FG extends GroupHelper<FG>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlGroup(GroupBuilder<FG> groupBuilder) {
-        GroupBuilder.execute(groupBuilder, this.sqlBuilderOptions, () -> this);
-        return this;
-    }
-
-    @Override
-    public <FH extends HavingHelper<FH>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlHaving(HavingBuilder<FH> havingBuilder) {
-        HavingBuilder.execute(havingBuilder, this.sqlBuilderOptions, () -> this);
-        return this;
-    }
-
-    @Override
-    public <FS extends SortHelper<FS>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> sqlSort(SortBuilder<FS> sortBuilder) {
-        SortBuilder.execute(sortBuilder, this.sqlBuilderOptions, () -> this);
         return this;
     }
 
@@ -322,6 +280,66 @@ public class SqlHelperEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
     @Override
     public SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> offset(Long offset) {
         this.setOffset(offset);
+        return this;
+    }
+
+    @Override
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
+        InsertColumnBuilder.execute(insertColumnBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder) {
+        SelectColumnBuilder.execute(selectColumnBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
+        UpdateColumnBuilder.execute(updateColumnBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildColumn(ColumnBuilder<FC> columnBuilder) {
+        ColumnBuilder.execute(columnBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FO extends OnHelper<FO>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
+        JoinBuilder.execute(joinBuilder, this.sqlBuilderOptions).forEach(this::addJoinTableDatum);
+        return this;
+    }
+
+    @Override
+    public <FO extends OnHelper<FO>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
+        OnBuilder.execute(onBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FW extends WhereHelper<FW>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
+        WhereBuilder.execute(whereBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FG extends GroupHelper<FG>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildGroup(GroupBuilder<FG> groupBuilder) {
+        GroupBuilder.execute(groupBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FH extends HavingHelper<FH>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildHaving(HavingBuilder<FH> havingBuilder) {
+        HavingBuilder.execute(havingBuilder, this.sqlBuilderOptions, () -> this);
+        return this;
+    }
+
+    @Override
+    public <FS extends SortHelper<FS>> SqlHelperEngine<T, TO, TC, TW, TG, TH, TS> buildSort(SortBuilder<FS> sortBuilder) {
+        SortBuilder.execute(sortBuilder, this.sqlBuilderOptions, () -> this);
         return this;
     }
 }

@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlHavingBeanJoin<TH extends HavingHelper<TH>,
+public final class HavingBuilderBeanJoin<TH extends HavingHelper<TH>,
         S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
         SO extends OnHelper<SO>,
         SC extends ColumnHelper<SC>,
         SW extends WhereHelper<SW>,
         SG extends GroupHelper<SG>,
         SH extends HavingHelper<SH>,
-        SS extends SortHelper<SS>> extends AbstractSqlHavingBean {
+        SS extends SortHelper<SS>> extends AbstractHavingBuilderBean {
 
     private TH havingHelper;
 
@@ -27,7 +27,7 @@ public final class SqlHavingBeanJoin<TH extends HavingHelper<TH>,
 
     private HavingJoinCallback<TH, SH> havingJoinCallback;
 
-    public SqlHavingBeanJoin(TH havingHelper, Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
+    public HavingBuilderBeanJoin(TH havingHelper, Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
         super(tableAlias);
         this.havingHelper = havingHelper;
         this.tableHelperClass = tableHelperClass;

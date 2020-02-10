@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackWhereBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperWhereBlock;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlWhereBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlWhereBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlWhereBeanJoin;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractWhereBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
@@ -37,17 +37,17 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         this.tableAlias = tableAlias;
     }
 
-    private List<AbstractSqlWhereBean> sqlWhereBeans = new ArrayList<>(1);
+    private List<AbstractWhereBuilderBean> whereBuilderBeans = new ArrayList<>(1);
 
     @Override
     public WhereBuilder<TW> where(WhereHelper<?>... whereHelpers) {
-        this.sqlWhereBeans.add(new SqlWhereBean<>(this.whereHelper, this.tableAlias).setWhereHelpers(whereHelpers));
+        this.whereBuilderBeans.add(new WhereBuilderBean<>(this.whereHelper, this.tableAlias).setWhereHelpers(whereHelpers));
         return this;
     }
 
     @Override
     public WhereBuilder<TW> where(WhereCallback<TW> whereCallback) {
-        this.sqlWhereBeans.add(new SqlWhereBean<>(this.whereHelper, this.tableAlias).setWhereCallback(whereCallback));
+        this.whereBuilderBeans.add(new WhereBuilderBean<>(this.whereHelper, this.tableAlias).setWhereCallback(whereCallback));
         return this;
     }
 
@@ -59,7 +59,7 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> WhereBuilder<TW> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        this.sqlWhereBeans.add(new SqlWhereBeanJoin<>(this.whereHelper, tableHelperClass, tableAlias, whereJoinCallback));
+        this.whereBuilderBeans.add(new WhereBuilderBeanJoin<>(this.whereHelper, tableHelperClass, tableAlias, whereJoinCallback));
         return this;
     }
 
@@ -67,8 +67,8 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         return tableAlias;
     }
 
-    public List<AbstractSqlWhereBean> getSqlWhereBeans() {
-        return sqlWhereBeans;
+    public List<AbstractWhereBuilderBean> getWhereBuilderBeans() {
+        return whereBuilderBeans;
     }
 
     public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
@@ -83,6 +83,6 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlWhere.getSqlWhereBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableWhereDatum));
+        sqlWhere.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableWhereDatum));
     }
 }

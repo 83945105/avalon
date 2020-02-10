@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlWhereBean<TW extends WhereHelper<TW>> extends AbstractSqlWhereBean {
+public final class WhereBuilderBean<TW extends WhereHelper<TW>> extends AbstractWhereBuilderBean {
 
     private TW whereHelper;
 
@@ -20,17 +20,17 @@ public final class SqlWhereBean<TW extends WhereHelper<TW>> extends AbstractSqlW
 
     private WhereCallback<TW> whereCallback;
 
-    public SqlWhereBean(TW whereHelper, String tableAlias) {
+    public WhereBuilderBean(TW whereHelper, String tableAlias) {
         super(tableAlias);
         this.whereHelper = whereHelper;
     }
 
-    public SqlWhereBean<TW> setWhereHelpers(WhereHelper<?>[] whereHelpers) {
+    public WhereBuilderBean<TW> setWhereHelpers(WhereHelper<?>[] whereHelpers) {
         this.whereHelpers = whereHelpers;
         return this;
     }
 
-    public SqlWhereBean<TW> setWhereCallback(WhereCallback<TW> whereCallback) {
+    public WhereBuilderBean<TW> setWhereCallback(WhereCallback<TW> whereCallback) {
         this.whereCallback = whereCallback;
         return this;
     }

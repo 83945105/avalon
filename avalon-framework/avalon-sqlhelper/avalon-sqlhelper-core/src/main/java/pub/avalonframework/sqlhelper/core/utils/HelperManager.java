@@ -85,6 +85,21 @@ public class HelperManager {
     }
 
     @SuppressWarnings("unchecked")
+    public static <T extends ColumnHelper<T>> T findColumnHelperClassFromAncestorsGenericType(InsertColumnBuilder<T> insertColumnBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(insertColumnBuilder.getClass(), ColumnHelper.class));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends ColumnHelper<T>> T findColumnHelperClassFromAncestorsGenericType(SelectColumnBuilder<T> selectColumnBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(selectColumnBuilder.getClass(), ColumnHelper.class));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends ColumnHelper<T>> T findColumnHelperClassFromAncestorsGenericType(UpdateColumnBuilder<T> updateColumnBuilder) {
+        return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(updateColumnBuilder.getClass(), ColumnHelper.class));
+    }
+
+    @SuppressWarnings("unchecked")
     public static <T extends OnHelper<T>> T findOnHelperClassFromAncestorsGenericType(JoinBuilder<T> joinBuilder) {
         return (T) ClassCacheManager.getInstance().newInstance(getExpectAncestorsClassGenricType(joinBuilder.getClass(), OnHelper.class));
     }

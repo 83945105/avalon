@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackHavingBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperHavingBlock;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlHavingBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlHavingBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlHavingBeanJoin;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractHavingBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
@@ -37,17 +37,17 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         this.tableAlias = tableAlias;
     }
 
-    private List<AbstractSqlHavingBean> sqlHavingBeans = new ArrayList<>(1);
+    private List<AbstractHavingBuilderBean> havingBuilderBeans = new ArrayList<>(1);
 
     @Override
     public HavingBuilder<TH> having(HavingHelper<?>... havingHelpers) {
-        this.sqlHavingBeans.add(new SqlHavingBean<>(this.havingHelper, this.tableAlias).setHavingHelpers(havingHelpers));
+        this.havingBuilderBeans.add(new HavingBuilderBean<>(this.havingHelper, this.tableAlias).setHavingHelpers(havingHelpers));
         return this;
     }
 
     @Override
     public HavingBuilder<TH> having(HavingCallback<TH> havingCallback) {
-        this.sqlHavingBeans.add(new SqlHavingBean<>(this.havingHelper, this.tableAlias).setHavingCallback(havingCallback));
+        this.havingBuilderBeans.add(new HavingBuilderBean<>(this.havingHelper, this.tableAlias).setHavingCallback(havingCallback));
         return this;
     }
 
@@ -59,7 +59,7 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> HavingBuilder<TH> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
-        this.sqlHavingBeans.add(new SqlHavingBeanJoin<>(this.havingHelper, tableHelperClass, tableAlias, havingJoinCallback));
+        this.havingBuilderBeans.add(new HavingBuilderBeanJoin<>(this.havingHelper, tableHelperClass, tableAlias, havingJoinCallback));
         return this;
     }
 
@@ -67,8 +67,8 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         return tableAlias;
     }
 
-    public List<AbstractSqlHavingBean> getSqlHavingBeans() {
-        return sqlHavingBeans;
+    public List<AbstractHavingBuilderBean> getHavingBuilderBeans() {
+        return havingBuilderBeans;
     }
 
     public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
@@ -83,6 +83,6 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlHaving.getSqlHavingBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableHavingDatum));
+        sqlHaving.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableHavingDatum));
     }
 }

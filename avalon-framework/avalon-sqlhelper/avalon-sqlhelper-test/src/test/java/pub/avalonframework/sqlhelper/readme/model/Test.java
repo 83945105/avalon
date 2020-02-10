@@ -3,10 +3,11 @@ package pub.avalonframework.sqlhelper.readme.model;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
-import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
-import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.core.builder.ColumnBuilder;
 import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
+import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
+import pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder;
+import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.readme.entity.RoleResourceHelper;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;
@@ -29,13 +30,13 @@ public class Test {
 
         SqlHelperEngine sqlEngine = new SqlHelperEngine<>(DatabaseType.MYSQL, "", RoleResourceHelper.class)
 
-                .sqlColumn(new SysUserHelper.ColumnBuilder())
+                .buildSelectColumn(new SysUserHelper.SelectColumnBuilder())
 
-                .sqlColumn(new ColumnBuilder<RoleResourceHelper.Column>() {
+                .buildSelectColumn(new SelectColumnBuilder<RoleResourceHelper.Column>() {
 
                 }.select(table -> table.id().primaryKey()))
 
-                .sqlColumn(new ColumnBuilder<RoleResourceHelper.Column>() {{
+                .buildSelectColumn(new SelectColumnBuilder<RoleResourceHelper.Column>() {{
 
                     if (true) {
                         select(table -> table.id().resourceName());
@@ -43,20 +44,20 @@ public class Test {
 
                 }})
 
-                .sqlColumn(new RoleResourceHelper.ColumnBuilder().select(table -> table.id().resourceId()))
-                .sqlColumn(new ColumnBuilder<SysUserHelper.Column>() {
+                .buildSelectColumn(new RoleResourceHelper.SelectColumnBuilder().select(table -> table.id().resourceId()))
+                .buildSelectColumn(new SelectColumnBuilder<SysUserHelper.Column>() {
                 }.select(table -> table.id().loginName()))
-                .sqlColumn(new RoleResourceHelper.ColumnBuilder() {{
+                .buildSelectColumn(new RoleResourceHelper.SelectColumnBuilder() {{
 
                     select(SysUserHelper.class, table -> table.userName().userName(""));
 
                 }})
 
-                .sqlJoin(new JoinBuilder<SysUserHelper.On>() {{
+                .buildJoin(new JoinBuilder<SysUserHelper.On>() {{
 
                 }})
 
-                .sqlOn(new OnBuilder<SysUserHelper.On>() {{
+                .buildOn(new OnBuilder<SysUserHelper.On>() {{
 
 
                 }})

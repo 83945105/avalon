@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackOnBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperOnBlock;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlOnBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlOnBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlOnBeanJoin;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractOnBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.OnCallback;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
@@ -37,17 +37,17 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         this.tableAlias = tableAlias;
     }
 
-    private List<AbstractSqlOnBean> sqlOnBeans = new ArrayList<>(1);
+    private List<AbstractOnBuilderBean> onBuilderBeans = new ArrayList<>(1);
 
     @Override
     public OnBuilder<TO> on(OnHelper<?>... onHelpers) {
-        this.sqlOnBeans.add(new SqlOnBean<>(this.onHelper, this.tableAlias).setOnHelpers(onHelpers));
+        this.onBuilderBeans.add(new OnBuilderBean<>(this.onHelper, this.tableAlias).setOnHelpers(onHelpers));
         return this;
     }
 
     @Override
     public OnBuilder<TO> on(OnCallback<TO> onCallback) {
-        this.sqlOnBeans.add(new SqlOnBean<>(this.onHelper, this.tableAlias).setOnCallback(onCallback));
+        this.onBuilderBeans.add(new OnBuilderBean<>(this.onHelper, this.tableAlias).setOnCallback(onCallback));
         return this;
     }
 
@@ -59,7 +59,7 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> OnBuilder<TO> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.sqlOnBeans.add(new SqlOnBeanJoin<>(this.onHelper, tableHelperClass, tableAlias, onJoinCallback));
+        this.onBuilderBeans.add(new OnBuilderBeanJoin<>(this.onHelper, tableHelperClass, tableAlias, onJoinCallback));
         return this;
     }
 
@@ -67,8 +67,8 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         return tableAlias;
     }
 
-    public List<AbstractSqlOnBean> getSqlOnBeans() {
-        return sqlOnBeans;
+    public List<AbstractOnBuilderBean> getOnBuilderBeans() {
+        return onBuilderBeans;
     }
 
     public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
@@ -83,6 +83,6 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlOn.getSqlOnBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableOnDatum));
+        sqlOn.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableOnDatum));
     }
 }

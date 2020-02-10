@@ -3,8 +3,8 @@ package pub.avalonframework.sqlhelper.core.builder;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackJoinBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperJoinBlock;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSqlJoinBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SqlJoinBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.AbstractJoinBuilderBean;
+import pub.avalonframework.sqlhelper.core.builder.beans.JoinBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -36,7 +36,7 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
         this.tableAlias = tableAlias;
     }
 
-    private List<AbstractSqlJoinBean> sqlJoinBeans = new ArrayList<>(1);
+    private List<AbstractJoinBuilderBean> joinBuilderBeans = new ArrayList<>(1);
 
     @Override
     public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
@@ -46,7 +46,7 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> JoinBuilder<TO> join(JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.sqlJoinBeans.add(new SqlJoinBean<>(this.onHelper, joinType, joinTableName, joinTableHelperClass, joinTableAlias, onJoinCallback));
+        this.joinBuilderBeans.add(new JoinBuilderBean<>(this.onHelper, joinType, joinTableName, joinTableHelperClass, joinTableAlias, onJoinCallback));
         return this;
     }
 
@@ -54,8 +54,8 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
         return tableAlias;
     }
 
-    public List<AbstractSqlJoinBean> getSqlJoinBeans() {
-        return sqlJoinBeans;
+    public List<AbstractJoinBuilderBean> getJoinBuilderBeans() {
+        return joinBuilderBeans;
     }
 
     public List<JoinTableDatum> execute(SqlBuilderOptions sqlBuilderOptions) {
@@ -63,6 +63,6 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
     }
 
     public static <FO extends OnHelper<FO>> List<JoinTableDatum> execute(JoinBuilder<FO> sqlJoin, SqlBuilderOptions sqlBuilderOptions) {
-        return sqlJoin.getSqlJoinBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderOptions)).collect(Collectors.toList());
+        return sqlJoin.getJoinBuilderBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderOptions)).collect(Collectors.toList());
     }
 }

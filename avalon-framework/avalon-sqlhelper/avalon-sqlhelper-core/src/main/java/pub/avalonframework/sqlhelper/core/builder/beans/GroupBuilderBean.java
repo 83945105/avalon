@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class SqlGroupBean<TG extends GroupHelper<TG>> extends AbstractSqlGroupBean {
+public final class GroupBuilderBean<TG extends GroupHelper<TG>> extends AbstractGroupBuilderBean {
 
     private TG groupHelper;
 
@@ -20,17 +20,17 @@ public final class SqlGroupBean<TG extends GroupHelper<TG>> extends AbstractSqlG
 
     private GroupCallback<TG> groupCallback;
 
-    public SqlGroupBean(TG groupHelper, String tableAlias) {
+    public GroupBuilderBean(TG groupHelper, String tableAlias) {
         super(tableAlias);
         this.groupHelper = groupHelper;
     }
 
-    public SqlGroupBean<TG> setGroupHelpers(GroupHelper<?>[] groupHelpers) {
+    public GroupBuilderBean<TG> setGroupHelpers(GroupHelper<?>[] groupHelpers) {
         this.groupHelpers = groupHelpers;
         return this;
     }
 
-    public SqlGroupBean<TG> setGroupCallback(GroupCallback<TG> groupCallback) {
+    public GroupBuilderBean<TG> setGroupCallback(GroupCallback<TG> groupCallback) {
         this.groupCallback = groupCallback;
         return this;
     }
