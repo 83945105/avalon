@@ -1,9 +1,10 @@
 package pub.avalonframework.sqlhelper.core.sql;
 
 import org.junit.jupiter.api.Test;
+import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.AbstractTest;
+import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
-import pub.avalonframework.sqlhelper.factory.MySqlDynamicEngine;
 import pub.avalonframework.sqlhelper.readme.entity.SysUser;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;
@@ -18,7 +19,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
 
     @Test
     void TestUpdateArgsByPrimaryKey01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .updateArgsByPrimaryKey(1, 2, 3);
         arg(2);
         arg(3);
@@ -28,7 +29,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
 
     @Test
     void TestUpdateArgsByPrimaryKey02() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .column(SysUserHelper.Column::userName)
                 .updateArgsByPrimaryKey(1, 2);
         arg(2);
@@ -41,7 +42,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         SysUser javaBean = new SysUser();
         arg(javaBean.getUserName());
         arg(javaBean.getLoginName());
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .updateJavaBeanByPrimaryKey(arg(), javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` set `user_name` = ?,`login_name` = ? where `id` = ?");
     }
@@ -50,7 +51,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
     void TestUpdateJavaBeanByPrimaryKey02() {
         SysUser javaBean = new SysUser();
         arg(javaBean.getUserName());
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .column(SysUserHelper.Column::userName)
                 .updateJavaBeanByPrimaryKey(arg(), javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` set `user_name` = ? where `id` = ?");
@@ -61,7 +62,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         SysUser javaBean = new SysUser();
         javaBean.setId("666");
         javaBean.setUserName(arg());
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .updateJavaBeanByPrimaryKeySelective(arg(), javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` set `user_name` = ? where `id` = ?");
     }
@@ -72,7 +73,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         javaBean.setId("666");
         javaBean.setUserName(arg());
         javaBean.setLoginName("233");
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .column(SysUserHelper.Column::userName)
                 .updateJavaBeanByPrimaryKeySelective(arg(), javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` set `user_name` = ? where `id` = ?");
@@ -112,7 +113,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         arg("2");
         arg("3");
 
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .batchUpdateJavaBeansByPrimaryKeys(javaBeans);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` SysUser set SysUser.`user_name`=case SysUser.`id` when '1' then ? when '2' then ? when '3' then ?  end,SysUser.`login_name`=case SysUser.`id` when '1' then ? when '2' then ? when '3' then ?  end where SysUser.`id` in (?,?,?)");
     }
@@ -124,7 +125,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         javaBean.setUserName(arg());
         arg(null);
 
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .column(table -> table)
                 .updateJavaBean(javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` SysUser set SysUser.`id` = ?,SysUser.`user_name` = ?,SysUser.`login_name` = ?");
@@ -138,7 +139,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         arg("1");
         arg("1");
 
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .column(table -> table.userName().userName())
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id())))
@@ -153,7 +154,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         SysUser javaBean = new SysUser();
         javaBean.setUserName(arg());
 
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id())))
                 .where(UserRoleHelper.class, (condition, table, mainTable) -> condition
@@ -181,7 +182,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         arg(sysUser.getLoginName());
         javaBeans.add(sysUser);
 
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .updateOrInsertJavaBeans(javaBeans);
         setSqlBuilder(sqlBuilderResult, "insert into sys_user (`id`,`user_name`,`login_name`) values (?,?,?),(?,?,?),(?,?,?) on duplicate key update `id` = values(`id`),`user_name` = values(`user_name`),`login_name` = values(`login_name`)");
     }
@@ -200,7 +201,7 @@ public class MySqlDynamicUpdateTest extends AbstractTest {
         sysUser = new SysUser();
         sysUser.setUserName(arg());
         javaBeans.add(sysUser);
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .column(SysUserHelper.Column::userName)
                 .updateOrInsertJavaBeans(javaBeans);
         setSqlBuilder(sqlBuilderResult, "insert into sys_user (`user_name`) values (?),(?),(?) on duplicate key update `user_name` = values(`user_name`)");

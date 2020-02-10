@@ -7,8 +7,6 @@ import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.core.engine.builder.SqlColumn;
 import pub.avalonframework.sqlhelper.core.engine.builder.SqlJoin;
 import pub.avalonframework.sqlhelper.core.engine.builder.SqlOn;
-import pub.avalonframework.sqlhelper.factory.MySqlDynamicEngine;
-import pub.avalonframework.sqlhelper.factory.SqlDynamicEngine;
 import pub.avalonframework.sqlhelper.readme.entity.RoleResourceHelper;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;
@@ -29,7 +27,7 @@ public class Test {
         RoleResourceHelper.Sort sort = RoleResourceHelper.orderBy().id().asc().id().desc();
         SysUserHelper.Sort joinSort = SysUserHelper.orderBy().userName().asc().userName().desc();
 
-        SqlHelperEngine sqlEngine = SqlDynamicEngine.table(DatabaseType.MYSQL, "", RoleResourceHelper.class)
+        SqlHelperEngine sqlEngine = new SqlHelperEngine<>(DatabaseType.MYSQL, "", RoleResourceHelper.class)
 
                 .sqlColumn(new SqlColumn<RoleResourceHelper.Column>() {
                 }.column(table -> table.id().primaryKey()))
@@ -72,7 +70,7 @@ public class Test {
                 .column(SysUserHelper.class, table -> joinColumn)
 
                 .subQueryColumn("", parentTable -> {
-                    return MySqlDynamicEngine.table(SysUserHelper.class)
+                    return new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                             .where((condition, mainTable) -> condition
                                     .and(mainTable.id().equalTo(parentTable.resourceName())))
                             .query();
@@ -134,7 +132,7 @@ public class Test {
                         .and(mainTable.id().equalToSubQuery(() -> {
 
 
-                            return MySqlDynamicEngine.table(SysUserHelper.class)
+                            return new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                                     .where((cd, mt) -> cd
                                             .and(mt.id().equalTo("")))
                                     .query();

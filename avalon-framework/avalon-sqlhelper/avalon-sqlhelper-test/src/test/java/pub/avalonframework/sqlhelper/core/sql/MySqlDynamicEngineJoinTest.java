@@ -2,9 +2,10 @@ package pub.avalonframework.sqlhelper.core.sql;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
+import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
-import pub.avalonframework.sqlhelper.factory.MySqlDynamicEngine;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;
 
@@ -18,7 +19,7 @@ public class MySqlDynamicEngineJoinTest {
      */
     @Test
     void Test_join_default() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .column(table -> table)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.userId().equalTo(mainTable.id())))
@@ -32,7 +33,7 @@ public class MySqlDynamicEngineJoinTest {
      */
     @Test
     void Test_join_twice() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .column(table -> table)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.userId().equalTo(mainTable.id())))
@@ -48,7 +49,7 @@ public class MySqlDynamicEngineJoinTest {
      */
     @Test
     void Test_join_assignTableName_assignTableAlias() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table("sys_user_custom", SysUserHelper.class, "A")
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,"sys_user_custom", SysUserHelper.class, "A")
                 .column(table -> table)
                 .join(JoinType.INNER, "user_role_custom", UserRoleHelper.class, "B", (on, joinTable, mainTable) -> on
                         .and(joinTable.userId().equalTo(mainTable.id())))

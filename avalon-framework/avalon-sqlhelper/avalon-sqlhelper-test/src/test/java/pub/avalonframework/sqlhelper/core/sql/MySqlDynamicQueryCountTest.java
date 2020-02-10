@@ -8,7 +8,7 @@ public class MySqlDynamicQueryCountTest {
 /*
     @Test
     void TestJoin03() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id()).resourceName().equalTo(arg())))
                 .leftJoin(RoleResourceHelper.class, "RR", (on, joinTable, mainTable) -> on
@@ -19,7 +19,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestJoin04() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id()).resourceName().equalTo(arg())))
                 .leftJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
@@ -32,7 +32,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestJoinAndWhere01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id())))
                 .where(UserRoleHelper.class, (condition, table, mainTable) -> condition
@@ -43,7 +43,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestJoinAndWhere02() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id())
                                 .roleName().equalTo(arg())))
@@ -58,7 +58,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestJoinAndWhere03() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id()).roleName().equalTo(arg())))
                 .leftJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
@@ -71,7 +71,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestJoinAndWhere04() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id()).roleName().equalTo(arg())))
                 .rightJoin(UserRoleHelper.class, "UR", (on, joinTable, mainTable) -> on
@@ -87,7 +87,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestGroup01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .group(SysUserHelper.Group::id)
                 .queryCount();
         setSqlBuilder(sqlBuilderResult, "select count(1) from (select SysUser.`id` from `sys_user` SysUser group by SysUser.`id`) C");
@@ -95,7 +95,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestGroup02() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .group(table -> table.id().userName())
                 .queryCount();
         setSqlBuilder(sqlBuilderResult, "select count(1) from (select SysUser.`id` from `sys_user` SysUser group by SysUser.`id`,SysUser.`user_name`) C");
@@ -103,7 +103,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestGroupAndJoinAndWhere01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .where((condition, mainTable) -> condition
                         .and(mainTable.userName().equalTo(arg())))
                 .group(table -> table.id().loginName())
@@ -114,7 +114,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestGroupAndJoinAndWhere02() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id())))
                 .where((condition, mainTable) -> condition
@@ -127,7 +127,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestSort01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .sort(table -> table.id().asc())
                 .queryCount();
         setSqlBuilder(sqlBuilderResult, "select count(1) from `sys_user` SysUser");
@@ -135,7 +135,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestSort02() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .sort(table -> table.id().asc().userName().desc())
                 .queryCount();
         setSqlBuilder(sqlBuilderResult, "select count(1) from `sys_user` SysUser");
@@ -143,7 +143,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestSortAndJoinAndWhere01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .where((condition, mainTable) -> condition
                         .and(mainTable.userName().equalTo(arg())))
                 .sort(table -> table.id().desc())
@@ -153,7 +153,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestSortAndJoinAndWhere02() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(joinTable.roleId().equalTo(mainTable.id())))
                 .where((condition, mainTable) -> condition
@@ -165,7 +165,7 @@ public class MySqlDynamicQueryCountTest {
 
     @Test
     void TestLimit01() {
-        SqlBuilderResult sqlBuilderResult = MySqlDynamicEngine.table(SysUserHelper.class)
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL,SysUserHelper.class)
                 .limit(200L, 10L, 20L)
                 .queryCount();
         Pagination pagination = new Pagination(DataBaseType.MYSQL);
