@@ -51,9 +51,9 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -74,7 +74,7 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> sqlGroup, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -82,6 +82,6 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlGroup.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableGroupDatum));
+        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableGroupDatum));
     }
 }

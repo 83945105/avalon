@@ -12,9 +12,9 @@ import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallbackComparisonOperator<T>, ToColumnComparisonOperator<T> {
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -26,9 +26,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -40,9 +40,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -54,9 +54,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -68,9 +68,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -82,9 +82,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -96,9 +96,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -112,9 +112,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -126,9 +126,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -140,9 +140,9 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
     }
 
     @Override
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,

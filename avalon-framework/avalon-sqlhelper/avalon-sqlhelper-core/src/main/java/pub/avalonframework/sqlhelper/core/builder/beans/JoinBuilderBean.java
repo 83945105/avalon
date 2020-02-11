@@ -11,9 +11,9 @@ import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
  * @author baichao
  */
 public final class JoinBuilderBean<TO extends OnHelper<TO>,
-        S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-        SO extends OnHelper<SO>,
+        S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
         SC extends ColumnHelper<SC>,
+        SO extends OnHelper<SO>,
         SW extends WhereHelper<SW>,
         SG extends GroupHelper<SG>,
         SH extends HavingHelper<SH>,

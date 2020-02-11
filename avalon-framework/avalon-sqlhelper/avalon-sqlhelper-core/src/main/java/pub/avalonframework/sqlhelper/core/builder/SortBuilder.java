@@ -51,9 +51,9 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -74,7 +74,7 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sqlSort, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -82,6 +82,6 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlSort.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableSortDatum));
+        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableSortDatum));
     }
 }

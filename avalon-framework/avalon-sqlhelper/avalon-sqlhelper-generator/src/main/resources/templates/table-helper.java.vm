@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @SuppressWarnings("all")
-public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix} implements TableHelper<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.On, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Column, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Where, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Group, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Having, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Sort> {
+public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix} implements TableHelper<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Column, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.On, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Where, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Group, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Having, $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}.Sort> {
 
     public final static $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix} DEFAULT_INSTANCE = new $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}();
 
@@ -157,13 +157,13 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
     }
 
     @Override
-    public On newOnHelper(String tableAlias) {
-        return on(tableAlias);
+    public Column newColumnHelper(String tableAlias) {
+        return column(tableAlias);
     }
 
     @Override
-    public Column newColumnHelper(String tableAlias) {
-        return column(tableAlias);
+    public On newOnHelper(String tableAlias) {
+        return on(tableAlias);
     }
 
     @Override
@@ -403,7 +403,7 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
         #end
     }
 
-    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, On, Column, Where, Group, Having, Sort> {
+    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, Column, On, Where, Group, Having, Sort> {
         public SqlBuilder() {
             super(TABLE_ALIAS);
         }

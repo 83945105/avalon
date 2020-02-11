@@ -3,7 +3,6 @@ package pub.avalonframework.sqlhelper.readme.model;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
-import pub.avalonframework.sqlhelper.core.builder.ColumnBuilder;
 import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
 import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
 import pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder;

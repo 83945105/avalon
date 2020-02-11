@@ -59,7 +59,7 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> sqlColumn, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -67,6 +67,6 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlColumn.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addInsertTableColumnDatum));
+        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addInsertTableColumnDatum));
     }
 }

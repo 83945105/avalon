@@ -59,7 +59,7 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> sqlColumn, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -67,6 +67,6 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlColumn.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addUpdateTableColumnDatum));
+        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addUpdateTableColumnDatum));
     }
 }

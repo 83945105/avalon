@@ -15,13 +15,13 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public abstract class AbstractCrudEngine<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
-        TO extends OnHelper<TO>,
+public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TC extends ColumnHelper<TC>,
+        TO extends OnHelper<TO>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TO, TC, TW, TG, TH, TS> implements
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements
         SqlCrudBuilder, SqlDataCrudProducer {
 
     public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass) {

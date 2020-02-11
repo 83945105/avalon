@@ -24,9 +24,9 @@ public interface CallbackSortBlock<TS extends SortHelper<TS>, R> extends Callbac
      * @param sortCallback     {@link SortCallback}
      * @return R
      */
-    <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -39,9 +39,9 @@ public interface CallbackSortBlock<TS extends SortHelper<TS>, R> extends Callbac
      * @param sortCallback     {@link SortCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,

@@ -39,9 +39,9 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
     private List<AbstractJoinBuilderBean> joinBuilderBeans = new ArrayList<>(1);
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -62,7 +62,7 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
         return execute(this, sqlBuilderOptions);
     }
 
-    public static <FO extends OnHelper<FO>> List<JoinTableDatum> execute(JoinBuilder<FO> sqlJoin, SqlBuilderOptions sqlBuilderOptions) {
-        return sqlJoin.getJoinBuilderBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderOptions)).collect(Collectors.toList());
+    public static <FO extends OnHelper<FO>> List<JoinTableDatum> execute(JoinBuilder<FO> joinBuilder, SqlBuilderOptions sqlBuilderOptions) {
+        return joinBuilder.getJoinBuilderBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderOptions)).collect(Collectors.toList());
     }
 }

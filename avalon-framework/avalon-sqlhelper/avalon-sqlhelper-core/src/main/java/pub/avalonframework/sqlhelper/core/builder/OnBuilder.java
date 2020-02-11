@@ -52,9 +52,9 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -75,7 +75,7 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> sqlOn, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -83,6 +83,6 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlOn.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableOnDatum));
+        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableOnDatum));
     }
 }

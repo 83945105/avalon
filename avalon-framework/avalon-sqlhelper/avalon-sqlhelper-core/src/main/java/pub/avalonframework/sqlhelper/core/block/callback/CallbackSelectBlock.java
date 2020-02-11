@@ -36,9 +36,9 @@ public interface CallbackSelectBlock<TC extends ColumnHelper<TC>,
      * @param columnCallback   {@link ColumnCallback}
      * @return R
      */
-    <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -51,9 +51,9 @@ public interface CallbackSelectBlock<TC extends ColumnHelper<TC>,
      * @param columnCallback   {@link ColumnCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,

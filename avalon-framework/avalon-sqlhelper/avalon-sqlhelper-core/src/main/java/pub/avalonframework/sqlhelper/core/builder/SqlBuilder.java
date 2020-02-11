@@ -2,28 +2,28 @@ package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
+import pub.avalonframework.sqlhelper.core.block.LimitBlock;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackCrudBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
 import pub.avalonframework.sqlhelper.core.callback.*;
-import pub.avalonframework.sqlhelper.core.engine.LimitEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
  * @author baichao
  */
-public abstract class SqlBuilder<T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
-        TO extends OnHelper<TO>,
+public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TC extends ColumnHelper<TC>,
+        TO extends OnHelper<TO>,
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> implements
 
-        HelperCrudBlock<SqlBuilder<T, TO, TC, TW, TG, TH, TS>>,
+        HelperCrudBlock<SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
 
-        CallbackCrudBlock<TC, TO, TW, TG, TH, TS, SqlBuilder<T, TO, TC, TW, TG, TH, TS>>,
+        CallbackCrudBlock<TC, TO, TW, TG, TH, TS, SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
 
-        LimitEngine<SqlBuilder<T, TO, TC, TW, TG, TH, TS>> {
+        LimitBlock<SqlBuilder<T, TC, TO, TW, TG, TH, TS>> {
 
     private TO onHelper;
     private TC columnHelper;
@@ -42,142 +42,142 @@ public abstract class SqlBuilder<T extends TableHelper<T, TO, TC, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> select(ColumnHelper<?>... columnHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(ColumnHelper<?>... columnHelpers) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> insert(ColumnHelper<?>... columnHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> insert(ColumnHelper<?>... columnHelpers) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> update(ColumnHelper<?>... columnHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> update(ColumnHelper<?>... columnHelpers) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> select(ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(ColumnCallback<TC> columnCallback) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> update(ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> update(ColumnCallback<TC> columnCallback) {
         return this;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> virtualColumn(Object columnValue, String columnAlias) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> virtualColumn(Object columnValue, String columnAlias) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
         return this;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> groupBy(GroupHelper<?>... groupHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(GroupHelper<?>... groupHelpers) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> groupBy(GroupCallback<TG> groupCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(GroupCallback<TG> groupCallback) {
         return this;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> limit(Long limit) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> limit(Long limit) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> offset(Long offset) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> offset(Long offset) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> orderBy(SortHelper<?>... sortHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(SortHelper<?>... sortHelpers) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> orderBy(SortCallback<TS> sortCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(SortCallback<TS> sortCallback) {
         return this;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> where(WhereHelper<?>... whereHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(WhereHelper<?>... whereHelpers) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> where(WhereCallback<TW> callback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> callback) {
         return this;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> callback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> callback) {
         return this;
     }
 
@@ -186,37 +186,55 @@ public abstract class SqlBuilder<T extends TableHelper<T, TO, TC, TW, TG, TH, TS
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>, SO extends OnHelper<SO>, SC extends ColumnHelper<SC>, SW extends WhereHelper<SW>, SG extends GroupHelper<SG>, SH extends HavingHelper<SH>, SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
         return null;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>, SO extends OnHelper<SO>, SC extends ColumnHelper<SC>, SW extends WhereHelper<SW>, SG extends GroupHelper<SG>, SH extends HavingHelper<SH>, SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> on(OnHelper<?>... onHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(OnHelper<?>... onHelpers) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> having(HavingCallback<TH> havingCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(HavingCallback<TH> havingCallback) {
         return null;
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>, SO extends OnHelper<SO>, SC extends ColumnHelper<SC>, SW extends WhereHelper<SW>, SG extends GroupHelper<SG>, SH extends HavingHelper<SH>, SS extends SortHelper<SS>> SqlBuilder<T, TO, TC, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TO, TC, TW, TG, TH, TS> having(HavingHelper<?>... havingHelpers) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(HavingHelper<?>... havingHelpers) {
         return null;
     }
 }

@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @SuppressWarnings("all")
-public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.On, SysUserHelper.Column, SysUserHelper.Where, SysUserHelper.Group, SysUserHelper.Having, SysUserHelper.Sort> {
+public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.Column, SysUserHelper.On, SysUserHelper.Where, SysUserHelper.Group, SysUserHelper.Having, SysUserHelper.Sort> {
 
     public final static SysUserHelper DEFAULT_INSTANCE = new SysUserHelper();
 
@@ -155,13 +155,13 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.O
     }
 
     @Override
-    public On newOnHelper(String tableAlias) {
-        return on(tableAlias);
+    public Column newColumnHelper(String tableAlias) {
+        return column(tableAlias);
     }
 
     @Override
-    public Column newColumnHelper(String tableAlias) {
-        return column(tableAlias);
+    public On newOnHelper(String tableAlias) {
+        return on(tableAlias);
     }
 
     @Override
@@ -457,7 +457,7 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.O
         }
             }
 
-    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<SysUserHelper, On, Column, Where, Group, Having, Sort> {
+    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<SysUserHelper, Column, On, Where, Group, Having, Sort> {
         public SqlBuilder() {
             super(TABLE_ALIAS);
         }

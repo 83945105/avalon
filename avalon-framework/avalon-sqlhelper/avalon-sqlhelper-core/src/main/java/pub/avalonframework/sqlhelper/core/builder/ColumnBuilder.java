@@ -49,9 +49,9 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Help
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -72,7 +72,7 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Help
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(ColumnBuilder<FC> sqlColumn, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(ColumnBuilder<FC> columnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -80,5 +80,6 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Help
         if (sqlDataCrudProducer == null) {
             return;
         }
+        //TODO 待实现
     }
 }

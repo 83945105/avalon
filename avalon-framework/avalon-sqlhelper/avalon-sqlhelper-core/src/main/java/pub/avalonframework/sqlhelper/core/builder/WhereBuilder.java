@@ -52,9 +52,9 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -75,7 +75,7 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> sqlWhere, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -83,6 +83,6 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlWhere.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableWhereDatum));
+        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableWhereDatum));
     }
 }

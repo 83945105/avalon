@@ -19,9 +19,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -36,9 +36,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -55,9 +55,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -73,9 +73,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -92,9 +92,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -110,9 +110,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -128,9 +128,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -145,9 +145,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -164,9 +164,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -182,9 +182,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -200,9 +200,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -217,9 +217,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -235,9 +235,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -252,9 +252,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -269,9 +269,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -285,9 +285,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -304,9 +304,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -322,9 +322,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -340,9 +340,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -357,9 +357,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -375,9 +375,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -392,9 +392,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -409,9 +409,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -425,9 +425,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -444,9 +444,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -462,9 +462,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -480,9 +480,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -497,9 +497,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -515,9 +515,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -532,9 +532,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableAlias       table alias
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -549,9 +549,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param onJoinCallback   {@link OnJoinCallback}
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -565,9 +565,9 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
      */
-    default <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,

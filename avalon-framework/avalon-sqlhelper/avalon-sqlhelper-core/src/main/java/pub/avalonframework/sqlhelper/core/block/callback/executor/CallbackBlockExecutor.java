@@ -27,9 +27,9 @@ public final class CallbackBlockExecutor {
     private CallbackBlockExecutor() {
     }
 
-    public static <T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
-            TO extends OnHelper<TO>,
+    public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
@@ -52,9 +52,9 @@ public final class CallbackBlockExecutor {
         return new TableColumnDatum(tableAlias, columnData);
     }
 
-    public static <T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
-            TO extends OnHelper<TO>,
+    public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
@@ -62,9 +62,9 @@ public final class CallbackBlockExecutor {
         return columnAlias == null ? null : new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDatum(null, null, columnValue, columnAlias)));
     }
 
-    public static <T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
-            TO extends OnHelper<TO>,
+    public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
@@ -80,9 +80,9 @@ public final class CallbackBlockExecutor {
     }
 
     public static <TO extends OnHelper<TO>,
-            S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+            S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -96,16 +96,16 @@ public final class CallbackBlockExecutor {
         return joinTableDatum;
     }
 
-    public static <T extends TableHelper<T, TO, TC, TW, TG, TH, TS>,
-            TO extends OnHelper<TO>,
+    public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
             TS extends SortHelper<TS>,
-            S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+            S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,

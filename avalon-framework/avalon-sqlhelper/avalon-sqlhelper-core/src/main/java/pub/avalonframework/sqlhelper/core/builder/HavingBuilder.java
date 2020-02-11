@@ -52,9 +52,9 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
     }
 
     @Override
-    public <S extends TableHelper<S, SO, SC, SW, SG, SH, SS>,
-            SO extends OnHelper<SO>,
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
@@ -75,7 +75,7 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> sqlHaving, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -83,6 +83,6 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         if (sqlDataCrudProducer == null) {
             return;
         }
-        sqlHaving.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableHavingDatum));
+        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableHavingDatum));
     }
 }
