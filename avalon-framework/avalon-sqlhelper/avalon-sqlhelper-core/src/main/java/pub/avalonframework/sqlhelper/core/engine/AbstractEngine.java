@@ -20,7 +20,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> {
+        TS extends SortHelper<TS>> implements Engine<T, TC, TO, TW, TG, TH, TS> {
 
     protected Class<T> tableHelperClass;
 
@@ -150,5 +150,20 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
         this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
         };
+    }
+
+    @Override
+    public Class<T> getTableHelperClass() {
+        return tableHelperClass;
+    }
+
+    @Override
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    @Override
+    public SqlBuilderOptions getSqlBuilderOptions() {
+        return sqlBuilderOptions;
     }
 }

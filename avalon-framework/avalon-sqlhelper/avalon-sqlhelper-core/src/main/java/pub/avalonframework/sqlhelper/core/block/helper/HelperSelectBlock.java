@@ -14,5 +14,11 @@ public interface HelperSelectBlock<R> extends
         HelperHavingBlock<R>,
         HelperSortBlock<R> {
 
+    /**
+     * Add the select columns.
+     *
+     * @param columnHelpers
+     * @return
+     */
     R select(ColumnHelper<?>... columnHelpers);
 }

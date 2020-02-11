@@ -1,45 +1,8 @@
 package pub.avalonframework.sqlhelper.core.data;
 
-import pub.avalonframework.database.DatabaseType;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
-
 /**
  * @author baichao
  */
-public interface SqlDataDeleteProducer {
+public interface SqlDataDeleteProducer extends SqlDataOptionsProducer, SqlDataJoinProducer, SqlDataOnProducer, SqlDataWhereProducer {
 
-    /**
-     * set sql builder options
-     *
-     * @param sqlBuilderOptions {@link SqlBuilderOptions}
-     */
-    void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions);
-
-    /**
-     * set database type
-     *
-     * @param databaseType {@link DatabaseType}
-     */
-    void setDatabaseType(DatabaseType databaseType);
-
-    /**
-     * add join table data
-     *
-     * @param joinTableDatum {@link JoinTableDatum}
-     */
-    void addJoinTableDatum(JoinTableDatum joinTableDatum);
-
-    /**
-     * add table on data
-     *
-     * @param tableOnDatum {@link TableOnDatum}
-     */
-    void addTableOnDatum(TableOnDatum tableOnDatum);
-
-    /**
-     * add table where data
-     *
-     * @param tableWhereDatum {@link TableWhereDatum}
-     */
-    void addTableWhereDatum(TableWhereDatum tableWhereDatum);
 }

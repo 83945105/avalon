@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.SqlDataUpdateProducer;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -55,18 +55,18 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         return updateColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataUpdateProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataUpdateProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
-        if (sqlDataCrudProducer == null) {
+        SqlDataUpdateProducer sqlDataUpdateProducer = supplier.get();
+        if (sqlDataUpdateProducer == null) {
             return;
         }
-        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addUpdateTableColumnDatum));
+        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataUpdateProducer::addUpdateTableColumnDatum));
     }
 }

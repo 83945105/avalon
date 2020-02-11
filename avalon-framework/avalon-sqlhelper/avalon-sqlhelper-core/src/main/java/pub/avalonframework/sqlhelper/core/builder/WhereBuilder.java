@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.SqlDataWhereProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -71,18 +71,18 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         return whereBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataWhereProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataWhereProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
-        if (sqlDataCrudProducer == null) {
+        SqlDataWhereProducer sqlDataWhereProducer = supplier.get();
+        if (sqlDataWhereProducer == null) {
             return;
         }
-        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableWhereDatum));
+        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataWhereProducer::addTableWhereDatum));
     }
 }

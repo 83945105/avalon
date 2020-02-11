@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.OnCallback;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.SqlDataOnProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -71,18 +71,18 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         return onBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataOnProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataOnProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
-        if (sqlDataCrudProducer == null) {
+        SqlDataOnProducer sqlDataOnProducer = supplier.get();
+        if (sqlDataOnProducer == null) {
             return;
         }
-        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableOnDatum));
+        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataOnProducer::addTableOnDatum));
     }
 }

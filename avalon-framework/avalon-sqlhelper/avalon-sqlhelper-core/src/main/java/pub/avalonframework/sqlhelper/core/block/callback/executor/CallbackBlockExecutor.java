@@ -52,13 +52,7 @@ public final class CallbackBlockExecutor {
         return new TableColumnDatum(tableAlias, columnData);
     }
 
-    public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
-            TC extends ColumnHelper<TC>,
-            TO extends OnHelper<TO>,
-            TW extends WhereHelper<TW>,
-            TG extends GroupHelper<TG>,
-            TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableColumnDatum executeVirtualColumn(Class<T> tableHelperClass, String tableAlias, Object columnValue, String columnAlias) {
+    public static TableColumnDatum executeVirtualColumn(String tableAlias, Object columnValue, String columnAlias) {
         return columnAlias == null ? null : new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDatum(null, null, columnValue, columnAlias)));
     }
 

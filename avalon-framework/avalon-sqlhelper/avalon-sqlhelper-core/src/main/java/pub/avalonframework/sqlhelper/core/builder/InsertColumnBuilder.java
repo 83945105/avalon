@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.SqlDataInsertProducer;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -55,18 +55,18 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         return insertColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataInsertProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataInsertProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
-        if (sqlDataCrudProducer == null) {
+        SqlDataInsertProducer sqlDataInsertProducer = supplier.get();
+        if (sqlDataInsertProducer == null) {
             return;
         }
-        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addInsertTableColumnDatum));
+        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataInsertProducer::addInsertTableColumnDatum));
     }
 }

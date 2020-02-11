@@ -78,20 +78,20 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
         return new $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}();
     }
 
-    public static On on() {
-        return new On(TABLE_ALIAS);
-    }
-
-    public static On on(String tableAlias) {
-        return new On(tableAlias);
-    }
-
     public static Column column() {
         return new Column(TABLE_ALIAS);
     }
 
     public static Column column(String tableAlias) {
         return new Column(tableAlias);
+    }
+
+    public static On on() {
+        return new On(TABLE_ALIAS);
+    }
+
+    public static On on(String tableAlias) {
+        return new On(tableAlias);
     }
 
     public static Where where() {
@@ -186,36 +186,6 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
         return orderBy(tableAlias);
     }
 
-    public final static class On extends OnHelper<On> {
-
-        public On() {
-            super(TABLE_ALIAS);
-        }
-
-        public On(String tableAlias) {
-            super(tableAlias);
-        }
-
-        @Override
-        public $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix} getDefaultTableHelper() {
-            return DEFAULT_INSTANCE.getDefaultInstance();
-        }
-
-        public OnSqlPartDatumBuilder<On> sqlPart(String sqlPart) {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
-        }
-
-        public OnSqlPartDatumBuilder<On> primaryKey() {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
-        }
-
-        #foreach($column in ${table.columns})
-        public OnSqlPartDatumBuilder<On> $!{table.getColumnAlias(${column})}() {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS);
-        }
-        #end
-    }
-
     public final static class Column extends ColumnHelper<Column> {
 
         public Column() {
@@ -271,6 +241,36 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
 
         public Column $!{table.getColumnAlias(${column})}(String alias, ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, alias, columnHandlers).getHelper();
+        }
+        #end
+    }
+
+    public final static class On extends OnHelper<On> {
+
+        public On() {
+            super(TABLE_ALIAS);
+        }
+
+        public On(String tableAlias) {
+            super(tableAlias);
+        }
+
+        @Override
+        public $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix} getDefaultTableHelper() {
+            return DEFAULT_INSTANCE.getDefaultInstance();
+        }
+
+        public OnSqlPartDatumBuilder<On> sqlPart(String sqlPart) {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
+        }
+
+        public OnSqlPartDatumBuilder<On> primaryKey() {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
+        }
+
+        #foreach($column in ${table.columns})
+            public OnSqlPartDatumBuilder<On> $!{table.getColumnAlias(${column})}() {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS);
         }
         #end
     }

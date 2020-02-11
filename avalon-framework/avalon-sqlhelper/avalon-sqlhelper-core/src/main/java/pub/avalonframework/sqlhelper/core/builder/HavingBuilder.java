@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.SqlDataHavingProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -71,18 +71,18 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         return havingBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataHavingProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataHavingProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
-        if (sqlDataCrudProducer == null) {
+        SqlDataHavingProducer sqlDataHavingProducer = supplier.get();
+        if (sqlDataHavingProducer == null) {
             return;
         }
-        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addTableHavingDatum));
+        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataHavingProducer::addTableHavingDatum));
     }
 }

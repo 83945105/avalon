@@ -10,6 +10,7 @@ import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
+import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
@@ -24,6 +25,8 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>>
         extends AbstractCrudEngine<T, TC, TO, TW, TG, TH, TS> implements
+        Engine<T, TC, TO, TW, TG, TH, TS>,
+        SqlDataCrudProducer,
         HelperCrudBlock<SqlHelperEngine<T, TC, TO, TW, TG, TH, TS>>,
         CallbackCrudBlock<TC, TO, TW, TG, TH, TS, SqlHelperEngine<T, TC, TO, TW, TG, TH, TS>>,
         LimitBlock<SqlHelperEngine<T, TC, TO, TW, TG, TH, TS>>,
@@ -77,7 +80,7 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> virtualColumn(Object columnValue, String columnAlias) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeVirtualColumn(this.tableHelperClass, this.tableAlias, columnValue, columnAlias));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeVirtualColumn(getTableAlias(), columnValue, columnAlias));
         return this;
     }
 
@@ -113,13 +116,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
-        this.addInsertTableColumnDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, columnCallback, this.sqlBuilderOptions));
+        this.addInsertTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> select(ColumnCallback<TC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, columnCallback, this.sqlBuilderOptions));
+        this.addSelectTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -131,19 +134,19 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, columnCallback, this.sqlBuilderOptions));
+        this.addSelectTableColumnDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, columnCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> update(ColumnCallback<TC> columnCallback) {
-        this.addUpdateTableColumnDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, columnCallback, this.sqlBuilderOptions));
+        this.addUpdateTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(this.tableHelperClass, this.tableAlias, groupType, columnCallback, this.sqlBuilderOptions));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(getTableHelperClass(), getTableAlias(), groupType, columnCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -155,13 +158,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(tableHelperClass, tableAlias, groupType, columnCallback, this.sqlBuilderOptions));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(tableHelperClass, tableAlias, groupType, columnCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeSubQueryColumn(this.tableHelperClass, this.tableAlias, columnAlias, subQueryColumnCallback, this.sqlBuilderOptions));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeSubQueryColumn(getTableHelperClass(), getTableAlias(), columnAlias, subQueryColumnCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -173,13 +176,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addJoinTableDatum(CallbackBlockExecutor.execute(joinType, this.tableHelperClass, this.tableAlias, tableName, tableHelperClass, tableAlias, onJoinCallback, this.sqlBuilderOptions));
+        this.addJoinTableDatum(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
-        this.addTableOnDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, onCallback, this.sqlBuilderOptions));
+        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -191,13 +194,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addTableOnDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, tableHelperClass, tableAlias, onJoinCallback, this.sqlBuilderOptions));
+        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> whereCallback) {
-        this.addTableWhereDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, whereCallback, this.sqlBuilderOptions));
+        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -209,13 +212,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        this.addTableWhereDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, tableHelperClass, tableAlias, whereJoinCallback, this.sqlBuilderOptions));
+        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> groupBy(GroupCallback<TG> groupCallback) {
-        this.addTableGroupDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, groupCallback, this.sqlBuilderOptions));
+        this.addTableGroupDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), groupCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -227,13 +230,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
-        this.addTableGroupDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, groupCallback, this.sqlBuilderOptions));
+        this.addTableGroupDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, groupCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> having(HavingCallback<TH> havingCallback) {
-        this.addTableHavingDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, havingCallback, this.sqlBuilderOptions));
+        this.addTableHavingDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), havingCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -245,13 +248,13 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
-        this.addTableHavingDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, tableHelperClass, tableAlias, havingJoinCallback, this.sqlBuilderOptions));
+        this.addTableHavingDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, havingJoinCallback, getSqlBuilderOptions()));
         return this;
     }
 
     @Override
     public SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> orderBy(SortCallback<TS> sortCallback) {
-        this.addTableSortDatum(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, sortCallback, this.sqlBuilderOptions));
+        this.addTableSortDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), sortCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -263,7 +266,7 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
-        this.addTableSortDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, sortCallback, this.sqlBuilderOptions));
+        this.addTableSortDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, sortCallback, getSqlBuilderOptions()));
         return this;
     }
 
@@ -281,61 +284,61 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
 
     @Override
     public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
-        InsertColumnBuilder.execute(insertColumnBuilder, this.sqlBuilderOptions, () -> this);
+        InsertColumnBuilder.execute(insertColumnBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder) {
-        SelectColumnBuilder.execute(selectColumnBuilder, this.sqlBuilderOptions, () -> this);
+        SelectColumnBuilder.execute(selectColumnBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
-        UpdateColumnBuilder.execute(updateColumnBuilder, this.sqlBuilderOptions, () -> this);
+        UpdateColumnBuilder.execute(updateColumnBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildColumn(ColumnBuilder<FC> columnBuilder) {
-        ColumnBuilder.execute(columnBuilder, this.sqlBuilderOptions, () -> this);
+        ColumnBuilder.execute(columnBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FO extends OnHelper<FO>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
-        JoinBuilder.execute(joinBuilder, this.sqlBuilderOptions).forEach(this::addJoinTableDatum);
+        JoinBuilder.execute(joinBuilder, getSqlBuilderOptions()).forEach(this::addJoinTableDatum);
         return this;
     }
 
     @Override
     public <FO extends OnHelper<FO>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
-        OnBuilder.execute(onBuilder, this.sqlBuilderOptions, () -> this);
+        OnBuilder.execute(onBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FW extends WhereHelper<FW>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
-        WhereBuilder.execute(whereBuilder, this.sqlBuilderOptions, () -> this);
+        WhereBuilder.execute(whereBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FG extends GroupHelper<FG>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildGroup(GroupBuilder<FG> groupBuilder) {
-        GroupBuilder.execute(groupBuilder, this.sqlBuilderOptions, () -> this);
+        GroupBuilder.execute(groupBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FH extends HavingHelper<FH>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildHaving(HavingBuilder<FH> havingBuilder) {
-        HavingBuilder.execute(havingBuilder, this.sqlBuilderOptions, () -> this);
+        HavingBuilder.execute(havingBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 
     @Override
     public <FS extends SortHelper<FS>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildSort(SortBuilder<FS> sortBuilder) {
-        SortBuilder.execute(sortBuilder, this.sqlBuilderOptions, () -> this);
+        SortBuilder.execute(sortBuilder, getSqlBuilderOptions(), () -> this);
         return this;
     }
 }

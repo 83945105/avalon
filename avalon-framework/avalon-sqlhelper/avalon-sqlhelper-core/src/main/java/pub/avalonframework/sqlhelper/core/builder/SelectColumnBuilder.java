@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBea
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.SqlDataSelectProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -81,18 +81,18 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
         return selectColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataSelectProducer> supplier) {
         execute(this, sqlBuilderOptions, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(SelectColumnBuilder<FC> selectColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataCrudProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(SelectColumnBuilder<FC> selectColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataSelectProducer> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataCrudProducer sqlDataCrudProducer = supplier.get();
-        if (sqlDataCrudProducer == null) {
+        SqlDataSelectProducer sqlDataSelectProducer = supplier.get();
+        if (sqlDataSelectProducer == null) {
             return;
         }
-        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataCrudProducer::addSelectTableColumnDatum));
+        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataSelectProducer::addSelectTableColumnDatum));
     }
 }
