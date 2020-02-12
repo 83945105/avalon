@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackGroupBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperGroupBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean;
@@ -8,7 +9,6 @@ import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataGroupProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -70,11 +70,11 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         return groupBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataGroupProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataGroupProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataGroupProducer> supplier) {
+    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataGroupProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -82,6 +82,6 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         if (sqlDataGroupProducer == null) {
             return;
         }
-        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderOptions).forEach(sqlDataGroupProducer::addTableGroupDatum));
+        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderConfiguration).forEach(sqlDataGroupProducer::addTableGroupDatum));
     }
 }

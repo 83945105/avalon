@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
+import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.data.OnDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -19,4 +20,8 @@ public interface OnComparisonOperator<T extends Helper> extends BaseComparisonOp
         ToSqlPartBuilderComparisonOperator<T, OnSqlPartDatumBuilder>,
         ToSqlPartBuilderComparisonOperatorImpl<T, OnDatum, OnSqlPartDatumBuilder> {
 
+    @Override
+    default ComparisonRule getComparisonRule() {
+        return getSqlBuilderConfiguration().getSqlPartDatumBuilder().getOnComparisonRule();
+    }
 }

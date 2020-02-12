@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.rules.impl;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.rules.BaseComparisonOperator;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
@@ -30,23 +30,18 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonSqlPa
     AbstractComparisonSqlPartDatum<S> getAbstractComparisonSqlPartDatum();
 
     /**
-     * get sql builder options
+     * get sql builder configuration.
      *
-     * @return {@link SqlBuilderOptions}
+     * @return {@link SqlBuilderConfiguration}
      */
-    SqlBuilderOptions getSqlBuilderOptions();
+    SqlBuilderConfiguration getSqlBuilderConfiguration();
 
     /**
      * Add abstract comparison sql part datum.
      *
      * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonSqlPartDatum} object.
      */
-    void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<S> abstractComparisonSqlPartDatum);;
-
-    @Override
-    default ComparisonRule getDefaultComparisonRule() {
-        return this.getSqlBuilderOptions().getSqlPartDatumBuilderOptions().getDefaultWhereComparisonRule();
-    }
+    void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<S> abstractComparisonSqlPartDatum);
 
     @Override
     default T sqlPart(String targetSqlPart) {

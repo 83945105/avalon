@@ -65,66 +65,66 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public int copyTable(String targetTableName, boolean copyData, SqlTableBuilder sqlTableBuilder) {
+    public int copyTable(String targetTableName, boolean copyData, TableSqlBuilder tableSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlTableBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlTableBuilder).setDatabaseType(this.databaseType);
+        if (tableSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) tableSqlBuilder).setDatabaseType(this.databaseType);
         }
-        TableSqlBuilderResult tableSqlBuilderResult = sqlTableBuilder.copyTable(targetTableName, copyData);
+        TableSqlBuilderResult tableSqlBuilderResult = tableSqlBuilder.copyTable(targetTableName, copyData);
         return this.jdbcTemplate.update(tableSqlBuilderResult.getPreparedStatementSql());
     }
 
     @Override
-    public int deleteTable(SqlTableBuilder sqlTableBuilder) {
+    public int deleteTable(TableSqlBuilder tableSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlTableBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlTableBuilder).setDatabaseType(this.databaseType);
+        if (tableSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) tableSqlBuilder).setDatabaseType(this.databaseType);
         }
-        TableSqlBuilderResult tableSqlBuilderResult = sqlTableBuilder.deleteTable();
+        TableSqlBuilderResult tableSqlBuilderResult = tableSqlBuilder.deleteTable();
         return this.jdbcTemplate.update(tableSqlBuilderResult.getPreparedStatementSql());
     }
 
     @Override
-    public int renameTable(String newTableName, SqlTableBuilder sqlTableBuilder) {
+    public int renameTable(String newTableName, TableSqlBuilder tableSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlTableBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlTableBuilder).setDatabaseType(this.databaseType);
+        if (tableSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) tableSqlBuilder).setDatabaseType(this.databaseType);
         }
-        TableSqlBuilderResult tableSqlBuilderResult = sqlTableBuilder.renameTable(newTableName);
+        TableSqlBuilderResult tableSqlBuilderResult = tableSqlBuilder.renameTable(newTableName);
         return this.jdbcTemplate.update(tableSqlBuilderResult.getPreparedStatementSql());
     }
 
     @Override
-    public boolean isTableExist(SqlTableBuilder sqlTableBuilder) {
+    public boolean isTableExist(TableSqlBuilder tableSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlTableBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlTableBuilder).setDatabaseType(this.databaseType);
+        if (tableSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) tableSqlBuilder).setDatabaseType(this.databaseType);
         }
-        TableSqlBuilderResult tableSqlBuilderResult = sqlTableBuilder.isTableExist();
+        TableSqlBuilderResult tableSqlBuilderResult = tableSqlBuilder.isTableExist();
         List<Map<String, Object>> results = this.jdbcTemplate.query(tableSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(tableSqlBuilderResult.getPreparedStatementArgs()), new ListMapResultSetExtractor(1));
         return results != null && results.size() == 1 && results.get(0).size() == 1;
     }
 
     @Override
-    public Map<String, Object> queryByPrimaryKey(Object keyValue, SqlSelectBuilder sqlSelectBuilder) {
+    public Map<String, Object> queryByPrimaryKey(Object keyValue, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.queryByPrimaryKey(keyValue);
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.queryByPrimaryKey(keyValue);
         List<Map<String, Object>> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new ListMapResultSetExtractor(1));
         return JdbcTools.nullableSingleResult(results);
     }
 
     @Override
-    public <T> T queryByPrimaryKey(Object keyValue, Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> T queryByPrimaryKey(Object keyValue, Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.queryByPrimaryKey(keyValue);
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.queryByPrimaryKey(keyValue);
         List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new ListJavaBeanResultSetExtractor<>(returnType, 1));
         return JdbcTools.nullableSingleResult(results);
@@ -138,12 +138,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public Map<String, Object> queryOne(SqlSelectBuilder sqlSelectBuilder) {
+    public Map<String, Object> queryOne(SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<Map<String, Object>> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new ListMapResultSetExtractor(1));
         return JdbcTools.nullableSingleResult(results);
@@ -157,12 +157,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <T> T queryOne(Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> T queryOne(Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new ListJavaBeanResultSetExtractor<>(returnType, 1));
         return JdbcTools.nullableSingleResult(results);
@@ -175,12 +175,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public List<Map<String, Object>> queryList(SqlSelectBuilder sqlSelectBuilder) {
+    public List<Map<String, Object>> queryList(SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new ListMapResultSetExtractor());
     }
@@ -192,12 +192,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <T> List<T> queryList(Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> List<T> queryList(Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new ListJavaBeanResultSetExtractor<>(returnType));
     }
@@ -211,12 +211,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public long queryCount(SqlSelectBuilder sqlSelectBuilder) {
+    public long queryCount(SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.queryCount();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.queryCount();
         List<Integer> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new RowMapperResultSetExtractor<>(new SingleColumnRowMapper<>(Integer.class), 1));
@@ -231,12 +231,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K, V> Map<K, V> queryPairColumnInMap(int keyIndex, int valueIndex, SqlSelectBuilder sqlSelectBuilder) {
+    public <K, V> Map<K, V> queryPairColumnInMap(int keyIndex, int valueIndex, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new PairColumnResultSetExtractor<>(keyIndex, valueIndex));
@@ -250,12 +250,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K, V> Map<K, V> queryPairColumnInMap(String keyColumnName, String valueColumnName, SqlSelectBuilder sqlSelectBuilder) {
+    public <K, V> Map<K, V> queryPairColumnInMap(String keyColumnName, String valueColumnName, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new PairColumnResultSetExtractor<>(keyColumnName, valueColumnName));
@@ -269,12 +269,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K> Map<K, Map<String, Object>> queryInMap(int keyIndex, SqlSelectBuilder sqlSelectBuilder) {
+    public <K> Map<K, Map<String, Object>> queryInMap(int keyIndex, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnMapResultSetExtractor<>(keyIndex));
@@ -288,12 +288,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K> Map<K, Map<String, Object>> queryInMap(String keyColumnName, SqlSelectBuilder sqlSelectBuilder) {
+    public <K> Map<K, Map<String, Object>> queryInMap(String keyColumnName, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnMapResultSetExtractor<>(keyColumnName));
@@ -307,12 +307,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K, T> Map<K, T> queryInMap(int keyIndex, Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <K, T> Map<K, T> queryInMap(int keyIndex, Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnObjectResultSetExtractor<>(keyIndex, returnType));
@@ -326,12 +326,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K, T> Map<K, T> queryInMap(String keyColumnName, Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <K, T> Map<K, T> queryInMap(String keyColumnName, Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnObjectResultSetExtractor<>(keyColumnName, returnType));
@@ -345,12 +345,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K> Map<K, List<Map<String, Object>>> queryListInMap(int keyIndex, SqlSelectBuilder sqlSelectBuilder) {
+    public <K> Map<K, List<Map<String, Object>>> queryListInMap(int keyIndex, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnMapListResultSetExtractor<>(keyIndex));
@@ -364,12 +364,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K> Map<K, List<Map<String, Object>>> queryListInMap(String keyColumnName, SqlSelectBuilder sqlSelectBuilder) {
+    public <K> Map<K, List<Map<String, Object>>> queryListInMap(String keyColumnName, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnMapListResultSetExtractor<>(keyColumnName));
@@ -383,12 +383,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K, T> Map<K, List<T>> queryListInMap(int keyIndex, Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <K, T> Map<K, List<T>> queryListInMap(int keyIndex, Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnObjectListResultSetExtractor<>(keyIndex, returnType));
@@ -402,12 +402,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <K, T> Map<K, List<T>> queryListInMap(String keyColumnName, Class<T> returnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <K, T> Map<K, List<T>> queryListInMap(String keyColumnName, Class<T> returnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ColumnObjectListResultSetExtractor<>(keyColumnName, returnType));
@@ -422,12 +422,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public Object queryColumnOne(int columnIndex, SqlSelectBuilder sqlSelectBuilder) {
+    public Object queryColumnOne(int columnIndex, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<Object> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnIndex, Object.class, 1));
@@ -443,12 +443,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public Object queryColumnOne(String columnName, SqlSelectBuilder sqlSelectBuilder) {
+    public Object queryColumnOne(String columnName, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<Object> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnName, Object.class, 1));
@@ -464,12 +464,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <T> T queryColumnOne(int columnIndex, Class<T> columnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> T queryColumnOne(int columnIndex, Class<T> columnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnIndex, columnType, 1));
@@ -485,12 +485,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <T> T queryColumnOne(String columnName, Class<T> columnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> T queryColumnOne(String columnName, Class<T> columnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnName, columnType, 1));
@@ -505,12 +505,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public List<Object> queryColumnList(int columnIndex, SqlSelectBuilder sqlSelectBuilder) {
+    public List<Object> queryColumnList(int columnIndex, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnIndex, Object.class));
@@ -524,12 +524,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public List<Object> queryColumnList(String columnName, SqlSelectBuilder sqlSelectBuilder) {
+    public List<Object> queryColumnList(String columnName, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnName, Object.class));
@@ -543,12 +543,12 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <T> List<T> queryColumnList(int columnIndex, Class<T> columnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> List<T> queryColumnList(int columnIndex, Class<T> columnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnIndex, columnType));
@@ -562,167 +562,167 @@ public final class SpringJdbcEngine implements JdbcEngine {
     }
 
     @Override
-    public <T> List<T> queryColumnList(String columnName, Class<T> columnType, SqlSelectBuilder sqlSelectBuilder) {
+    public <T> List<T> queryColumnList(String columnName, Class<T> columnType, SelectSqlBuilder selectSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlSelectBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlSelectBuilder).setDatabaseType(this.databaseType);
+        if (selectSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) selectSqlBuilder).setDatabaseType(this.databaseType);
         }
-        SelectSqlBuilderResult selectSqlBuilderResult = sqlSelectBuilder.query();
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
                 new ListColumnResultSetExtractor<>(columnName, columnType));
     }
 
     @Override
-    public int insertArgs(Collection<?> args, SqlInsertBuilder sqlInsertBuilder) {
+    public int insertArgs(Collection<?> args, InsertSqlBuilder insertSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlInsertBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlInsertBuilder).setDatabaseType(this.databaseType);
+        if (insertSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) insertSqlBuilder).setDatabaseType(this.databaseType);
         }
-        InsertSqlBuilderResult insertSqlBuilderResult = sqlInsertBuilder.insertArgs(args);
+        InsertSqlBuilderResult insertSqlBuilderResult = insertSqlBuilder.insertArgs(args);
         return this.jdbcTemplate.update(insertSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(insertSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int insertJavaBean(Object javaBean, SqlInsertBuilder sqlInsertBuilder) {
+    public int insertJavaBean(Object javaBean, InsertSqlBuilder insertSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlInsertBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlInsertBuilder).setDatabaseType(this.databaseType);
+        if (insertSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) insertSqlBuilder).setDatabaseType(this.databaseType);
         }
-        InsertSqlBuilderResult insertSqlBuilderResult = sqlInsertBuilder.insertJavaBean(javaBean);
+        InsertSqlBuilderResult insertSqlBuilderResult = insertSqlBuilder.insertJavaBean(javaBean);
         return this.jdbcTemplate.update(insertSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(insertSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int insertJavaBeanSelective(Object javaBean, SqlInsertBuilder sqlInsertBuilder) {
+    public int insertJavaBeanSelective(Object javaBean, InsertSqlBuilder insertSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlInsertBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlInsertBuilder).setDatabaseType(this.databaseType);
+        if (insertSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) insertSqlBuilder).setDatabaseType(this.databaseType);
         }
-        InsertSqlBuilderResult insertSqlBuilderResult = sqlInsertBuilder.insertJavaBeanSelective(javaBean);
+        InsertSqlBuilderResult insertSqlBuilderResult = insertSqlBuilder.insertJavaBeanSelective(javaBean);
         return this.jdbcTemplate.update(insertSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(insertSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int batchInsertJavaBeans(Collection<?> javaBeans, SqlInsertBuilder sqlInsertBuilder) {
+    public int batchInsertJavaBeans(Collection<?> javaBeans, InsertSqlBuilder insertSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlInsertBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlInsertBuilder).setDatabaseType(this.databaseType);
+        if (insertSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) insertSqlBuilder).setDatabaseType(this.databaseType);
         }
-        InsertSqlBuilderResult insertSqlBuilderResult = sqlInsertBuilder.batchInsertJavaBeans(javaBeans);
+        InsertSqlBuilderResult insertSqlBuilderResult = insertSqlBuilder.batchInsertJavaBeans(javaBeans);
         return this.jdbcTemplate.update(insertSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(insertSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int updateArgsByPrimaryKey(Object keyValue, Collection<?> args, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int updateArgsByPrimaryKey(Object keyValue, Collection<?> args, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.updateArgsByPrimaryKey(keyValue, args);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.updateArgsByPrimaryKey(keyValue, args);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int updateJavaBeanByPrimaryKey(Object keyValue, Object javaBean, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int updateJavaBeanByPrimaryKey(Object keyValue, Object javaBean, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.updateJavaBeanByPrimaryKey(keyValue, javaBean);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.updateJavaBeanByPrimaryKey(keyValue, javaBean);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int updateJavaBeanByPrimaryKeySelective(Object keyValue, Object javaBean, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int updateJavaBeanByPrimaryKeySelective(Object keyValue, Object javaBean, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.updateJavaBeanByPrimaryKeySelective(keyValue, javaBean);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.updateJavaBeanByPrimaryKeySelective(keyValue, javaBean);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int updateJavaBean(Object javaBean, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int updateJavaBean(Object javaBean, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.updateJavaBean(javaBean);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.updateJavaBean(javaBean);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int updateJavaBeanSelective(Object javaBean, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int updateJavaBeanSelective(Object javaBean, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.updateJavaBeanSelective(javaBean);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.updateJavaBeanSelective(javaBean);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int batchUpdateJavaBeansByPrimaryKeys(Collection<?> javaBeans, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int batchUpdateJavaBeansByPrimaryKeys(Collection<?> javaBeans, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.batchUpdateJavaBeansByPrimaryKeys(javaBeans);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.batchUpdateJavaBeansByPrimaryKeys(javaBeans);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int updateOrInsertJavaBeans(Collection<?> javaBeans, SqlUpdateBuilder sqlUpdateBuilder) {
+    public int updateOrInsertJavaBeans(Collection<?> javaBeans, UpdateSqlBuilder updateSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlUpdateBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlUpdateBuilder).setDatabaseType(this.databaseType);
+        if (updateSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) updateSqlBuilder).setDatabaseType(this.databaseType);
         }
-        UpdateSqlBuilderResult updateSqlBuilderResult = sqlUpdateBuilder.updateOrInsertJavaBeans(javaBeans);
+        UpdateSqlBuilderResult updateSqlBuilderResult = updateSqlBuilder.updateOrInsertJavaBeans(javaBeans);
         return this.jdbcTemplate.update(updateSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(updateSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int deleteByPrimaryKey(Object keyValue, SqlDeleteBuilder sqlDeleteBuilder) {
+    public int deleteByPrimaryKey(Object keyValue, DeleteSqlBuilder deleteSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlDeleteBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlDeleteBuilder).setDatabaseType(this.databaseType);
+        if (deleteSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) deleteSqlBuilder).setDatabaseType(this.databaseType);
         }
-        DeleteSqlBuilderResult deleteSqlBuilderResult = sqlDeleteBuilder.deleteByPrimaryKey(keyValue);
+        DeleteSqlBuilderResult deleteSqlBuilderResult = deleteSqlBuilder.deleteByPrimaryKey(keyValue);
         return this.jdbcTemplate.update(deleteSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(deleteSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int batchDeleteByPrimaryKeys(Collection<?> keyValues, SqlDeleteBuilder sqlDeleteBuilder) {
+    public int batchDeleteByPrimaryKeys(Collection<?> keyValues, DeleteSqlBuilder deleteSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlDeleteBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlDeleteBuilder).setDatabaseType(this.databaseType);
+        if (deleteSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) deleteSqlBuilder).setDatabaseType(this.databaseType);
         }
-        DeleteSqlBuilderResult deleteSqlBuilderResult = sqlDeleteBuilder.batchDeleteByPrimaryKeys(keyValues);
+        DeleteSqlBuilderResult deleteSqlBuilderResult = deleteSqlBuilder.batchDeleteByPrimaryKeys(keyValues);
         return this.jdbcTemplate.update(deleteSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(deleteSqlBuilderResult.getPreparedStatementArgs()));
     }
 
     @Override
-    public int delete(SqlDeleteBuilder sqlDeleteBuilder) {
+    public int delete(DeleteSqlBuilder deleteSqlBuilder) {
         //TODO 使用代理模式优化掉该代码
-        if (sqlDeleteBuilder instanceof AbstractCrudEngine) {
-            ((AbstractCrudEngine) sqlDeleteBuilder).setDatabaseType(this.databaseType);
+        if (deleteSqlBuilder instanceof AbstractCrudEngine) {
+            ((AbstractCrudEngine) deleteSqlBuilder).setDatabaseType(this.databaseType);
         }
-        DeleteSqlBuilderResult deleteSqlBuilderResult = sqlDeleteBuilder.delete();
+        DeleteSqlBuilderResult deleteSqlBuilderResult = deleteSqlBuilder.delete();
         return this.jdbcTemplate.update(deleteSqlBuilderResult.getPreparedStatementSql(),
                 new CollectionArgumentPreparedStatementSetter(deleteSqlBuilderResult.getPreparedStatementArgs()));
     }

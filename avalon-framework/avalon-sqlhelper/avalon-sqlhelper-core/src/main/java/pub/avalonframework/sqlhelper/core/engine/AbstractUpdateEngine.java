@@ -1,13 +1,13 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlUpdateBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.UpdateSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.UpdateSqlBuilderResult;
 
 import java.util.Collection;
@@ -22,22 +22,22 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements
-        SqlUpdateBuilder, UpdateEngine<T, TC, TO, TW, TG, TH, TS> {
+        UpdateSqlBuilder, UpdateEngine<T, TC, TO, TW, TG, TH, TS> {
 
     public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableHelperClass, sqlBuilderOptions);
+    public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, sqlBuilderOptions);
+    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -48,57 +48,47 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlBuilderOptions);
+    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBean(Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBean(javaBean);
+        return this.crudSqlBuilder.updateJavaBean(javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBeanSelective(Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBeanSelective(javaBean);
+        return this.crudSqlBuilder.updateJavaBeanSelective(javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult updateArgsByPrimaryKey(Object primaryKeyValue, Object... args) {
-        return this.sqlCrudBuilder.updateArgsByPrimaryKey(primaryKeyValue, args);
+        return this.crudSqlBuilder.updateArgsByPrimaryKey(primaryKeyValue, args);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBeanByPrimaryKey(Object primaryKeyValue, Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBeanByPrimaryKey(primaryKeyValue, javaBean);
+        return this.crudSqlBuilder.updateJavaBeanByPrimaryKey(primaryKeyValue, javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBeanByPrimaryKeySelective(Object primaryKeyValue, Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBeanByPrimaryKeySelective(primaryKeyValue, javaBean);
+        return this.crudSqlBuilder.updateJavaBeanByPrimaryKeySelective(primaryKeyValue, javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult batchUpdateJavaBeansByPrimaryKeys(Collection<?> javaBeans) {
-        return this.sqlCrudBuilder.batchUpdateJavaBeansByPrimaryKeys(javaBeans);
+        return this.crudSqlBuilder.batchUpdateJavaBeansByPrimaryKeys(javaBeans);
     }
 
     @Override
     public UpdateSqlBuilderResult updateOrInsertJavaBeans(Collection<?> javaBeans) {
-        return this.sqlCrudBuilder.updateOrInsertJavaBeans(javaBeans);
+        return this.crudSqlBuilder.updateOrInsertJavaBeans(javaBeans);
     }
 
     public DatabaseType getDatabaseType() {
         return this.sqlData.getDatabaseType();
-    }
-
-    @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
-    }
-
-    @Override
-    public void setDatabaseType(DatabaseType databaseType) {
-        this.sqlData.setDatabaseType(databaseType);
     }
 
     @Override

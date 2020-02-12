@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.data.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.SortType;
 import pub.avalonframework.sqlhelper.core.data.SortDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 /**
  * @author baichao
@@ -13,7 +13,7 @@ public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSql
 
     private SortDatum sortDatum;
 
-    private SqlBuilderOptions sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
+    private SqlBuilderConfiguration sqlBuilderConfiguration;
 
     public SortSqlPartDatumBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
@@ -32,31 +32,21 @@ public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSql
     }
 
     @Override
-    public SqlBuilderOptions getSqlBuilderOptions() {
-        return this.sqlBuilderOptions;
+    public SqlBuilderConfiguration getSqlBuilderConfiguration() {
+        return sqlBuilderConfiguration;
     }
 
     @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.sqlBuilderConfiguration = sqlBuilderConfiguration;
     }
 
-    /**
-     * 升序
-     *
-     * @return 当前操作的排序模组
-     */
     public T asc() {
         this.sortDatum.setSortType(SortType.ASC);
         this.addSqlPartDatum(this.sortDatum);
         return this.getHelper();
     }
 
-    /**
-     * 降序
-     *
-     * @return 当前操作的排序模组
-     */
     public T desc() {
         this.sortDatum.setSortType(SortType.DESC);
         this.addSqlPartDatum(this.sortDatum);

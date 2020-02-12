@@ -1,16 +1,16 @@
 package pub.avalonframework.sqlhelper.core.data.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 /**
  * @author baichao
  */
 public final class ColumnSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, ColumnDatum> {
 
-    private SqlBuilderOptions sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
+    private SqlBuilderConfiguration sqlBuilderConfiguration;
 
     public ColumnSqlPartDatumBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
@@ -29,12 +29,12 @@ public final class ColumnSqlPartDatumBuilder<T extends Helper> extends AbstractS
     }
 
     @Override
-    public SqlBuilderOptions getSqlBuilderOptions() {
-        return this.sqlBuilderOptions;
+    public SqlBuilderConfiguration getSqlBuilderConfiguration() {
+        return sqlBuilderConfiguration;
     }
 
     @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.sqlBuilderConfiguration = sqlBuilderConfiguration;
     }
 }

@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.block.callback.executor;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
@@ -11,7 +12,6 @@ import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
@@ -33,7 +33,7 @@ public final class CallbackBlockExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableColumnDatum executeGroupColumn(Class<T> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<TC> columnCallback, SqlBuilderOptions sqlBuilderOptions) {
+            TS extends SortHelper<TS>> TableColumnDatum executeGroupColumn(Class<T> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<TC> columnCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (groupType == null) {
             ExceptionUtils.groupTypeNullException();
         }
@@ -42,7 +42,7 @@ public final class CallbackBlockExecutor {
         }
         T t = HelperManager.defaultTableHelper(tableHelperClass);
         TC tc = t.newColumnHelper(tableAlias);
-        tc.setSqlBuilderOptions(sqlBuilderOptions);
+        tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         tc = columnCallback.apply(tc);
         List<ColumnDatum> columnData = tc.takeoutSqlPartData();
         if (columnData == null || columnData.size() == 0) {
@@ -62,13 +62,13 @@ public final class CallbackBlockExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableColumnDatum executeSubQueryColumn(Class<T> tableHelperClass, String tableAlias, String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback, SqlBuilderOptions sqlBuilderOptions) {
+            TS extends SortHelper<TS>> TableColumnDatum executeSubQueryColumn(Class<T> tableHelperClass, String tableAlias, String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (columnAlias == null) {
             return null;
         }
         T t = HelperManager.defaultTableHelper(tableHelperClass);
         TC tc = t.newColumnHelper(tableAlias);
-        tc.setSqlBuilderOptions(sqlBuilderOptions);
+        tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         SqlBuilderResult sqlBuilderResult = subQueryColumnCallback.apply(tc);
         return new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDatum(null, null, sqlBuilderResult, columnAlias)));
     }
@@ -80,12 +80,12 @@ public final class CallbackBlockExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JoinTableDatum execute(JoinType joinType, TO mainOnHelper, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderOptions sqlBuilderOptions) {
+            SS extends SortHelper<SS>> JoinTableDatum execute(JoinType joinType, TO mainOnHelper, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         S s = HelperManager.defaultTableHelper(joinTableHelperClass);
         joinTableName = joinTableName == null ? s.getTableName() : joinTableName;
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         JoinTableDatum joinTableDatum = new JoinTableDatum(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
-        TableOnDatum tableOnDatum = CallbackExecutor.execute(mainOnHelper, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderOptions);
+        TableOnDatum tableOnDatum = CallbackExecutor.execute(mainOnHelper, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderConfiguration);
         joinTableDatum.setTableOnDatum(tableOnDatum);
         return joinTableDatum;
     }
@@ -103,12 +103,12 @@ public final class CallbackBlockExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JoinTableDatum execute(JoinType joinType, Class<T> mainTableHelperClass, String mainTableAlias, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderOptions sqlBuilderOptions) {
+            SS extends SortHelper<SS>> JoinTableDatum execute(JoinType joinType, Class<T> mainTableHelperClass, String mainTableAlias, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         S s = HelperManager.defaultTableHelper(joinTableHelperClass);
         joinTableName = joinTableName == null ? s.getTableName() : joinTableName;
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         JoinTableDatum joinTableDatum = new JoinTableDatum(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
-        TableOnDatum tableOnDatum = CallbackExecutor.execute(mainTableHelperClass, mainTableAlias, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderOptions);
+        TableOnDatum tableOnDatum = CallbackExecutor.execute(mainTableHelperClass, mainTableAlias, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderConfiguration);
         joinTableDatum.setTableOnDatum(tableOnDatum);
         return joinTableDatum;
     }

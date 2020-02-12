@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.data.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.HavingDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.rules.GroupByOperator;
 import pub.avalonframework.sqlhelper.core.rules.HavingComparisonOperator;
 
@@ -16,7 +16,7 @@ public final class HavingSqlPartDatumBuilder<T extends Helper> extends AbstractC
 
     private HavingDatum havingDatum;
 
-    private SqlBuilderOptions sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
+    private SqlBuilderConfiguration sqlBuilderConfiguration;
 
     public HavingSqlPartDatumBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
@@ -35,18 +35,18 @@ public final class HavingSqlPartDatumBuilder<T extends Helper> extends AbstractC
     }
 
     @Override
-    public SqlBuilderOptions getSqlBuilderOptions() {
-        return this.sqlBuilderOptions;
+    public SqlBuilderConfiguration getSqlBuilderConfiguration() {
+        return sqlBuilderConfiguration;
+    }
+
+    @Override
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.sqlBuilderConfiguration = sqlBuilderConfiguration;
     }
 
     @Override
     public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<HavingDatum> abstractComparisonSqlPartDatum) {
         super.addSqlPartDatum((HavingDatum) abstractComparisonSqlPartDatum);
-    }
-
-    @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
     }
 
     @Override

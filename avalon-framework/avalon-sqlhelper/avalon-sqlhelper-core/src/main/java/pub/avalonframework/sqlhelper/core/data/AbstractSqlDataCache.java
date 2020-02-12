@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.data;
 
 import pub.avalonframework.database.DatabaseType;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.LinkedHashMap;
@@ -13,7 +13,7 @@ public abstract class AbstractSqlDataCache implements SqlData {
 
     private MainTableDatum mainTableDatum;
 
-    private SqlBuilderOptions sqlBuilderOptions;
+    private SqlhelperConfiguration sqlhelperConfiguration;
 
     private DatabaseType databaseType;
 
@@ -24,8 +24,8 @@ public abstract class AbstractSqlDataCache implements SqlData {
     }
 
     @Override
-    public SqlBuilderOptions getSqlBuilderOptions() {
-        return this.sqlBuilderOptions;
+    public SqlhelperConfiguration getSqlhelperConfiguration() {
+        return sqlhelperConfiguration;
     }
 
     @Override
@@ -44,8 +44,8 @@ public abstract class AbstractSqlDataCache implements SqlData {
     }
 
     @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
+    public void setSqlhelperConfiguration(SqlhelperConfiguration sqlhelperConfiguration) {
+        this.sqlhelperConfiguration = sqlhelperConfiguration;
     }
 
     @Override

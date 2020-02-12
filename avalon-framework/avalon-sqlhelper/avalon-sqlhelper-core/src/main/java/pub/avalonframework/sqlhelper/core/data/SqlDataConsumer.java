@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.data;
 
 import pub.avalonframework.database.DatabaseType;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.List;
 public interface SqlDataConsumer {
 
     /**
-     * get sql builder options
+     * get sqlhelper configuration.
      *
-     * @return {@link SqlBuilderOptions}
+     * @return {@link SqlhelperConfiguration}
      */
-    SqlBuilderOptions getSqlBuilderOptions();
+    SqlhelperConfiguration getSqlhelperConfiguration();
 
     /**
      * get database type

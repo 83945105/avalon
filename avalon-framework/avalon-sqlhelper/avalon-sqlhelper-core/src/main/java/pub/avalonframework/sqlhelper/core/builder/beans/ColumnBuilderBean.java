@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public final class ColumnBuilderBean<TC extends ColumnHelper<TC>> extends Abstra
     }
 
     @Override
-    public List<TableColumnDatum> execute(SqlBuilderOptions sqlBuilderOptions) {
+    public List<TableColumnDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
         List<TableColumnDatum> tableColumnData = new ArrayList<>(1);
         if (this.columnHelpers != null) {
             for (ColumnHelper<?> columnHelper : this.columnHelpers) {
@@ -44,7 +44,7 @@ public final class ColumnBuilderBean<TC extends ColumnHelper<TC>> extends Abstra
             }
         }
         if (this.columnCallback != null) {
-            tableColumnData.add(CallbackExecutor.execute(this.columnHelper, this.columnCallback, sqlBuilderOptions));
+            tableColumnData.add(CallbackExecutor.execute(this.columnHelper, this.columnCallback, sqlBuilderConfiguration));
         }
         return tableColumnData;
     }

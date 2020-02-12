@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataInsertProducer;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -55,11 +55,11 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         return insertColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataInsertProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataInsertProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataInsertProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataInsertProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -67,6 +67,6 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         if (sqlDataInsertProducer == null) {
             return;
         }
-        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataInsertProducer::addInsertTableColumnDatum));
+        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(sqlDataInsertProducer::addInsertTableColumnDatum));
     }
 }

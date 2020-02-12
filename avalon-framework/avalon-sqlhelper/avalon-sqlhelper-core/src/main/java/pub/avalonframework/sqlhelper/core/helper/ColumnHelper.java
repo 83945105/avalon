@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
 import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.builder.ColumnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.Arrays;
@@ -53,8 +53,8 @@ public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
         return this.columnSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.columnSqlPartDatumBuilder.setSqlBuilderOptions(sqlBuilderOptions);
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.columnSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableColumnDatum execute() {

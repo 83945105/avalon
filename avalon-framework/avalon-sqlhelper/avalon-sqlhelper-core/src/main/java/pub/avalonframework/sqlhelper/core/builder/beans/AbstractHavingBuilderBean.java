@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public abstract class AbstractHavingBuilderBean extends BuilderBean {
         super(tableAlias);
     }
 
-    public abstract List<TableHavingDatum> execute(SqlBuilderOptions sqlBuilderOptions);
+    public abstract List<TableHavingDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

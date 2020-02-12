@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataUpdateProducer;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -55,11 +55,11 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         return updateColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataUpdateProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataUpdateProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataUpdateProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataUpdateProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -67,6 +67,6 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         if (sqlDataUpdateProducer == null) {
             return;
         }
-        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderOptions).forEach(sqlDataUpdateProducer::addUpdateTableColumnDatum));
+        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(sqlDataUpdateProducer::addUpdateTableColumnDatum));
     }
 }

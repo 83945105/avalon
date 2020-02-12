@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.data.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.SqlPartDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.List;
 
@@ -76,16 +76,16 @@ public interface SqlPartDatumBuilder<T extends Helper, S extends SqlPartDatum> {
     void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers);
 
     /**
-     * get sql builder options
+     * get sql builder configuration.
      *
-     * @return {@link SqlBuilderOptions}
+     * @return {@link SqlBuilderConfiguration}
      */
-    SqlBuilderOptions getSqlBuilderOptions();
+    SqlBuilderConfiguration getSqlBuilderConfiguration();
 
     /**
      * set sql builder options
      *
-     * @param sqlBuilderOptions {@link SqlBuilderOptions}
+     * @param sqlBuilderConfiguration {@link SqlBuilderConfiguration}
      */
-    void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions);
+    void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

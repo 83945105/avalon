@@ -1,7 +1,8 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
-import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.WhereDatum;
+import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.impl.*;
 
@@ -19,4 +20,8 @@ public interface WhereComparisonOperator<T extends Helper> extends BaseCompariso
         ToSqlPartBuilderComparisonOperator<T, WhereSqlPartDatumBuilder>,
         ToSqlPartBuilderComparisonOperatorImpl<T, WhereDatum, WhereSqlPartDatumBuilder> {
 
+    @Override
+    default ComparisonRule getComparisonRule() {
+        return getSqlBuilderConfiguration().getSqlPartDatumBuilder().getWhereComparisonRule();
+    }
 }

@@ -11,11 +11,11 @@ import java.util.Collection;
 public interface BaseComparisonOperator<T> {
 
     /**
-     * get default comparison rule.
+     * get comparison rule.
      *
      * @return {@link ComparisonRule}
      */
-    ComparisonRule getDefaultComparisonRule();
+    ComparisonRule getComparisonRule();
 
     /**
      * custom sql
@@ -55,7 +55,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T equalTo(Object value) {
-        return equalTo(value, getDefaultComparisonRule());
+        return equalTo(value, getComparisonRule());
     }
 
     /**
@@ -74,7 +74,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T notEqualTo(Object value) {
-        return notEqualTo(value, getDefaultComparisonRule());
+        return notEqualTo(value, getComparisonRule());
     }
 
     /**
@@ -93,7 +93,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T greaterThan(Object value) {
-        return greaterThan(value, getDefaultComparisonRule());
+        return greaterThan(value, getComparisonRule());
     }
 
     /**
@@ -112,7 +112,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T greaterThanAndEqualTo(Object value) {
-        return greaterThanAndEqualTo(value, getDefaultComparisonRule());
+        return greaterThanAndEqualTo(value, getComparisonRule());
     }
 
     /**
@@ -131,7 +131,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T lessThan(Object value) {
-        return lessThan(value, getDefaultComparisonRule());
+        return lessThan(value, getComparisonRule());
     }
 
     /**
@@ -150,7 +150,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T lessThanAndEqualTo(Object value) {
-        return lessThanAndEqualTo(value, getDefaultComparisonRule());
+        return lessThanAndEqualTo(value, getComparisonRule());
     }
 
     /**
@@ -171,7 +171,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T between(Object value, Object secondValue) {
-        return between(value, secondValue, getDefaultComparisonRule());
+        return between(value, secondValue, getComparisonRule());
     }
 
     /**
@@ -190,7 +190,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T like(Object value) {
-        return like(value, getDefaultComparisonRule());
+        return like(value, getComparisonRule());
     }
 
     /**
@@ -220,7 +220,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T in(Object... values) {
-        return in(getDefaultComparisonRule(), values);
+        return in(getComparisonRule(), values);
     }
 
     /**
@@ -239,7 +239,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T in(Collection<Object> values) {
-        return in(values, getDefaultComparisonRule());
+        return in(values, getComparisonRule());
     }
 
     /**
@@ -269,7 +269,7 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T notIn(Object... values) {
-        return notIn(getDefaultComparisonRule(), values);
+        return notIn(getComparisonRule(), values);
     }
 
     /**
@@ -288,6 +288,6 @@ public interface BaseComparisonOperator<T> {
      * @return extends {@link Helper} object
      */
     default T notIn(Collection<Object> values) {
-        return notIn(values, getDefaultComparisonRule());
+        return notIn(values, getComparisonRule());
     }
 }

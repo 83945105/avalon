@@ -1,14 +1,11 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.AbstractSqlCrudBuilder;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlCrudBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.Collection;
 
@@ -22,22 +19,22 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements
-        SqlCrudBuilder, SqlDataCrudProducer {
+        CrudSqlBuilder, SqlDataCrudProducer {
 
     public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableHelperClass, sqlBuilderOptions);
+    public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, sqlBuilderOptions);
+    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -48,127 +45,117 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlBuilderOptions);
+    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
     }
 
     @Override
     public TableSqlBuilderResult copyTable(String targetTableName, boolean copyData) {
-        return this.sqlCrudBuilder.copyTable(targetTableName, copyData);
+        return this.crudSqlBuilder.copyTable(targetTableName, copyData);
     }
 
     @Override
     public TableSqlBuilderResult deleteTable() {
-        return this.sqlCrudBuilder.deleteTable();
+        return this.crudSqlBuilder.deleteTable();
     }
 
     @Override
     public TableSqlBuilderResult renameTable(String newTableName) {
-        return this.sqlCrudBuilder.renameTable(newTableName);
+        return this.crudSqlBuilder.renameTable(newTableName);
     }
 
     @Override
     public TableSqlBuilderResult isTableExist() {
-        return this.sqlCrudBuilder.isTableExist();
+        return this.crudSqlBuilder.isTableExist();
     }
 
     @Override
     public InsertSqlBuilderResult insertArgs(Object... args) {
-        return this.sqlCrudBuilder.insertArgs(args);
+        return this.crudSqlBuilder.insertArgs(args);
     }
 
     @Override
     public InsertSqlBuilderResult insertJavaBean(Object javaBean) {
-        return this.sqlCrudBuilder.insertJavaBean(javaBean);
+        return this.crudSqlBuilder.insertJavaBean(javaBean);
     }
 
     @Override
     public InsertSqlBuilderResult insertJavaBeanSelective(Object javaBean) {
-        return this.sqlCrudBuilder.insertJavaBeanSelective(javaBean);
+        return this.crudSqlBuilder.insertJavaBeanSelective(javaBean);
     }
 
     @Override
     public InsertSqlBuilderResult batchInsertJavaBeans(Collection<?> javaBeans) {
-        return this.sqlCrudBuilder.batchInsertJavaBeans(javaBeans);
+        return this.crudSqlBuilder.batchInsertJavaBeans(javaBeans);
     }
 
     @Override
     public DeleteSqlBuilderResult delete() {
-        return this.sqlCrudBuilder.delete();
+        return this.crudSqlBuilder.delete();
     }
 
     @Override
     public DeleteSqlBuilderResult deleteByPrimaryKey(Object primaryKeyValue) {
-        return this.sqlCrudBuilder.deleteByPrimaryKey(primaryKeyValue);
+        return this.crudSqlBuilder.deleteByPrimaryKey(primaryKeyValue);
     }
 
     @Override
     public DeleteSqlBuilderResult batchDeleteByPrimaryKeys(Object... primaryKeyValues) {
-        return this.sqlCrudBuilder.batchDeleteByPrimaryKeys(primaryKeyValues);
+        return this.crudSqlBuilder.batchDeleteByPrimaryKeys(primaryKeyValues);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBean(Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBean(javaBean);
+        return this.crudSqlBuilder.updateJavaBean(javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBeanSelective(Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBeanSelective(javaBean);
+        return this.crudSqlBuilder.updateJavaBeanSelective(javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult updateArgsByPrimaryKey(Object primaryKeyValue, Object... args) {
-        return this.sqlCrudBuilder.updateArgsByPrimaryKey(primaryKeyValue, args);
+        return this.crudSqlBuilder.updateArgsByPrimaryKey(primaryKeyValue, args);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBeanByPrimaryKey(Object primaryKeyValue, Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBeanByPrimaryKey(primaryKeyValue, javaBean);
+        return this.crudSqlBuilder.updateJavaBeanByPrimaryKey(primaryKeyValue, javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult updateJavaBeanByPrimaryKeySelective(Object primaryKeyValue, Object javaBean) {
-        return this.sqlCrudBuilder.updateJavaBeanByPrimaryKeySelective(primaryKeyValue, javaBean);
+        return this.crudSqlBuilder.updateJavaBeanByPrimaryKeySelective(primaryKeyValue, javaBean);
     }
 
     @Override
     public UpdateSqlBuilderResult batchUpdateJavaBeansByPrimaryKeys(Collection<?> javaBeans) {
-        return this.sqlCrudBuilder.batchUpdateJavaBeansByPrimaryKeys(javaBeans);
+        return this.crudSqlBuilder.batchUpdateJavaBeansByPrimaryKeys(javaBeans);
     }
 
     @Override
     public UpdateSqlBuilderResult updateOrInsertJavaBeans(Collection<?> javaBeans) {
-        return this.sqlCrudBuilder.updateOrInsertJavaBeans(javaBeans);
+        return this.crudSqlBuilder.updateOrInsertJavaBeans(javaBeans);
     }
 
     @Override
     public SelectSqlBuilderResult query() {
-        return this.sqlCrudBuilder.query();
+        return this.crudSqlBuilder.query();
     }
 
     @Override
     public SelectSqlBuilderResult queryCount() {
-        return this.sqlCrudBuilder.queryCount();
+        return this.crudSqlBuilder.queryCount();
     }
 
     @Override
     public SelectSqlBuilderResult queryByPrimaryKey(Object primaryKeyValue) {
-        return this.sqlCrudBuilder.queryByPrimaryKey(primaryKeyValue);
+        return this.crudSqlBuilder.queryByPrimaryKey(primaryKeyValue);
     }
 
     public DatabaseType getDatabaseType() {
         return this.sqlData.getDatabaseType();
-    }
-
-    @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
-    }
-
-    @Override
-    public void setDatabaseType(DatabaseType databaseType) {
-        this.sqlData.setDatabaseType(databaseType);
     }
 
     @Override

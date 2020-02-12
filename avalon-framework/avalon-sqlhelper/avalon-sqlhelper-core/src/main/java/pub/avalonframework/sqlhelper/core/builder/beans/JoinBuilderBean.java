@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.block.callback.executor.CallbackBlockExecutor;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 /**
  * @author baichao
@@ -39,7 +39,7 @@ public final class JoinBuilderBean<TO extends OnHelper<TO>,
     }
 
     @Override
-    public JoinTableDatum execute(SqlBuilderOptions sqlBuilderOptions) {
-        return CallbackBlockExecutor.execute(this.joinType, this.mainOnHelper, this.joinTableName, this.joinTableHelperClass, this.tableAlias, this.onJoinCallback, sqlBuilderOptions);
+    public JoinTableDatum execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        return CallbackBlockExecutor.execute(this.joinType, this.mainOnHelper, this.joinTableName, this.joinTableHelperClass, this.tableAlias, this.onJoinCallback, sqlBuilderConfiguration);
     }
 }

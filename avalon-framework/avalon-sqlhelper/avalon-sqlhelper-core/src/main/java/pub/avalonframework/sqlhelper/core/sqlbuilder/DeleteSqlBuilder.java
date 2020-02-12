@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.DeleteSqlBuilderResul
 /**
  * @author baichao
  */
-public interface SqlDeleteBuilder {
+public interface DeleteSqlBuilder {
 
     /**
      * delete

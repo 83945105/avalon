@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackSortBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperSortBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSortBuilderBean;
@@ -8,7 +9,6 @@ import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.SortCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataSortProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -70,11 +70,11 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         return sortBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataSortProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataSortProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataSortProducer> supplier) {
+    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataSortProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -82,6 +82,6 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         if (sqlDataSortProducer == null) {
             return;
         }
-        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderOptions).forEach(sqlDataSortProducer::addTableSortDatum));
+        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderConfiguration).forEach(sqlDataSortProducer::addTableSortDatum));
     }
 }

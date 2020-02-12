@@ -12,7 +12,7 @@ import pub.avalonframework.security.core.yaml.config.YamlAuthenticationConfigura
  */
 public final class AuthenticationConfigurationYamlSwapper implements YamlSwapper<YamlAuthenticationConfiguration, AuthenticationConfiguration> {
 
-    private final static Boolean DEFAULT_CACHE_ENABLED = false;
+    private final static Boolean DEFAULT_CACHE_ENABLED = Boolean.FALSE;
 
     private final static String DEFAULT_CACHE_NAME = "authentication";
 

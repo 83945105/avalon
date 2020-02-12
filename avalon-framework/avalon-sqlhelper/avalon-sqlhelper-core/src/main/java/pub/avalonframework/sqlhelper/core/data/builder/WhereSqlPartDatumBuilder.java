@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.data.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.WhereDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.rules.WhereComparisonOperator;
 
 /**
@@ -14,7 +14,7 @@ public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractCo
 
     private WhereDatum whereDatum;
 
-    private SqlBuilderOptions sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
+    private SqlBuilderConfiguration sqlBuilderConfiguration;
 
     public WhereSqlPartDatumBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
@@ -33,18 +33,18 @@ public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractCo
     }
 
     @Override
-    public SqlBuilderOptions getSqlBuilderOptions() {
-        return this.sqlBuilderOptions;
+    public SqlBuilderConfiguration getSqlBuilderConfiguration() {
+        return sqlBuilderConfiguration;
+    }
+
+    @Override
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.sqlBuilderConfiguration = sqlBuilderConfiguration;
     }
 
     @Override
     public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<WhereDatum> abstractComparisonSqlPartDatum) {
         super.addSqlPartDatum((WhereDatum) abstractComparisonSqlPartDatum);
-    }
-
-    @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
     }
 
     @Override

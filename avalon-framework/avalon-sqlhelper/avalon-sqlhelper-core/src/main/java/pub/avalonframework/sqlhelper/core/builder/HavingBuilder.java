@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackHavingBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperHavingBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractHavingBuilderBean;
@@ -9,7 +10,6 @@ import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataHavingProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -71,11 +71,11 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         return havingBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataHavingProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataHavingProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataHavingProducer> supplier) {
+    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataHavingProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -83,6 +83,6 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         if (sqlDataHavingProducer == null) {
             return;
         }
-        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderOptions).forEach(sqlDataHavingProducer::addTableHavingDatum));
+        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderConfiguration).forEach(sqlDataHavingProducer::addTableHavingDatum));
     }
 }

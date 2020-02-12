@@ -1,13 +1,15 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.FinalSqlData;
 import pub.avalonframework.sqlhelper.core.data.MainTableDatum;
 import pub.avalonframework.sqlhelper.core.data.SqlData;
+import pub.avalonframework.sqlhelper.core.data.SqlDataOptionsProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
+import pub.avalonframework.sqlhelper.core.mgt.SqlhelperManager;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.AbstractSqlCrudBuilder;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlCrudBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -20,7 +22,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> implements Engine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> implements Engine<T, TC, TO, TW, TG, TH, TS>, SqlDataOptionsProducer {
 
     protected Class<T> tableHelperClass;
 
@@ -34,9 +36,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
 
     protected SqlData sqlData;
 
-    protected SqlBuilderOptions sqlBuilderOptions;
+    protected SqlhelperConfiguration sqlhelperConfiguration;
 
-    protected SqlCrudBuilder sqlCrudBuilder;
+    protected CrudSqlBuilder crudSqlBuilder;
 
     public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         if (tableHelperClass == null) {
@@ -47,13 +49,13 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = this.tableHelper.getTableName();
         this.tableAlias = this.tableHelper.getTableAlias();
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
-    public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
+    public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -62,9 +64,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = this.tableHelper.getTableName();
         this.tableAlias = this.tableHelper.getTableAlias();
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = sqlBuilderOptions;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = sqlhelperConfiguration;
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
@@ -77,13 +79,13 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = tableName;
         this.tableAlias = this.tableHelper.getTableAlias();
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
-    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
+    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -92,9 +94,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = tableName;
         this.tableAlias = this.tableHelper.getTableAlias();
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = sqlBuilderOptions;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = sqlhelperConfiguration;
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
@@ -110,9 +112,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = this.tableHelper.getTableName();
         this.tableAlias = tableAlias;
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
@@ -128,13 +130,13 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = tableName;
         this.tableAlias = tableAlias;
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = SqlBuilderOptions.DEFAULT_SQL_BUILDER_OPTIONS;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
-    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
+    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -146,9 +148,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableName = tableName;
         this.tableAlias = tableAlias;
         this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlBuilderOptions = sqlBuilderOptions;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlBuilderOptions);
-        this.sqlCrudBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlBuilderOptions) {
+        this.sqlhelperConfiguration = sqlhelperConfiguration;
+        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
+        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
         };
     }
 
@@ -163,7 +165,17 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
     }
 
     @Override
-    public SqlBuilderOptions getSqlBuilderOptions() {
-        return sqlBuilderOptions;
+    public SqlhelperConfiguration getSqlhelperConfiguration() {
+        return sqlhelperConfiguration;
+    }
+
+    @Override
+    public void setSqlhelperConfiguration(SqlhelperConfiguration sqlhelperConfiguration) {
+        this.sqlhelperConfiguration = sqlhelperConfiguration;
+    }
+
+    @Override
+    public void setDatabaseType(DatabaseType databaseType) {
+        this.sqlData.setDatabaseType(databaseType);
     }
 }

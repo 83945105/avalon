@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.SortCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.TableSortDatum;
 import pub.avalonframework.sqlhelper.core.helper.SortHelper;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSo
     }
 
     @Override
-    public List<TableSortDatum> execute(SqlBuilderOptions sqlBuilderOptions) {
+    public List<TableSortDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
         List<TableSortDatum> tableSortData = new ArrayList<>(1);
         if (this.sortHelpers != null) {
             for (SortHelper<?> sortHelper : this.sortHelpers) {
@@ -44,7 +44,7 @@ public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSo
             }
         }
         if (this.sortCallback != null) {
-            tableSortData.add(CallbackExecutor.execute(this.sortHelper, this.sortCallback, sqlBuilderOptions));
+            tableSortData.add(CallbackExecutor.execute(this.sortHelper, this.sortCallback, sqlBuilderConfiguration));
         }
         return tableSortData;
     }

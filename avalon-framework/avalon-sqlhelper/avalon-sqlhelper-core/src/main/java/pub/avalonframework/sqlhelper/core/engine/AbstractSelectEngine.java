@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlSelectBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.SelectSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SelectSqlBuilderResult;
 
 /**
@@ -16,22 +16,22 @@ public abstract class AbstractSelectEngine<T extends TableHelper<T, TC, TO, TW, 
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements SqlSelectBuilder, SelectEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements SelectSqlBuilder, SelectEngine<T, TC, TO, TW, TG, TH, TS> {
 
     public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableHelperClass, sqlBuilderOptions);
+    public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, sqlBuilderOptions);
+    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -42,37 +42,27 @@ public abstract class AbstractSelectEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlBuilderOptions);
+    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
     }
 
     @Override
     public SelectSqlBuilderResult query() {
-        return this.sqlCrudBuilder.query();
+        return this.crudSqlBuilder.query();
     }
 
     @Override
     public SelectSqlBuilderResult queryCount() {
-        return this.sqlCrudBuilder.queryCount();
+        return this.crudSqlBuilder.queryCount();
     }
 
     @Override
     public SelectSqlBuilderResult queryByPrimaryKey(Object primaryKeyValue) {
-        return this.sqlCrudBuilder.queryByPrimaryKey(primaryKeyValue);
+        return this.crudSqlBuilder.queryByPrimaryKey(primaryKeyValue);
     }
 
     public DatabaseType getDatabaseType() {
         return this.sqlData.getDatabaseType();
-    }
-
-    @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
-    }
-
-    @Override
-    public void setDatabaseType(DatabaseType databaseType) {
-        this.sqlData.setDatabaseType(databaseType);
     }
 
     @Override

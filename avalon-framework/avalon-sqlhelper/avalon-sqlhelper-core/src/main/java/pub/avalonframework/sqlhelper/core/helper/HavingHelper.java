@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.HavingDatum;
 import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
 import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,8 +50,8 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
         return this.havingSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.havingSqlPartDatumBuilder.setSqlBuilderOptions(sqlBuilderOptions);
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.havingSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableHavingDatum execute() {

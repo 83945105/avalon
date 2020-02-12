@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.sqlbuilder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.SqlData;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlBuilderTemplate;
 
@@ -11,23 +11,23 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlCrudBuilder implements SqlCrudBuilder {
+public abstract class AbstractSqlCrudBuilder implements CrudSqlBuilder {
 
     private SqlData sqlData;
 
-    private SqlBuilderOptions sqlBuilderOptions;
+    private SqlBuilderConfiguration sqlBuilderConfiguration;
 
     private SqlBuilderTemplate sqlBuilderTemplate;
 
-    public AbstractSqlCrudBuilder(SqlData sqlData, SqlBuilderOptions sqlBuilderOptions) {
+    public AbstractSqlCrudBuilder(SqlData sqlData, SqlBuilderConfiguration sqlBuilderConfiguration) {
         this.sqlData = sqlData;
-        this.sqlBuilderOptions = sqlBuilderOptions;
+        this.sqlBuilderConfiguration = sqlBuilderConfiguration;
     }
 
     private void switchSqlBuilderTemplate() {
         switch (sqlData.getDatabaseType()) {
             case MYSQL:
-                this.sqlBuilderTemplate = this.sqlBuilderOptions.getMySqlBuilderTemplate();
+                this.sqlBuilderTemplate = this.sqlBuilderConfiguration.getMysqlSqlBuilderTemplate();
                 break;
             default:
                 throw new SqlException("SqlBuilder do not support this database type temporarily.");

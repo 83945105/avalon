@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.GroupDatum;
 import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
 import pub.avalonframework.sqlhelper.core.data.builder.GroupSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,8 +42,8 @@ public abstract class GroupHelper<T extends GroupHelper<T>> extends Helper {
         return this.groupSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.groupSqlPartDatumBuilder.setSqlBuilderOptions(sqlBuilderOptions);
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.groupSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableGroupDatum execute() {

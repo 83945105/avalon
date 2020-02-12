@@ -10,7 +10,7 @@ import pub.avalonframework.security.core.yaml.config.YamlSecurityConfiguration;
  */
 public final class RootConfigurationYamlSwapper implements YamlSwapper<YamlSecurityConfiguration, SecurityConfiguration> {
 
-    private final static Boolean DEFAULT_ENABLED = false;
+    private final static Boolean DEFAULT_ENABLED = Boolean.FALSE;
 
     private final static CacheType DEFAULT_CACHE_TYPE = CacheType.EHCACHE;
 

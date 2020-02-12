@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 /**
  * @author baichao
@@ -18,5 +18,5 @@ public interface Engine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
 
     String getTableAlias();
 
-    SqlBuilderOptions getSqlBuilderOptions();
+    SqlhelperConfiguration getSqlhelperConfiguration();
 }

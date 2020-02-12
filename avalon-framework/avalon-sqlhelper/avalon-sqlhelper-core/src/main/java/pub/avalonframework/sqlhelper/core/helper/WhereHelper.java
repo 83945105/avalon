@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
 import pub.avalonframework.sqlhelper.core.data.WhereDatum;
 import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,8 +44,8 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
         return this.whereSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.whereSqlPartDatumBuilder.setSqlBuilderOptions(sqlBuilderOptions);
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.whereSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableWhereDatum execute() {

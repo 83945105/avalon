@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackOnBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperOnBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractOnBuilderBean;
@@ -9,7 +10,6 @@ import pub.avalonframework.sqlhelper.core.callback.OnCallback;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataOnProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -71,11 +71,11 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         return onBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataOnProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataOnProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataOnProducer> supplier) {
+    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataOnProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -83,6 +83,6 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         if (sqlDataOnProducer == null) {
             return;
         }
-        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderOptions).forEach(sqlDataOnProducer::addTableOnDatum));
+        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderConfiguration).forEach(sqlDataOnProducer::addTableOnDatum));
     }
 }

@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlTableBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.TableSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.TableSqlBuilderResult;
 
 /**
@@ -15,22 +15,22 @@ public abstract class AbstractTableEngine<T extends TableHelper<T, TC, TO, TW, T
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements SqlTableBuilder {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements TableSqlBuilder {
 
     public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableHelperClass, sqlBuilderOptions);
+    public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, sqlBuilderOptions);
+    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -41,28 +41,28 @@ public abstract class AbstractTableEngine<T extends TableHelper<T, TC, TO, TW, T
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlBuilderOptions);
+    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
     }
 
     @Override
     public TableSqlBuilderResult copyTable(String targetTableName, boolean copyData) {
-        return this.sqlCrudBuilder.copyTable(targetTableName, copyData);
+        return this.crudSqlBuilder.copyTable(targetTableName, copyData);
     }
 
     @Override
     public TableSqlBuilderResult deleteTable() {
-        return this.sqlCrudBuilder.deleteTable();
+        return this.crudSqlBuilder.deleteTable();
     }
 
     @Override
     public TableSqlBuilderResult renameTable(String newTableName) {
-        return this.sqlCrudBuilder.renameTable(newTableName);
+        return this.crudSqlBuilder.renameTable(newTableName);
     }
 
     @Override
     public TableSqlBuilderResult isTableExist() {
-        return this.sqlCrudBuilder.isTableExist();
+        return this.crudSqlBuilder.isTableExist();
     }
 
     public DatabaseType getDatabaseType() {

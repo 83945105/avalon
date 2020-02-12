@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackWhereBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperWhereBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractWhereBuilderBean;
@@ -9,7 +10,6 @@ import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.SqlDataWhereProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.ArrayList;
@@ -71,11 +71,11 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         return whereBuilderBeans;
     }
 
-    public void execute(SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataWhereProducer> supplier) {
-        execute(this, sqlBuilderOptions, supplier);
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataWhereProducer> supplier) {
+        execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderOptions sqlBuilderOptions, Supplier<SqlDataWhereProducer> supplier) {
+    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataWhereProducer> supplier) {
         if (supplier == null) {
             return;
         }
@@ -83,6 +83,6 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         if (sqlDataWhereProducer == null) {
             return;
         }
-        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderOptions).forEach(sqlDataWhereProducer::addTableWhereDatum));
+        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderConfiguration).forEach(sqlDataWhereProducer::addTableWhereDatum));
     }
 }

@@ -1,5 +1,7 @@
 package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlPartDatumBuilderConfiguration;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.*;
@@ -7,7 +9,6 @@ import pub.avalonframework.sqlhelper.core.data.beans.ColumnType;
 import pub.avalonframework.sqlhelper.core.data.beans.Type;
 import pub.avalonframework.sqlhelper.core.data.beans.ValueType;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
@@ -29,9 +30,10 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         StringBuilder sql = new StringBuilder(128);
         List<Object> args = new ArrayList<>(16);
         if (!hasC) {
-            SqlBuilderOptions sqlBuilderOptions = sqlDataConsumer.getSqlBuilderOptions();
-            boolean selectAllColumnForMainTable = sqlBuilderOptions.getSqlPartDatumBuilderOptions().isSelectAllColumnForMainTable();
-            boolean selectAllColumnForJoinTable = sqlBuilderOptions.getSqlPartDatumBuilderOptions().isSelectAllColumnForJoinTable();
+            SqlhelperConfiguration sqlhelperConfiguration = sqlDataConsumer.getSqlhelperConfiguration();
+            SqlPartDatumBuilderConfiguration sqlPartDatumBuilderConfiguration = sqlhelperConfiguration.getSqlBuilder().getSqlPartDatumBuilder();
+            boolean selectAllColumnForMainTable = sqlPartDatumBuilderConfiguration.getSelectAllColumnForMainTable();
+            boolean selectAllColumnForJoinTable = sqlPartDatumBuilderConfiguration.getSelectAllColumnForJoinTable();
             if (!selectAllColumnForMainTable && !selectAllColumnForJoinTable) {
                 ExceptionUtils.selectColumnNullException();
             }

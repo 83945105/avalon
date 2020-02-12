@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +35,7 @@ public final class OnBuilderBeanJoin<TO extends OnHelper<TO>,
     }
 
     @Override
-    public List<TableOnDatum> execute(SqlBuilderOptions sqlBuilderOptions) {
-        return Collections.singletonList(CallbackExecutor.execute(this.onHelper, this.tableHelperClass, this.tableAlias, this.onJoinCallback, sqlBuilderOptions));
+    public List<TableOnDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        return Collections.singletonList(CallbackExecutor.execute(this.onHelper, this.tableHelperClass, this.tableAlias, this.onJoinCallback, sqlBuilderConfiguration));
     }
 }

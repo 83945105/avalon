@@ -46,7 +46,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
 
     @Override
     default UpdateEngine<T, TC, TO, TW, TG, TH, TS> update(ColumnCallback<TC> columnCallback) {
-        this.addUpdateTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlBuilderOptions()));
+        this.addUpdateTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlhelperConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -58,13 +58,13 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addJoinTableDatum(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getSqlBuilderOptions()));
+        this.addJoinTableDatum(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
-        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getSqlBuilderOptions()));
+        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getSqlhelperConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -76,13 +76,13 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getSqlBuilderOptions()));
+        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> whereCallback) {
-        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getSqlBuilderOptions()));
+        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getSqlhelperConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -94,31 +94,31 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getSqlBuilderOptions()));
+        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default <FC extends ColumnHelper<FC>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
-        UpdateColumnBuilder.execute(updateColumnBuilder, getSqlBuilderOptions(), () -> this);
+        UpdateColumnBuilder.execute(updateColumnBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FO extends OnHelper<FO>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
-        JoinBuilder.execute(joinBuilder, getSqlBuilderOptions()).forEach(this::addJoinTableDatum);
+        JoinBuilder.execute(joinBuilder, getSqlhelperConfiguration().getSqlBuilder()).forEach(this::addJoinTableDatum);
         return this;
     }
 
     @Override
     default <FO extends OnHelper<FO>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
-        OnBuilder.execute(onBuilder, getSqlBuilderOptions(), () -> this);
+        OnBuilder.execute(onBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FW extends WhereHelper<FW>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
-        WhereBuilder.execute(whereBuilder, getSqlBuilderOptions(), () -> this);
+        WhereBuilder.execute(whereBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 }

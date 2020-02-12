@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.OnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,8 +44,8 @@ public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
         return this.onSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.onSqlPartDatumBuilder.setSqlBuilderOptions(sqlBuilderOptions);
+    public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        this.onSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableOnDatum execute() {

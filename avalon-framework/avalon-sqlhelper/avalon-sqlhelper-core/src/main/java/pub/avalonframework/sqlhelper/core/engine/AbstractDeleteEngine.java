@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.option.SqlBuilderOptions;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlDeleteBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.DeleteSqlBuilderResult;
 
 /**
@@ -18,22 +18,22 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements SqlDeleteBuilder, DeleteEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements DeleteSqlBuilder, DeleteEngine<T, TC, TO, TW, TG, TH, TS> {
 
     public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableHelperClass, sqlBuilderOptions);
+    public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, sqlBuilderOptions);
+    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
     }
 
     public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -44,37 +44,27 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlBuilderOptions sqlBuilderOptions) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlBuilderOptions);
+    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
     }
 
     @Override
     public DeleteSqlBuilderResult delete() {
-        return this.sqlCrudBuilder.delete();
+        return this.crudSqlBuilder.delete();
     }
 
     @Override
     public DeleteSqlBuilderResult deleteByPrimaryKey(Object primaryKeyValue) {
-        return this.sqlCrudBuilder.deleteByPrimaryKey(primaryKeyValue);
+        return this.crudSqlBuilder.deleteByPrimaryKey(primaryKeyValue);
     }
 
     @Override
     public DeleteSqlBuilderResult batchDeleteByPrimaryKeys(Object... primaryKeyValues) {
-        return this.sqlCrudBuilder.batchDeleteByPrimaryKeys(primaryKeyValues);
+        return this.crudSqlBuilder.batchDeleteByPrimaryKeys(primaryKeyValues);
     }
 
     public DatabaseType getDatabaseType() {
         return this.sqlData.getDatabaseType();
-    }
-
-    @Override
-    public void setSqlBuilderOptions(SqlBuilderOptions sqlBuilderOptions) {
-        this.sqlBuilderOptions = sqlBuilderOptions;
-    }
-
-    @Override
-    public void setDatabaseType(DatabaseType databaseType) {
-        this.sqlData.setDatabaseType(databaseType);
     }
 
     @Override
