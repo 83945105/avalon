@@ -3,6 +3,7 @@ package pub.avalonframework.sqlhelper.core.engine;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.*;
+import pub.avalonframework.sqlhelper.core.data.inject.CrudInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
@@ -19,7 +20,7 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements
-        CrudSqlBuilder, SqlDataCrudProducer {
+        CrudSqlBuilder, CrudInjector {
 
     public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
         super(databaseType, tableHelperClass);

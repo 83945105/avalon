@@ -1,9 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
+
+import pub.avalonframework.sqlhelper.core.data.TableSortDatum;
 
 /**
  * @author baichao
  */
-public interface SqlDataSortProducer {
+public interface SortDataInjector {
 
     /**
      * add table sort data

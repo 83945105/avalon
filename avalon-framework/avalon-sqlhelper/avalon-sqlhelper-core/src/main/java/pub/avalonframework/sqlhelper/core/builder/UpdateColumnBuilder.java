@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataUpdateProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -55,18 +55,18 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         return updateColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataUpdateProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<UpdateInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataUpdateProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<UpdateInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataUpdateProducer sqlDataUpdateProducer = supplier.get();
-        if (sqlDataUpdateProducer == null) {
+        UpdateInjector updateInjector = supplier.get();
+        if (updateInjector == null) {
             return;
         }
-        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(sqlDataUpdateProducer::addUpdateTableColumnDatum));
+        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(updateInjector::addUpdateTableColumnDatum));
     }
 }

@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
 
 /**
  * @author baichao
  */
-public interface SqlDataLimitProducer {
+public interface LimitDataInjector {
 
     /**
      * set limit data

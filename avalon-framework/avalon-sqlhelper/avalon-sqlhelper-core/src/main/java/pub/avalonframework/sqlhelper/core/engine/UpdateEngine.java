@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.block.helper.HelperUpdateBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.SqlDataUpdateProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -21,7 +21,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
-        SqlDataUpdateProducer,
+        UpdateInjector,
         HelperUpdateBlock<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         CallbackUpdateBlock<TC, TO, TW, UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         UpdateBuilder<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> {

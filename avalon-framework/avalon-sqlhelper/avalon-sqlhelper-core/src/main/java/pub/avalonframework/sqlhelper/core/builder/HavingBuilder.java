@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataHavingProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.HavingDataInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -71,18 +71,18 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         return havingBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataHavingProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<HavingDataInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataHavingProducer> supplier) {
+    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<HavingDataInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataHavingProducer sqlDataHavingProducer = supplier.get();
-        if (sqlDataHavingProducer == null) {
+        HavingDataInjector havingDataInjector = supplier.get();
+        if (havingDataInjector == null) {
             return;
         }
-        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderConfiguration).forEach(sqlDataHavingProducer::addTableHavingDatum));
+        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderConfiguration).forEach(havingDataInjector::addTableHavingDatum));
     }
 }

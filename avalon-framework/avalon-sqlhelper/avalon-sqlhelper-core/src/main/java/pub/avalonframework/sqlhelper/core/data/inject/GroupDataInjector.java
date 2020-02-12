@@ -1,9 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
+
+import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
 
 /**
  * @author baichao
  */
-public interface SqlDataGroupProducer {
+public interface GroupDataInjector {
 
     /**
      * add table group data

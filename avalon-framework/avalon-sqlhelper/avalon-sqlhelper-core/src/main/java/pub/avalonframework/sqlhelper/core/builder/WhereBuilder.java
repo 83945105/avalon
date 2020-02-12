@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataWhereProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.WhereDataInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -71,18 +71,18 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         return whereBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataWhereProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<WhereDataInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataWhereProducer> supplier) {
+    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<WhereDataInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataWhereProducer sqlDataWhereProducer = supplier.get();
-        if (sqlDataWhereProducer == null) {
+        WhereDataInjector whereDataInjector = supplier.get();
+        if (whereDataInjector == null) {
             return;
         }
-        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderConfiguration).forEach(sqlDataWhereProducer::addTableWhereDatum));
+        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderConfiguration).forEach(whereDataInjector::addTableWhereDatum));
     }
 }

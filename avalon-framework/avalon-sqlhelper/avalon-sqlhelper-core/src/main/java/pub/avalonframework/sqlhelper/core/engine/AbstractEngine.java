@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.FinalSqlData;
 import pub.avalonframework.sqlhelper.core.data.MainTableDatum;
 import pub.avalonframework.sqlhelper.core.data.SqlData;
-import pub.avalonframework.sqlhelper.core.data.SqlDataOptionsProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.ConfigurationInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.mgt.SqlhelperManager;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
@@ -22,7 +22,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> implements Engine<T, TC, TO, TW, TG, TH, TS>, SqlDataOptionsProducer {
+        TS extends SortHelper<TS>> implements Engine<T, TC, TO, TW, TG, TH, TS>, ConfigurationInjector {
 
     protected Class<T> tableHelperClass;
 

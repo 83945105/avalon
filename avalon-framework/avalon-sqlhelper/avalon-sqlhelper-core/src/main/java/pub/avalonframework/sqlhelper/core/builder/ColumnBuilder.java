@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.block.callback.CallbackColumnBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperColumnBlock;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.SubQueryColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataColumnProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.ColumnDataInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -63,16 +63,16 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Help
         return tableAlias;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataColumnProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<ColumnDataInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(ColumnBuilder<FC> columnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataColumnProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(ColumnBuilder<FC> columnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<ColumnDataInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataColumnProducer sqlDataColumnProducer = supplier.get();
-        if (sqlDataColumnProducer == null) {
+        ColumnDataInjector columnDataInjector = supplier.get();
+        if (columnDataInjector == null) {
             return;
         }
         //TODO 待实现

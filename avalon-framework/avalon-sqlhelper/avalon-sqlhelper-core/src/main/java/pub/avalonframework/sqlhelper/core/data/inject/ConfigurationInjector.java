@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 
 /**
  * @author baichao
  */
-public interface SqlDataOptionsProducer {
+public interface ConfigurationInjector {
 
     /**
      * set configuration.

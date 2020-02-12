@@ -1,9 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
+
+import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 
 /**
  * @author baichao
  */
-public interface SqlDataJoinProducer {
+public interface JoinDataInjector {
 
     /**
      * add join table data

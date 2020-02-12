@@ -1,9 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
+
+import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 
 /**
  * @author baichao
  */
-public interface SqlDataInsertProducer extends SqlDataOptionsProducer {
+public interface InsertInjector extends ConfigurationInjector {
 
     /**
      * add insert table column data

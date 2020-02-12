@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.block.helper.HelperSelectBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.SqlDataSelectProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.SelectInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -23,7 +23,7 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
-        SqlDataSelectProducer,
+        SelectInjector,
         HelperSelectBlock<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
         CallbackSelectBlock<TC, TO, TW, TG, TH, TS, SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
         LimitBlock<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,

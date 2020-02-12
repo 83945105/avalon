@@ -11,7 +11,7 @@ import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.SqlDataCrudProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.CrudInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -26,7 +26,7 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
         TS extends SortHelper<TS>>
         extends AbstractCrudEngine<T, TC, TO, TW, TG, TH, TS> implements
         Engine<T, TC, TO, TW, TG, TH, TS>,
-        SqlDataCrudProducer,
+        CrudInjector,
         HelperCrudBlock<SqlHelperEngine<T, TC, TO, TW, TG, TH, TS>>,
         CallbackCrudBlock<TC, TO, TW, TG, TH, TS, SqlHelperEngine<T, TC, TO, TW, TG, TH, TS>>,
         LimitBlock<SqlHelperEngine<T, TC, TO, TW, TG, TH, TS>>,

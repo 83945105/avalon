@@ -13,7 +13,7 @@ import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.SqlDataDeleteProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.DeleteInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -27,7 +27,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
-        SqlDataDeleteProducer,
+        DeleteInjector,
         HelperDeleteBlock<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         CallbackDeleteBlock<TO, TW, DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         DeleteBuilder<DeleteEngine<T, TC, TO, TW, TG, TH, TS>> {

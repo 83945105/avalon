@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataInsertProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.InsertInjector;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -55,18 +55,18 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         return insertColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataInsertProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<InsertInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataInsertProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<InsertInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataInsertProducer sqlDataInsertProducer = supplier.get();
-        if (sqlDataInsertProducer == null) {
+        InsertInjector insertInjector = supplier.get();
+        if (insertInjector == null) {
             return;
         }
-        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(sqlDataInsertProducer::addInsertTableColumnDatum));
+        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(insertInjector::addInsertTableColumnDatum));
     }
 }

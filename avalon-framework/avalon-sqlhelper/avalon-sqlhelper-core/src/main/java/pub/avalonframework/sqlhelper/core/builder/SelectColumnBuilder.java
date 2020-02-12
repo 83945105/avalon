@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBea
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataSelectProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.SelectInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -81,18 +81,18 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
         return selectColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataSelectProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SelectInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(SelectColumnBuilder<FC> selectColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataSelectProducer> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(SelectColumnBuilder<FC> selectColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SelectInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataSelectProducer sqlDataSelectProducer = supplier.get();
-        if (sqlDataSelectProducer == null) {
+        SelectInjector selectInjector = supplier.get();
+        if (selectInjector == null) {
             return;
         }
-        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(sqlDataSelectProducer::addSelectTableColumnDatum));
+        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(selectInjector::addSelectTableColumnDatum));
     }
 }

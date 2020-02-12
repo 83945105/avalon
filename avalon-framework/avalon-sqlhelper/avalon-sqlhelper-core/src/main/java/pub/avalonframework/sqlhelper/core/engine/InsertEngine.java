@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.builder.InsertBuilder;
 import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.SqlDataInsertProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.InsertInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -20,7 +20,7 @@ public interface InsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
-        SqlDataInsertProducer,
+        InsertInjector,
         HelperInsertBlock<InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
         CallbackInsertBlock<TC, InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
         InsertBuilder<InsertEngine<T, TC, TO, TW, TG, TH, TS>> {

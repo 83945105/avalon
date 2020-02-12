@@ -1,9 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.inject;
+
+import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
 
 /**
  * @author baichao
  */
-public interface SqlDataHavingProducer {
+public interface HavingDataInjector {
 
     /**
      * add table having data

@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSortBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.SortCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataSortProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.SortDataInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -70,18 +70,18 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         return sortBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataSortProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SortDataInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataSortProducer> supplier) {
+    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SortDataInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataSortProducer sqlDataSortProducer = supplier.get();
-        if (sqlDataSortProducer == null) {
+        SortDataInjector sortDataInjector = supplier.get();
+        if (sortDataInjector == null) {
             return;
         }
-        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderConfiguration).forEach(sqlDataSortProducer::addTableSortDatum));
+        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderConfiguration).forEach(sortDataInjector::addTableSortDatum));
     }
 }

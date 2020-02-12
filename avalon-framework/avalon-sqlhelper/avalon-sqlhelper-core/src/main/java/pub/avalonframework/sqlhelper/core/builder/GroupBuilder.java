@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean
 import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
-import pub.avalonframework.sqlhelper.core.data.SqlDataGroupProducer;
+import pub.avalonframework.sqlhelper.core.data.inject.GroupDataInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -70,18 +70,18 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         return groupBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataGroupProducer> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<GroupDataInjector> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SqlDataGroupProducer> supplier) {
+    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<GroupDataInjector> supplier) {
         if (supplier == null) {
             return;
         }
-        SqlDataGroupProducer sqlDataGroupProducer = supplier.get();
-        if (sqlDataGroupProducer == null) {
+        GroupDataInjector groupDataInjector = supplier.get();
+        if (groupDataInjector == null) {
             return;
         }
-        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderConfiguration).forEach(sqlDataGroupProducer::addTableGroupDatum));
+        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderConfiguration).forEach(groupDataInjector::addTableGroupDatum));
     }
 }
