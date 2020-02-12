@@ -18,7 +18,7 @@ public final class SqlhelperManager {
         return DEFAULT_SQLHELPER_CONFIGURATION;
     }
 
-    public static void setDefaultSqlhelperConfiguration(SqlhelperConfiguration sqlhelperConfiguration) {
-        DEFAULT_SQLHELPER_CONFIGURATION = sqlhelperConfiguration;
+    public static void setDefaultSqlhelperConfiguration(SqlhelperConfiguration configuration) {
+        DEFAULT_SQLHELPER_CONFIGURATION = configuration;
     }
 }

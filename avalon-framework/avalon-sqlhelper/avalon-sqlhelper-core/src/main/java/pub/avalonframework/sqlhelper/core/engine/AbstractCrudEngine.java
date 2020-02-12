@@ -25,16 +25,16 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableHelperClass, sqlhelperConfiguration);
+    public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableHelperClass, configuration);
     }
 
     public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
+    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, configuration);
     }
 
     public AbstractCrudEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -45,8 +45,8 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
+    public AbstractCrudEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, configuration);
     }
 
     @Override
@@ -152,10 +152,6 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
     @Override
     public SelectSqlBuilderResult queryByPrimaryKey(Object primaryKeyValue) {
         return this.crudSqlBuilder.queryByPrimaryKey(primaryKeyValue);
-    }
-
-    public DatabaseType getDatabaseType() {
-        return this.sqlData.getDatabaseType();
     }
 
     @Override

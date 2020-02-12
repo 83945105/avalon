@@ -21,16 +21,16 @@ public abstract class AbstractTableEngine<T extends TableHelper<T, TC, TO, TW, T
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableHelperClass, sqlhelperConfiguration);
+    public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableHelperClass, configuration);
     }
 
     public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
+    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, configuration);
     }
 
     public AbstractTableEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -41,8 +41,8 @@ public abstract class AbstractTableEngine<T extends TableHelper<T, TC, TO, TW, T
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
+    public AbstractTableEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, configuration);
     }
 
     @Override
@@ -63,9 +63,5 @@ public abstract class AbstractTableEngine<T extends TableHelper<T, TC, TO, TW, T
     @Override
     public TableSqlBuilderResult isTableExist() {
         return this.crudSqlBuilder.isTableExist();
-    }
-
-    public DatabaseType getDatabaseType() {
-        return this.sqlData.getDatabaseType();
     }
 }

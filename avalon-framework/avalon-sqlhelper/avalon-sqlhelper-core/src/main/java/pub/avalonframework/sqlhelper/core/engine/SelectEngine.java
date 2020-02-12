@@ -73,7 +73,7 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> select(ColumnCallback<TC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addSelectTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -85,13 +85,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, columnCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addSelectTableColumnDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, columnCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(getTableHelperClass(), getTableAlias(), groupType, columnCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(getTableHelperClass(), getTableAlias(), groupType, columnCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -103,13 +103,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(tableHelperClass, tableAlias, groupType, columnCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeGroupColumn(tableHelperClass, tableAlias, groupType, columnCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
-        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeSubQueryColumn(getTableHelperClass(), getTableAlias(), columnAlias, subQueryColumnCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addSelectTableColumnDatum(CallbackBlockExecutor.executeSubQueryColumn(getTableHelperClass(), getTableAlias(), columnAlias, subQueryColumnCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -121,13 +121,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addJoinTableDatum(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addJoinTableDatum(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
-        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -139,13 +139,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableOnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> whereCallback) {
-        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -157,13 +157,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableWhereDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(GroupCallback<TG> groupCallback) {
-        this.addTableGroupDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), groupCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableGroupDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), groupCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -175,13 +175,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
-        this.addTableGroupDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, groupCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableGroupDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, groupCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> having(HavingCallback<TH> havingCallback) {
-        this.addTableHavingDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), havingCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableHavingDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), havingCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -193,13 +193,13 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
-        this.addTableHavingDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, havingJoinCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableHavingDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, havingJoinCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(SortCallback<TS> sortCallback) {
-        this.addTableSortDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), sortCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableSortDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), sortCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -211,7 +211,7 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
-        this.addTableSortDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, sortCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addTableSortDatum(CallbackExecutor.execute(tableHelperClass, tableAlias, sortCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -229,49 +229,49 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
 
     @Override
     default <FC extends ColumnHelper<FC>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder) {
-        SelectColumnBuilder.execute(selectColumnBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        SelectColumnBuilder.execute(selectColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FC extends ColumnHelper<FC>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildColumn(ColumnBuilder<FC> columnBuilder) {
-        ColumnBuilder.execute(columnBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        ColumnBuilder.execute(columnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FO extends OnHelper<FO>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
-        JoinBuilder.execute(joinBuilder, getSqlhelperConfiguration().getSqlBuilder()).forEach(this::addJoinTableDatum);
+        JoinBuilder.execute(joinBuilder, getConfiguration().getSqlBuilder()).forEach(this::addJoinTableDatum);
         return this;
     }
 
     @Override
     default <FO extends OnHelper<FO>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
-        OnBuilder.execute(onBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        OnBuilder.execute(onBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FW extends WhereHelper<FW>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
-        WhereBuilder.execute(whereBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        WhereBuilder.execute(whereBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FG extends GroupHelper<FG>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildGroup(GroupBuilder<FG> groupBuilder) {
-        GroupBuilder.execute(groupBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        GroupBuilder.execute(groupBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FH extends HavingHelper<FH>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildHaving(HavingBuilder<FH> havingBuilder) {
-        HavingBuilder.execute(havingBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        HavingBuilder.execute(havingBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
     default <FS extends SortHelper<FS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildSort(SortBuilder<FS> sortBuilder) {
-        SortBuilder.execute(sortBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        SortBuilder.execute(sortBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 }

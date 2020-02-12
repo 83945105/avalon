@@ -8,8 +8,8 @@ import pub.avalonframework.sqlhelper.core.data.SqlData;
 import pub.avalonframework.sqlhelper.core.data.SqlDataOptionsProducer;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.mgt.SqlhelperManager;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.AbstractSqlCrudBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilderProxyBuilder;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -26,117 +26,37 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
 
     protected Class<T> tableHelperClass;
 
-    protected T tableHelper;
-
-    protected String tableName;
-
     protected String tableAlias;
 
-    protected MainTableDatum mainTableDatum;
-
     protected SqlData sqlData;
-
-    protected SqlhelperConfiguration sqlhelperConfiguration;
 
     protected CrudSqlBuilder crudSqlBuilder;
 
     public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
-        if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
-        }
-        this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = this.tableHelper.getTableName();
-        this.tableAlias = this.tableHelper.getTableAlias();
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+        this(databaseType, tableHelperClass, SqlhelperManager.getDefaultSqlhelperConfiguration());
     }
 
-    public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
-        }
-        this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = this.tableHelper.getTableName();
-        this.tableAlias = this.tableHelper.getTableAlias();
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = sqlhelperConfiguration;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+    public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        this(databaseType, HelperManager.newTableHelper(tableHelperClass).getTableName(), tableHelperClass, HelperManager.newTableHelper(tableHelperClass).getTableAlias(), configuration);
     }
 
     public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
-        if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
-        }
-        this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = tableName;
-        this.tableAlias = this.tableHelper.getTableAlias();
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+        this(databaseType, tableName, tableHelperClass, SqlhelperManager.getDefaultSqlhelperConfiguration());
     }
 
-    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
-        }
-        this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = tableName;
-        this.tableAlias = this.tableHelper.getTableAlias();
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = sqlhelperConfiguration;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        this(databaseType, tableName, tableHelperClass, HelperManager.newTableHelper(tableHelperClass).getTableAlias(), configuration);
     }
 
     public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
-        if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
-        }
-        if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
-        }
-        this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = this.tableHelper.getTableName();
-        this.tableAlias = tableAlias;
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+        this(databaseType, HelperManager.newTableHelper(tableHelperClass).getTableName(), tableHelperClass, tableAlias, SqlhelperManager.getDefaultSqlhelperConfiguration());
     }
 
     public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
-        }
-        if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
-        }
-        this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = tableName;
-        this.tableAlias = tableAlias;
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = SqlhelperManager.getDefaultSqlhelperConfiguration();
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+        this(databaseType, tableName, tableHelperClass, tableAlias, SqlhelperManager.getDefaultSqlhelperConfiguration());
     }
 
-    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
+    public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -144,14 +64,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
             ExceptionUtils.tableAliasNullException();
         }
         this.tableHelperClass = tableHelperClass;
-        this.tableHelper = HelperManager.newTableHelper(tableHelperClass);
-        this.tableName = tableName;
         this.tableAlias = tableAlias;
-        this.mainTableDatum = new MainTableDatum(tableHelperClass, this.tableName, this.tableAlias);
-        this.sqlhelperConfiguration = sqlhelperConfiguration;
-        this.sqlData = new FinalSqlData(databaseType, this.mainTableDatum, this.sqlhelperConfiguration);
-        this.crudSqlBuilder = new AbstractSqlCrudBuilder(this.sqlData, this.sqlhelperConfiguration.getSqlBuilder()) {
-        };
+        this.sqlData = new FinalSqlData(databaseType, new MainTableDatum(tableHelperClass, tableName, this.tableAlias), configuration);
+        this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.sqlData).createCrudSqlBuilder();
     }
 
     @Override
@@ -165,17 +80,12 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
     }
 
     @Override
-    public SqlhelperConfiguration getSqlhelperConfiguration() {
-        return sqlhelperConfiguration;
+    public SqlhelperConfiguration getConfiguration() {
+        return this.sqlData.getConfiguration();
     }
 
     @Override
-    public void setSqlhelperConfiguration(SqlhelperConfiguration sqlhelperConfiguration) {
-        this.sqlhelperConfiguration = sqlhelperConfiguration;
-    }
-
-    @Override
-    public void setDatabaseType(DatabaseType databaseType) {
-        this.sqlData.setDatabaseType(databaseType);
+    public void setConfiguration(SqlhelperConfiguration configuration) {
+        this.sqlData.setConfiguration(configuration);
     }
 }

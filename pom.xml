@@ -28,16 +28,18 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <junit.jupiter.version>5.2.0</junit.jupiter.version>
+        <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <junit.surefire.version>2.19</junit.surefire.version>
         <mysql-connector-java.version>5.1.45</mysql-connector-java.version>
         <mssql-jdbc.version>6.4.0.jre8</mssql-jdbc.version>
-        <mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
+        <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>
 
         <apache.velocity.version>1.7</apache.velocity.version>
 
         <alibaba.druid.version>1.1.8</alibaba.druid.version>
         <alibaba.fastjson.version>1.2.62</alibaba.fastjson.version>
+
+        <cglib.version>3.3.0</cglib.version>
 
         <esotericsoftware.reflectasm.version>1.11.3</esotericsoftware.reflectasm.version>
 
@@ -51,6 +53,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
@@ -95,6 +103,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${alibaba.fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${cglib.version}</version>
             </dependency>
 
             <dependency>
@@ -150,9 +164,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.18.1</version>
-                    <configuration>
-                        <skipTests>true</skipTests>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

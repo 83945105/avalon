@@ -1,3 +1,4 @@
+/*
 package pub.avalon.sqlhelper.spring.core;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,13 +18,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * SpringJdbc引擎
  *
  * @author 白超
  * @version 1.0
  * @since 2018/7/10
- */
+ *//*
+
 public final class SpringJdbcEngine implements JdbcEngine {
 
     private String name;
@@ -756,3 +759,4 @@ public final class SpringJdbcEngine implements JdbcEngine {
         return databaseType;
     }
 }
+*/

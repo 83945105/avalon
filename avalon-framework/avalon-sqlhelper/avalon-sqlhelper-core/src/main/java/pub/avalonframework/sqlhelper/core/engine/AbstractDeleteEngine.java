@@ -24,16 +24,16 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableHelperClass, sqlhelperConfiguration);
+    public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableHelperClass, configuration);
     }
 
     public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
+    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, configuration);
     }
 
     public AbstractDeleteEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -44,8 +44,8 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
+    public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, configuration);
     }
 
     @Override
@@ -61,10 +61,6 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
     @Override
     public DeleteSqlBuilderResult batchDeleteByPrimaryKeys(Object... primaryKeyValues) {
         return this.crudSqlBuilder.batchDeleteByPrimaryKeys(primaryKeyValues);
-    }
-
-    public DatabaseType getDatabaseType() {
-        return this.sqlData.getDatabaseType();
     }
 
     @Override

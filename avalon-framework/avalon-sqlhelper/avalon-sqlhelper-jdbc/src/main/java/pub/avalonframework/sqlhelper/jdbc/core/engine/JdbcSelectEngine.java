@@ -31,16 +31,16 @@ public class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         super(jdbcTemplate.getDatabaseType(), tableHelperClass);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, sqlhelperConfiguration);
+    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcTemplate.getDatabaseType(), tableHelperClass, configuration);
     }
 
     public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass) {
         super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, sqlhelperConfiguration);
+    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, configuration);
     }
 
     public JdbcSelectEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, String tableAlias) {
@@ -51,8 +51,8 @@ public class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
+    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
     }
 
     public JdbcTemplate getJdbcTemplate() {

@@ -11,6 +11,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 /**
  * @author baichao
  */
+//TODO 改名
 public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TC extends ColumnHelper<TC>,
         TO extends OnHelper<TO>,

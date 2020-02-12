@@ -1,6 +1,5 @@
 package pub.avalon.sqlhelper.spring.beans;
 
-import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
 import pub.avalonframework.database.Pagination;
 import pub.avalonframework.sqlhelper.core.engine.AbstractCrudEngine;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.*;

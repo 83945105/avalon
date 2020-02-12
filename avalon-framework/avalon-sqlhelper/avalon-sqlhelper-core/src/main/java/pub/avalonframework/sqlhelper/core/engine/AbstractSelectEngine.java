@@ -22,16 +22,16 @@ public abstract class AbstractSelectEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableHelperClass, sqlhelperConfiguration);
+    public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableHelperClass, configuration);
     }
 
     public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
+    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, configuration);
     }
 
     public AbstractSelectEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -42,8 +42,8 @@ public abstract class AbstractSelectEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
+    public AbstractSelectEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, configuration);
     }
 
     @Override
@@ -59,10 +59,6 @@ public abstract class AbstractSelectEngine<T extends TableHelper<T, TC, TO, TW, 
     @Override
     public SelectSqlBuilderResult queryByPrimaryKey(Object primaryKeyValue) {
         return this.crudSqlBuilder.queryByPrimaryKey(primaryKeyValue);
-    }
-
-    public DatabaseType getDatabaseType() {
-        return this.sqlData.getDatabaseType();
     }
 
     @Override

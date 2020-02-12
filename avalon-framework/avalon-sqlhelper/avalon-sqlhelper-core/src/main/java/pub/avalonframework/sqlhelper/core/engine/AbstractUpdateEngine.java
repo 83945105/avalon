@@ -28,16 +28,16 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableHelperClass);
     }
 
-    public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableHelperClass, sqlhelperConfiguration);
+    public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableHelperClass, configuration);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
         super(databaseType, tableName, tableHelperClass);
     }
 
-    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, sqlhelperConfiguration);
+    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, configuration);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
@@ -48,8 +48,8 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
         super(databaseType, tableName, tableHelperClass, tableAlias);
     }
 
-    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration sqlhelperConfiguration) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, sqlhelperConfiguration);
+    public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(databaseType, tableName, tableHelperClass, tableAlias, configuration);
     }
 
     @Override
@@ -85,10 +85,6 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
     @Override
     public UpdateSqlBuilderResult updateOrInsertJavaBeans(Collection<?> javaBeans) {
         return this.crudSqlBuilder.updateOrInsertJavaBeans(javaBeans);
-    }
-
-    public DatabaseType getDatabaseType() {
-        return this.sqlData.getDatabaseType();
     }
 
     @Override

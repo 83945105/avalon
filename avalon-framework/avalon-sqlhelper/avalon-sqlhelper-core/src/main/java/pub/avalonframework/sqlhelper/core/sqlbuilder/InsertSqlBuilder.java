@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public interface InsertSqlBuilder {
+public interface InsertSqlBuilder extends SqlBuilder {
 
     /**
      * insert args

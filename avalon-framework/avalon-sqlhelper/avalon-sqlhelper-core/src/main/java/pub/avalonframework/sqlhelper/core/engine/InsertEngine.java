@@ -33,13 +33,13 @@ public interface InsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
 
     @Override
     default InsertEngine<T, TC, TO, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
-        this.addInsertTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getSqlhelperConfiguration().getSqlBuilder()));
+        this.addInsertTableColumnDatum(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getConfiguration().getSqlBuilder()));
         return this;
     }
 
     @Override
     default <FC extends ColumnHelper<FC>> InsertEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
-        InsertColumnBuilder.execute(insertColumnBuilder, getSqlhelperConfiguration().getSqlBuilder(), () -> this);
+        InsertColumnBuilder.execute(insertColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 }

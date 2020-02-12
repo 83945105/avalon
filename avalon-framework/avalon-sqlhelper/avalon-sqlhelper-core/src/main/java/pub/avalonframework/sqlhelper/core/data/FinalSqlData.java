@@ -8,9 +8,8 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
  */
 public final class FinalSqlData extends AbstractSqlData {
 
-    public FinalSqlData(DatabaseType databaseType, MainTableDatum mainTableDatum, SqlhelperConfiguration sqlhelperConfiguration) {
+    public FinalSqlData(DatabaseType databaseType, MainTableDatum mainTableDatum, SqlhelperConfiguration configuration) {
         super(mainTableDatum);
-        this.setSqlhelperConfiguration(sqlhelperConfiguration);
-        this.setDatabaseType(databaseType);
+        this.setConfiguration(configuration);
     }
 }

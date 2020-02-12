@@ -1,6 +1,5 @@
 package pub.avalonframework.sqlhelper.core.data;
 
-import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 
 /**
@@ -9,16 +8,9 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 public interface SqlDataOptionsProducer {
 
     /**
-     * set sqlhelper configuration.
+     * set configuration.
      *
-     * @param sqlhelperConfiguration {@link SqlhelperConfiguration}
+     * @param configuration {@link SqlhelperConfiguration}
      */
-    void setSqlhelperConfiguration(SqlhelperConfiguration sqlhelperConfiguration);
-
-    /**
-     * set database type
-     *
-     * @param databaseType {@link DatabaseType}
-     */
-    void setDatabaseType(DatabaseType databaseType);
+    void setConfiguration(SqlhelperConfiguration configuration);
 }

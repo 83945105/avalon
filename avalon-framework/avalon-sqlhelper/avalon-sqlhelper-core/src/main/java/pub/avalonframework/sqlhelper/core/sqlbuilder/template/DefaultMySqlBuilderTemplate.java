@@ -17,9 +17,7 @@ import java.util.*;
  */
 public final class DefaultMySqlBuilderTemplate implements MySqlBuilderTemplate {
 
-    public static final DefaultMySqlBuilderTemplate DEFAULT_DEFAULT_MY_SQL_BUILDER_TEMPLATE = new DefaultMySqlBuilderTemplate();
-
-    private SqlPartBuilderTemplate sqlPartBuilderTemplate = DefaultMySqlPartBuilderTemplate.DEFAULT_DEFAULT_MY_SQL_PART_BUILDER_TEMPLATE;
+    private SqlPartBuilderTemplate sqlPartBuilderTemplate;
 
     @Override
     public void setSqlPartBuilderTemplate(SqlPartBuilderTemplate sqlPartBuilderTemplate) {

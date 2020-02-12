@@ -15,9 +15,9 @@ import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlPartDatumBuilderCon
  */
 public final class SqlBuilderConfigurationYamlSwapper implements YamlSwapper<YamlSqlBuilderConfiguration, SqlBuilderConfiguration> {
 
-    private final static SqlPartBuilderTemplate DEFAULT_MYSQL_SQL_PART_BUILDER_TEMPLATE = DefaultMySqlPartBuilderTemplate.DEFAULT_DEFAULT_MY_SQL_PART_BUILDER_TEMPLATE;
+    private final static SqlPartBuilderTemplate DEFAULT_MYSQL_SQL_PART_BUILDER_TEMPLATE = new DefaultMySqlPartBuilderTemplate();
 
-    private final static SqlBuilderTemplate DEFAULT_MYSQL_SQL_BUILDER_TEMPLATE = DefaultMySqlBuilderTemplate.DEFAULT_DEFAULT_MY_SQL_BUILDER_TEMPLATE;
+    private final static SqlBuilderTemplate DEFAULT_MYSQL_SQL_BUILDER_TEMPLATE = new DefaultMySqlBuilderTemplate();
 
     @Override
     public YamlSqlBuilderConfiguration swap(SqlBuilderConfiguration data) {

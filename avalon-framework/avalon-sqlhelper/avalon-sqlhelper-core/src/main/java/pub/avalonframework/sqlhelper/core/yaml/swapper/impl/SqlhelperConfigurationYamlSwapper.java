@@ -1,6 +1,7 @@
 package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlPrintConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
@@ -17,6 +18,8 @@ public final class SqlhelperConfigurationYamlSwapper implements YamlSwapper<Yaml
     public YamlSqlhelperConfiguration swap(SqlhelperConfiguration data) {
         data = data == null ? new SqlhelperConfiguration() : data;
         YamlSqlhelperConfiguration configuration = new YamlSqlhelperConfiguration();
+        DatabaseType databaseType = data.getDatabaseType();
+        configuration.setDatabaseType(databaseType);
         SqlPrintConfiguration sqlPrint = data.getSqlPrint();
         configuration.setSqlPrint(new SqlPrintConfigurationYamlSwapper().swap(sqlPrint));
         SqlBuilderConfiguration sqlBuilder = data.getSqlBuilder();
@@ -28,6 +31,8 @@ public final class SqlhelperConfigurationYamlSwapper implements YamlSwapper<Yaml
     public SqlhelperConfiguration swap(YamlSqlhelperConfiguration yamlConfiguration) {
         yamlConfiguration = yamlConfiguration == null ? new YamlSqlhelperConfiguration() : yamlConfiguration;
         SqlhelperConfiguration configuration = new SqlhelperConfiguration();
+        DatabaseType databaseType = yamlConfiguration.getDatabaseType();
+        configuration.setDatabaseType(databaseType);
         YamlSqlPrintConfiguration sqlPrint = yamlConfiguration.getSqlPrint();
         configuration.setSqlPrint(new SqlPrintConfigurationYamlSwapper().swap(sqlPrint));
         YamlSqlBuilderConfiguration sqlBuilder = yamlConfiguration.getSqlBuilder();

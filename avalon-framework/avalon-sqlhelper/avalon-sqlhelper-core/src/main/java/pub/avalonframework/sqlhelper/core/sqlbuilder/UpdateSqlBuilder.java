@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public interface UpdateSqlBuilder {
+public interface UpdateSqlBuilder extends SqlBuilder {
 
     /**
      * update javaBean

@@ -18,5 +18,5 @@ public interface Engine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
 
     String getTableAlias();
 
-    SqlhelperConfiguration getSqlhelperConfiguration();
+    SqlhelperConfiguration getConfiguration();
 }

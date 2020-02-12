@@ -21,8 +21,6 @@ import java.util.*;
  */
 public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTemplate {
 
-    public final static DefaultMySqlPartBuilderTemplate DEFAULT_DEFAULT_MY_SQL_PART_BUILDER_TEMPLATE = new DefaultMySqlPartBuilderTemplate();
-
     @Override
     public SqlBuilderResult buildSelectColumn(SqlDataConsumer sqlDataConsumer) {
         List<TableColumnDatum> tableColumnData = sqlDataConsumer.getSelectTableColumnData();
@@ -30,8 +28,8 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         StringBuilder sql = new StringBuilder(128);
         List<Object> args = new ArrayList<>(16);
         if (!hasC) {
-            SqlhelperConfiguration sqlhelperConfiguration = sqlDataConsumer.getSqlhelperConfiguration();
-            SqlPartDatumBuilderConfiguration sqlPartDatumBuilderConfiguration = sqlhelperConfiguration.getSqlBuilder().getSqlPartDatumBuilder();
+            SqlhelperConfiguration configuration = sqlDataConsumer.getConfiguration();
+            SqlPartDatumBuilderConfiguration sqlPartDatumBuilderConfiguration = configuration.getSqlBuilder().getSqlPartDatumBuilder();
             boolean selectAllColumnForMainTable = sqlPartDatumBuilderConfiguration.getSelectAllColumnForMainTable();
             boolean selectAllColumnForJoinTable = sqlPartDatumBuilderConfiguration.getSelectAllColumnForJoinTable();
             if (!selectAllColumnForMainTable && !selectAllColumnForJoinTable) {
