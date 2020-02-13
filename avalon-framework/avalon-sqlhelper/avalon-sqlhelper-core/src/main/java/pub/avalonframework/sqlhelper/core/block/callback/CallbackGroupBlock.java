@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface CallbackGroupBlock<TG extends GroupHelper<TG>, R> extends CallbackBlock {
 
     /**
-     * use callback to add group sql data
+     * Use callback to add group sql data.
      *
      * @param groupCallback {@link GroupCallback}
      * @return R
@@ -17,7 +17,7 @@ public interface CallbackGroupBlock<TG extends GroupHelper<TG>, R> extends Callb
     R groupBy(GroupCallback<TG> groupCallback);
 
     /**
-     * use callback to add assign class group sql data
+     * Use callback to add assign class group sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -33,7 +33,7 @@ public interface CallbackGroupBlock<TG extends GroupHelper<TG>, R> extends Callb
             SS extends SortHelper<SS>> R groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback);
 
     /**
-     * use callback to add assign class group sql data
+     * Use callback to add assign class group sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param groupCallback    {@link GroupCallback}

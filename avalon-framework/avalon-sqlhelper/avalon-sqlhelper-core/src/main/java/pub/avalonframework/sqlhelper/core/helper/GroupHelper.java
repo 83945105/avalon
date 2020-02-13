@@ -15,35 +15,35 @@ import java.util.stream.Collectors;
  */
 public abstract class GroupHelper<T extends GroupHelper<T>> extends Helper {
 
-    private GroupDataBlockBuilder<T> groupSqlPartDatumBuilder;
+    private GroupDataBlockBuilder<T> groupDataBlockBuilder;
 
     @SuppressWarnings("unchecked")
     public GroupHelper(String tableAlias) {
         super(tableAlias);
-        this.groupSqlPartDatumBuilder = new GroupDataBlockBuilder<>(tableAlias, (T) this);
+        this.groupDataBlockBuilder = new GroupDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
         this.tableAlias = tableAlias;
-        this.groupSqlPartDatumBuilder.setTableAlias(tableAlias);
+        this.groupDataBlockBuilder.setTableAlias(tableAlias);
     }
 
     protected GroupDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.groupSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
-        return this.groupSqlPartDatumBuilder;
+        this.groupDataBlockBuilder.accept(templateTableName, templateTableAlias, sqlPart);
+        return this.groupDataBlockBuilder;
     }
 
     protected GroupDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
-        this.groupSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
-        return this.groupSqlPartDatumBuilder;
+        this.groupDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
+        return this.groupDataBlockBuilder;
     }
 
-    public List<GroupDataBlock> takeoutSqlPartData() {
-        return this.groupSqlPartDatumBuilder.takeoutSqlPartData();
+    public List<GroupDataBlock> takeoutGroupDataBlocks() {
+        return this.groupDataBlockBuilder.takeoutDataBlocks();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        this.groupSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
+        this.groupDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableGroupDataBlock execute() {
@@ -51,7 +51,7 @@ public abstract class GroupHelper<T extends GroupHelper<T>> extends Helper {
     }
 
     public static TableGroupDataBlock execute(GroupHelper<?> groupHelper) {
-        List<GroupDataBlock> groupDataBlocks = groupHelper.takeoutSqlPartData();
+        List<GroupDataBlock> groupDataBlocks = groupHelper.takeoutGroupDataBlocks();
         if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
             return null;
         }

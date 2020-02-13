@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 public interface OnDataInjector {
 
     /**
-     * add table on data
+     * Add table on data block.
      *
-     * @param tableOnDatum {@link TableOnDataBlock}
+     * @param tableOnDataBlock {@link TableOnDataBlock}
      */
-    void addTableOnDatum(TableOnDataBlock tableOnDatum);
+    void addTableOnDataBlock(TableOnDataBlock tableOnDataBlock);
 }

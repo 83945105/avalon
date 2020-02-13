@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 public interface CallbackInsertBlock<TC extends ColumnHelper<TC>, R> {
 
     /**
-     * use callback to add insert column sql data
+     * Use callback to add insert column sql data.
      *
      * @param columnCallback {@link ColumnCallback}
      * @return R

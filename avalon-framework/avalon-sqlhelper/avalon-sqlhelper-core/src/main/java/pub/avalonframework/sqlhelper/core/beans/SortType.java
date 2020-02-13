@@ -4,12 +4,13 @@ package pub.avalonframework.sqlhelper.core.beans;
  * @author baichao
  */
 public enum SortType {
+
     /**
-     * ascending order
+     * Ascending order
      */
     ASC,
     /**
-     * descending order
+     * Descending order
      */
     DESC
 }

@@ -12,7 +12,7 @@ import pub.avalonframework.sqlhelper.core.rules.WhereComparisonOperator;
  */
 public final class WhereDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, WhereDataBlock> implements WhereComparisonOperator<T> {
 
-    private WhereDataBlock whereDatum;
+    private WhereDataBlock whereDataBlock;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
@@ -22,13 +22,13 @@ public final class WhereDataBlockBuilder<T extends Helper> extends AbstractCompa
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.whereDatum = new WhereDataBlock(templateTableName, templateTableAlias, sqlPart)
+        this.whereDataBlock = new WhereDataBlock(templateTableName, templateTableAlias, sqlPart)
                 .setTableAlias(this.tableAlias);
     }
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.whereDatum = new WhereDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
+        this.whereDataBlock = new WhereDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
                 .setTableAlias(this.tableAlias);
     }
 
@@ -43,17 +43,17 @@ public final class WhereDataBlockBuilder<T extends Helper> extends AbstractCompa
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<WhereDataBlock> abstractComparisonSqlPartDatum) {
-        super.addDataBlock((WhereDataBlock) abstractComparisonSqlPartDatum);
+    public void addComparisonDataBlock(AbstractComparisonDataBlock<WhereDataBlock> comparisonDataBlock) {
+        super.addDataBlock((WhereDataBlock) comparisonDataBlock);
     }
 
     @Override
-    public AbstractComparisonDataBlock<WhereDataBlock> getAbstractComparisonSqlPartDatum() {
-        return this.whereDatum;
+    public AbstractComparisonDataBlock<WhereDataBlock> getComparisonDataBlock() {
+        return this.whereDataBlock;
     }
 
     @Override
-    public AbstractComparisonDataBlock<WhereDataBlock> getCloneComparisonSqlPartDatum() {
-        return this.whereDatum.getCloneComparisonSqlPartDatum();
+    public AbstractComparisonDataBlock<WhereDataBlock> getCloneComparisonDataBlock() {
+        return this.whereDataBlock.getCloneWhereDataBlock();
     }
 }

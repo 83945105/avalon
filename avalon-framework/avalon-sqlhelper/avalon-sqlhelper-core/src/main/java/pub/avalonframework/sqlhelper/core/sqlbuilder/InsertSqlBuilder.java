@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface InsertSqlBuilder extends SqlBuilder {
 
     /**
-     * insert args
+     * Insert args
      *
      * @param args args
      * @return {@link InsertSqlBuilderResult}
@@ -18,7 +18,7 @@ public interface InsertSqlBuilder extends SqlBuilder {
     InsertSqlBuilderResult insertArgs(Object... args);
 
     /**
-     * insert javaBean
+     * Insert javaBean
      *
      * @param javaBean javaBean
      * @return {@link InsertSqlBuilderResult}
@@ -26,7 +26,7 @@ public interface InsertSqlBuilder extends SqlBuilder {
     InsertSqlBuilderResult insertJavaBean(Object javaBean);
 
     /**
-     * inset javaBean
+     * Inset javaBean
      * <p>when value is {@code null},skip field
      *
      * @param javaBean javaBean
@@ -35,7 +35,7 @@ public interface InsertSqlBuilder extends SqlBuilder {
     InsertSqlBuilderResult insertJavaBeanSelective(Object javaBean);
 
     /**
-     * batch inset javaBeans
+     * Batch inset javaBeans
      *
      * @param javaBeans javaBeans
      * @return {@link InsertSqlBuilderResult}

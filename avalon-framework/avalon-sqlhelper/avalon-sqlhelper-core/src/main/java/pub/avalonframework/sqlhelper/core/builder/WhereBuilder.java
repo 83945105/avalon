@@ -83,6 +83,6 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
         if (whereDataInjector == null) {
             return;
         }
-        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderConfiguration).forEach(whereDataInjector::addTableWhereDatum));
+        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderConfiguration).forEach(whereDataInjector::addTableWhereDataBlock));
     }
 }

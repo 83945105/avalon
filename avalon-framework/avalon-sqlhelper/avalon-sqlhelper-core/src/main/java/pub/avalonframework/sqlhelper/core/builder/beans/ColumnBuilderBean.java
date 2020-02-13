@@ -37,15 +37,15 @@ public final class ColumnBuilderBean<TC extends ColumnHelper<TC>> extends Abstra
 
     @Override
     public List<TableColumnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableColumnDataBlock> tableColumnData = new ArrayList<>(1);
+        List<TableColumnDataBlock> tableColumnDataBlocks = new ArrayList<>(1);
         if (this.columnHelpers != null) {
             for (ColumnHelper<?> columnHelper : this.columnHelpers) {
-                tableColumnData.add(columnHelper.execute());
+                tableColumnDataBlocks.add(columnHelper.execute());
             }
         }
         if (this.columnCallback != null) {
-            tableColumnData.add(CallbackExecutor.execute(this.columnHelper, this.columnCallback, sqlBuilderConfiguration));
+            tableColumnDataBlocks.add(CallbackExecutor.execute(this.columnHelper, this.columnCallback, sqlBuilderConfiguration));
         }
-        return tableColumnData;
+        return tableColumnDataBlocks;
     }
 }

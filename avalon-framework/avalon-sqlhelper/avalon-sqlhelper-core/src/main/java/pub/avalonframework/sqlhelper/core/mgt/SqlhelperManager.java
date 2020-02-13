@@ -12,13 +12,13 @@ public final class SqlhelperManager {
     private SqlhelperManager() {
     }
 
-    private static SqlhelperConfiguration DEFAULT_SQLHELPER_CONFIGURATION = new SqlhelperConfigurationYamlSwapper().swap(new YamlSqlhelperConfiguration());
+    private static SqlhelperConfiguration DEFAULT_CONFIGURATION = new SqlhelperConfigurationYamlSwapper().swap(new YamlSqlhelperConfiguration());
 
-    public static SqlhelperConfiguration getDefaultSqlhelperConfiguration() {
-        return DEFAULT_SQLHELPER_CONFIGURATION;
+    public static SqlhelperConfiguration getDefaultConfiguration() {
+        return DEFAULT_CONFIGURATION;
     }
 
-    public static void setDefaultSqlhelperConfiguration(SqlhelperConfiguration configuration) {
-        DEFAULT_SQLHELPER_CONFIGURATION = configuration;
+    public static void setDefaultConfiguration(SqlhelperConfiguration configuration) {
+        DEFAULT_CONFIGURATION = configuration;
     }
 }

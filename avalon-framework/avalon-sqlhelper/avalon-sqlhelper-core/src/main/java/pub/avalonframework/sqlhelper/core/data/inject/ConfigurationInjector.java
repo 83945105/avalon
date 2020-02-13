@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 public interface ConfigurationInjector {
 
     /**
-     * set configuration.
+     * Set configuration.
      *
      * @param configuration {@link SqlhelperConfiguration}
      */

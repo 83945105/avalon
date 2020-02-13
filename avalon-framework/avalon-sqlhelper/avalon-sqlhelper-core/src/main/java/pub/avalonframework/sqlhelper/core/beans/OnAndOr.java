@@ -13,13 +13,13 @@ import java.util.List;
  */
 public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
 
-    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = new ArrayList<>();
+    private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = new ArrayList<>();
 
     @Override
-    public List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers() {
-        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = this.comparisonSqlPartDataLinkers;
-        this.comparisonSqlPartDataLinkers = new ArrayList<>();
-        return comparisonSqlPartDataLinkers;
+    public List<ComparisonDataBlockLinker> takeoutComparisonDataBlockLinkers() {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = this.comparisonDataBlockLinkers;
+        this.comparisonDataBlockLinkers = new ArrayList<>();
+        return comparisonDataBlockLinkers;
     }
 
     @Override
@@ -27,13 +27,13 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (onHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
-        List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        List<OnDataBlock> onDataBlocks = onHelper.takeoutOnDataBlocks();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
         }
-        onDataLinker.setComparisonSqlPartData(onDataBlocks);
-        this.comparisonSqlPartDataLinkers.add(onDataLinker);
+        comparisonDataBlockLinker.setComparisonDataBlocks(onDataBlocks);
+        this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
     }
 
@@ -43,18 +43,18 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
             return this;
         }
         OnLinker<TO> onLinker = onLinkerCallback.apply(new OnAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
-        if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onLinker.takeoutComparisonDataBlockLinkers();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
-        onDataLinker.setComparisonSqlPartDataLinkers(comparisonSqlPartDataLinkers);
-        this.comparisonSqlPartDataLinkers.add(onDataLinker);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
+        this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
     }
 
     /**
-     * or
+     * Or
      *
      * @param onHelper {@link OnHelper}
      * @return {@link OnAndOr}
@@ -63,18 +63,18 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (onHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
-        List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        List<OnDataBlock> onDataBlocks = onHelper.takeoutOnDataBlocks();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
         }
-        onDataLinker.setComparisonSqlPartData(onDataBlocks);
-        this.comparisonSqlPartDataLinkers.add(onDataLinker);
+        comparisonDataBlockLinker.setComparisonDataBlocks(onDataBlocks);
+        this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
     }
 
     /**
-     * or
+     * Or
      *
      * @param onLinkerCallback {@link OnLinkerCallback}
      * @return {@link OnAndOr}
@@ -84,13 +84,13 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
             return this;
         }
         OnLinker<TO> onLinker = onLinkerCallback.apply(new OnAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
-        if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onLinker.takeoutComparisonDataBlockLinkers();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
-        onDataLinker.setComparisonSqlPartDataLinkers(comparisonSqlPartDataLinkers);
-        this.comparisonSqlPartDataLinkers.add(onDataLinker);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
+        this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
     }
 }

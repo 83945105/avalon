@@ -46,8 +46,8 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
         return this.havingDataBlockBuilder;
     }
 
-    public List<HavingDataBlock> takeoutSqlPartData() {
-        return this.havingDataBlockBuilder.takeoutSqlPartData();
+    public List<HavingDataBlock> takeoutHavingDataBlocks() {
+        return this.havingDataBlockBuilder.takeoutDataBlocks();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -59,12 +59,12 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
     }
 
     public static TableHavingDataBlock execute(HavingHelper<?> havingHelper) {
-        List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
+        List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutHavingDataBlocks();
         if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return null;
         }
         return new TableHavingDataBlock(havingHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonSqlPartData(havingDataBlocks)));
+                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonDataBlocks(havingDataBlocks)));
     }
 
     public static List<TableHavingDataBlock> execute(HavingHelper<?>... havingHelpers) {

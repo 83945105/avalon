@@ -17,10 +17,10 @@ public interface WhereLinker<TW extends WhereHelper<TW>> {
      *
      * @return list {@link ComparisonDataBlockLinker}
      */
-    List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers();
+    List<ComparisonDataBlockLinker> takeoutComparisonDataBlockLinkers();
 
     /**
-     * and
+     * And
      *
      * @param whereHelper {@link WhereHelper}
      * @return {@link WhereAndOr}
@@ -28,7 +28,7 @@ public interface WhereLinker<TW extends WhereHelper<TW>> {
     WhereAndOr<TW> and(WhereHelper<?> whereHelper);
 
     /**
-     * and
+     * And
      *
      * @param whereLinkerCallback {@link WhereLinkerCallback}
      * @return {@link WhereAndOr}
@@ -36,7 +36,7 @@ public interface WhereLinker<TW extends WhereHelper<TW>> {
     WhereAndOr<TW> and(WhereLinkerCallback<TW> whereLinkerCallback);
 
     /**
-     * and
+     * And
      *
      * @param tableHelperClass        target {@link TableHelper} class
      * @param tableAlias              target {@link TableHelper} alias
@@ -52,7 +52,7 @@ public interface WhereLinker<TW extends WhereHelper<TW>> {
             SS extends SortHelper<SS>> WhereAndOr<TW> and(Class<S> tableHelperClass, String tableAlias, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback);
 
     /**
-     * and
+     * And
      *
      * @param tableHelperClass        target {@link TableHelper} class
      * @param whereJoinLinkerCallback {@link WhereJoinLinkerCallback}

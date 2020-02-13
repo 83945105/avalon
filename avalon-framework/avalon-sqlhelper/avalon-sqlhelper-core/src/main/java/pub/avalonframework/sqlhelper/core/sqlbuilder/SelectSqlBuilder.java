@@ -8,21 +8,21 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SelectSqlBuilderResul
 public interface SelectSqlBuilder extends SqlBuilder {
 
     /**
-     * query
+     * Query
      *
      * @return {@link SelectSqlBuilderResult}
      */
     SelectSqlBuilderResult query();
 
     /**
-     * query count
+     * Query count
      *
      * @return {@link SelectSqlBuilderResult}
      */
     SelectSqlBuilderResult queryCount();
 
     /**
-     * query by primary key
+     * Query by primary key
      *
      * @param primaryKeyValue primary key value
      * @return {@link SelectSqlBuilderResult}

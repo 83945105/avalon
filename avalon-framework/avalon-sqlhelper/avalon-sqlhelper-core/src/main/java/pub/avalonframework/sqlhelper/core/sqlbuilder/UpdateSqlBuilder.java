@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface UpdateSqlBuilder extends SqlBuilder {
 
     /**
-     * update javaBean
+     * Update javaBean
      *
      * @param javaBean javaBean
      * @return {@link UpdateSqlBuilderResult}
@@ -18,7 +18,7 @@ public interface UpdateSqlBuilder extends SqlBuilder {
     UpdateSqlBuilderResult updateJavaBean(Object javaBean);
 
     /**
-     * update javaBean
+     * Update javaBean
      * <p>when value is {@code null},skip field
      *
      * @param javaBean javaBean
@@ -27,7 +27,7 @@ public interface UpdateSqlBuilder extends SqlBuilder {
     UpdateSqlBuilderResult updateJavaBeanSelective(Object javaBean);
 
     /**
-     * update args by primary key
+     * Update args by primary key
      *
      * @param primaryKeyValue primary key value
      * @param args            args
@@ -36,7 +36,7 @@ public interface UpdateSqlBuilder extends SqlBuilder {
     UpdateSqlBuilderResult updateArgsByPrimaryKey(Object primaryKeyValue, Object... args);
 
     /**
-     * update javaBean by primary key
+     * Update javaBean by primary key
      *
      * @param primaryKeyValue primary key value
      * @param javaBean        javaBean
@@ -45,7 +45,7 @@ public interface UpdateSqlBuilder extends SqlBuilder {
     UpdateSqlBuilderResult updateJavaBeanByPrimaryKey(Object primaryKeyValue, Object javaBean);
 
     /**
-     * update javaBean by primary key
+     * Update javaBean by primary key
      * <p>when value is {@code null},skip field
      *
      * @param primaryKeyValue primary key value
@@ -55,7 +55,7 @@ public interface UpdateSqlBuilder extends SqlBuilder {
     UpdateSqlBuilderResult updateJavaBeanByPrimaryKeySelective(Object primaryKeyValue, Object javaBean);
 
     /**
-     * batch update javaBeans by primary keys
+     * Batch update javaBeans by primary keys
      *
      * @param javaBeans javaBeans
      * @return {@link UpdateSqlBuilderResult}
@@ -63,7 +63,7 @@ public interface UpdateSqlBuilder extends SqlBuilder {
     UpdateSqlBuilderResult batchUpdateJavaBeansByPrimaryKeys(Collection<?> javaBeans);
 
     /**
-     * update or insert javaBeans
+     * Update or insert javaBeans
      * <p>if exist update else insert
      *
      * @param javaBeans javaBeans

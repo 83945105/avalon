@@ -83,6 +83,6 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
         if (havingDataInjector == null) {
             return;
         }
-        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderConfiguration).forEach(havingDataInjector::addTableHavingDatum));
+        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderConfiguration).forEach(havingDataInjector::addTableHavingDataBlock));
     }
 }

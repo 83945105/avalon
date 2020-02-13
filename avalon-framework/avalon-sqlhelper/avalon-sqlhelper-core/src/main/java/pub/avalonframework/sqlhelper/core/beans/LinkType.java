@@ -5,11 +5,11 @@ package pub.avalonframework.sqlhelper.core.beans;
  */
 public enum LinkType {
     /**
-     * and
+     * And
      */
     AND,
     /**
-     * or
+     * Or
      */
     OR
 }

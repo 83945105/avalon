@@ -233,11 +233,6 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        @Override
-        public Set<TableColumn> getTableDefaultColumns() {
-            return DEFAULT_INSTANCE.getTableColumns();
-        }
-
         public Column sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart).getHelper();
         }

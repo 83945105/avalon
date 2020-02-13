@@ -37,15 +37,15 @@ public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSo
 
     @Override
     public List<TableSortDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableSortDataBlock> tableSortData = new ArrayList<>(1);
+        List<TableSortDataBlock> tableSortDataBlocks = new ArrayList<>(1);
         if (this.sortHelpers != null) {
             for (SortHelper<?> sortHelper : this.sortHelpers) {
-                tableSortData.add(sortHelper.execute());
+                tableSortDataBlocks.add(sortHelper.execute());
             }
         }
         if (this.sortCallback != null) {
-            tableSortData.add(CallbackExecutor.execute(this.sortHelper, this.sortCallback, sqlBuilderConfiguration));
+            tableSortDataBlocks.add(CallbackExecutor.execute(this.sortHelper, this.sortCallback, sqlBuilderConfiguration));
         }
-        return tableSortData;
+        return tableSortDataBlocks;
     }
 }

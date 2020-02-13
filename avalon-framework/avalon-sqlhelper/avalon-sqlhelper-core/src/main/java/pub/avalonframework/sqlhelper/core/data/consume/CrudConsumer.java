@@ -12,86 +12,86 @@ import java.util.List;
 public interface CrudConsumer {
 
     /**
-     * get configuration.
+     * Get configuration.
      *
      * @return {@link SqlhelperConfiguration}
      */
     SqlhelperConfiguration getConfiguration();
 
     /**
-     * get main table data
+     * Get table main data block.
      *
      * @return {@link TableMainDataBlock}
      */
-    TableMainDataBlock getMainTableDatum();
+    TableMainDataBlock getTableMainDataBlock();
 
     /**
-     * get select table column data
+     * Get select table column data blocks.
      *
      * @return {@link TableColumnDataBlock}
      */
-    List<TableColumnDataBlock> getSelectTableColumnData();
+    List<TableColumnDataBlock> getSelectTableColumnDataBlocks();
 
     /**
-     * get insert table column data
+     * Get insert table column data blocks.
      *
      * @return {@link TableColumnDataBlock}
      */
-    List<TableColumnDataBlock> getInsertTableColumnData();
+    List<TableColumnDataBlock> getInsertTableColumnDataBlocks();
 
     /**
-     * get update table column data
+     * Get update table column data blocks.
      *
      * @return {@link TableColumnDataBlock}
      */
-    List<TableColumnDataBlock> getUpdateTableColumnData();
+    List<TableColumnDataBlock> getUpdateTableColumnDataBlocks();
 
     /**
-     * get join table alias and data
+     * Get alias table join data block map.
      *
      * @return key - table alias | value - {@link TableJoinDataBlock}
      */
-    LinkedHashMap<String, TableJoinDataBlock> getAliasJoinTableData();
+    LinkedHashMap<String, TableJoinDataBlock> getAliasTableJoinDataBlockMap();
 
     /**
-     * get table where data
+     * Get table where data blocks.
      *
      * @return {@link TableWhereDataBlock}
      */
-    List<TableWhereDataBlock> getTableWhereData();
+    List<TableWhereDataBlock> getTableWhereDataBlocks();
 
     /**
-     * get table group data
+     * Get table group data blocks.
      *
      * @return {@link TableGroupDataBlock}
      */
-    List<TableGroupDataBlock> getTableGroupData();
+    List<TableGroupDataBlock> getTableGroupDataBlocks();
 
     /**
-     * get table having data
+     * Get table having data blocks.
      *
      * @return {@link TableHavingDataBlock}
      */
-    List<TableHavingDataBlock> getTableHavingData();
+    List<TableHavingDataBlock> getTableHavingDataBlocks();
 
     /**
-     * get table sort data
+     * Get table sort data blocks.
      *
      * @return {@link TableSortDataBlock}
      */
-    List<TableSortDataBlock> getTableSortData();
+    List<TableSortDataBlock> getTableSortDataBlocks();
 
     /**
-     * get limit data
+     * Get limit number.
      *
-     * @return The Limit data
+     * @return The Limit number.
      */
     Long getLimit();
 
     /**
-     * get offset data
+     * Get offset number.
      *
-     * @return The offset data
+     * @return The offset number.
      */
     Long getOffset();
 }

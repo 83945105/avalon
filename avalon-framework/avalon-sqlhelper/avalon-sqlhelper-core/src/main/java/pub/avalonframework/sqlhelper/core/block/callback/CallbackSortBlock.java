@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface CallbackSortBlock<TS extends SortHelper<TS>, R> extends CallbackBlock {
 
     /**
-     * use callback to add sort sql data
+     * Use callback to add sort sql data.
      *
      * @param sortCallback {@link SortCallback}
      * @return R
@@ -17,7 +17,7 @@ public interface CallbackSortBlock<TS extends SortHelper<TS>, R> extends Callbac
     R orderBy(SortCallback<TS> sortCallback);
 
     /**
-     * use callback to add assign class sort sql data
+     * Use callback to add assign class sort sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -33,7 +33,7 @@ public interface CallbackSortBlock<TS extends SortHelper<TS>, R> extends Callbac
             SS extends SortHelper<SS>> R orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback);
 
     /**
-     * use callback to add assign class sort sql data
+     * Use callback to add assign class sort sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param sortCallback     {@link SortCallback}

@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class AbstractDataBlockBuilder<T extends Helper, S extends DataBlock> implements DataBlockBuilder<T, S> {
 
     protected String tableAlias;
+
     private T helper;
 
     public AbstractDataBlockBuilder(String tableAlias, T helper) {
@@ -57,7 +58,7 @@ public abstract class AbstractDataBlockBuilder<T extends Helper, S extends DataB
     }
 
     @Override
-    public List<S> takeoutSqlPartData() {
+    public List<S> takeoutDataBlocks() {
         List<S> dataBlocks = this.dataBlocks;
         this.dataBlocks = null;
         return dataBlocks;

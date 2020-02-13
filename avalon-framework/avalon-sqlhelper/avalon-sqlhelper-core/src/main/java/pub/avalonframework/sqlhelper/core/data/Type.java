@@ -4,12 +4,13 @@ package pub.avalonframework.sqlhelper.core.data;
  * @author baichao
  */
 public enum Type {
+
     /**
-     * default type
+     * Default type
      */
     DEFAULT,
     /**
-     * custom sql
+     * Custom sql
      */
     SQL_PART
 }

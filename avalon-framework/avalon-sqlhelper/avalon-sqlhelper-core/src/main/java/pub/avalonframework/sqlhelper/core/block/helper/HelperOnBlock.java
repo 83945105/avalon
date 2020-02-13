@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 public interface HelperOnBlock<R> extends HelperBlock {
 
     /**
-     * add on sql data
+     * Add on data block.
      *
      * @param onHelpers {@link OnHelper}
      * @return R

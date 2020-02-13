@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 public interface DataBlockBuilderTemplate {
 
     /**
-     * build select column sql part result
+     * Build select column sql part result
      *
      * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
@@ -17,7 +17,7 @@ public interface DataBlockBuilderTemplate {
     SqlBuilderResult buildSelectColumn(CrudConsumer consumer);
 
     /**
-     * build join sql part result
+     * Build join sql part result
      *
      * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
@@ -25,7 +25,7 @@ public interface DataBlockBuilderTemplate {
     SqlBuilderResult buildJoin(CrudConsumer consumer);
 
     /**
-     * build where sql part result
+     * Build where sql part result
      *
      * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
@@ -33,7 +33,7 @@ public interface DataBlockBuilderTemplate {
     SqlBuilderResult buildWhere(CrudConsumer consumer);
 
     /**
-     * build group sql part result
+     * Build group sql part result
      *
      * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
@@ -41,7 +41,7 @@ public interface DataBlockBuilderTemplate {
     SqlBuilderResult buildGroup(CrudConsumer consumer);
 
     /**
-     * build having sql part result
+     * Build having sql part result
      *
      * @param consumer {@link CrudConsumer}er
      * @return {@link SqlBuilderResult}
@@ -49,7 +49,7 @@ public interface DataBlockBuilderTemplate {
     SqlBuilderResult buildHaving(CrudConsumer consumer);
 
     /**
-     * build sort sql part result
+     * Build sort sql part result
      *
      * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
@@ -57,7 +57,7 @@ public interface DataBlockBuilderTemplate {
     SqlBuilderResult buildSort(CrudConsumer consumer);
 
     /**
-     * build limit sql part result
+     * Build limit sql part result
      *
      * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}

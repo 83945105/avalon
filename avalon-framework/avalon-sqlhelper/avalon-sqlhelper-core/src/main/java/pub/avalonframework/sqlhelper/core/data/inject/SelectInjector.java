@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 public interface SelectInjector extends ConfigurationInjector, ColumnDataInjector, JoinDataInjector, OnDataInjector, WhereDataInjector, GroupDataInjector, HavingDataInjector, SortDataInjector, LimitDataInjector {
 
     /**
-     * add select table column data
+     * Add select table column data block.
      *
-     * @param tableColumnDatum {@link TableColumnDataBlock}
+     * @param tableColumnDataBlock {@link TableColumnDataBlock}
      */
-    void addSelectTableColumnDatum(TableColumnDataBlock tableColumnDatum);
+    void addSelectTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock);
 }

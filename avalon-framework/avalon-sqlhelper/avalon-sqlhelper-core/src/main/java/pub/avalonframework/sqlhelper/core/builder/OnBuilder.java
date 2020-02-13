@@ -83,6 +83,6 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
         if (onDataInjector == null) {
             return;
         }
-        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderConfiguration).forEach(onDataInjector::addTableOnDatum));
+        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderConfiguration).forEach(onDataInjector::addTableOnDataBlock));
     }
 }

@@ -6,12 +6,13 @@ import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
  * @author baichao
  */
 public enum ColumnType {
+
     /**
-     * default type
+     * Default type
      */
     DEFAULT,
     /**
-     * column handler {@link ColumnHandler}
+     * Column handler {@link ColumnHandler}
      */
     HANDLER
 }

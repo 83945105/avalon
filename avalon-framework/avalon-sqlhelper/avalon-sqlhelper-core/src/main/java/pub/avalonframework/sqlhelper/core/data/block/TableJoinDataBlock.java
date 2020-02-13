@@ -14,36 +14,36 @@ public final class TableJoinDataBlock extends AbstractTableDataBlock {
         this.joinType = joinType;
     }
 
-    private TableOnDataBlock tableOnDatum;
+    private TableOnDataBlock tableOnDataBlock;
 
     public JoinType getJoinType() {
         return joinType;
     }
 
-    public TableOnDataBlock getTableOnDatum() {
-        return tableOnDatum;
+    public TableOnDataBlock getTableOnDataBlock() {
+        return tableOnDataBlock;
     }
 
-    public void setTableOnDatum(TableOnDataBlock tableOnDatum) {
-        this.tableOnDatum = tableOnDatum;
+    public void setTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
+        this.tableOnDataBlock = tableOnDataBlock;
     }
 
-    public TableJoinDataBlock appendTableOnDatum(TableOnDataBlock tableOnDatum) {
-        if (tableOnDatum == null) {
+    public TableJoinDataBlock appendTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
+        if (tableOnDataBlock == null) {
             return this;
         }
-        if (this.tableOnDatum == null) {
-            this.setTableOnDatum(tableOnDatum);
+        if (this.tableOnDataBlock == null) {
+            this.setTableOnDataBlock(tableOnDataBlock);
             return this;
         }
-        this.tableOnDatum.merge(tableOnDatum);
+        this.tableOnDataBlock.merge(tableOnDataBlock);
         return this;
     }
 
-    public TableJoinDataBlock merge(TableJoinDataBlock joinTableDatum) {
-        if (joinTableDatum == null) {
+    public TableJoinDataBlock merge(TableJoinDataBlock tableJoinDataBlock) {
+        if (tableJoinDataBlock == null) {
             return this;
         }
-        return appendTableOnDatum(joinTableDatum.getTableOnDatum());
+        return appendTableOnDataBlock(tableJoinDataBlock.getTableOnDataBlock());
     }
 }

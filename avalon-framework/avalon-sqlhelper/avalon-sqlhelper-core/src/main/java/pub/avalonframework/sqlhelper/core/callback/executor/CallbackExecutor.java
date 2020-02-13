@@ -31,7 +31,7 @@ public final class CallbackExecutor {
         }
         columnHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         columnHelper = columnCallback.apply(columnHelper);
-        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
         }
@@ -47,7 +47,7 @@ public final class CallbackExecutor {
         }
         groupHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         groupHelper = groupCallback.apply(groupHelper);
-        List<GroupDataBlock> groupDataBlocks = groupHelper.takeoutSqlPartData();
+        List<GroupDataBlock> groupDataBlocks = groupHelper.takeoutGroupDataBlocks();
         if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
             return null;
         }
@@ -63,7 +63,7 @@ public final class CallbackExecutor {
         }
         sortHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         sortHelper = sortCallback.apply(sortHelper);
-        List<SortDataBlock> sortDataBlocks = sortHelper.takeoutSqlPartData();
+        List<SortDataBlock> sortDataBlocks = sortHelper.takeoutSortDataBlocks();
         if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
             return null;
         }
@@ -79,11 +79,11 @@ public final class CallbackExecutor {
         }
         onHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         OnLinker<TO> onLinker = onCallback.apply(new OnAndOr<>(), onHelper);
-        List<ComparisonDataBlockLinker> onDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
-        if (onDataLinkers == null || onDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onLinker.takeoutComparisonDataBlockLinkers();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return null;
         }
-        return new TableOnDataBlock(onHelper.getTableAlias(), onDataLinkers);
+        return new TableOnDataBlock(onHelper.getTableAlias(), comparisonDataBlockLinkers);
     }
 
     public static <TO extends OnHelper<TO>,
@@ -106,11 +106,11 @@ public final class CallbackExecutor {
         SO so = s.newOnHelper(joinTableAlias);
         so.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         OnLinker<TO> onLinker = onJoinCallback.apply(new OnAndOr<>(), so, mainOnHelper);
-        List<ComparisonDataBlockLinker> onDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
-        if (onDataLinkers == null || onDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onLinker.takeoutComparisonDataBlockLinkers();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return null;
         }
-        return new TableOnDataBlock(joinTableAlias, onDataLinkers);
+        return new TableOnDataBlock(joinTableAlias, comparisonDataBlockLinkers);
     }
 
     public static <TW extends WhereHelper<TW>> TableWhereDataBlock execute(TW whereHelper, WhereCallback<TW> whereCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -122,11 +122,11 @@ public final class CallbackExecutor {
         }
         whereHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         WhereLinker<TW> whereLinker = whereCallback.apply(new WhereAndOr<>(), whereHelper);
-        List<ComparisonDataBlockLinker> whereDataLinkers = whereLinker.takeoutComparisonSqlPartDataLinkers();
-        if (whereDataLinkers == null || whereDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereLinker.takeoutComparisonDataBlockLinkers();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return null;
         }
-        return new TableWhereDataBlock(whereHelper.getTableAlias(), whereDataLinkers);
+        return new TableWhereDataBlock(whereHelper.getTableAlias(), comparisonDataBlockLinkers);
     }
 
     public static <TW extends WhereHelper<TW>,
@@ -149,11 +149,11 @@ public final class CallbackExecutor {
         SW sw = s.newWhereHelper(joinTableAlias);
         sw.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         WhereLinker<TW> whereLinker = whereJoinCallback.apply(new WhereAndOr<>(), sw, mainWhereHelper);
-        List<ComparisonDataBlockLinker> whereDataLinkers = whereLinker.takeoutComparisonSqlPartDataLinkers();
-        if (whereDataLinkers == null || whereDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereLinker.takeoutComparisonDataBlockLinkers();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return null;
         }
-        return new TableWhereDataBlock(joinTableAlias, whereDataLinkers);
+        return new TableWhereDataBlock(joinTableAlias, comparisonDataBlockLinkers);
     }
 
     public static <TH extends HavingHelper<TH>> TableHavingDataBlock execute(TH havingHelper, HavingCallback<TH> havingCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -165,11 +165,11 @@ public final class CallbackExecutor {
         }
         havingHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         HavingLinker<TH> havingLinker = havingCallback.apply(new HavingAndOr<>(), havingHelper);
-        List<ComparisonDataBlockLinker> havingDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
-        if (havingDataLinkers == null || havingDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingLinker.takeoutComparisonDataBlockLinker();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return null;
         }
-        return new TableHavingDataBlock(havingHelper.getTableAlias(), havingDataLinkers);
+        return new TableHavingDataBlock(havingHelper.getTableAlias(), comparisonDataBlockLinkers);
     }
 
     public static <TH extends HavingHelper<TH>,
@@ -192,11 +192,11 @@ public final class CallbackExecutor {
         SH sh = s.newHavingHelper(joinTableAlias);
         sh.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         HavingLinker<TH> havingLinker = havingJoinCallback.apply(new HavingAndOr<>(), sh, mainHavingHelper);
-        List<ComparisonDataBlockLinker> havingDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
-        if (havingDataLinkers == null || havingDataLinkers.size() == 0) {
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingLinker.takeoutComparisonDataBlockLinker();
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return null;
         }
-        return new TableHavingDataBlock(joinTableAlias, havingDataLinkers);
+        return new TableHavingDataBlock(joinTableAlias, comparisonDataBlockLinkers);
     }
 
     public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,

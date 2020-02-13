@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.helper.SortHelper;
 public interface HelperSortBlock<R> extends HelperBlock {
 
     /**
-     * add sort sql data
+     * Add sort data block.
      *
      * @param sortHelpers {@link SortHelper}
      * @return R

@@ -37,14 +37,14 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
     private List<AbstractColumnBuilderBean> selectColumnBuilderBeans = new ArrayList<>(1);
 
     public SelectColumnBuilder<TC> select(ColumnHelper<?>... columnHelpers) {
-        ColumnBuilderBean<TC> sqlColumnBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnHelpers(columnHelpers);
-        this.selectColumnBuilderBeans.add(sqlColumnBean);
+        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnHelpers(columnHelpers);
+        this.selectColumnBuilderBeans.add(columnBuilderBean);
         return this;
     }
 
     public SelectColumnBuilder<TC> select(ColumnCallback<TC> columnCallback) {
-        ColumnBuilderBean<TC> sqlColumnBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnCallback(columnCallback);
-        this.selectColumnBuilderBeans.add(sqlColumnBean);
+        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnCallback(columnCallback);
+        this.selectColumnBuilderBeans.add(columnBuilderBean);
         return this;
     }
 
@@ -56,8 +56,8 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         tableAlias = tableAlias == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias;
-        ColumnBuilderBeanJoin sqlColumnBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, tableAlias, columnCallback);
-        this.selectColumnBuilderBeans.add(sqlColumnBeanJoin);
+        ColumnBuilderBeanJoin columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, tableAlias, columnCallback);
+        this.selectColumnBuilderBeans.add(columnBuilderBeanJoin);
         return this;
     }
 
@@ -68,8 +68,8 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        ColumnBuilderBeanJoin sqlColumnBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, null, columnCallback);
-        this.selectColumnBuilderBeans.add(sqlColumnBeanJoin);
+        ColumnBuilderBeanJoin columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, null, columnCallback);
+        this.selectColumnBuilderBeans.add(columnBuilderBeanJoin);
         return this;
     }
 
@@ -93,6 +93,6 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
         if (selectInjector == null) {
             return;
         }
-        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(selectInjector::addSelectTableColumnDatum));
+        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(selectInjector::addSelectTableColumnDataBlock));
     }
 }

@@ -7,13 +7,11 @@ import pub.avalonframework.sqlhelper.core.exception.ComparisonRuleNullException;
  */
 public enum ComparisonRule {
     /**
-     * when the parameter is null,the current rule is invalid.
-     * {@link pub.avalon.sqlhelper.core.comparison.ComparisonOperator}
+     * When the parameter is null,the current rule is invalid.
      */
     NULL_SKIP,
     /**
-     * when the parameter is null,throw exception.
-     * {@link pub.avalon.sqlhelper.core.comparison.ComparisonOperator}
+     * When the parameter is null,throw exception.
      * {@link ComparisonRuleNullException}
      */
     NULL_THROW_EXCEPTION

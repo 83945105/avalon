@@ -10,7 +10,7 @@ public class SqlBuilderConfiguration {
 
     private DataBlockBuilderConfiguration dataBlockBuilder;
 
-    private DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate;
+    private DataBlockBuilderTemplate mysqlDataBlockBuilderTemplate;
 
     private SqlBuilderTemplate mysqlSqlBuilderTemplate;
 
@@ -22,12 +22,12 @@ public class SqlBuilderConfiguration {
         this.dataBlockBuilder = dataBlockBuilder;
     }
 
-    public DataBlockBuilderTemplate getMysqlSqlPartBuilderTemplate() {
-        return mysqlSqlPartBuilderTemplate;
+    public DataBlockBuilderTemplate getMysqlDataBlockBuilderTemplate() {
+        return mysqlDataBlockBuilderTemplate;
     }
 
-    public void setMysqlSqlPartBuilderTemplate(DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate) {
-        this.mysqlSqlPartBuilderTemplate = mysqlSqlPartBuilderTemplate;
+    public void setMysqlDataBlockBuilderTemplate(DataBlockBuilderTemplate mysqlDataBlockBuilderTemplate) {
+        this.mysqlDataBlockBuilderTemplate = mysqlDataBlockBuilderTemplate;
     }
 
     public SqlBuilderTemplate getMysqlSqlBuilderTemplate() {

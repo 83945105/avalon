@@ -15,83 +15,83 @@ import java.util.stream.Collectors;
 public interface ToDataBlockBuilderComparisonOperatorImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder> extends ToDataBlockBuilderComparisonOperator<T, SB> {
 
     /**
-     * get helper
+     * Get helper.
      *
      * @return extends {@link Helper} object
      */
     T getHelper();
 
     /**
-     * get abstract comparison sql part datum
+     * Get comparison data block.
      *
      * @return extends {@link AbstractComparisonDataBlock}
      */
-    AbstractComparisonDataBlock<S> getAbstractComparisonSqlPartDatum();
+    AbstractComparisonDataBlock<S> getComparisonDataBlock();
 
     /**
-     * Add abstract comparison sql part datum.
+     * Add comparison data block.
      *
-     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonDataBlock} object.
+     * @param comparisonDataBlock Implements {@link AbstractComparisonDataBlock} object.
      */
-    void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<S> abstractComparisonSqlPartDatum);
+    void addComparisonDataBlock(AbstractComparisonDataBlock<S> comparisonDataBlock);
 
     @Override
     default T equalTo(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.EQUAL, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T notEqualTo(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.NOT_EQUAL, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.NOT_EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T greaterThan(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.GREATER, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.GREATER, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T greaterThanAndEqualTo(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.GREATER_EQUAL, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.GREATER_EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T lessThan(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LESS, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.LESS, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T lessThanAndEqualTo(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LESS_EQUAL, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.LESS_EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T between(SB dataBlockBuilder, SB secondOnSqlPartDatumBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetPairSqlPartDatum(ComparisonType.BETWEEN, dataBlockBuilder.getAbstractComparisonSqlPartDatum(), secondOnSqlPartDatumBuilder.getAbstractComparisonSqlPartDatum()));
+    default T between(SB dataBlockBuilder, SB secondDataBlockBuilder) {
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetPairDataBlock(ComparisonType.BETWEEN, dataBlockBuilder.getComparisonDataBlock(), secondDataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T like(SB dataBlockBuilder) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LIKE, dataBlockBuilder.getAbstractComparisonSqlPartDatum()));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.LIKE, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
     default T in(SB... dataBlockBuilders) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetMultiSqlPartDatum(ComparisonType.IN, Arrays.stream(dataBlockBuilders).map(AbstractComparisonDataBlockBuilder::getAbstractComparisonSqlPartDatum).collect(Collectors.toList())));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiDataBlock(ComparisonType.IN, Arrays.stream(dataBlockBuilders).map(AbstractComparisonDataBlockBuilder::getComparisonDataBlock).collect(Collectors.toList())));
         return this.getHelper();
     }
 
     @Override
     default T notIn(SB... dataBlockBuilders) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetMultiSqlPartDatum(ComparisonType.NOT_IN, Arrays.stream(dataBlockBuilders).map(AbstractComparisonDataBlockBuilder::getAbstractComparisonSqlPartDatum).collect(Collectors.toList())));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiDataBlock(ComparisonType.NOT_IN, Arrays.stream(dataBlockBuilders).map(AbstractComparisonDataBlockBuilder::getComparisonDataBlock).collect(Collectors.toList())));
         return this.getHelper();
     }
 }

@@ -4,56 +4,57 @@ package pub.avalonframework.sqlhelper.core.data;
  * @author baichao
  */
 public enum ComparisonType {
+
     /**
-     * none
+     * None
      */
     NONE,
     /**
-     * is null
+     * Is null
      */
     IS_NULL,
     /**
-     * is not null
+     * Is not null
      */
     IS_NOT_NULL,
     /**
-     * equal to
+     * Equal to
      */
     EQUAL,
     /**
-     * not equal to
+     * Not equal to
      */
     NOT_EQUAL,
     /**
-     * greater than
+     * Greater than
      */
     GREATER,
     /**
-     * greater than or equal to
+     * Greater than or equal to
      */
     GREATER_EQUAL,
     /**
-     * less than
+     * Less than
      */
     LESS,
     /**
-     * less than or equal to
+     * Less than or equal to
      */
     LESS_EQUAL,
     /**
-     * between ... and ...
+     * Between ... and ...
      */
     BETWEEN,
     /**
-     * like
+     * Like
      */
     LIKE,
     /**
-     * in
+     * In
      */
     IN,
     /**
-     * not in
+     * Not in
      */
     NOT_IN
 }

@@ -16,10 +16,10 @@ public interface OnLinker<TO extends OnHelper<TO>> {
      *
      * @return list {@link ComparisonDataBlockLinker}
      */
-    List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers();
+    List<ComparisonDataBlockLinker> takeoutComparisonDataBlockLinkers();
 
     /**
-     * and
+     * And
      *
      * @param onHelper {@link OnHelper}
      * @return {@link OnAndOr}
@@ -27,7 +27,7 @@ public interface OnLinker<TO extends OnHelper<TO>> {
     OnAndOr<TO> and(OnHelper<?> onHelper);
 
     /**
-     * and
+     * And
      *
      * @param onLinkerCallback {@link OnLinkerCallback}
      * @return {@link OnAndOr}

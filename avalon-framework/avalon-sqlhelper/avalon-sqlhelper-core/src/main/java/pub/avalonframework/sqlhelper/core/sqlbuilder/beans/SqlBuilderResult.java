@@ -8,28 +8,28 @@ import java.util.List;
 public interface SqlBuilderResult {
 
     /**
-     * has prepared statement sql
+     * Has prepared statement sql
      *
      * @return true or false
      */
     boolean hasPreparedStatementSql();
 
     /**
-     * has prepared statement args
+     * Has prepared statement args
      *
      * @return true or false
      */
     boolean hasPreparedStatementArgs();
 
     /**
-     * get prepared statement sql
+     * Get prepared statement sql
      *
      * @return prepared statement sql
      */
     String getPreparedStatementSql();
 
     /**
-     * get prepared statement args
+     * Get prepared statement args
      *
      * @return prepared statement args
      */

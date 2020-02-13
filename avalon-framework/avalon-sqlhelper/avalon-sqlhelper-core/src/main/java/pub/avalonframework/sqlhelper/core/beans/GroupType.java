@@ -5,31 +5,31 @@ package pub.avalonframework.sqlhelper.core.beans;
  */
 public enum GroupType implements ColumnHandler {
     /**
-     * min
+     * Min
      */
     MIN("min"),
     /**
-     * max
+     * Max
      */
     MAX("max"),
     /**
-     * total
+     * Total
      */
     COUNT("count"),
     /**
-     * sum
+     * Sum
      */
     SUM("sum"),
     /**
-     * average
+     * Average
      */
     AVG("avg"),
     /**
-     * standard deviation
+     * Standard deviation
      */
     STDDEV("stddev"),
     /**
-     * variance
+     * Variance
      */
     VARIANCE("variance");
 

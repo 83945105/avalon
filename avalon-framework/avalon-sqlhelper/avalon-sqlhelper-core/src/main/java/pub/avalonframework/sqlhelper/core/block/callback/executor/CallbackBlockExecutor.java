@@ -44,7 +44,7 @@ public final class CallbackBlockExecutor {
         TC tc = t.newColumnHelper(tableAlias);
         tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         tc = columnCallback.apply(tc);
-        List<ColumnDataBlock> columnDataBlocks = tc.takeoutSqlPartData();
+        List<ColumnDataBlock> columnDataBlocks = tc.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return null;
         }
@@ -84,10 +84,10 @@ public final class CallbackBlockExecutor {
         S s = HelperManager.defaultTableHelper(joinTableHelperClass);
         joinTableName = joinTableName == null ? s.getTableName() : joinTableName;
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
-        TableJoinDataBlock joinTableDatum = new TableJoinDataBlock(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
-        TableOnDataBlock tableOnDatum = CallbackExecutor.execute(mainOnHelper, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderConfiguration);
-        joinTableDatum.setTableOnDatum(tableOnDatum);
-        return joinTableDatum;
+        TableJoinDataBlock tableJoinDataBlock = new TableJoinDataBlock(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
+        TableOnDataBlock tableOnDataBlock = CallbackExecutor.execute(mainOnHelper, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderConfiguration);
+        tableJoinDataBlock.setTableOnDataBlock(tableOnDataBlock);
+        return tableJoinDataBlock;
     }
 
     public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
@@ -107,9 +107,9 @@ public final class CallbackBlockExecutor {
         S s = HelperManager.defaultTableHelper(joinTableHelperClass);
         joinTableName = joinTableName == null ? s.getTableName() : joinTableName;
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
-        TableJoinDataBlock joinTableDatum = new TableJoinDataBlock(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
-        TableOnDataBlock tableOnDatum = CallbackExecutor.execute(mainTableHelperClass, mainTableAlias, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderConfiguration);
-        joinTableDatum.setTableOnDatum(tableOnDatum);
-        return joinTableDatum;
+        TableJoinDataBlock tableJoinDataBlock = new TableJoinDataBlock(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
+        TableOnDataBlock tableOnDataBlock = CallbackExecutor.execute(mainTableHelperClass, mainTableAlias, joinTableHelperClass, joinTableAlias, onJoinCallback, sqlBuilderConfiguration);
+        tableJoinDataBlock.setTableOnDataBlock(tableOnDataBlock);
+        return tableJoinDataBlock;
     }
 }

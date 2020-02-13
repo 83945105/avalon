@@ -36,14 +36,14 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
     private List<AbstractColumnBuilderBean> updateColumnBuilderBeans = new ArrayList<>(1);
 
     public UpdateColumnBuilder<TC> update(ColumnHelper<?>... columnHelpers) {
-        ColumnBuilderBean<TC> sqlColumnBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnHelpers(columnHelpers);
-        this.updateColumnBuilderBeans.add(sqlColumnBean);
+        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnHelpers(columnHelpers);
+        this.updateColumnBuilderBeans.add(columnBuilderBean);
         return this;
     }
 
     public UpdateColumnBuilder<TC> update(ColumnCallback<TC> columnCallback) {
-        ColumnBuilderBean<TC> sqlColumnBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnCallback(columnCallback);
-        this.updateColumnBuilderBeans.add(sqlColumnBean);
+        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnCallback(columnCallback);
+        this.updateColumnBuilderBeans.add(columnBuilderBean);
         return this;
     }
 
@@ -67,6 +67,6 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         if (updateInjector == null) {
             return;
         }
-        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(updateInjector::addUpdateTableColumnDatum));
+        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(updateInjector::addUpdateTableColumnDataBlock));
     }
 }

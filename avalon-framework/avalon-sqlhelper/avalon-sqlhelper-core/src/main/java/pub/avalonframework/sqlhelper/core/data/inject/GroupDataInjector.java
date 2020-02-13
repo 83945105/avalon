@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
 public interface GroupDataInjector {
 
     /**
-     * add table group data
+     * Add table group data block.
      *
-     * @param tableGroupDatum {@link TableGroupDataBlock}
+     * @param tableGroupDataBlock {@link TableGroupDataBlock}
      */
-    void addTableGroupDatum(TableGroupDataBlock tableGroupDatum);
+    void addTableGroupDataBlock(TableGroupDataBlock tableGroupDataBlock);
 }

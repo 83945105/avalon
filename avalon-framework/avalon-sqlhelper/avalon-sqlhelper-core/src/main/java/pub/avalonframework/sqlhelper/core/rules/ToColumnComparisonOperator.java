@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 public interface ToColumnComparisonOperator<T> {
 
     /**
-     * equal to
+     * Equal to
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -17,7 +17,7 @@ public interface ToColumnComparisonOperator<T> {
     T equalTo(ColumnHelper<?> columnHelper);
 
     /**
-     * not equal to
+     * Not equal to
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -25,7 +25,7 @@ public interface ToColumnComparisonOperator<T> {
     T notEqualTo(ColumnHelper<?> columnHelper);
 
     /**
-     * greater than
+     * Greater than
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -33,7 +33,7 @@ public interface ToColumnComparisonOperator<T> {
     T greaterThan(ColumnHelper<?> columnHelper);
 
     /**
-     * greater than or equal to
+     * Greater than or equal to
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -41,7 +41,7 @@ public interface ToColumnComparisonOperator<T> {
     T greaterThanAndEqualTo(ColumnHelper<?> columnHelper);
 
     /**
-     * less than
+     * Less than
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -49,7 +49,7 @@ public interface ToColumnComparisonOperator<T> {
     T lessThan(ColumnHelper<?> columnHelper);
 
     /**
-     * less than or equal to
+     * Less than or equal to
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -57,7 +57,7 @@ public interface ToColumnComparisonOperator<T> {
     T lessThanAndEqualTo(ColumnHelper<?> columnHelper);
 
     /**
-     * between ... and ...
+     * Between ... and ...
      *
      * @param columnHelper       extends {@link ColumnHelper} object
      * @param secondColumnHelper extends {@link ColumnHelper} object
@@ -66,7 +66,7 @@ public interface ToColumnComparisonOperator<T> {
     T between(ColumnHelper<?> columnHelper, ColumnHelper<?> secondColumnHelper);
 
     /**
-     * like
+     * Like
      *
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
@@ -74,7 +74,7 @@ public interface ToColumnComparisonOperator<T> {
     T like(ColumnHelper<?> columnHelper);
 
     /**
-     * in
+     * In
      *
      * @param columnHelpers extends {@link ColumnHelper} objects
      * @return extends {@link Helper} object
@@ -82,7 +82,7 @@ public interface ToColumnComparisonOperator<T> {
     T in(ColumnHelper<?>... columnHelpers);
 
     /**
-     * not in
+     * Not in
      *
      * @param columnHelpers extends {@link ColumnHelper} objects
      * @return extends {@link Helper} object

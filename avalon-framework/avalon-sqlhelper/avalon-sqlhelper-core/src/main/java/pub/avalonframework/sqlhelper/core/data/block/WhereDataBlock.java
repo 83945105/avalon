@@ -73,20 +73,20 @@ public final class WhereDataBlock extends AbstractComparisonDataBlock<WhereDataB
     }
 
     @Override
-    public WhereDataBlock setTargetSingleSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum) {
-        super.setTargetSingleSqlPartDatum(comparisonType, targetSqlPartDatum);
+    public WhereDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+        super.setTargetSingleDataBlock(comparisonType, targetDataBlock);
         return this;
     }
 
     @Override
-    public WhereDataBlock setTargetPairSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum, AbstractDataBlock targetSecondSqlPartDatum) {
-        super.setTargetPairSqlPartDatum(comparisonType, targetSqlPartDatum, targetSecondSqlPartDatum);
+    public WhereDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+        super.setTargetPairDataBlock(comparisonType, targetDataBlock, targetSecondDataBlock);
         return this;
     }
 
     @Override
-    public WhereDataBlock setTargetMultiSqlPartDatum(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiSqlPartDatum) {
-        super.setTargetMultiSqlPartDatum(comparisonType, targetMultiSqlPartDatum);
+    public WhereDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+        super.setTargetMultiDataBlock(comparisonType, targetMultiDataBlock);
         return this;
     }
 
@@ -114,9 +114,9 @@ public final class WhereDataBlock extends AbstractComparisonDataBlock<WhereDataB
         return this;
     }
 
-    public WhereDataBlock getCloneComparisonSqlPartDatum() {
-        WhereDataBlock whereDatum = new WhereDataBlock(this.getTemplateTableName(), this.getTemplateTableAlias(), this.getTemplateColumnName(), this.getTemplateColumnAlias());
-        BeanUtils.copyProperties(this, whereDatum);
-        return whereDatum;
+    public WhereDataBlock getCloneWhereDataBlock() {
+        WhereDataBlock whereDataBlock = new WhereDataBlock(this.getTemplateTableName(), this.getTemplateTableAlias(), this.getTemplateColumnName(), this.getTemplateColumnAlias());
+        BeanUtils.copyProperties(this, whereDataBlock);
+        return whereDataBlock;
     }
 }

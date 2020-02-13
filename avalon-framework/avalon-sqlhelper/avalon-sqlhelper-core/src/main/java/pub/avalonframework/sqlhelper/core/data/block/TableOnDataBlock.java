@@ -13,41 +13,41 @@ public final class TableOnDataBlock {
 
     private String tableAlias;
 
-    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers;
+    private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers;
 
-    public TableOnDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
+    public TableOnDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonDataBlockLinkers) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }
         this.tableAlias = tableAlias;
-        this.comparisonSqlPartDataLinkers = comparisonSqlPartDataLinkers;
+        this.comparisonDataBlockLinkers = comparisonDataBlockLinkers;
     }
 
     public String getTableAlias() {
         return tableAlias;
     }
 
-    public List<ComparisonDataBlockLinker> getComparisonSqlPartDataLinkers() {
-        return comparisonSqlPartDataLinkers;
+    public List<ComparisonDataBlockLinker> getComparisonDataBlockLinkers() {
+        return comparisonDataBlockLinkers;
     }
 
-    public void merge(TableOnDataBlock tableOnDatum) {
-        if (tableOnDatum == null) {
+    public void merge(TableOnDataBlock tableOnDataBlock) {
+        if (tableOnDataBlock == null) {
             return;
         }
-        if (!this.getTableAlias().equals(tableOnDatum.getTableAlias())) {
+        if (!this.getTableAlias().equals(tableOnDataBlock.getTableAlias())) {
             ExceptionUtils.inconsistentAliasException();
         }
-        this.addAllComparisonSqlPartDataLinkers(tableOnDatum.getComparisonSqlPartDataLinkers());
+        this.addAllComparisonDataBlockLinkers(tableOnDataBlock.getComparisonDataBlockLinkers());
     }
 
-    public void addAllComparisonSqlPartDataLinkers(List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
-        if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
+    public void addAllComparisonDataBlockLinkers(List<ComparisonDataBlockLinker> comparisonDataBlockLinkers) {
+        if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return;
         }
-        if (this.comparisonSqlPartDataLinkers == null) {
-            this.comparisonSqlPartDataLinkers = new ArrayList<>(comparisonSqlPartDataLinkers.size());
+        if (this.comparisonDataBlockLinkers == null) {
+            this.comparisonDataBlockLinkers = new ArrayList<>(comparisonDataBlockLinkers.size());
         }
-        this.comparisonSqlPartDataLinkers.addAll(comparisonSqlPartDataLinkers);
+        this.comparisonDataBlockLinkers.addAll(comparisonDataBlockLinkers);
     }
 }

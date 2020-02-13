@@ -12,21 +12,21 @@ public final class TableHavingDataBlock {
 
     private String tableAlias;
 
-    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers;
+    private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers;
 
-    public TableHavingDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
+    public TableHavingDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonDataBlockLinkers) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }
         this.tableAlias = tableAlias;
-        this.comparisonSqlPartDataLinkers = comparisonSqlPartDataLinkers;
+        this.comparisonDataBlockLinkers = comparisonDataBlockLinkers;
     }
 
     public String getTableAlias() {
         return tableAlias;
     }
 
-    public List<ComparisonDataBlockLinker> getComparisonSqlPartDataLinkers() {
-        return comparisonSqlPartDataLinkers;
+    public List<ComparisonDataBlockLinker> getComparisonDataBlockLinkers() {
+        return comparisonDataBlockLinkers;
     }
 }

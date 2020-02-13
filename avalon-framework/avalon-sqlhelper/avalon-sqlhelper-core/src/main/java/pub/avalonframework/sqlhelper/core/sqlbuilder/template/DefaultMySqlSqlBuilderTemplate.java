@@ -26,7 +26,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
 
     @Override
     public TableSqlBuilderResult buildCopyTable(CrudConsumer consumer, String targetTableName, boolean copyData) {
-        String tableName = consumer.getMainTableDatum().getTableName();
+        String tableName = consumer.getTableMainDataBlock().getTableName();
         StringBuilder preparedStatementSql = new StringBuilder(128);
         preparedStatementSql.append("create table `")
                 .append(targetTableName)
@@ -47,14 +47,14 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     @Override
     public TableSqlBuilderResult buildDeleteTable(CrudConsumer consumer) {
         return FinalSqlBuilderResult.newInstance("drop table `" +
-                consumer.getMainTableDatum().getTableName() +
+                consumer.getTableMainDataBlock().getTableName() +
                 "`");
     }
 
     @Override
     public TableSqlBuilderResult buildRenameTable(CrudConsumer consumer, String newTableName) {
         return FinalSqlBuilderResult.newInstance("rename table `" +
-                consumer.getMainTableDatum().getTableName() +
+                consumer.getTableMainDataBlock().getTableName() +
                 "` to `" +
                 newTableName +
                 "`");
@@ -63,38 +63,38 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     @Override
     public TableSqlBuilderResult buildIsTableExist(CrudConsumer consumer) {
         return FinalSqlBuilderResult.newInstance("select table_name from information_schema.TABLES where table_name = '" +
-                consumer.getMainTableDatum().getTableName() +
+                consumer.getTableMainDataBlock().getTableName() +
                 "' and table_schema = (select database())");
     }
 
     private List<ColumnDataBlock> getOnlyInsertTableDefaultColumnData(CrudConsumer consumer) {
         List<ColumnDataBlock> columnDataBlocks;
-        List<TableColumnDataBlock> tableColumnData = consumer.getInsertTableColumnData();
-        if (tableColumnData == null || tableColumnData.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias());
+        List<TableColumnDataBlock> tableColumnDataBlocks = consumer.getInsertTableColumnDataBlocks();
+        if (tableColumnDataBlocks == null || tableColumnDataBlocks.size() == 0) {
+            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
-        if (tableColumnData.size() > 1) {
+        if (tableColumnDataBlocks.size() > 1) {
             ExceptionUtils.multiTableColumnException();
         }
-        columnDataBlocks = tableColumnData.iterator().next().getColumnDataBlocks();
+        columnDataBlocks = tableColumnDataBlocks.iterator().next().getColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias());
+            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         return columnDataBlocks;
     }
 
     private List<ColumnDataBlock> getOnlyUpdateTableDefaultColumnData(CrudConsumer consumer) {
         List<ColumnDataBlock> columnDataBlocks;
-        List<TableColumnDataBlock> tableColumnData = consumer.getUpdateTableColumnData();
-        if (tableColumnData == null || tableColumnData.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias());
+        List<TableColumnDataBlock> tableColumnDataBlocks = consumer.getUpdateTableColumnDataBlocks();
+        if (tableColumnDataBlocks == null || tableColumnDataBlocks.size() == 0) {
+            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
-        if (tableColumnData.size() > 1) {
+        if (tableColumnDataBlocks.size() > 1) {
             ExceptionUtils.multiTableColumnException();
         }
-        columnDataBlocks = tableColumnData.iterator().next().getColumnDataBlocks();
+        columnDataBlocks = tableColumnDataBlocks.iterator().next().getColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias());
+            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         return columnDataBlocks;
     }
@@ -104,7 +104,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         StringBuilder preparedStatementSql = new StringBuilder(512);
         List<Object> preparedStatementArgs = new ArrayList<>(args.length);
         preparedStatementSql.append("insert into `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` (");
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyInsertTableDefaultColumnData(consumer);
@@ -132,7 +132,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         StringBuilder preparedStatementSql = new StringBuilder(512);
         List<Object> preparedStatementArgs = new ArrayList<>(64);
         preparedStatementSql.append("insert into `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` (");
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyInsertTableDefaultColumnData(consumer);
@@ -160,7 +160,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         StringBuilder preparedStatementSql = new StringBuilder(512);
         List<Object> preparedStatementArgs = new ArrayList<>(64);
         preparedStatementSql.append("insert into `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` (");
         int i = 0;
         Object value;
@@ -193,7 +193,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         StringBuilder preparedStatementSql = new StringBuilder(2048);
         List<Object> preparedStatementArgs = new ArrayList<>(64 * javaBeans.size());
         preparedStatementSql.append("insert into `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` (");
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyInsertTableDefaultColumnData(consumer);
@@ -228,11 +228,11 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public DeleteSqlBuilderResult buildDelete(CrudConsumer consumer) {
         StringBuilder preparedStatementSql = new StringBuilder(512);
         List<Object> preparedStatementArgs = new ArrayList<>(64);
-        String tableAlias = consumer.getMainTableDatum().getTableAlias();
+        String tableAlias = consumer.getTableMainDataBlock().getTableAlias();
         preparedStatementSql.append("delete ")
                 .append(tableAlias)
                 .append(" from `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` ")
                 .append(tableAlias);
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.newInstance(preparedStatementSql.toString(), preparedStatementArgs);
@@ -246,9 +246,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         StringBuilder preparedStatementSql = new StringBuilder(128);
         List<Object> preparedStatementArgs = Collections.singletonList(primaryKeyValue);
         preparedStatementSql.append("delete from `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` where `")
-                .append(HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName())
+                .append(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                 .append("` = ?");
         return FinalSqlBuilderResult.newInstance(preparedStatementSql.toString(), preparedStatementArgs);
     }
@@ -258,9 +258,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         StringBuilder preparedStatementSql = new StringBuilder(512);
         List<Object> preparedStatementArgs = Arrays.asList(primaryKeyValues);
         preparedStatementSql.append("delete from `")
-                .append(consumer.getMainTableDatum().getTableName())
+                .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` where `")
-                .append(HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName())
+                .append(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                 .append("` in (");
         int size = primaryKeyValues.length;
         for (int i = 0; i < size; i++) {
@@ -276,9 +276,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     @Override
     public UpdateSqlBuilderResult buildUpdateJavaBean(CrudConsumer consumer, Object javaBean) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(512), new ArrayList<>(64));
-        String tableAlias = consumer.getMainTableDatum().getTableAlias();
+        String tableAlias = consumer.getTableMainDataBlock().getTableAlias();
         sqlBuilderResult.appendSqlPart("update `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(tableAlias);
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
@@ -299,9 +299,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     @Override
     public UpdateSqlBuilderResult buildUpdateJavaBeanSelective(CrudConsumer consumer, Object javaBean) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(512), new ArrayList<>(64));
-        String tableAlias = consumer.getMainTableDatum().getTableAlias();
+        String tableAlias = consumer.getTableMainDataBlock().getTableAlias();
         sqlBuilderResult.appendSqlPart("update `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(tableAlias);
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
@@ -328,9 +328,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public UpdateSqlBuilderResult buildUpdateArgsByPrimaryKey(CrudConsumer consumer, Object primaryKeyValue, Object... args) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(512), new ArrayList<>(args.length + 1));
         sqlBuilderResult.appendSqlPart("update `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` set ");
-        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName();
+        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
         for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
@@ -354,9 +354,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public UpdateSqlBuilderResult buildUpdateJavaBeanByPrimaryKey(CrudConsumer consumer, Object primaryKeyValue, Object javaBean) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(512), new ArrayList<>(65));
         sqlBuilderResult.appendSqlPart("update `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` set ");
-        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName();
+        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
         for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
@@ -380,9 +380,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public UpdateSqlBuilderResult buildUpdateJavaBeanByPrimaryKeySelective(CrudConsumer consumer, Object primaryKeyValue, Object javaBean) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(512), new ArrayList<>(65));
         sqlBuilderResult.appendSqlPart("update `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` set ");
-        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName();
+        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
         int i = 0;
         Object value;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
@@ -410,15 +410,15 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     @Override
     public UpdateSqlBuilderResult buildBatchUpdateJavaBeansByPrimaryKeys(CrudConsumer consumer, Collection<?> javaBeans) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(2048), new ArrayList<>(128));
-        String tableAlias = consumer.getMainTableDatum().getTableAlias();
+        String tableAlias = consumer.getTableMainDataBlock().getTableAlias();
         sqlBuilderResult.appendSqlPart("update `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(tableAlias);
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.appendSqlPart(" set ");
         int i = 0;
-        TableHelper tableHelper = HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass());
+        TableHelper tableHelper = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass());
         String primaryKeyName = tableHelper.getPrimaryKeyName();
         String primaryKeyAlias = tableHelper.getPrimaryKeyAlias();
         Object keyValue;
@@ -495,7 +495,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public UpdateSqlBuilderResult buildUpdateOrInsertJavaBeans(CrudConsumer consumer, Collection<?> javaBeans) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(2048), new ArrayList<>(128));
         sqlBuilderResult.appendSqlPart("insert into ")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart(" (");
         int i = 0;
         StringBuilder onSql = new StringBuilder(64);
@@ -537,9 +537,9 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.appendSqlPart("select");
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildSelectColumn(consumer));
         sqlBuilderResult.appendSqlPart(" from `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
-                .appendSqlPart(consumer.getMainTableDatum().getTableAlias());
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias());
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildGroup(consumer));
@@ -558,16 +558,16 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         boolean hasLimit = limit.hasPreparedStatementSql();
         if (hasGroup || hasLimit) {
             sqlBuilderResult.appendSqlPart("select count(1) from (select ")
-                    .appendSqlPart(consumer.getMainTableDatum().getTableAlias())
+                    .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias())
                     .appendSqlPart(".`")
-                    .appendSqlPart(HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName())
+                    .appendSqlPart(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                     .appendSqlPart("` from `");
         } else {
             sqlBuilderResult.appendSqlPart("select count(1) from `");
         }
-        sqlBuilderResult.appendSqlPart(consumer.getMainTableDatum().getTableName())
+        sqlBuilderResult.appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
-                .appendSqlPart(consumer.getMainTableDatum().getTableAlias());
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias());
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
         if (hasGroup || hasLimit) {
@@ -588,13 +588,13 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.appendSqlPart("select");
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildSelectColumn(consumer));
         sqlBuilderResult.appendSqlPart(" from `")
-                .appendSqlPart(consumer.getMainTableDatum().getTableName())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
-                .appendSqlPart(consumer.getMainTableDatum().getTableAlias())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias())
                 .appendSqlPart(" where ")
-                .appendSqlPart(consumer.getMainTableDatum().getTableAlias())
+                .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias())
                 .appendSqlPart(".`")
-                .appendSqlPart(HelperManager.defaultTableHelper(consumer.getMainTableDatum().getTableHelperClass()).getPrimaryKeyName())
+                .appendSqlPart(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                 .appendSqlPart("` = ?");
         return sqlBuilderResult;
     }

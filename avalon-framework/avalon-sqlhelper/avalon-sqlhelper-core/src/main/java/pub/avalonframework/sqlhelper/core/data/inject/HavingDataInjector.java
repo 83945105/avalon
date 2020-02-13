@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableHavingDataBlock;
 public interface HavingDataInjector {
 
     /**
-     * add table having data
+     * Add table having data block.
      *
-     * @param tableHavingDatum {@link TableHavingDataBlock}
+     * @param tableHavingDataBlock {@link TableHavingDataBlock}
      */
-    void addTableHavingDatum(TableHavingDataBlock tableHavingDatum);
+    void addTableHavingDataBlock(TableHavingDataBlock tableHavingDataBlock);
 }

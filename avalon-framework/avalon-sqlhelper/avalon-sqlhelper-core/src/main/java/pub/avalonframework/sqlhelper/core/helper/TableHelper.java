@@ -16,49 +16,49 @@ public interface TableHelper<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TS extends SortHelper<TS>> {
 
     /**
-     * get table name
+     * Get table name
      *
      * @return table name
      */
     String getTableName();
 
     /**
-     * get table alias
+     * Get table alias
      *
      * @return table alias
      */
     String getTableAlias();
 
     /**
-     * get primary key name
+     * Get primary key name
      *
      * @return primary key name
      */
     String getPrimaryKeyName();
 
     /**
-     * get primary key alias
+     * Get primary key alias
      *
      * @return primary key alias
      */
     String getPrimaryKeyAlias();
 
     /**
-     * get table columns
+     * Get table columns
      *
      * @return set {@link TableColumn}
      */
     Set<TableColumn> getTableColumns();
 
     /**
-     * get extends {@link Helper} single object
+     * Get extends {@link Helper} single object
      *
      * @return extends {@link Helper} single object
      */
     T getDefaultInstance();
 
     /**
-     * create new extends {@link ColumnHelper} class object
+     * Create new extends {@link ColumnHelper} class object
      *
      * @param tableAlias table alias
      * @return extends {@link ColumnHelper} class object
@@ -66,7 +66,7 @@ public interface TableHelper<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     TC newColumnHelper(String tableAlias);
 
     /**
-     * create new extends {@link OnHelper} class object
+     * Create new extends {@link OnHelper} class object
      *
      * @param tableAlias table alias
      * @return extends {@link OnHelper} class object
@@ -74,7 +74,7 @@ public interface TableHelper<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     TO newOnHelper(String tableAlias);
 
     /**
-     * create new extends {@link WhereHelper} class object
+     * Create new extends {@link WhereHelper} class object
      *
      * @param tableAlias table alias
      * @return extends {@link WhereHelper} class object
@@ -82,7 +82,7 @@ public interface TableHelper<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     TW newWhereHelper(String tableAlias);
 
     /**
-     * create new extends {@link GroupHelper} class object
+     * Create new extends {@link GroupHelper} class object
      *
      * @param tableAlias table alias
      * @return extends {@link GroupHelper} class object
@@ -90,7 +90,7 @@ public interface TableHelper<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     TG newGroupHelper(String tableAlias);
 
     /**
-     * create new extends {@link HavingHelper} class object
+     * Create new extends {@link HavingHelper} class object
      *
      * @param tableAlias table alias
      * @return extends {@link HavingHelper} class object
@@ -98,7 +98,7 @@ public interface TableHelper<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     TH newHavingHelper(String tableAlias);
 
     /**
-     * create new extends {@link SortHelper} class object
+     * Create new extends {@link SortHelper} class object
      *
      * @param tableAlias table alias
      * @return extends {@link SortHelper} class object

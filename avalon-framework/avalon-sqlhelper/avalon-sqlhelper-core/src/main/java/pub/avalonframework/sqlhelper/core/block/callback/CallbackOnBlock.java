@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface CallbackOnBlock<TO extends OnHelper<TO>, R> extends CallbackBlock {
 
     /**
-     * use callback to add where sql data
+     * Use callback to add where sql data.
      *
      * @param onCallback {@link OnCallback}
      * @return R
@@ -18,7 +18,7 @@ public interface CallbackOnBlock<TO extends OnHelper<TO>, R> extends CallbackBlo
     R on(OnCallback<TO> onCallback);
 
     /**
-     * use callback to add assign class on sql data
+     * Use callback to add assign class on sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -34,7 +34,7 @@ public interface CallbackOnBlock<TO extends OnHelper<TO>, R> extends CallbackBlo
             SS extends SortHelper<SS>> R on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback);
 
     /**
-     * use callback to add assign class on sql data
+     * Use callback to add assign class on sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param onJoinCallback   {@link OnJoinCallback}

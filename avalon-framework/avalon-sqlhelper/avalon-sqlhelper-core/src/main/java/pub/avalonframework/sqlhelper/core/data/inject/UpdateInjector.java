@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 public interface UpdateInjector extends ConfigurationInjector, JoinDataInjector, OnDataInjector, WhereDataInjector {
 
     /**
-     * add update table column data
+     * Add update table column data block.
      *
-     * @param tableColumnDatum {@link TableColumnDataBlock}
+     * @param tableColumnDataBlock {@link TableColumnDataBlock}
      */
-    void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum);
+    void addUpdateTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock);
 }

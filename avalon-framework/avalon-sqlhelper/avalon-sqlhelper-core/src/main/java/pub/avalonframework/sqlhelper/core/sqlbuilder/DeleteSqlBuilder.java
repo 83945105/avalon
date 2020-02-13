@@ -8,14 +8,14 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.DeleteSqlBuilderResul
 public interface DeleteSqlBuilder extends SqlBuilder {
 
     /**
-     * delete
+     * Delete
      *
      * @return {@link DeleteSqlBuilderResult}
      */
     DeleteSqlBuilderResult delete();
 
     /**
-     * delete by primary key
+     * Delete by primary key
      *
      * @param primaryKeyValue primary key value
      * @return {@link DeleteSqlBuilderResult}
@@ -23,7 +23,7 @@ public interface DeleteSqlBuilder extends SqlBuilder {
     DeleteSqlBuilderResult deleteByPrimaryKey(Object primaryKeyValue);
 
     /**
-     * batch delete by primary keys
+     * Batch delete by primary keys
      *
      * @param primaryKeyValues primary key values
      * @return {@link DeleteSqlBuilderResult}

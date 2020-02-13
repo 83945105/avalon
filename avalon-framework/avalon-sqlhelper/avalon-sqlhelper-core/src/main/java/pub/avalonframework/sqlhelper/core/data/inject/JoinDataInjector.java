@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 public interface JoinDataInjector {
 
     /**
-     * add join table data
+     * Add table join data block.
      *
-     * @param joinTableDatum {@link TableJoinDataBlock}
+     * @param tableJoinDataBlock {@link TableJoinDataBlock}
      */
-    void addJoinTableDatum(TableJoinDataBlock joinTableDatum);
+    void addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock);
 }

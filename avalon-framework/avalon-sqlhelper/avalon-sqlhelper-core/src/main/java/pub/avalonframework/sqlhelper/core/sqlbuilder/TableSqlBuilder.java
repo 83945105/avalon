@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.TableSqlBuilderResult
 public interface TableSqlBuilder extends SqlBuilder {
 
     /**
-     * copy table
+     * Copy table
      *
      * @param targetTableName target table name
      * @param copyData        copy data or not
@@ -17,14 +17,14 @@ public interface TableSqlBuilder extends SqlBuilder {
     TableSqlBuilderResult copyTable(String targetTableName, boolean copyData);
 
     /**
-     * delete table
+     * Delete table
      *
      * @return {@link TableSqlBuilderResult}
      */
     TableSqlBuilderResult deleteTable();
 
     /**
-     * rename table
+     * Rename table
      *
      * @param newTableName new table name
      * @return {@link TableSqlBuilderResult}
@@ -32,7 +32,7 @@ public interface TableSqlBuilder extends SqlBuilder {
     TableSqlBuilderResult renameTable(String newTableName);
 
     /**
-     * is table exist
+     * Is table exist
      *
      * @return {@link TableSqlBuilderResult}
      */

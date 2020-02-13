@@ -5,15 +5,15 @@ package pub.avalonframework.sqlhelper.core.beans;
  */
 public enum JoinType {
     /**
-     * inner join
+     * Inner join
      */
     INNER,
     /**
-     * left join
+     * Left join
      */
     LEFT,
     /**
-     * right join
+     * Right join
      */
     RIGHT
 }

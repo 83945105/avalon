@@ -11,7 +11,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface CallbackColumnBlock<TC extends ColumnHelper<TC>, R> extends CallbackBlock {
 
     /**
-     * use callback to add group column sql data
+     * Use callback to add group column sql data.
      *
      * @param groupType      {@link GroupType}
      * @param columnCallback {@link ColumnCallback}
@@ -20,7 +20,7 @@ public interface CallbackColumnBlock<TC extends ColumnHelper<TC>, R> extends Cal
     R groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback);
 
     /**
-     * use callback to add assign class group column sql data
+     * Use callback to add assign class group column sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -37,7 +37,7 @@ public interface CallbackColumnBlock<TC extends ColumnHelper<TC>, R> extends Cal
             SS extends SortHelper<SS>> R groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback);
 
     /**
-     * use callback to add assign class group column sql data
+     * Use callback to add assign class group column sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param groupType        {@link GroupType}
@@ -55,7 +55,7 @@ public interface CallbackColumnBlock<TC extends ColumnHelper<TC>, R> extends Cal
     }
 
     /**
-     * use callback to add sub query column sql data
+     * Use callback to add sub query column sql data.
      *
      * @param columnAlias            column alias
      * @param subQueryColumnCallback {@link SubQueryColumnCallback}

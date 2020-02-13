@@ -16,49 +16,49 @@ import java.util.Collection;
 public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends BaseComparisonOperator<T> {
 
     /**
-     * get helper
+     * Get helper.
      *
      * @return extends {@link Helper} object
      */
     T getHelper();
 
     /**
-     * get abstract comparison sql part datum
+     * Get comparison data block.
      *
      * @return extends {@link AbstractComparisonDataBlock}
      */
-    AbstractComparisonDataBlock<S> getAbstractComparisonSqlPartDatum();
+    AbstractComparisonDataBlock<S> getComparisonDataBlock();
 
     /**
-     * get sql builder configuration.
+     * Get sql builder configuration.
      *
      * @return {@link SqlBuilderConfiguration}
      */
     SqlBuilderConfiguration getSqlBuilderConfiguration();
 
     /**
-     * Add abstract comparison sql part datum.
+     * Add comparison data block.
      *
-     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonDataBlock} object.
+     * @param comparisonDataBlock Implements {@link AbstractComparisonDataBlock} object.
      */
-    void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<S> abstractComparisonSqlPartDatum);
+    void addComparisonDataBlock(AbstractComparisonDataBlock<S> comparisonDataBlock);
 
     @Override
     default T sqlPart(String targetSqlPart) {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum()
+        this.addComparisonDataBlock(this.getComparisonDataBlock()
                 .setTargetSqlPart(targetSqlPart));
         return this.getHelper();
     }
 
     @Override
     default T isNull() {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetNoneValue(ComparisonType.IS_NULL));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetNoneValue(ComparisonType.IS_NULL));
         return this.getHelper();
     }
 
     @Override
     default T isNotNull() {
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetNoneValue(ComparisonType.IS_NOT_NULL));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetNoneValue(ComparisonType.IS_NOT_NULL));
         return this.getHelper();
     }
 
@@ -69,13 +69,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "equalTo", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "equalTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.EQUAL, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.EQUAL, value));
         return this.getHelper();
     }
 
@@ -86,13 +86,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notEqualTo", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.NOT_EQUAL, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.NOT_EQUAL, value));
         return this.getHelper();
     }
 
@@ -103,13 +103,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "greaterThan", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "greaterThan", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.GREATER, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.GREATER, value));
         return this.getHelper();
     }
 
@@ -120,13 +120,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "greaterThanAndEqualTo", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "greaterThanAndEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.GREATER_EQUAL, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.GREATER_EQUAL, value));
         return this.getHelper();
     }
 
@@ -137,13 +137,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "lessThan", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "lessThan", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.LESS, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.LESS, value));
         return this.getHelper();
     }
 
@@ -154,13 +154,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "lessThanAndEqualTo", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "lessThanAndEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.LESS_EQUAL, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.LESS_EQUAL, value));
         return this.getHelper();
     }
 
@@ -171,7 +171,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "between", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "between", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -182,13 +182,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "secondValue", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "secondValue", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetPairValue(ComparisonType.BETWEEN, value, secondValue));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetPairValue(ComparisonType.BETWEEN, value, secondValue));
         return this.getHelper();
     }
 
@@ -199,13 +199,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "like", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "like", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetSingleValue(ComparisonType.LIKE, value));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleValue(ComparisonType.LIKE, value));
         return this.getHelper();
     }
 
@@ -216,13 +216,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "in", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "in", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetMultiValue(ComparisonType.IN, values));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiValue(ComparisonType.IN, values));
         return this.getHelper();
     }
 
@@ -233,13 +233,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "in", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "in", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetMultiValue(ComparisonType.IN, values));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiValue(ComparisonType.IN, values));
         return this.getHelper();
     }
 
@@ -250,13 +250,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notIn", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notIn", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetMultiValue(ComparisonType.NOT_IN, values));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiValue(ComparisonType.NOT_IN, values));
         return this.getHelper();
     }
 
@@ -267,13 +267,13 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notIn", this.getAbstractComparisonSqlPartDatum().getTableName(), this.getAbstractComparisonSqlPartDatum().getTableAlias(), this.getAbstractComparisonSqlPartDatum().getColumnName(), this.getAbstractComparisonSqlPartDatum().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notIn", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
             }
         }
-        this.addAbstractComparisonSqlPartDatum(this.getAbstractComparisonSqlPartDatum().setTargetMultiValue(ComparisonType.NOT_IN, values));
+        this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiValue(ComparisonType.NOT_IN, values));
         return this.getHelper();
     }
 }

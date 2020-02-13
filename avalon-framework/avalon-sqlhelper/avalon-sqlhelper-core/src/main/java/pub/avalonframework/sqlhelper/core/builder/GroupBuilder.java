@@ -82,6 +82,6 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
         if (groupDataInjector == null) {
             return;
         }
-        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderConfiguration).forEach(groupDataInjector::addTableGroupDatum));
+        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderConfiguration).forEach(groupDataInjector::addTableGroupDataBlock));
     }
 }

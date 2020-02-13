@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.helper.GroupHelper;
 public interface HelperGroupBlock<R> extends HelperBlock {
 
     /**
-     * add group sql data
+     * Add group data block.
      *
      * @param groupHelpers extends {@link GroupHelper} objects
      * @return R

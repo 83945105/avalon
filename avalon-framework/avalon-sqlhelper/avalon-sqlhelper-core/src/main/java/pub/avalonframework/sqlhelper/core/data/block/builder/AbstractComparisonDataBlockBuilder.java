@@ -13,9 +13,9 @@ public abstract class AbstractComparisonDataBlockBuilder<T extends Helper, S ext
     }
 
     /**
-     * get abstract comparison sql part datum
+     * Get comparison data block.
      *
      * @return extends {@link AbstractComparisonDataBlock}
      */
-    public abstract AbstractComparisonDataBlock<S> getAbstractComparisonSqlPartDatum();
+    public abstract AbstractComparisonDataBlock<S> getComparisonDataBlock();
 }

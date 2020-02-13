@@ -10,61 +10,61 @@ import java.util.List;
  */
 public abstract class AbstractDataStore extends AbstractDataStoreCache {
 
-    private List<TableColumnDataBlock> selectTableColumnData;
+    private List<TableColumnDataBlock> selectTableColumnDataBlocks;
 
-    private List<TableColumnDataBlock> insertTabColumnData;
+    private List<TableColumnDataBlock> insertTableColumnDataBlocks;
 
-    private List<TableColumnDataBlock> updateTabColumnData;
+    private List<TableColumnDataBlock> updateTableColumnDataBlocks;
 
-    private List<TableWhereDataBlock> tableWhereData;
+    private List<TableWhereDataBlock> tableWhereDataBlocks;
 
-    private List<TableGroupDataBlock> tableGroupData;
+    private List<TableGroupDataBlock> tableGroupDataBlocks;
 
-    private List<TableHavingDataBlock> tableHavingData;
+    private List<TableHavingDataBlock> tableHavingDataBlocks;
 
-    private List<TableSortDataBlock> tableSortData;
+    private List<TableSortDataBlock> tableSortDataBlocks;
 
     private Long limit;
 
     private Long offset;
 
-    public AbstractDataStore(TableMainDataBlock mainTableDatum) {
-        super(mainTableDatum);
+    public AbstractDataStore(TableMainDataBlock tableMainDataBlock) {
+        super(tableMainDataBlock);
     }
 
     @Override
-    public List<TableColumnDataBlock> getSelectTableColumnData() {
-        return this.selectTableColumnData;
+    public List<TableColumnDataBlock> getSelectTableColumnDataBlocks() {
+        return selectTableColumnDataBlocks;
     }
 
     @Override
-    public List<TableColumnDataBlock> getInsertTableColumnData() {
-        return this.insertTabColumnData;
+    public List<TableColumnDataBlock> getInsertTableColumnDataBlocks() {
+        return insertTableColumnDataBlocks;
     }
 
     @Override
-    public List<TableColumnDataBlock> getUpdateTableColumnData() {
-        return this.updateTabColumnData;
+    public List<TableColumnDataBlock> getUpdateTableColumnDataBlocks() {
+        return updateTableColumnDataBlocks;
     }
 
     @Override
-    public List<TableWhereDataBlock> getTableWhereData() {
-        return this.tableWhereData;
+    public List<TableWhereDataBlock> getTableWhereDataBlocks() {
+        return tableWhereDataBlocks;
     }
 
     @Override
-    public List<TableGroupDataBlock> getTableGroupData() {
-        return this.tableGroupData;
+    public List<TableGroupDataBlock> getTableGroupDataBlocks() {
+        return tableGroupDataBlocks;
     }
 
     @Override
-    public List<TableHavingDataBlock> getTableHavingData() {
-        return this.tableHavingData;
+    public List<TableHavingDataBlock> getTableHavingDataBlocks() {
+        return tableHavingDataBlocks;
     }
 
     @Override
-    public List<TableSortDataBlock> getTableSortData() {
-        return this.tableSortData;
+    public List<TableSortDataBlock> getTableSortDataBlocks() {
+        return tableSortDataBlocks;
     }
 
     @Override
@@ -78,80 +78,80 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addSelectTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
-        if (tableColumnDatum == null) {
+    public void addSelectTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        if (tableColumnDataBlock == null) {
             return;
         }
-        if (this.selectTableColumnData == null) {
-            this.selectTableColumnData = new ArrayList<>();
+        if (this.selectTableColumnDataBlocks == null) {
+            this.selectTableColumnDataBlocks = new ArrayList<>();
         }
-        this.selectTableColumnData.add(tableColumnDatum);
+        this.selectTableColumnDataBlocks.add(tableColumnDataBlock);
     }
 
     @Override
-    public void addInsertTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
-        if (tableColumnDatum == null) {
+    public void addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        if (tableColumnDataBlock == null) {
             return;
         }
-        if (this.insertTabColumnData == null) {
-            this.insertTabColumnData = new ArrayList<>();
+        if (this.insertTableColumnDataBlocks == null) {
+            this.insertTableColumnDataBlocks = new ArrayList<>();
         }
-        this.insertTabColumnData.add(tableColumnDatum);
+        this.insertTableColumnDataBlocks.add(tableColumnDataBlock);
     }
 
     @Override
-    public void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
-        if (tableColumnDatum == null) {
+    public void addUpdateTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        if (tableColumnDataBlock == null) {
             return;
         }
-        if (this.updateTabColumnData == null) {
-            this.updateTabColumnData = new ArrayList<>();
+        if (this.updateTableColumnDataBlocks == null) {
+            this.updateTableColumnDataBlocks = new ArrayList<>();
         }
-        this.updateTabColumnData.add(tableColumnDatum);
+        this.updateTableColumnDataBlocks.add(tableColumnDataBlock);
     }
 
     @Override
-    public void addTableWhereDatum(TableWhereDataBlock tableWhereDatum) {
-        if (tableWhereDatum == null) {
+    public void addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock) {
+        if (tableWhereDataBlock == null) {
             return;
         }
-        if (this.tableWhereData == null) {
-            this.tableWhereData = new ArrayList<>();
+        if (this.tableWhereDataBlocks == null) {
+            this.tableWhereDataBlocks = new ArrayList<>();
         }
-        this.tableWhereData.add(tableWhereDatum);
+        this.tableWhereDataBlocks.add(tableWhereDataBlock);
     }
 
     @Override
-    public void addTableGroupDatum(TableGroupDataBlock tableGroupDatum) {
-        if (tableGroupDatum == null) {
+    public void addTableGroupDataBlock(TableGroupDataBlock tableGroupDataBlock) {
+        if (tableGroupDataBlock == null) {
             return;
         }
-        if (this.tableGroupData == null) {
-            this.tableGroupData = new ArrayList<>();
+        if (this.tableGroupDataBlocks == null) {
+            this.tableGroupDataBlocks = new ArrayList<>();
         }
-        this.tableGroupData.add(tableGroupDatum);
+        this.tableGroupDataBlocks.add(tableGroupDataBlock);
     }
 
     @Override
-    public void addTableHavingDatum(TableHavingDataBlock tableHavingDatum) {
-        if (tableHavingDatum == null) {
+    public void addTableHavingDataBlock(TableHavingDataBlock tableHavingDataBlock) {
+        if (tableHavingDataBlock == null) {
             return;
         }
-        if (this.tableHavingData == null) {
-            this.tableHavingData = new ArrayList<>();
+        if (this.tableHavingDataBlocks == null) {
+            this.tableHavingDataBlocks = new ArrayList<>();
         }
-        this.tableHavingData.add(tableHavingDatum);
+        this.tableHavingDataBlocks.add(tableHavingDataBlock);
     }
 
     @Override
-    public void addTableSortDatum(TableSortDataBlock tableSortDatum) {
-        if (tableSortDatum == null) {
+    public void addTableSortDataBlock(TableSortDataBlock tableSortDataBlock) {
+        if (tableSortDataBlock == null) {
             return;
         }
-        if (this.tableSortData == null) {
-            this.tableSortData = new ArrayList<>();
+        if (this.tableSortDataBlocks == null) {
+            this.tableSortDataBlocks = new ArrayList<>();
         }
-        this.tableSortData.add(tableSortDatum);
+        this.tableSortDataBlocks.add(tableSortDataBlock);
     }
 
     @Override

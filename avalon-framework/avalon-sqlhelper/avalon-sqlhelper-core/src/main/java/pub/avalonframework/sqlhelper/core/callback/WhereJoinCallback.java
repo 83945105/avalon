@@ -6,6 +6,7 @@ import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 /**
  * @author baichao
  */
+@FunctionalInterface
 public interface WhereJoinCallback<TW extends WhereHelper<TW>, SW extends WhereHelper<SW>> {
 
     WhereLinker<TW> apply(WhereLinker<TW> condition, SW joinTable, TW mainTable);

@@ -40,8 +40,8 @@ public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
         return this.onDataBlockBuilder;
     }
 
-    public List<OnDataBlock> takeoutSqlPartData() {
-        return this.onDataBlockBuilder.takeoutSqlPartData();
+    public List<OnDataBlock> takeoutOnDataBlocks() {
+        return this.onDataBlockBuilder.takeoutDataBlocks();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -53,12 +53,12 @@ public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
     }
 
     public static TableOnDataBlock execute(OnHelper<?> onHelper) {
-        List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
+        List<OnDataBlock> onDataBlocks = onHelper.takeoutOnDataBlocks();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return null;
         }
         return new TableOnDataBlock(onHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonSqlPartData(onDataBlocks)));
+                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonDataBlocks(onDataBlocks)));
     }
 
     public static List<TableOnDataBlock> execute(OnHelper<?>... onHelpers) {

@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 public interface WhereDataInjector {
 
     /**
-     * add table where data
+     * Add table where data block.
      *
-     * @param tableWhereDatum {@link TableWhereDataBlock}
+     * @param tableWhereDataBlock {@link TableWhereDataBlock}
      */
-    void addTableWhereDatum(TableWhereDataBlock tableWhereDatum);
+    void addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock);
 }

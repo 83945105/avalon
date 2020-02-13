@@ -21,7 +21,7 @@ public interface CallbackSelectBlock<TC extends ColumnHelper<TC>,
         CallbackSortBlock<TS, R> {
 
     /**
-     * use callback to add select column sql data
+     * Use callback to add select column sql data.
      *
      * @param columnCallback {@link ColumnCallback}
      * @return R
@@ -29,7 +29,7 @@ public interface CallbackSelectBlock<TC extends ColumnHelper<TC>,
     R select(ColumnCallback<TC> columnCallback);
 
     /**
-     * use callback to add assign class select column sql data
+     * Use callback to add assign class select column sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -45,7 +45,7 @@ public interface CallbackSelectBlock<TC extends ColumnHelper<TC>,
             SS extends SortHelper<SS>> R select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * use callback to add assign class select column sql data
+     * Use callback to add assign class select column sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}

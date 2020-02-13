@@ -8,35 +8,35 @@ import pub.avalonframework.sqlhelper.core.helper.TableHelper;
 public interface TableDataBlock {
 
     /**
-     * get extends {@link TableHelper} class
+     * Get extends {@link TableHelper} class.
      *
      * @return {@link TableHelper}
      */
     Class<?> getTableHelperClass();
 
     /**
-     * get table name
+     * Get table name.
      *
      * @return table name
      */
     String getTableName();
 
     /**
-     * set table name
+     * Set table name.
      *
      * @param tableName table name
      */
     void setTableName(String tableName);
 
     /**
-     * get table alias
+     * Get table alias.
      *
      * @return table alias
      */
     String getTableAlias();
 
     /**
-     * set table alias
+     * Set table alias.
      *
      * @param tableAlias table alias
      */

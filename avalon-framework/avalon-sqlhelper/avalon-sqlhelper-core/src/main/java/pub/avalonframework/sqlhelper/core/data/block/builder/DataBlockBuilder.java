@@ -13,35 +13,35 @@ import java.util.List;
 public interface DataBlockBuilder<T extends Helper, S extends DataBlock> {
 
     /**
-     * get table alias
+     * Get table alias.
      *
      * @return table alias
      */
     String getTableAlias();
 
     /**
-     * set table alias
+     * Set table alias.
      *
      * @param tableAlias table alias
      */
     void setTableAlias(String tableAlias);
 
     /**
-     * get helper
+     * Get helper.
      *
      * @return extends {@link Helper} object
      */
     T getHelper();
 
     /**
-     * set helper
+     * Set helper.
      *
      * @param helper extends {@link Helper} object
      */
     void setHelper(T helper);
 
     /**
-     * add data block.
+     * Add data block.
      *
      * @param dataBlock implements {@link DataBlock} object
      */
@@ -52,10 +52,10 @@ public interface DataBlockBuilder<T extends Helper, S extends DataBlock> {
      *
      * @return implements {@link DataBlock} objects
      */
-    List<S> takeoutSqlPartData();
+    List<S> takeoutDataBlocks();
 
     /**
-     * accept sql part
+     * Accept data block.
      *
      * @param templateTableName  template table name
      * @param templateTableAlias template table alias
@@ -64,7 +64,7 @@ public interface DataBlockBuilder<T extends Helper, S extends DataBlock> {
     void accept(String templateTableName, String templateTableAlias, String sqlPart);
 
     /**
-     * accept sql data
+     * Accept data block.
      *
      * @param templateTableName   template table name
      * @param templateTableAlias  template table alias
@@ -76,14 +76,14 @@ public interface DataBlockBuilder<T extends Helper, S extends DataBlock> {
     void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers);
 
     /**
-     * get sql builder configuration.
+     * Get sql builder configuration.
      *
      * @return {@link SqlBuilderConfiguration}
      */
     SqlBuilderConfiguration getSqlBuilderConfiguration();
 
     /**
-     * set sql builder options
+     * Set sql builder configuration.
      *
      * @param sqlBuilderConfiguration {@link SqlBuilderConfiguration}
      */

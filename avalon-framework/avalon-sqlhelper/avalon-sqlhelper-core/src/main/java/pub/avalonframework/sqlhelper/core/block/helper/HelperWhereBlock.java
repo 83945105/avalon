@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 public interface HelperWhereBlock<R> extends HelperBlock {
 
     /**
-     * add where sql data
+     * Add where data block.
      *
      * @param whereHelpers {@link WhereHelper}
      * @return R

@@ -16,7 +16,7 @@ public interface CallbackUpdateBlock<TC extends ColumnHelper<TC>,
         CallbackWhereBlock<TW, R> {
 
     /**
-     * use callback to add update column sql data
+     * Use callback to add update column sql data.
      *
      * @param columnCallback {@link ColumnCallback}
      * @return R

@@ -35,11 +35,11 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
 
     protected String targetSqlPart;
 
-    protected AbstractDataBlock targetSqlPartDatum;
+    protected AbstractDataBlock targetDataBlock;
 
-    protected AbstractDataBlock targetSecondSqlPartDatum;
+    protected AbstractDataBlock targetSecondDataBlock;
 
-    protected List<AbstractDataBlock> targetMultiSqlPartDatum;
+    protected List<AbstractDataBlock> targetMultiDataBlock;
 
     public AbstractComparisonDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
@@ -132,34 +132,34 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return this;
     }
 
-    public AbstractComparisonDataBlock<T> setTargetSingleSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum) {
-        if (comparisonType == null || targetSqlPartDatum == null) {
+    public AbstractComparisonDataBlock<T> setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+        if (comparisonType == null || targetDataBlock == null) {
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.SINGLE_SQL_PART_DATUM;
-        this.targetSqlPartDatum = targetSqlPartDatum;
+        this.valueType = ValueType.SINGLE_DATA_BLOCK;
+        this.targetDataBlock = targetDataBlock;
         return this;
     }
 
-    public AbstractComparisonDataBlock<T> setTargetPairSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum, AbstractDataBlock targetSecondSqlPartDatum) {
-        if (comparisonType == null || targetSqlPartDatum == null || targetSecondSqlPartDatum == null) {
+    public AbstractComparisonDataBlock<T> setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+        if (comparisonType == null || targetDataBlock == null || targetSecondDataBlock == null) {
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.PAIR_SQL_PART_DATUM;
-        this.targetSqlPartDatum = targetSqlPartDatum;
-        this.targetSecondSqlPartDatum = targetSecondSqlPartDatum;
+        this.valueType = ValueType.PAIR_DATA_BLOCK;
+        this.targetDataBlock = targetDataBlock;
+        this.targetSecondDataBlock = targetSecondDataBlock;
         return this;
     }
 
-    public AbstractComparisonDataBlock<T> setTargetMultiSqlPartDatum(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiSqlPartDatum) {
-        if (comparisonType == null || targetMultiSqlPartDatum == null) {
+    public AbstractComparisonDataBlock<T> setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+        if (comparisonType == null || targetMultiDataBlock == null) {
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.MULTI_SQL_PART_DATUM;
-        this.targetMultiSqlPartDatum = targetMultiSqlPartDatum;
+        this.valueType = ValueType.MULTI_DATA_BLOCK;
+        this.targetMultiDataBlock = targetMultiDataBlock;
         return this;
     }
 
@@ -169,6 +169,10 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
 
     public String getSqlPart() {
         return sqlPart;
+    }
+
+    public AbstractDataBlock getTargetDataBlock() {
+        return targetDataBlock;
     }
 
     public ColumnType getColumnType() {
@@ -203,15 +207,11 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return targetSqlPart;
     }
 
-    public AbstractDataBlock getTargetSqlPartDatum() {
-        return targetSqlPartDatum;
+    public AbstractDataBlock getTargetSecondDataBlock() {
+        return targetSecondDataBlock;
     }
 
-    public AbstractDataBlock getTargetSecondSqlPartDatum() {
-        return targetSecondSqlPartDatum;
-    }
-
-    public List<AbstractDataBlock> getTargetMultiSqlPartDatum() {
-        return targetMultiSqlPartDatum;
+    public List<AbstractDataBlock> getTargetMultiDataBlock() {
+        return targetMultiDataBlock;
     }
 }

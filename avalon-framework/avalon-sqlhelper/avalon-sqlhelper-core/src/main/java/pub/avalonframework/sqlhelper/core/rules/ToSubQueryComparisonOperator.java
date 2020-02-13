@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 public interface ToSubQueryComparisonOperator<T> {
 
     /**
-     * 等于
+     * Equal to sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -17,7 +17,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T equalToSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 不等于
+     * Not equal to sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -25,7 +25,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T notEqualToSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 大于
+     * Greater than sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -33,7 +33,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T greaterThanSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 大于等于
+     * Greater than and equal to sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -41,7 +41,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T greaterThanAndEqualToSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 小于
+     * Less than sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -49,7 +49,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T lessThanSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 小于等于
+     * Less than and equal to sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -57,7 +57,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T lessThanAndEqualToSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 模糊匹配
+     * Like sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -65,7 +65,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T likeSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 在...内
+     * In sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
@@ -73,7 +73,7 @@ public interface ToSubQueryComparisonOperator<T> {
     T inSubQuery(SubQueryCallback subQueryCallback);
 
     /**
-     * 不在...内
+     * Not in sub query.
      *
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object

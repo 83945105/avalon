@@ -6,7 +6,7 @@ package pub.avalonframework.sqlhelper.core.block.helper;
 public interface HelperColumnBlock<R> extends HelperBlock {
 
     /**
-     * add virtual column sql data
+     * Add virtual column data block.
      *
      * @param columnValue column value
      * @param columnAlias column alias

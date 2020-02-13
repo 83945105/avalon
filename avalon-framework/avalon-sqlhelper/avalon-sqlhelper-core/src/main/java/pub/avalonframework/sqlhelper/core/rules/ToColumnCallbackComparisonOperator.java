@@ -9,7 +9,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface ToColumnCallbackComparisonOperator<T> {
 
     /**
-     * equal to
+     * Equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -25,7 +25,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T equalTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * equal to
+     * Equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -42,7 +42,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * not equal to
+     * Not equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -58,7 +58,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T notEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * not equal to
+     * Not equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -75,7 +75,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * greater than
+     * Greater than
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -91,7 +91,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T greaterThan(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * greater than
+     * Greater than
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -108,7 +108,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * greater than or equal to
+     * Greater than or equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -124,7 +124,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T greaterThanAndEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * greater than or equal to
+     * Greater than or equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -141,7 +141,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * less than
+     * Less than
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -157,7 +157,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T lessThan(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * less than
+     * Less than
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -174,7 +174,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * less than or equal to
+     * Less than or equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -190,7 +190,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T lessThanAndEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * less than or equal to
+     * Less than or equal to
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -207,7 +207,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * between ... and ...
+     * Between ... and ...
      *
      * @param tableHelperClass     extends {@link TableHelper} class
      * @param tableAlias           table alias
@@ -224,7 +224,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T between(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback);
 
     /**
-     * between ... and ...
+     * Between ... and ...
      *
      * @param tableHelperClass     extends {@link TableHelper} class
      * @param columnCallback       {@link ColumnCallback}
@@ -242,7 +242,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * like
+     * Like
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -258,7 +258,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T like(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * like
+     * Like
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -275,7 +275,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * in
+     * In
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -291,7 +291,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T in(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * in
+     * In
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}
@@ -308,7 +308,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
     }
 
     /**
-     * not in
+     * Not in
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -324,7 +324,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SS extends SortHelper<SS>> T notIn(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
-     * not in
+     * Not in
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param columnCallback   {@link ColumnCallback}

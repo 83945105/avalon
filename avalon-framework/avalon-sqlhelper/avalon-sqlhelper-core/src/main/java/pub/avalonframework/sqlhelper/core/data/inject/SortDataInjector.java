@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableSortDataBlock;
 public interface SortDataInjector {
 
     /**
-     * add table sort data
+     * Add table sort data block.
      *
-     * @param tableSortDatum {@link TableSortDataBlock}
+     * @param tableSortDataBlock {@link TableSortDataBlock}
      */
-    void addTableSortDatum(TableSortDataBlock tableSortDatum);
+    void addTableSortDataBlock(TableSortDataBlock tableSortDataBlock);
 }

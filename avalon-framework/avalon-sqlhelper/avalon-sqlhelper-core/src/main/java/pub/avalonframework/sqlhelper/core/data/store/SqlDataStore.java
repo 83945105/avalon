@@ -8,8 +8,8 @@ import pub.avalonframework.sqlhelper.core.data.block.TableMainDataBlock;
  */
 public final class SqlDataStore extends AbstractDataStore {
 
-    public SqlDataStore(TableMainDataBlock mainTableDatum, SqlhelperConfiguration configuration) {
-        super(mainTableDatum);
+    public SqlDataStore(TableMainDataBlock tableMainDataBlock, SqlhelperConfiguration configuration) {
+        super(tableMainDataBlock);
         this.setConfiguration(configuration);
     }
 }

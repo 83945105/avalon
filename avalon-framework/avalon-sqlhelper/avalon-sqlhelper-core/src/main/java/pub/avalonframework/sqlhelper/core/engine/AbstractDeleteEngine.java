@@ -64,17 +64,17 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
     }
 
     @Override
-    public void addJoinTableDatum(TableJoinDataBlock joinTableDatum) {
-        this.dataStore.addJoinTableDatum(joinTableDatum);
+    public void addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock) {
+        this.dataStore.addTableJoinDataBlock(tableJoinDataBlock);
     }
 
     @Override
-    public void addTableOnDatum(TableOnDataBlock tableOnDatum) {
-        this.dataStore.addTableOnDatum(tableOnDatum);
+    public void addTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
+        this.dataStore.addTableOnDataBlock(tableOnDataBlock);
     }
 
     @Override
-    public void addTableWhereDatum(TableWhereDataBlock tableWhereDatum) {
-        this.dataStore.addTableWhereDatum(tableWhereDatum);
+    public void addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock) {
+        this.dataStore.addTableWhereDataBlock(tableWhereDataBlock);
     }
 }

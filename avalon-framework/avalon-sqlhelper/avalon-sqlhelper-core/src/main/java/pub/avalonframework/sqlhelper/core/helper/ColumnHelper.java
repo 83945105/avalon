@@ -2,7 +2,6 @@ package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.beans.TableColumn;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.ColumnDataBlockBuilder;
@@ -11,7 +10,6 @@ import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -19,42 +17,40 @@ import java.util.stream.Collectors;
  */
 public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
 
-    private ColumnDataBlockBuilder<T> columnSqlPartDatumBuilder;
+    private ColumnDataBlockBuilder<T> columnDataBlockBuilder;
 
     @SuppressWarnings("unchecked")
     public ColumnHelper(String tableAlias) {
         super(tableAlias);
-        this.columnSqlPartDatumBuilder = new ColumnDataBlockBuilder<>(tableAlias, (T) this);
+        this.columnDataBlockBuilder = new ColumnDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
         this.tableAlias = tableAlias;
-        this.columnSqlPartDatumBuilder.setTableAlias(tableAlias);
+        this.columnDataBlockBuilder.setTableAlias(tableAlias);
     }
 
-    public abstract Set<TableColumn> getTableDefaultColumns();
-
     protected ColumnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.columnSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
-        return this.columnSqlPartDatumBuilder;
+        this.columnDataBlockBuilder.accept(templateTableName, templateTableAlias, sqlPart);
+        return this.columnDataBlockBuilder;
     }
 
     protected ColumnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.columnSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName, columnHandlers);
-        return this.columnSqlPartDatumBuilder;
+        this.columnDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName, columnHandlers);
+        return this.columnDataBlockBuilder;
     }
 
     protected ColumnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
-        this.columnSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
-        return this.columnSqlPartDatumBuilder;
+        this.columnDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
+        return this.columnDataBlockBuilder;
     }
 
-    public List<ColumnDataBlock> takeoutSqlPartData() {
-        return this.columnSqlPartDatumBuilder.takeoutSqlPartData();
+    public List<ColumnDataBlock> takeoutColumnDataBlocks() {
+        return this.columnDataBlockBuilder.takeoutDataBlocks();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        this.columnSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
+        this.columnDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableColumnDataBlock execute() {
@@ -62,7 +58,7 @@ public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
     }
 
     public static TableColumnDataBlock execute(ColumnHelper<?> columnHelper) {
-        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
         }

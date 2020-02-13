@@ -4,40 +4,41 @@ package pub.avalonframework.sqlhelper.core.data;
  * @author baichao
  */
 public enum ValueType {
+
     /**
-     * none value
+     * None value
      */
     NONE_VALUE,
     /**
-     * single value
+     * Single value
      */
     SINGLE_VALUE,
     /**
-     * pair value
+     * Pair value
      */
     PAIR_VALUE,
     /**
-     * multi value
+     * Multi value
      */
     MULTI_VALUE,
     /**
-     * sub query value
+     * Sub query value
      */
     SUB_QUERY,
     /**
-     * custom sql value
+     * Custom sql value
      */
     SQL_PART,
     /**
-     * single sql part datum
+     * Single data block
      */
-    SINGLE_SQL_PART_DATUM,
+    SINGLE_DATA_BLOCK,
     /**
-     * pair sql part datum
+     * Pair data block
      */
-    PAIR_SQL_PART_DATUM,
+    PAIR_DATA_BLOCK,
     /**
-     * multi sql part datum
+     * Multi data block
      */
-    MULTI_SQL_PART_DATUM
+    MULTI_DATA_BLOCK
 }

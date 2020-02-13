@@ -45,18 +45,18 @@ public final class HavingDataBlockBuilder<T extends Helper> extends AbstractComp
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<HavingDataBlock> abstractComparisonSqlPartDatum) {
-        super.addDataBlock((HavingDataBlock) abstractComparisonSqlPartDatum);
+    public void addComparisonDataBlock(AbstractComparisonDataBlock<HavingDataBlock> comparisonDataBlock) {
+        super.addDataBlock((HavingDataBlock) comparisonDataBlock);
     }
 
     @Override
-    public AbstractComparisonDataBlock<HavingDataBlock> getAbstractComparisonSqlPartDatum() {
+    public AbstractComparisonDataBlock<HavingDataBlock> getComparisonDataBlock() {
         return this.havingDataBlock;
     }
 
     @Override
-    public AbstractComparisonDataBlock<HavingDataBlock> getCloneComparisonSqlPartDatum() {
-        return this.havingDataBlock.getCloneComparisonSqlPartDatum();
+    public AbstractComparisonDataBlock<HavingDataBlock> getCloneComparisonDataBlock() {
+        return this.havingDataBlock.getCloneHavingDataBlock();
     }
 
     @Override

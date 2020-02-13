@@ -38,8 +38,8 @@ public abstract class SortHelper<T extends SortHelper<T>> extends Helper {
         return this.sortDataBlockBuilder;
     }
 
-    public List<SortDataBlock> takeoutSqlPartData() {
-        return this.sortDataBlockBuilder.takeoutSqlPartData();
+    public List<SortDataBlock> takeoutSortDataBlocks() {
+        return this.sortDataBlockBuilder.takeoutDataBlocks();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -51,7 +51,7 @@ public abstract class SortHelper<T extends SortHelper<T>> extends Helper {
     }
 
     public static TableSortDataBlock execute(SortHelper<?> sortHelper) {
-        List<SortDataBlock> sortDataBlocks = sortHelper.takeoutSqlPartData();
+        List<SortDataBlock> sortDataBlocks = sortHelper.takeoutSortDataBlocks();
         if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
             return null;
         }

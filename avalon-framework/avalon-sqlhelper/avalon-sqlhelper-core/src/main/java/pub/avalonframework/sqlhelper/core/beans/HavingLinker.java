@@ -16,10 +16,10 @@ public interface HavingLinker<TH extends HavingHelper<TH>> {
      *
      * @return list {@link ComparisonDataBlockLinker}
      */
-    List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers();
+    List<ComparisonDataBlockLinker> takeoutComparisonDataBlockLinker();
 
     /**
-     * and
+     * And
      *
      * @param havingHelper {@link HavingHelper}
      * @return {@link HavingAndOr}
@@ -27,7 +27,7 @@ public interface HavingLinker<TH extends HavingHelper<TH>> {
     HavingAndOr<TH> and(HavingHelper<?> havingHelper);
 
     /**
-     * and
+     * And
      *
      * @param havingLinkerCallback {@link HavingLinkerCallback}
      * @return {@link HavingAndOr}

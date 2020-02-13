@@ -82,6 +82,6 @@ public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<S
         if (sortDataInjector == null) {
             return;
         }
-        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderConfiguration).forEach(sortDataInjector::addTableSortDatum));
+        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderConfiguration).forEach(sortDataInjector::addTableSortDataBlock));
     }
 }

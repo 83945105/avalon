@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackBlock {
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableName        table name
@@ -28,7 +28,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
             SS extends SortHelper<SS>> R join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback);
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableName        table name
@@ -47,7 +47,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableName        table name
@@ -66,7 +66,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableName        table name
@@ -84,7 +84,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableHelperClass extends {@link TableHelper} class
@@ -103,7 +103,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableHelperClass extends {@link TableHelper} class
@@ -121,7 +121,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableHelperClass extends {@link TableHelper} class
@@ -139,7 +139,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add join sql data
+     * Use callback to add join sql data.
      *
      * @param joinType         {@link JoinType}
      * @param tableHelperClass extends {@link TableHelper} class
@@ -156,7 +156,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -175,7 +175,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -193,7 +193,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -211,7 +211,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -228,7 +228,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -246,7 +246,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -263,7 +263,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param onJoinCallback   {@link OnJoinCallback}
@@ -280,7 +280,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add inner join sql data
+     * Use callback to add inner join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
@@ -296,7 +296,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -315,7 +315,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -333,7 +333,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -351,7 +351,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -368,7 +368,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -386,7 +386,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -403,7 +403,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param onJoinCallback   {@link OnJoinCallback}
@@ -420,7 +420,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add left join sql data
+     * Use callback to add left join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R
@@ -436,7 +436,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -455,7 +455,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -473,7 +473,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -491,7 +491,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableName        table name
      * @param tableHelperClass extends {@link TableHelper} class
@@ -508,7 +508,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -526,7 +526,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param tableAlias       table alias
@@ -543,7 +543,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @param onJoinCallback   {@link OnJoinCallback}
@@ -560,7 +560,7 @@ public interface CallbackJoinBlock<TO extends OnHelper<TO>, R> extends CallbackB
     }
 
     /**
-     * use callback to add right join sql data
+     * Use callback to add right join sql data.
      *
      * @param tableHelperClass extends {@link TableHelper} class
      * @return R

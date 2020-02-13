@@ -37,15 +37,15 @@ public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends Abstra
 
     @Override
     public List<TableHavingDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableHavingDataBlock> tableHavingData = new ArrayList<>(1);
+        List<TableHavingDataBlock> tableHavingDataBlocks = new ArrayList<>(1);
         if (this.havingHelpers != null) {
             for (HavingHelper<?> havingHelper : this.havingHelpers) {
-                tableHavingData.add(havingHelper.execute());
+                tableHavingDataBlocks.add(havingHelper.execute());
             }
         }
         if (this.havingCallback != null) {
-            tableHavingData.add(CallbackExecutor.execute(this.havingHelper, this.havingCallback, sqlBuilderConfiguration));
+            tableHavingDataBlocks.add(CallbackExecutor.execute(this.havingHelper, this.havingCallback, sqlBuilderConfiguration));
         }
-        return tableHavingData;
+        return tableHavingDataBlocks;
     }
 }

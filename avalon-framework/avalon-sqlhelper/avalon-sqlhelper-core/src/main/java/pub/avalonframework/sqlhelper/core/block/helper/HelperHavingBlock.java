@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 public interface HelperHavingBlock<R> extends HelperBlock {
 
     /**
-     * add having sql data
+     * Add having data block.
      *
      * @param havingHelpers {@link HavingHelper}
      * @return R

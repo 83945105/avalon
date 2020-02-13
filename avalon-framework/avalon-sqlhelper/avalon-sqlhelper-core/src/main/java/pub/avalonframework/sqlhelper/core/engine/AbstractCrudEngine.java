@@ -156,48 +156,48 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
     }
 
     @Override
-    public void addJoinTableDatum(TableJoinDataBlock joinTableDatum) {
-        this.dataStore.addJoinTableDatum(joinTableDatum);
+    public void addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock) {
+        this.dataStore.addTableJoinDataBlock(tableJoinDataBlock);
     }
 
     @Override
-    public void addTableOnDatum(TableOnDataBlock tableOnDatum) {
-        this.dataStore.addTableOnDatum(tableOnDatum);
+    public void addTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
+        this.dataStore.addTableOnDataBlock(tableOnDataBlock);
     }
 
     @Override
-    public void addSelectTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
-        this.dataStore.addSelectTableColumnDatum(tableColumnDatum);
+    public void addSelectTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        this.dataStore.addSelectTableColumnDataBlock(tableColumnDataBlock);
     }
 
     @Override
-    public void addInsertTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
-        this.dataStore.addInsertTableColumnDatum(tableColumnDatum);
+    public void addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        this.dataStore.addInsertTableColumnDataBlock(tableColumnDataBlock);
     }
 
     @Override
-    public void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
-        this.dataStore.addUpdateTableColumnDatum(tableColumnDatum);
+    public void addUpdateTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        this.dataStore.addUpdateTableColumnDataBlock(tableColumnDataBlock);
     }
 
     @Override
-    public void addTableWhereDatum(TableWhereDataBlock tableWhereDatum) {
-        this.dataStore.addTableWhereDatum(tableWhereDatum);
+    public void addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock) {
+        this.dataStore.addTableWhereDataBlock(tableWhereDataBlock);
     }
 
     @Override
-    public void addTableGroupDatum(TableGroupDataBlock tableGroupDatum) {
-        this.dataStore.addTableGroupDatum(tableGroupDatum);
+    public void addTableGroupDataBlock(TableGroupDataBlock tableGroupDataBlock) {
+        this.dataStore.addTableGroupDataBlock(tableGroupDataBlock);
     }
 
     @Override
-    public void addTableHavingDatum(TableHavingDataBlock tableHavingDatum) {
-        this.dataStore.addTableHavingDatum(tableHavingDatum);
+    public void addTableHavingDataBlock(TableHavingDataBlock tableHavingDataBlock) {
+        this.dataStore.addTableHavingDataBlock(tableHavingDataBlock);
     }
 
     @Override
-    public void addTableSortDatum(TableSortDataBlock tableSortDatum) {
-        this.dataStore.addTableSortDatum(tableSortDatum);
+    public void addTableSortDataBlock(TableSortDataBlock tableSortDataBlock) {
+        this.dataStore.addTableSortDataBlock(tableSortDataBlock);
     }
 
     @Override

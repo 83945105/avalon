@@ -39,7 +39,7 @@ public final class CrudSqlBuilderProxyBuilder implements MethodInterceptor {
         switch (dataStore.getConfiguration().getDatabaseType()) {
             case MYSQL:
                 supperCrudSqlBuilder.sqlBuilderTemplate = dataStore.getConfiguration().getSqlBuilder().getMysqlSqlBuilderTemplate();
-                supperCrudSqlBuilder.sqlBuilderTemplate.setSqlPartBuilderTemplate(dataStore.getConfiguration().getSqlBuilder().getMysqlSqlPartBuilderTemplate());
+                supperCrudSqlBuilder.sqlBuilderTemplate.setSqlPartBuilderTemplate(dataStore.getConfiguration().getSqlBuilder().getMysqlDataBlockBuilderTemplate());
                 break;
             default:
                 throw new SqlException("SqlBuilder do not support this database type temporarily.");

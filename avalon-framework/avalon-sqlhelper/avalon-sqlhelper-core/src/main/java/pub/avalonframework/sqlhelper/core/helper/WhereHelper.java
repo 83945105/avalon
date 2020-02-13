@@ -40,8 +40,8 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
         return this.whereDataBlockBuilder;
     }
 
-    public List<WhereDataBlock> takeoutSqlPartData() {
-        return this.whereDataBlockBuilder.takeoutSqlPartData();
+    public List<WhereDataBlock> takeoutWhereDataBlocks() {
+        return this.whereDataBlockBuilder.takeoutDataBlocks();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -53,12 +53,12 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
     }
 
     public static TableWhereDataBlock execute(WhereHelper<?> whereHelper) {
-        List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutSqlPartData();
+        List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutWhereDataBlocks();
         if (whereDataBlocks == null || whereDataBlocks.size() == 0) {
             return null;
         }
         return new TableWhereDataBlock(whereHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonSqlPartData(whereDataBlocks)));
+                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonDataBlocks(whereDataBlocks)));
     }
 
     public static List<TableWhereDataBlock> execute(WhereHelper<?>... whereHelpers) {

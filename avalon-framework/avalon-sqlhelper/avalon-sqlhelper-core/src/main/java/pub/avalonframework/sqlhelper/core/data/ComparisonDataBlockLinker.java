@@ -16,29 +16,29 @@ public final class ComparisonDataBlockLinker {
         this.linkType = linkType;
     }
 
-    private List<? extends AbstractComparisonDataBlock> comparisonSqlPartData;
+    private List<? extends AbstractComparisonDataBlock> comparisonDataBlocks;
 
-    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers;
+    private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers;
 
     public LinkType getLinkType() {
         return linkType;
     }
 
-    public List<? extends AbstractComparisonDataBlock> getComparisonSqlPartData() {
-        return comparisonSqlPartData;
+    public List<? extends AbstractComparisonDataBlock> getComparisonDataBlocks() {
+        return comparisonDataBlocks;
     }
 
-    public ComparisonDataBlockLinker setComparisonSqlPartData(List<? extends AbstractComparisonDataBlock> comparisonSqlPartData) {
-        this.comparisonSqlPartData = comparisonSqlPartData;
+    public ComparisonDataBlockLinker setComparisonDataBlocks(List<? extends AbstractComparisonDataBlock> comparisonDataBlocks) {
+        this.comparisonDataBlocks = comparisonDataBlocks;
         return this;
     }
 
-    public List<ComparisonDataBlockLinker> getComparisonSqlPartDataLinkers() {
-        return comparisonSqlPartDataLinkers;
+    public List<ComparisonDataBlockLinker> getComparisonDataBlockLinkers() {
+        return comparisonDataBlockLinkers;
     }
 
-    public ComparisonDataBlockLinker setComparisonSqlPartDataLinkers(List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
-        this.comparisonSqlPartDataLinkers = comparisonSqlPartDataLinkers;
+    public ComparisonDataBlockLinker setComparisonDataBlockLinkers(List<ComparisonDataBlockLinker> comparisonDataBlockLinkers) {
+        this.comparisonDataBlockLinkers = comparisonDataBlockLinkers;
         return this;
     }
 }

@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB extends AbstractComparisonDataBlockBuilder> {
 
     /**
-     * equal to
+     * Equal to
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -18,7 +18,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T equalTo(SB dataBlockBuilder);
 
     /**
-     * not equal to
+     * Not equal to
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -26,7 +26,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T notEqualTo(SB dataBlockBuilder);
 
     /**
-     * greater than
+     * Greater than
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -34,7 +34,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T greaterThan(SB dataBlockBuilder);
 
     /**
-     * greater than or equal to
+     * Greater than or equal to
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -42,7 +42,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T greaterThanAndEqualTo(SB dataBlockBuilder);
 
     /**
-     * less than
+     * Less than
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -50,7 +50,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T lessThan(SB dataBlockBuilder);
 
     /**
-     * less than or equal to
+     * Less than or equal to
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -58,16 +58,16 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T lessThanAndEqualTo(SB dataBlockBuilder);
 
     /**
-     * between ... and ...
+     * Between ... and ...
      *
      * @param dataBlockBuilder       {@link DataBlockBuilder}
-     * @param secondSqlPartDatumBuilder {@link DataBlockBuilder}
+     * @param secondDataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T between(SB dataBlockBuilder, SB secondSqlPartDatumBuilder);
+    T between(SB dataBlockBuilder, SB secondDataBlockBuilder);
 
     /**
-     * like
+     * Like
      *
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -75,7 +75,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T like(SB dataBlockBuilder);
 
     /**
-     * in
+     * In
      *
      * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object
@@ -83,7 +83,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
     T in(SB... dataBlockBuilders);
 
     /**
-     * not in
+     * Not in
      *
      * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object

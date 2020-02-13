@@ -73,20 +73,20 @@ public final class OnDataBlock extends AbstractComparisonDataBlock<OnDataBlock> 
     }
 
     @Override
-    public OnDataBlock setTargetSingleSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum) {
-        super.setTargetSingleSqlPartDatum(comparisonType, targetSqlPartDatum);
+    public OnDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+        super.setTargetSingleDataBlock(comparisonType, targetDataBlock);
         return this;
     }
 
     @Override
-    public OnDataBlock setTargetPairSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum, AbstractDataBlock targetSecondSqlPartDatum) {
-        super.setTargetPairSqlPartDatum(comparisonType, targetSqlPartDatum, targetSecondSqlPartDatum);
+    public OnDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+        super.setTargetPairDataBlock(comparisonType, targetDataBlock, targetSecondDataBlock);
         return this;
     }
 
     @Override
-    public OnDataBlock setTargetMultiSqlPartDatum(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiSqlPartDatum) {
-        super.setTargetMultiSqlPartDatum(comparisonType, targetMultiSqlPartDatum);
+    public OnDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+        super.setTargetMultiDataBlock(comparisonType, targetMultiDataBlock);
         return this;
     }
 
@@ -114,7 +114,7 @@ public final class OnDataBlock extends AbstractComparisonDataBlock<OnDataBlock> 
         return this;
     }
 
-    public OnDataBlock getCloneComparisonSqlPartDatum() {
+    public OnDataBlock getCloneOnDataBlock() {
         OnDataBlock onDataBlock = new OnDataBlock(this.getTemplateTableName(), this.getTemplateTableAlias(), this.getTemplateColumnName(), this.getTemplateColumnAlias());
         BeanUtils.copyProperties(this, onDataBlock);
         return onDataBlock;

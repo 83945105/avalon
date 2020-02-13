@@ -73,20 +73,20 @@ public final class HavingDataBlock extends AbstractComparisonDataBlock<HavingDat
     }
 
     @Override
-    public HavingDataBlock setTargetSingleSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum) {
-        super.setTargetSingleSqlPartDatum(comparisonType, targetSqlPartDatum);
+    public HavingDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+        super.setTargetSingleDataBlock(comparisonType, targetDataBlock);
         return this;
     }
 
     @Override
-    public HavingDataBlock setTargetPairSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum, AbstractDataBlock targetSecondSqlPartDatum) {
-        super.setTargetPairSqlPartDatum(comparisonType, targetSqlPartDatum, targetSecondSqlPartDatum);
+    public HavingDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+        super.setTargetPairDataBlock(comparisonType, targetDataBlock, targetSecondDataBlock);
         return this;
     }
 
     @Override
-    public HavingDataBlock setTargetMultiSqlPartDatum(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiSqlPartDatum) {
-        super.setTargetMultiSqlPartDatum(comparisonType, targetMultiSqlPartDatum);
+    public HavingDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+        super.setTargetMultiDataBlock(comparisonType, targetMultiDataBlock);
         return this;
     }
 
@@ -114,7 +114,7 @@ public final class HavingDataBlock extends AbstractComparisonDataBlock<HavingDat
         return this;
     }
 
-    public HavingDataBlock getCloneComparisonSqlPartDatum() {
+    public HavingDataBlock getCloneHavingDataBlock() {
         HavingDataBlock havingDataBlock = new HavingDataBlock(this.getTemplateTableName(), this.getTemplateTableAlias(), this.getTemplateColumnName(), this.getTemplateColumnAlias());
         BeanUtils.copyProperties(this, havingDataBlock);
         return havingDataBlock;

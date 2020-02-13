@@ -33,7 +33,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
     protected CrudSqlBuilder crudSqlBuilder;
 
     public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
-        this(databaseType, tableHelperClass, SqlhelperManager.getDefaultSqlhelperConfiguration());
+        this(databaseType, tableHelperClass, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
@@ -41,7 +41,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
     }
 
     public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
-        this(databaseType, tableName, tableHelperClass, SqlhelperManager.getDefaultSqlhelperConfiguration());
+        this(databaseType, tableName, tableHelperClass, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
@@ -49,11 +49,11 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
     }
 
     public AbstractEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
-        this(databaseType, HelperManager.newTableHelper(tableHelperClass).getTableName(), tableHelperClass, tableAlias, SqlhelperManager.getDefaultSqlhelperConfiguration());
+        this(databaseType, HelperManager.newTableHelper(tableHelperClass).getTableName(), tableHelperClass, tableAlias, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        this(databaseType, tableName, tableHelperClass, tableAlias, SqlhelperManager.getDefaultSqlhelperConfiguration());
+        this(databaseType, tableName, tableHelperClass, tableAlias, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {

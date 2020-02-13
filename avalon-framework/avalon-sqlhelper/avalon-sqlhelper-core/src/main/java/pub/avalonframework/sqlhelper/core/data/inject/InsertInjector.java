@@ -8,9 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 public interface InsertInjector extends ConfigurationInjector {
 
     /**
-     * add insert table column data
+     * Add insert table column data block.
      *
-     * @param tableColumnDatum {@link TableColumnDataBlock}
+     * @param tableColumnDataBlock {@link TableColumnDataBlock}
      */
-    void addInsertTableColumnDatum(TableColumnDataBlock tableColumnDatum);
+    void addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock);
 }

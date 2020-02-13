@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 public interface CallbackHavingBlock<TH extends HavingHelper<TH>, R> extends CallbackBlock {
 
     /**
-     * use callback to add having sql data
+     * Use callback to add having sql data.
      *
      * @param havingCallback {@link HavingCallback}
      * @return R
@@ -18,7 +18,7 @@ public interface CallbackHavingBlock<TH extends HavingHelper<TH>, R> extends Cal
     R having(HavingCallback<TH> havingCallback);
 
     /**
-     * use callback to add assign class having sql data
+     * Use callback to add assign class having sql data.
      *
      * @param tableHelperClass   extends {@link TableHelper} class
      * @param tableAlias         table alias
@@ -34,7 +34,7 @@ public interface CallbackHavingBlock<TH extends HavingHelper<TH>, R> extends Cal
             SS extends SortHelper<SS>> R having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback);
 
     /**
-     * use callback to add assign class having sql data
+     * Use callback to add assign class having sql data.
      *
      * @param tableHelperClass   extends {@link TableHelper} class
      * @param havingJoinCallback {@link HavingJoinCallback}
