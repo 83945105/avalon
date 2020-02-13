@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 /**
  * @author baichao
  */
-public interface SqlPartBuilderTemplate {
+public interface DataBlockBuilderTemplate {
 
     /**
      * build select column sql part result

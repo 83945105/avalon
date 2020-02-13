@@ -13,9 +13,9 @@ public interface SqlBuilderTemplate {
     /**
      * set sql part builder template
      *
-     * @param sqlPartBuilderTemplate {@link SqlPartBuilderTemplate}
+     * @param sqlPartBuilderTemplate {@link DataBlockBuilderTemplate}
      */
-    void setSqlPartBuilderTemplate(SqlPartBuilderTemplate sqlPartBuilderTemplate);
+    void setSqlPartBuilderTemplate(DataBlockBuilderTemplate sqlPartBuilderTemplate);
 
     /**
      * build copy table result

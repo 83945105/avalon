@@ -15,12 +15,12 @@ import java.util.*;
 /**
  * @author baichao
  */
-public final class DefaultMySqlBuilderTemplate implements MySqlBuilderTemplate {
+public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemplate {
 
-    private SqlPartBuilderTemplate sqlPartBuilderTemplate;
+    private DataBlockBuilderTemplate sqlPartBuilderTemplate;
 
     @Override
-    public void setSqlPartBuilderTemplate(SqlPartBuilderTemplate sqlPartBuilderTemplate) {
+    public void setSqlPartBuilderTemplate(DataBlockBuilderTemplate sqlPartBuilderTemplate) {
         this.sqlPartBuilderTemplate = sqlPartBuilderTemplate;
     }
 

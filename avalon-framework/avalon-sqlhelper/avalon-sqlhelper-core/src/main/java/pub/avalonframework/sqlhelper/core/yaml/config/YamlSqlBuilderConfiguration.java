@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.yaml.config;
 
 import pub.avalonframework.core.yaml.config.YamlConfiguration;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DataBlockBuilderTemplate;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlBuilderTemplate;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlPartBuilderTemplate;
 
 /**
  * @author baichao
@@ -11,7 +11,7 @@ public class YamlSqlBuilderConfiguration implements YamlConfiguration {
 
     private YamlDataBlockBuilderConfiguration dataBlockBuilder;
 
-    private SqlPartBuilderTemplate mysqlSqlPartBuilderTemplate;
+    private DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate;
 
     private SqlBuilderTemplate mysqlSqlBuilderTemplate;
 
@@ -23,11 +23,11 @@ public class YamlSqlBuilderConfiguration implements YamlConfiguration {
         this.dataBlockBuilder = dataBlockBuilder;
     }
 
-    public SqlPartBuilderTemplate getMysqlSqlPartBuilderTemplate() {
+    public DataBlockBuilderTemplate getMysqlSqlPartBuilderTemplate() {
         return mysqlSqlPartBuilderTemplate;
     }
 
-    public void setMysqlSqlPartBuilderTemplate(SqlPartBuilderTemplate mysqlSqlPartBuilderTemplate) {
+    public void setMysqlSqlPartBuilderTemplate(DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate) {
         this.mysqlSqlPartBuilderTemplate = mysqlSqlPartBuilderTemplate;
     }
 

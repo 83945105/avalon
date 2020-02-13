@@ -18,7 +18,7 @@ import java.util.*;
 /**
  * @author baichao
  */
-public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTemplate {
+public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBlockBuilderTemplate {
 
     @Override
     public SqlBuilderResult buildSelectColumn(CrudConsumer consumer) {

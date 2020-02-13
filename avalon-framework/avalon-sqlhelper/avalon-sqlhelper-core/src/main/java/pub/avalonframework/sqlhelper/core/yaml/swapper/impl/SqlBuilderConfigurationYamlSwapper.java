@@ -3,10 +3,10 @@ package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
 import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlBuilderTemplate;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlPartBuilderTemplate;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DataBlockBuilderTemplate;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlDataBlockBuilderTemplate;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlSqlBuilderTemplate;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlBuilderTemplate;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlPartBuilderTemplate;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlDataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlBuilderConfiguration;
 
@@ -15,9 +15,9 @@ import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlBuilderConfiguratio
  */
 public final class SqlBuilderConfigurationYamlSwapper implements YamlSwapper<YamlSqlBuilderConfiguration, SqlBuilderConfiguration> {
 
-    private final static SqlPartBuilderTemplate DEFAULT_MYSQL_SQL_PART_BUILDER_TEMPLATE = new DefaultMySqlPartBuilderTemplate();
+    private final static DataBlockBuilderTemplate DEFAULT_MYSQL_SQL_PART_BUILDER_TEMPLATE = new DefaultMySqlDataBlockBuilderTemplate();
 
-    private final static SqlBuilderTemplate DEFAULT_MYSQL_SQL_BUILDER_TEMPLATE = new DefaultMySqlBuilderTemplate();
+    private final static SqlBuilderTemplate DEFAULT_MYSQL_SQL_BUILDER_TEMPLATE = new DefaultMySqlSqlBuilderTemplate();
 
     @Override
     public YamlSqlBuilderConfiguration swap(SqlBuilderConfiguration data) {
@@ -25,7 +25,7 @@ public final class SqlBuilderConfigurationYamlSwapper implements YamlSwapper<Yam
         YamlSqlBuilderConfiguration configuration = new YamlSqlBuilderConfiguration();
         DataBlockBuilderConfiguration dataBlockBuilder = data.getDataBlockBuilder();
         configuration.setDataBlockBuilder(new DataBlockBuilderConfigurationYamlSwapper().swap(dataBlockBuilder));
-        SqlPartBuilderTemplate mysqlSqlPartBuilderTemplate = data.getMysqlSqlPartBuilderTemplate();
+        DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate = data.getMysqlSqlPartBuilderTemplate();
         configuration.setMysqlSqlPartBuilderTemplate(mysqlSqlPartBuilderTemplate == null ? DEFAULT_MYSQL_SQL_PART_BUILDER_TEMPLATE : mysqlSqlPartBuilderTemplate);
         SqlBuilderTemplate mysqlSqlBuilderTemplate = data.getMysqlSqlBuilderTemplate();
         configuration.setMysqlSqlBuilderTemplate(mysqlSqlBuilderTemplate == null ? DEFAULT_MYSQL_SQL_BUILDER_TEMPLATE : mysqlSqlBuilderTemplate);
@@ -38,7 +38,7 @@ public final class SqlBuilderConfigurationYamlSwapper implements YamlSwapper<Yam
         SqlBuilderConfiguration configuration = new SqlBuilderConfiguration();
         YamlDataBlockBuilderConfiguration dataBlockBuilder = yamlConfiguration.getDataBlockBuilder();
         configuration.setDataBlockBuilder(new DataBlockBuilderConfigurationYamlSwapper().swap(dataBlockBuilder));
-        SqlPartBuilderTemplate mysqlSqlPartBuilderTemplate = yamlConfiguration.getMysqlSqlPartBuilderTemplate();
+        DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate = yamlConfiguration.getMysqlSqlPartBuilderTemplate();
         configuration.setMysqlSqlPartBuilderTemplate(mysqlSqlPartBuilderTemplate == null ? DEFAULT_MYSQL_SQL_PART_BUILDER_TEMPLATE : mysqlSqlPartBuilderTemplate);
         SqlBuilderTemplate mysqlSqlBuilderTemplate = yamlConfiguration.getMysqlSqlBuilderTemplate();
         configuration.setMysqlSqlBuilderTemplate(mysqlSqlBuilderTemplate == null ? DEFAULT_MYSQL_SQL_BUILDER_TEMPLATE : mysqlSqlBuilderTemplate);
