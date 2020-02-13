@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public interface ToSqlPartBuilderComparisonOperator<T extends Helper, SB extends AbstractComparisonDataBlockBuilder> {
+public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB extends AbstractComparisonDataBlockBuilder> {
 
     /**
      * equal to

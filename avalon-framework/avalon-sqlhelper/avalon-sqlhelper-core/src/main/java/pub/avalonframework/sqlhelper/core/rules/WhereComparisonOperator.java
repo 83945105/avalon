@@ -17,8 +17,8 @@ public interface WhereComparisonOperator<T extends Helper> extends BaseCompariso
         ToColumnCallbackComparisonOperatorImpl<T>,
         ToSubQueryComparisonOperator<T>,
         ToSubQueryComparisonOperatorImpl<T, WhereDataBlock>,
-        ToSqlPartBuilderComparisonOperator<T, WhereDataBlockBuilder>,
-        ToSqlPartBuilderComparisonOperatorImpl<T, WhereDataBlock, WhereDataBlockBuilder> {
+        ToDataBlockBuilderComparisonOperator<T, WhereDataBlockBuilder>,
+        ToDataBlockBuilderComparisonOperatorImpl<T, WhereDataBlock, WhereDataBlockBuilder> {
 
     @Override
     default ComparisonRule getComparisonRule() {

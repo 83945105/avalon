@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.AbstractComparisonDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.ToSqlPartBuilderComparisonOperator;
+import pub.avalonframework.sqlhelper.core.rules.ToDataBlockBuilderComparisonOperator;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @author baichao
  */
-public interface ToSqlPartBuilderComparisonOperatorImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder> extends ToSqlPartBuilderComparisonOperator<T, SB> {
+public interface ToDataBlockBuilderComparisonOperatorImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder> extends ToDataBlockBuilderComparisonOperator<T, SB> {
 
     /**
      * get helper

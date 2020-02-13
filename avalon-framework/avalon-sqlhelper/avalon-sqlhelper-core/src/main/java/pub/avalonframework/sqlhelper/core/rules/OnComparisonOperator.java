@@ -17,8 +17,8 @@ public interface OnComparisonOperator<T extends Helper> extends BaseComparisonOp
         ToColumnCallbackComparisonOperatorImpl<T>,
         ToSubQueryComparisonOperator<T>,
         ToSubQueryComparisonOperatorImpl<T, OnDataBlock>,
-        ToSqlPartBuilderComparisonOperator<T, OnDataBlockBuilder>,
-        ToSqlPartBuilderComparisonOperatorImpl<T, OnDataBlock, OnDataBlockBuilder> {
+        ToDataBlockBuilderComparisonOperator<T, OnDataBlockBuilder>,
+        ToDataBlockBuilderComparisonOperatorImpl<T, OnDataBlock, OnDataBlockBuilder> {
 
     @Override
     default ComparisonRule getComparisonRule() {
