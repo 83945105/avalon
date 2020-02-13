@@ -1,6 +1,7 @@
 package pub.avalonframework.sqlhelper.core.data;
 
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public final class ComparisonSqlPartDataLinker {
         this.linkType = linkType;
     }
 
-    private List<? extends AbstractComparisonSqlPartDatum> comparisonSqlPartData;
+    private List<? extends AbstractComparisonDataBlock> comparisonSqlPartData;
 
     private List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers;
 
@@ -23,11 +24,11 @@ public final class ComparisonSqlPartDataLinker {
         return linkType;
     }
 
-    public List<? extends AbstractComparisonSqlPartDatum> getComparisonSqlPartData() {
+    public List<? extends AbstractComparisonDataBlock> getComparisonSqlPartData() {
         return comparisonSqlPartData;
     }
 
-    public ComparisonSqlPartDataLinker setComparisonSqlPartData(List<? extends AbstractComparisonSqlPartDatum> comparisonSqlPartData) {
+    public ComparisonSqlPartDataLinker setComparisonSqlPartData(List<? extends AbstractComparisonDataBlock> comparisonSqlPartData) {
         this.comparisonSqlPartData = comparisonSqlPartData;
         return this;
     }

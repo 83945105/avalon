@@ -2,10 +2,10 @@ package pub.avalonframework.sqlhelper.readme.entity;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.SortDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;
@@ -217,31 +217,31 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public OnSqlPartDatumBuilder<On> sqlPart(String sqlPart) {
+        public OnDataBlockBuilder<On> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public OnSqlPartDatumBuilder<On> primaryKey() {
+        public OnDataBlockBuilder<On> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-        public OnSqlPartDatumBuilder<On> id() {
+        public OnDataBlockBuilder<On> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
 
-        public OnSqlPartDatumBuilder<On> userId() {
+        public OnDataBlockBuilder<On> userId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_ID, USER_ID_ALIAS, USER_ID_ALIAS);
         }
 
-        public OnSqlPartDatumBuilder<On> roleId() {
+        public OnDataBlockBuilder<On> roleId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_ID, ROLE_ID_ALIAS, ROLE_ID_ALIAS);
         }
 
-        public OnSqlPartDatumBuilder<On> roleName() {
+        public OnDataBlockBuilder<On> roleName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_NAME, ROLE_NAME_ALIAS, ROLE_NAME_ALIAS);
         }
 
-        public OnSqlPartDatumBuilder<On> sortIndex() {
+        public OnDataBlockBuilder<On> sortIndex() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, SORT_INDEX, SORT_INDEX_ALIAS, SORT_INDEX_ALIAS);
         }
     }
@@ -382,31 +382,31 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public WhereSqlPartDatumBuilder<Where> sqlPart(String sqlPart) {
+        public WhereDataBlockBuilder<Where> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public WhereSqlPartDatumBuilder<Where> primaryKey() {
+        public WhereDataBlockBuilder<Where> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-        public WhereSqlPartDatumBuilder<Where> id() {
+        public WhereDataBlockBuilder<Where> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
 
-        public WhereSqlPartDatumBuilder<Where> userId() {
+        public WhereDataBlockBuilder<Where> userId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_ID, USER_ID_ALIAS, USER_ID_ALIAS);
         }
 
-        public WhereSqlPartDatumBuilder<Where> roleId() {
+        public WhereDataBlockBuilder<Where> roleId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_ID, ROLE_ID_ALIAS, ROLE_ID_ALIAS);
         }
 
-        public WhereSqlPartDatumBuilder<Where> roleName() {
+        public WhereDataBlockBuilder<Where> roleName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_NAME, ROLE_NAME_ALIAS, ROLE_NAME_ALIAS);
         }
 
-        public WhereSqlPartDatumBuilder<Where> sortIndex() {
+        public WhereDataBlockBuilder<Where> sortIndex() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, SORT_INDEX, SORT_INDEX_ALIAS, SORT_INDEX_ALIAS);
         }
     }
@@ -470,55 +470,55 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public HavingSqlPartDatumBuilder<Having> sqlPart(String sqlPart) {
+        public HavingDataBlockBuilder<Having> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public HavingSqlPartDatumBuilder<Having> primaryKey() {
+        public HavingDataBlockBuilder<Having> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> primaryKey(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> primaryKey(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS, columnHandlers);
         }
 
-        public HavingSqlPartDatumBuilder<Having> id() {
+        public HavingDataBlockBuilder<Having> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> id(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> id(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS, columnHandlers);
         }
 
-        public HavingSqlPartDatumBuilder<Having> userId() {
+        public HavingDataBlockBuilder<Having> userId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_ID, USER_ID_ALIAS, USER_ID_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> userId(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> userId(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_ID, USER_ID_ALIAS, USER_ID_ALIAS, columnHandlers);
         }
 
-        public HavingSqlPartDatumBuilder<Having> roleId() {
+        public HavingDataBlockBuilder<Having> roleId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_ID, ROLE_ID_ALIAS, ROLE_ID_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> roleId(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> roleId(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_ID, ROLE_ID_ALIAS, ROLE_ID_ALIAS, columnHandlers);
         }
 
-        public HavingSqlPartDatumBuilder<Having> roleName() {
+        public HavingDataBlockBuilder<Having> roleName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_NAME, ROLE_NAME_ALIAS, ROLE_NAME_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> roleName(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> roleName(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_NAME, ROLE_NAME_ALIAS, ROLE_NAME_ALIAS, columnHandlers);
         }
 
-        public HavingSqlPartDatumBuilder<Having> sortIndex() {
+        public HavingDataBlockBuilder<Having> sortIndex() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, SORT_INDEX, SORT_INDEX_ALIAS, SORT_INDEX_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> sortIndex(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> sortIndex(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, SORT_INDEX, SORT_INDEX_ALIAS, SORT_INDEX_ALIAS, columnHandlers);
         }
     }
@@ -538,31 +538,31 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public SortSqlPartDatumBuilder<Sort> sqlPart(String sqlPart) {
+        public SortDataBlockBuilder<Sort> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public SortSqlPartDatumBuilder<Sort> primaryKey() {
+        public SortDataBlockBuilder<Sort> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-        public SortSqlPartDatumBuilder<Sort> id() {
+        public SortDataBlockBuilder<Sort> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
 
-        public SortSqlPartDatumBuilder<Sort> userId() {
+        public SortDataBlockBuilder<Sort> userId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_ID, USER_ID_ALIAS, USER_ID_ALIAS);
         }
 
-        public SortSqlPartDatumBuilder<Sort> roleId() {
+        public SortDataBlockBuilder<Sort> roleId() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_ID, ROLE_ID_ALIAS, ROLE_ID_ALIAS);
         }
 
-        public SortSqlPartDatumBuilder<Sort> roleName() {
+        public SortDataBlockBuilder<Sort> roleName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ROLE_NAME, ROLE_NAME_ALIAS, ROLE_NAME_ALIAS);
         }
 
-        public SortSqlPartDatumBuilder<Sort> sortIndex() {
+        public SortDataBlockBuilder<Sort> sortIndex() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, SORT_INDEX, SORT_INDEX_ALIAS, SORT_INDEX_ALIAS);
         }
     }

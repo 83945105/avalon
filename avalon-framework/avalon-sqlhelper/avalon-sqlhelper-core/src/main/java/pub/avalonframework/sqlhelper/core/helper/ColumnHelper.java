@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.ColumnSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.ColumnDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.Arrays;
@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
  */
 public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
 
-    private ColumnSqlPartDatumBuilder<T> columnSqlPartDatumBuilder;
+    private ColumnDataBlockBuilder<T> columnSqlPartDatumBuilder;
 
     @SuppressWarnings("unchecked")
     public ColumnHelper(String tableAlias) {
         super(tableAlias);
-        this.columnSqlPartDatumBuilder = new ColumnSqlPartDatumBuilder<>(tableAlias, (T) this);
+        this.columnSqlPartDatumBuilder = new ColumnDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
@@ -34,17 +34,17 @@ public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
 
     public abstract Set<TableColumn> getTableDefaultColumns();
 
-    protected ColumnSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
+    protected ColumnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
         this.columnSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
         return this.columnSqlPartDatumBuilder;
     }
 
-    protected ColumnSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
+    protected ColumnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
         this.columnSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName, columnHandlers);
         return this.columnSqlPartDatumBuilder;
     }
 
-    protected ColumnSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    protected ColumnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         this.columnSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
         return this.columnSqlPartDatumBuilder;
     }

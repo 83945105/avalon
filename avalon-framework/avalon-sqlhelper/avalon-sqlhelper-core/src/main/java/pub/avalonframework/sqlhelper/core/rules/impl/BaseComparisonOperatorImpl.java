@@ -2,8 +2,8 @@ package pub.avalonframework.sqlhelper.core.rules.impl;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
-import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.BaseComparisonOperator;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
@@ -13,7 +13,7 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonSqlPartDatum<S>> extends BaseComparisonOperator<T> {
+public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends BaseComparisonOperator<T> {
 
     /**
      * get helper
@@ -25,9 +25,9 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonSqlPa
     /**
      * get abstract comparison sql part datum
      *
-     * @return extends {@link AbstractComparisonSqlPartDatum}
+     * @return extends {@link AbstractComparisonDataBlock}
      */
-    AbstractComparisonSqlPartDatum<S> getAbstractComparisonSqlPartDatum();
+    AbstractComparisonDataBlock<S> getAbstractComparisonSqlPartDatum();
 
     /**
      * get sql builder configuration.
@@ -39,9 +39,9 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonSqlPa
     /**
      * Add abstract comparison sql part datum.
      *
-     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonSqlPartDatum} object.
+     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonDataBlock} object.
      */
-    void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<S> abstractComparisonSqlPartDatum);
+    void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<S> abstractComparisonSqlPartDatum);
 
     @Override
     default T sqlPart(String targetSqlPart) {

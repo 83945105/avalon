@@ -2,10 +2,7 @@ package $!{setting.packagePath};
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;
@@ -260,16 +257,16 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public OnSqlPartDatumBuilder<On> sqlPart(String sqlPart) {
+        public OnDataBlockBuilder<On> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public OnSqlPartDatumBuilder<On> primaryKey() {
+        public OnDataBlockBuilder<On> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
         #foreach($column in ${table.columns})
-            public OnSqlPartDatumBuilder<On> $!{table.getColumnAlias(${column})}() {
+            public OnDataBlockBuilder<On> $!{table.getColumnAlias(${column})}() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS);
         }
         #end
@@ -290,16 +287,16 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public WhereSqlPartDatumBuilder<Where> sqlPart(String sqlPart) {
+        public WhereDataBlockBuilder<Where> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public WhereSqlPartDatumBuilder<Where> primaryKey() {
+        public WhereDataBlockBuilder<Where> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
         #foreach($column in ${table.columns})
-        public WhereSqlPartDatumBuilder<Where> $!{table.getColumnAlias(${column})}() {
+        public WhereDataBlockBuilder<Where> $!{table.getColumnAlias(${column})}() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS);
         }
         #end
@@ -350,24 +347,24 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public HavingSqlPartDatumBuilder<Having> sqlPart(String sqlPart) {
+        public HavingDataBlockBuilder<Having> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public HavingSqlPartDatumBuilder<Having> primaryKey() {
+        public HavingDataBlockBuilder<Having> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> primaryKey(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> primaryKey(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS, columnHandlers);
         }
 
         #foreach($column in ${table.columns})
-        public HavingSqlPartDatumBuilder<Having> $!{table.getColumnAlias(${column})}() {
+        public HavingDataBlockBuilder<Having> $!{table.getColumnAlias(${column})}() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> $!{table.getColumnAlias(${column})}(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> $!{table.getColumnAlias(${column})}(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS, columnHandlers);
         }
         #end
@@ -388,16 +385,16 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public SortSqlPartDatumBuilder<Sort> sqlPart(String sqlPart) {
+        public SortDataBlockBuilder<Sort> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public SortSqlPartDatumBuilder<Sort> primaryKey() {
+        public SortDataBlockBuilder<Sort> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
         #foreach($column in ${table.columns})
-        public SortSqlPartDatumBuilder<Sort> $!{table.getColumnAlias(${column})}() {
+        public SortDataBlockBuilder<Sort> $!{table.getColumnAlias(${column})}() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, $!{column.name.toUpperCase()}, $!{column.name.toUpperCase()}_ALIAS, $!{column.name.toUpperCase()}_ALIAS);
         }
         #end

@@ -2,10 +2,10 @@ package pub.avalonframework.sqlhelper.readme.entity;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.SortDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;
@@ -199,21 +199,21 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public OnSqlPartDatumBuilder<On> sqlPart(String sqlPart) {
+        public OnDataBlockBuilder<On> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public OnSqlPartDatumBuilder<On> primaryKey() {
+        public OnDataBlockBuilder<On> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-                public OnSqlPartDatumBuilder<On> id() {
+                public OnDataBlockBuilder<On> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
-                public OnSqlPartDatumBuilder<On> userName() {
+                public OnDataBlockBuilder<On> userName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS);
         }
-                public OnSqlPartDatumBuilder<On> loginName() {
+                public OnDataBlockBuilder<On> loginName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS);
         }
             }
@@ -320,21 +320,21 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public WhereSqlPartDatumBuilder<Where> sqlPart(String sqlPart) {
+        public WhereDataBlockBuilder<Where> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public WhereSqlPartDatumBuilder<Where> primaryKey() {
+        public WhereDataBlockBuilder<Where> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-                public WhereSqlPartDatumBuilder<Where> id() {
+                public WhereDataBlockBuilder<Where> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
-                public WhereSqlPartDatumBuilder<Where> userName() {
+                public WhereDataBlockBuilder<Where> userName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS);
         }
-                public WhereSqlPartDatumBuilder<Where> loginName() {
+                public WhereDataBlockBuilder<Where> loginName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS);
         }
             }
@@ -388,37 +388,37 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public HavingSqlPartDatumBuilder<Having> sqlPart(String sqlPart) {
+        public HavingDataBlockBuilder<Having> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public HavingSqlPartDatumBuilder<Having> primaryKey() {
+        public HavingDataBlockBuilder<Having> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> primaryKey(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> primaryKey(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS, columnHandlers);
         }
 
-                public HavingSqlPartDatumBuilder<Having> id() {
+                public HavingDataBlockBuilder<Having> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> id(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> id(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS, columnHandlers);
         }
-                public HavingSqlPartDatumBuilder<Having> userName() {
+                public HavingDataBlockBuilder<Having> userName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> userName(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> userName(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS, columnHandlers);
         }
-                public HavingSqlPartDatumBuilder<Having> loginName() {
+                public HavingDataBlockBuilder<Having> loginName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS);
         }
 
-        public HavingSqlPartDatumBuilder<Having> loginName(ColumnHandler... columnHandlers) {
+        public HavingDataBlockBuilder<Having> loginName(ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS, columnHandlers);
         }
             }
@@ -438,21 +438,21 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
             return DEFAULT_INSTANCE.getDefaultInstance();
         }
 
-        public SortSqlPartDatumBuilder<Sort> sqlPart(String sqlPart) {
+        public SortDataBlockBuilder<Sort> sqlPart(String sqlPart) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
         }
 
-        public SortSqlPartDatumBuilder<Sort> primaryKey() {
+        public SortDataBlockBuilder<Sort> primaryKey() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
         }
 
-                public SortSqlPartDatumBuilder<Sort> id() {
+                public SortDataBlockBuilder<Sort> id() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
         }
-                public SortSqlPartDatumBuilder<Sort> userName() {
+                public SortDataBlockBuilder<Sort> userName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS);
         }
-                public SortSqlPartDatumBuilder<Sort> loginName() {
+                public SortDataBlockBuilder<Sort> loginName() {
             return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS);
         }
             }

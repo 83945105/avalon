@@ -2,7 +2,6 @@ package pub.avalonframework.sqlhelper.core.data.block;
 
 import org.springframework.beans.BeanUtils;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 
@@ -11,7 +10,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class HavingDataBlock extends AbstractComparisonSqlPartDatum<HavingDataBlock> {
+public final class HavingDataBlock extends AbstractComparisonDataBlock<HavingDataBlock> {
 
     public HavingDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);

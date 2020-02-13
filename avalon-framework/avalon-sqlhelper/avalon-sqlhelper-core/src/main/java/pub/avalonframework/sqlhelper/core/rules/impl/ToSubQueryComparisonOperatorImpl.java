@@ -2,15 +2,15 @@ package pub.avalonframework.sqlhelper.core.rules.impl;
 
 import pub.avalonframework.sqlhelper.core.callback.SubQueryCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.ToSubQueryComparisonOperator;
 
 /**
  * @author baichao
  */
-public interface ToSubQueryComparisonOperatorImpl<T, S extends AbstractComparisonSqlPartDatum<S>> extends ToSubQueryComparisonOperator<T> {
+public interface ToSubQueryComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends ToSubQueryComparisonOperator<T> {
 
     /**
      * get helper
@@ -22,16 +22,16 @@ public interface ToSubQueryComparisonOperatorImpl<T, S extends AbstractCompariso
     /**
      * get abstract comparison sql part datum
      *
-     * @return extends {@link AbstractComparisonSqlPartDatum}
+     * @return extends {@link AbstractComparisonDataBlock}
      */
-    AbstractComparisonSqlPartDatum<S> getAbstractComparisonSqlPartDatum();
+    AbstractComparisonDataBlock<S> getAbstractComparisonSqlPartDatum();
 
     /**
      * Add abstract comparison sql part datum.
      *
-     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonSqlPartDatum} object.
+     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonDataBlock} object.
      */
-    void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<S> abstractComparisonSqlPartDatum);
+    void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<S> abstractComparisonSqlPartDatum);
 
     @Override
     default T equalToSubQuery(SubQueryCallback subQueryCallback) {

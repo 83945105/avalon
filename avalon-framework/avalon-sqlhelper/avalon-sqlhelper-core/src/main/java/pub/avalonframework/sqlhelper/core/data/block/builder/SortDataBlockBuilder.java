@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data.builder;
+package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
@@ -9,13 +9,13 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, SortDataBlock> {
+public final class SortDataBlockBuilder<T extends Helper> extends AbstractDataBlockBuilder<T, SortDataBlock> {
 
     private SortDataBlock sortDataBlock;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
-    public SortSqlPartDatumBuilder(String tableAlias, T helper) {
+    public SortDataBlockBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
     }
 

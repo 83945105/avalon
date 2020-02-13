@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.rules;
 
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.impl.*;
 
@@ -17,8 +17,8 @@ public interface HavingComparisonOperator<T extends Helper> extends BaseComparis
         ToColumnCallbackComparisonOperatorImpl<T>,
         ToSubQueryComparisonOperator<T>,
         ToSubQueryComparisonOperatorImpl<T, HavingDataBlock>,
-        ToSqlPartBuilderComparisonOperator<T, HavingSqlPartDatumBuilder>,
-        ToSqlPartBuilderComparisonOperatorImpl<T, HavingDataBlock, HavingSqlPartDatumBuilder> {
+        ToSqlPartBuilderComparisonOperator<T, HavingDataBlockBuilder>,
+        ToSqlPartBuilderComparisonOperatorImpl<T, HavingDataBlock, HavingDataBlockBuilder> {
 
     @Override
     default ComparisonRule getComparisonRule() {

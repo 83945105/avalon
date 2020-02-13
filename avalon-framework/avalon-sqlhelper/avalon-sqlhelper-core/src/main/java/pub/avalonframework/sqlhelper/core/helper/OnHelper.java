@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,35 +17,35 @@ import java.util.stream.Collectors;
  */
 public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
 
-    private OnSqlPartDatumBuilder<T> onSqlPartDatumBuilder;
+    private OnDataBlockBuilder<T> onDataBlockBuilder;
 
     @SuppressWarnings("unchecked")
     public OnHelper(String tableAlias) {
         super(tableAlias);
-        this.onSqlPartDatumBuilder = new OnSqlPartDatumBuilder<>(tableAlias, (T) this);
+        this.onDataBlockBuilder = new OnDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
         this.tableAlias = tableAlias;
-        this.onSqlPartDatumBuilder.setTableAlias(tableAlias);
+        this.onDataBlockBuilder.setTableAlias(tableAlias);
     }
 
-    protected OnSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.onSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
-        return this.onSqlPartDatumBuilder;
+    protected OnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
+        this.onDataBlockBuilder.accept(templateTableName, templateTableAlias, sqlPart);
+        return this.onDataBlockBuilder;
     }
 
-    protected OnSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
-        this.onSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
-        return this.onSqlPartDatumBuilder;
+    protected OnDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+        this.onDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
+        return this.onDataBlockBuilder;
     }
 
     public List<OnDataBlock> takeoutSqlPartData() {
-        return this.onSqlPartDatumBuilder.takeoutSqlPartData();
+        return this.onDataBlockBuilder.takeoutSqlPartData();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        this.onSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
+        this.onDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableOnDatum execute() {

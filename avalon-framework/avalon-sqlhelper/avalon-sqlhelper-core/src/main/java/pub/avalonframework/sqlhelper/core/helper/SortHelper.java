@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.helper;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.TableSortDatum;
 import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.SortDataBlockBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,35 +15,35 @@ import java.util.stream.Collectors;
  */
 public abstract class SortHelper<T extends SortHelper<T>> extends Helper {
 
-    private SortSqlPartDatumBuilder<T> sortSqlPartDatumBuilder;
+    private SortDataBlockBuilder<T> sortDataBlockBuilder;
 
     @SuppressWarnings("unchecked")
     public SortHelper(String tableAlias) {
         super(tableAlias);
-        this.sortSqlPartDatumBuilder = new SortSqlPartDatumBuilder<>(tableAlias, (T) this);
+        this.sortDataBlockBuilder = new SortDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
         this.tableAlias = tableAlias;
-        this.sortSqlPartDatumBuilder.setTableAlias(tableAlias);
+        this.sortDataBlockBuilder.setTableAlias(tableAlias);
     }
 
-    protected SortSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.sortSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
-        return this.sortSqlPartDatumBuilder;
+    protected SortDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
+        this.sortDataBlockBuilder.accept(templateTableName, templateTableAlias, sqlPart);
+        return this.sortDataBlockBuilder;
     }
 
-    protected SortSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
-        this.sortSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
-        return this.sortSqlPartDatumBuilder;
+    protected SortDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+        this.sortDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
+        return this.sortDataBlockBuilder;
     }
 
     public List<SortDataBlock> takeoutSqlPartData() {
-        return this.sortSqlPartDatumBuilder.takeoutSqlPartData();
+        return this.sortDataBlockBuilder.takeoutSqlPartData();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        this.sortSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
+        this.sortDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableSortDatum execute() {

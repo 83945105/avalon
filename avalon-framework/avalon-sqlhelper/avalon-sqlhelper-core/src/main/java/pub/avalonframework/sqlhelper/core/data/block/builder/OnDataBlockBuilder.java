@@ -1,8 +1,8 @@
-package pub.avalonframework.sqlhelper.core.data.builder;
+package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.OnComparisonOperator;
@@ -10,13 +10,13 @@ import pub.avalonframework.sqlhelper.core.rules.OnComparisonOperator;
 /**
  * @author baichao
  */
-public final class OnSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, OnDataBlock> implements OnComparisonOperator<T> {
+public final class OnDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, OnDataBlock> implements OnComparisonOperator<T> {
 
     private OnDataBlock onDataBlock;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
-    public OnSqlPartDatumBuilder(String tableAlias, T helper) {
+    public OnDataBlockBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
     }
 
@@ -43,17 +43,17 @@ public final class OnSqlPartDatumBuilder<T extends Helper> extends AbstractCompa
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<OnDataBlock> abstractComparisonSqlPartDatum) {
+    public void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<OnDataBlock> abstractComparisonSqlPartDatum) {
         super.addDataBlock((OnDataBlock) abstractComparisonSqlPartDatum);
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<OnDataBlock> getAbstractComparisonSqlPartDatum() {
+    public AbstractComparisonDataBlock<OnDataBlock> getAbstractComparisonSqlPartDatum() {
         return this.onDataBlock;
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<OnDataBlock> getCloneComparisonSqlPartDatum() {
+    public AbstractComparisonDataBlock<OnDataBlock> getCloneComparisonSqlPartDatum() {
         return this.onDataBlock.getCloneComparisonSqlPartDatum();
     }
 }

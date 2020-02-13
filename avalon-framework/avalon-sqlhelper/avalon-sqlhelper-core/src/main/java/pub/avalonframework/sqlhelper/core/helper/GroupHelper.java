@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.helper;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
 import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.GroupSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.GroupDataBlockBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
  */
 public abstract class GroupHelper<T extends GroupHelper<T>> extends Helper {
 
-    private GroupSqlPartDatumBuilder<T> groupSqlPartDatumBuilder;
+    private GroupDataBlockBuilder<T> groupSqlPartDatumBuilder;
 
     @SuppressWarnings("unchecked")
     public GroupHelper(String tableAlias) {
         super(tableAlias);
-        this.groupSqlPartDatumBuilder = new GroupSqlPartDatumBuilder<>(tableAlias, (T) this);
+        this.groupSqlPartDatumBuilder = new GroupDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
@@ -28,12 +28,12 @@ public abstract class GroupHelper<T extends GroupHelper<T>> extends Helper {
         this.groupSqlPartDatumBuilder.setTableAlias(tableAlias);
     }
 
-    protected GroupSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
+    protected GroupDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
         this.groupSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
         return this.groupSqlPartDatumBuilder;
     }
 
-    protected GroupSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    protected GroupDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         this.groupSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
         return this.groupSqlPartDatumBuilder;
     }

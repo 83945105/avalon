@@ -1,10 +1,10 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
+import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.beans.ColumnType;
 import pub.avalonframework.sqlhelper.core.data.beans.Type;
 import pub.avalonframework.sqlhelper.core.data.beans.ValueType;
-import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractComparisonSqlPartDatum<T extends AbstractComparisonSqlPartDatum<T>> extends AbstractDataBlock<T> {
+public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDataBlock<T>> extends AbstractDataBlock<T> {
 
     protected Type type = Type.DEFAULT;
 
@@ -41,20 +41,20 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
 
     protected List<AbstractDataBlock> targetMultiSqlPartDatum;
 
-    public AbstractComparisonSqlPartDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
+    public AbstractComparisonDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
     }
 
-    public AbstractComparisonSqlPartDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    public AbstractComparisonDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
     }
 
-    public AbstractComparisonSqlPartDatum(String templateTableName, String templateTableAlias, String sqlPart) {
+    public AbstractComparisonDataBlock(String templateTableName, String templateTableAlias, String sqlPart) {
         super(templateTableName, templateTableAlias, null, null);
         this.setSqlPart(sqlPart);
     }
 
-    public AbstractComparisonSqlPartDatum<T> setSqlPart(String sqlPart) {
+    public AbstractComparisonDataBlock<T> setSqlPart(String sqlPart) {
         if (sqlPart == null) {
             return this;
         }
@@ -63,7 +63,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setColumnHandler(ColumnHandler columnHandler) {
+    public AbstractComparisonDataBlock<T> setColumnHandler(ColumnHandler columnHandler) {
         if (columnHandler == null) {
             return this;
         }
@@ -72,7 +72,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetNoneValue(ComparisonType comparisonType) {
+    public AbstractComparisonDataBlock<T> setTargetNoneValue(ComparisonType comparisonType) {
         if (comparisonType == null) {
             return this;
         }
@@ -81,7 +81,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetSingleValue(ComparisonType comparisonType, Object targetValue) {
+    public AbstractComparisonDataBlock<T> setTargetSingleValue(ComparisonType comparisonType, Object targetValue) {
         if (comparisonType == null || targetValue == null) {
             return this;
         }
@@ -91,7 +91,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetPairValue(ComparisonType comparisonType, Object targetValue, Object targetSecondValue) {
+    public AbstractComparisonDataBlock<T> setTargetPairValue(ComparisonType comparisonType, Object targetValue, Object targetSecondValue) {
         if (comparisonType == null || targetValue == null || targetSecondValue == null) {
             return this;
         }
@@ -102,7 +102,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetMultiValue(ComparisonType comparisonType, Object targetValue) {
+    public AbstractComparisonDataBlock<T> setTargetMultiValue(ComparisonType comparisonType, Object targetValue) {
         if (comparisonType == null || targetValue == null) {
             return this;
         }
@@ -112,7 +112,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetSubQuery(ComparisonType comparisonType, SqlBuilderResult targetSubQuery) {
+    public AbstractComparisonDataBlock<T> setTargetSubQuery(ComparisonType comparisonType, SqlBuilderResult targetSubQuery) {
         if (comparisonType == null || targetSubQuery == null) {
             return this;
         }
@@ -122,7 +122,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetSqlPart(String targetSqlPart) {
+    public AbstractComparisonDataBlock<T> setTargetSqlPart(String targetSqlPart) {
         if (targetSqlPart == null) {
             return this;
         }
@@ -132,7 +132,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetSingleSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum) {
+    public AbstractComparisonDataBlock<T> setTargetSingleSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum) {
         if (comparisonType == null || targetSqlPartDatum == null) {
             return this;
         }
@@ -142,7 +142,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetPairSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum, AbstractDataBlock targetSecondSqlPartDatum) {
+    public AbstractComparisonDataBlock<T> setTargetPairSqlPartDatum(ComparisonType comparisonType, AbstractDataBlock targetSqlPartDatum, AbstractDataBlock targetSecondSqlPartDatum) {
         if (comparisonType == null || targetSqlPartDatum == null || targetSecondSqlPartDatum == null) {
             return this;
         }
@@ -153,7 +153,7 @@ public abstract class AbstractComparisonSqlPartDatum<T extends AbstractCompariso
         return this;
     }
 
-    public AbstractComparisonSqlPartDatum<T> setTargetMultiSqlPartDatum(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiSqlPartDatum) {
+    public AbstractComparisonDataBlock<T> setTargetMultiSqlPartDatum(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiSqlPartDatum) {
         if (comparisonType == null || targetMultiSqlPartDatum == null) {
             return this;
         }

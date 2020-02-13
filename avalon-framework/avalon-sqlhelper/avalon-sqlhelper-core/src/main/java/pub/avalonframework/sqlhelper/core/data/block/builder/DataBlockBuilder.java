@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data.builder;
+package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public interface SqlPartDatumBuilder<T extends Helper, S extends DataBlock> {
+public interface DataBlockBuilder<T extends Helper, S extends DataBlock> {
 
     /**
      * get table alias

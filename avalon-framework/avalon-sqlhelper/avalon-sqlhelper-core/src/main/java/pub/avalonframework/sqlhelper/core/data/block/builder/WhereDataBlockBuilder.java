@@ -1,8 +1,8 @@
-package pub.avalonframework.sqlhelper.core.data.builder;
+package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.WhereComparisonOperator;
@@ -10,13 +10,13 @@ import pub.avalonframework.sqlhelper.core.rules.WhereComparisonOperator;
 /**
  * @author baichao
  */
-public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, WhereDataBlock> implements WhereComparisonOperator<T> {
+public final class WhereDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, WhereDataBlock> implements WhereComparisonOperator<T> {
 
     private WhereDataBlock whereDatum;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
-    public WhereSqlPartDatumBuilder(String tableAlias, T helper) {
+    public WhereDataBlockBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
     }
 
@@ -43,17 +43,17 @@ public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractCo
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<WhereDataBlock> abstractComparisonSqlPartDatum) {
+    public void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<WhereDataBlock> abstractComparisonSqlPartDatum) {
         super.addDataBlock((WhereDataBlock) abstractComparisonSqlPartDatum);
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<WhereDataBlock> getAbstractComparisonSqlPartDatum() {
+    public AbstractComparisonDataBlock<WhereDataBlock> getAbstractComparisonSqlPartDatum() {
         return this.whereDatum;
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<WhereDataBlock> getCloneComparisonSqlPartDatum() {
+    public AbstractComparisonDataBlock<WhereDataBlock> getCloneComparisonSqlPartDatum() {
         return this.whereDatum.getCloneComparisonSqlPartDatum();
     }
 }

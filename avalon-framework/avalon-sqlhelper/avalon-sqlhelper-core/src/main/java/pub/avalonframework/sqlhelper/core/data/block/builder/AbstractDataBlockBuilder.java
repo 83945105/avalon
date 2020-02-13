@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data.builder;
+package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.data.block.DataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -10,12 +10,12 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlPartDatumBuilder<T extends Helper, S extends DataBlock> implements SqlPartDatumBuilder<T, S> {
+public abstract class AbstractDataBlockBuilder<T extends Helper, S extends DataBlock> implements DataBlockBuilder<T, S> {
 
     protected String tableAlias;
     private T helper;
 
-    public AbstractSqlPartDatumBuilder(String tableAlias, T helper) {
+    public AbstractDataBlockBuilder(String tableAlias, T helper) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }

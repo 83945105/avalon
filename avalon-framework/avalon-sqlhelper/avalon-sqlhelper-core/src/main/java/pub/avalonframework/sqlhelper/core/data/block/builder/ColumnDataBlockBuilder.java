@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data.builder;
+package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
@@ -8,11 +8,11 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public final class ColumnSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, ColumnDataBlock> {
+public final class ColumnDataBlockBuilder<T extends Helper> extends AbstractDataBlockBuilder<T, ColumnDataBlock> {
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
-    public ColumnSqlPartDatumBuilder(String tableAlias, T helper) {
+    public ColumnDataBlockBuilder(String tableAlias, T helper) {
         super(tableAlias, helper);
     }
 

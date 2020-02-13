@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.rules.impl;
 
-import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonSqlPartDatum<S>> extends ToColumnComparisonOperator<T> {
+public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends ToColumnComparisonOperator<T> {
 
     /**
      * get helper
@@ -27,16 +27,16 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonS
     /**
      * get clone comparison sql part datum
      *
-     * @return extends {@link AbstractComparisonSqlPartDatum}
+     * @return extends {@link AbstractComparisonDataBlock}
      */
-    AbstractComparisonSqlPartDatum<S> getCloneComparisonSqlPartDatum();
+    AbstractComparisonDataBlock<S> getCloneComparisonSqlPartDatum();
 
     /**
      * Add abstract comparison sql part datum.
      *
-     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonSqlPartDatum} object.
+     * @param abstractComparisonSqlPartDatum Implements {@link AbstractComparisonDataBlock} object.
      */
-    void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<S> abstractComparisonSqlPartDatum);
+    void addAbstractComparisonSqlPartDatum(AbstractComparisonDataBlock<S> abstractComparisonSqlPartDatum);
 
     @Override
     default T equalTo(ColumnHelper<?> columnHelper) {

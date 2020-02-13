@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,40 +18,40 @@ import java.util.stream.Collectors;
  */
 public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
 
-    private HavingSqlPartDatumBuilder<T> havingSqlPartDatumBuilder;
+    private HavingDataBlockBuilder<T> havingDataBlockBuilder;
 
     @SuppressWarnings("unchecked")
     public HavingHelper(String tableAlias) {
         super(tableAlias);
-        this.havingSqlPartDatumBuilder = new HavingSqlPartDatumBuilder<>(tableAlias, (T) this);
+        this.havingDataBlockBuilder = new HavingDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
         this.tableAlias = tableAlias;
-        this.havingSqlPartDatumBuilder.setTableAlias(tableAlias);
+        this.havingDataBlockBuilder.setTableAlias(tableAlias);
     }
 
-    protected HavingSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.havingSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
-        return this.havingSqlPartDatumBuilder;
+    protected HavingDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
+        this.havingDataBlockBuilder.accept(templateTableName, templateTableAlias, sqlPart);
+        return this.havingDataBlockBuilder;
     }
 
-    protected HavingSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.havingSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName, columnHandlers);
-        return this.havingSqlPartDatumBuilder;
+    protected HavingDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
+        this.havingDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName, columnHandlers);
+        return this.havingDataBlockBuilder;
     }
 
-    protected HavingSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
-        this.havingSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
-        return this.havingSqlPartDatumBuilder;
+    protected HavingDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+        this.havingDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
+        return this.havingDataBlockBuilder;
     }
 
     public List<HavingDataBlock> takeoutSqlPartData() {
-        return this.havingSqlPartDatumBuilder.takeoutSqlPartData();
+        return this.havingDataBlockBuilder.takeoutSqlPartData();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        this.havingSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
+        this.havingDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableHavingDatum execute() {

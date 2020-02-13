@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
 import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
-import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,35 +17,35 @@ import java.util.stream.Collectors;
  */
 public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
 
-    private WhereSqlPartDatumBuilder<T> whereSqlPartDatumBuilder;
+    private WhereDataBlockBuilder<T> whereDataBlockBuilder;
 
     @SuppressWarnings("unchecked")
     public WhereHelper(String tableAlias) {
         super(tableAlias);
-        this.whereSqlPartDatumBuilder = new WhereSqlPartDatumBuilder<>(tableAlias, (T) this);
+        this.whereDataBlockBuilder = new WhereDataBlockBuilder<>(tableAlias, (T) this);
     }
 
     public void setTableAlias(String tableAlias) {
         this.tableAlias = tableAlias;
-        this.whereSqlPartDatumBuilder.setTableAlias(tableAlias);
+        this.whereDataBlockBuilder.setTableAlias(tableAlias);
     }
 
-    protected WhereSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.whereSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, sqlPart);
-        return this.whereSqlPartDatumBuilder;
+    protected WhereDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String sqlPart) {
+        this.whereDataBlockBuilder.accept(templateTableName, templateTableAlias, sqlPart);
+        return this.whereDataBlockBuilder;
     }
 
-    protected WhereSqlPartDatumBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
-        this.whereSqlPartDatumBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
-        return this.whereSqlPartDatumBuilder;
+    protected WhereDataBlockBuilder<T> apply(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+        this.whereDataBlockBuilder.accept(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
+        return this.whereDataBlockBuilder;
     }
 
     public List<WhereDataBlock> takeoutSqlPartData() {
-        return this.whereSqlPartDatumBuilder.takeoutSqlPartData();
+        return this.whereDataBlockBuilder.takeoutSqlPartData();
     }
 
     public void setSqlBuilderConfiguration(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        this.whereSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
+        this.whereDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
     public TableWhereDatum execute() {

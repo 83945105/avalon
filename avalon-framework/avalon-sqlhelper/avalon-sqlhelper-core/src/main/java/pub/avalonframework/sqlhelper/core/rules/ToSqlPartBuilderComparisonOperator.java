@@ -1,92 +1,92 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
-import pub.avalonframework.sqlhelper.core.data.builder.AbstractComparisonSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.builder.SqlPartDatumBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.AbstractComparisonDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.DataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
  * @author baichao
  */
-public interface ToSqlPartBuilderComparisonOperator<T extends Helper, SB extends AbstractComparisonSqlPartDatumBuilder> {
+public interface ToSqlPartBuilderComparisonOperator<T extends Helper, SB extends AbstractComparisonDataBlockBuilder> {
 
     /**
      * equal to
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T equalTo(SB sqlPartDatumBuilder);
+    T equalTo(SB dataBlockBuilder);
 
     /**
      * not equal to
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T notEqualTo(SB sqlPartDatumBuilder);
+    T notEqualTo(SB dataBlockBuilder);
 
     /**
      * greater than
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T greaterThan(SB sqlPartDatumBuilder);
+    T greaterThan(SB dataBlockBuilder);
 
     /**
      * greater than or equal to
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T greaterThanAndEqualTo(SB sqlPartDatumBuilder);
+    T greaterThanAndEqualTo(SB dataBlockBuilder);
 
     /**
      * less than
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lessThan(SB sqlPartDatumBuilder);
+    T lessThan(SB dataBlockBuilder);
 
     /**
      * less than or equal to
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lessThanAndEqualTo(SB sqlPartDatumBuilder);
+    T lessThanAndEqualTo(SB dataBlockBuilder);
 
     /**
      * between ... and ...
      *
-     * @param sqlPartDatumBuilder       {@link SqlPartDatumBuilder}
-     * @param secondSqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder       {@link DataBlockBuilder}
+     * @param secondSqlPartDatumBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T between(SB sqlPartDatumBuilder, SB secondSqlPartDatumBuilder);
+    T between(SB dataBlockBuilder, SB secondSqlPartDatumBuilder);
 
     /**
      * like
      *
-     * @param sqlPartDatumBuilder {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T like(SB sqlPartDatumBuilder);
+    T like(SB dataBlockBuilder);
 
     /**
      * in
      *
-     * @param sqlPartDatumBuilders {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T in(SB... sqlPartDatumBuilders);
+    T in(SB... dataBlockBuilders);
 
     /**
      * not in
      *
-     * @param sqlPartDatumBuilders {@link SqlPartDatumBuilder}
+     * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T notIn(SB... sqlPartDatumBuilders);
+    T notIn(SB... dataBlockBuilders);
 }

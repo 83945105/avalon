@@ -8,10 +8,7 @@ import pub.avalonframework.sqlhelper.core.data.*;
 import pub.avalonframework.sqlhelper.core.data.beans.ColumnType;
 import pub.avalonframework.sqlhelper.core.data.beans.Type;
 import pub.avalonframework.sqlhelper.core.data.beans.ValueType;
-import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
@@ -338,7 +335,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendType(StringBuilder sql, AbstractComparisonSqlPartDatum dataBlock) {
+    private void appendType(StringBuilder sql, AbstractComparisonDataBlock dataBlock) {
         Type type = dataBlock.getType();
         switch (type) {
             case DEFAULT:
@@ -351,7 +348,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendColumnType(StringBuilder sql, AbstractComparisonSqlPartDatum dataBlock) {
+    private void appendColumnType(StringBuilder sql, AbstractComparisonDataBlock dataBlock) {
         ColumnType columnType = dataBlock.getColumnType();
         switch (columnType) {
             case DEFAULT:
@@ -368,7 +365,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendComparisonType(StringBuilder sql, AbstractComparisonSqlPartDatum dataBlock) {
+    private void appendComparisonType(StringBuilder sql, AbstractComparisonDataBlock dataBlock) {
         ComparisonType comparisonType = dataBlock.getComparisonType();
         switch (comparisonType) {
             case NONE:
@@ -415,7 +412,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @SuppressWarnings("unchecked")
-    private void appendValueType(StringBuilder sql, List<Object> args, AbstractComparisonSqlPartDatum dataBlock) {
+    private void appendValueType(StringBuilder sql, List<Object> args, AbstractComparisonDataBlock dataBlock) {
         ValueType valueType = dataBlock.getValueType();
         switch (valueType) {
             case NONE_VALUE:
@@ -501,7 +498,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendSqlPartData(StringBuilder sql, List<Object> args, List<? extends AbstractComparisonSqlPartDatum> dataBlocks, LinkType linkType) {
+    private void appendSqlPartData(StringBuilder sql, List<Object> args, List<? extends AbstractComparisonDataBlock> dataBlocks, LinkType linkType) {
         if (dataBlocks == null || dataBlocks.size() == 0) {
             return;
         }
@@ -509,7 +506,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
             sql.append("(");
         }
         int i = 0;
-        for (AbstractComparisonSqlPartDatum dataBlock : dataBlocks) {
+        for (AbstractComparisonDataBlock dataBlock : dataBlocks) {
             if (i++ > 0) {
                 sql.append(" and ");
             }
@@ -528,7 +525,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
             return;
         }
         int length = sql.length();
-        List<? extends AbstractComparisonSqlPartDatum> comparisonSqlPartData;
+        List<? extends AbstractComparisonDataBlock> comparisonSqlPartData;
         int i = 0;
         boolean brackets = false;
         for (ComparisonSqlPartDataLinker comparisonSqlPartDataLinker : onDataLinkers) {
