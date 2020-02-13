@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
-import pub.avalonframework.sqlhelper.core.data.HavingDatum;
+import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.GroupByOperator;
 import pub.avalonframework.sqlhelper.core.rules.HavingComparisonOperator;
@@ -12,9 +12,9 @@ import pub.avalonframework.sqlhelper.core.rules.HavingComparisonOperator;
 /**
  * @author baichao
  */
-public final class HavingSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, HavingDatum> implements HavingComparisonOperator<T>, GroupByOperator<HavingSqlPartDatumBuilder<T>> {
+public final class HavingSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, HavingDataBlock> implements HavingComparisonOperator<T>, GroupByOperator<HavingSqlPartDatumBuilder<T>> {
 
-    private HavingDatum havingDatum;
+    private HavingDataBlock havingDataBlock;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
@@ -24,13 +24,13 @@ public final class HavingSqlPartDatumBuilder<T extends Helper> extends AbstractC
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.havingDatum = new HavingDatum(templateTableName, templateTableAlias, sqlPart)
+        this.havingDataBlock = new HavingDataBlock(templateTableName, templateTableAlias, sqlPart)
                 .setTableAlias(this.tableAlias);
     }
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.havingDatum = new HavingDatum(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
+        this.havingDataBlock = new HavingDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
                 .setTableAlias(this.tableAlias);
     }
 
@@ -45,59 +45,59 @@ public final class HavingSqlPartDatumBuilder<T extends Helper> extends AbstractC
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<HavingDatum> abstractComparisonSqlPartDatum) {
-        super.addSqlPartDatum((HavingDatum) abstractComparisonSqlPartDatum);
+    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<HavingDataBlock> abstractComparisonSqlPartDatum) {
+        super.addDataBlock((HavingDataBlock) abstractComparisonSqlPartDatum);
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<HavingDatum> getAbstractComparisonSqlPartDatum() {
-        return this.havingDatum;
+    public AbstractComparisonSqlPartDatum<HavingDataBlock> getAbstractComparisonSqlPartDatum() {
+        return this.havingDataBlock;
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<HavingDatum> getCloneComparisonSqlPartDatum() {
-        return this.havingDatum.getCloneComparisonSqlPartDatum();
+    public AbstractComparisonSqlPartDatum<HavingDataBlock> getCloneComparisonSqlPartDatum() {
+        return this.havingDataBlock.getCloneComparisonSqlPartDatum();
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> min() {
-        this.havingDatum.setColumnHandler(GroupType.MIN);
+        this.havingDataBlock.setColumnHandler(GroupType.MIN);
         return this;
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> max() {
-        this.havingDatum.setColumnHandler(GroupType.MAX);
+        this.havingDataBlock.setColumnHandler(GroupType.MAX);
         return this;
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> count() {
-        this.havingDatum.setColumnHandler(GroupType.COUNT);
+        this.havingDataBlock.setColumnHandler(GroupType.COUNT);
         return this;
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> sum() {
-        this.havingDatum.setColumnHandler(GroupType.SUM);
+        this.havingDataBlock.setColumnHandler(GroupType.SUM);
         return this;
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> avg() {
-        this.havingDatum.setColumnHandler(GroupType.AVG);
+        this.havingDataBlock.setColumnHandler(GroupType.AVG);
         return this;
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> stddev() {
-        this.havingDatum.setColumnHandler(GroupType.STDDEV);
+        this.havingDataBlock.setColumnHandler(GroupType.STDDEV);
         return this;
     }
 
     @Override
     public HavingSqlPartDatumBuilder<T> variance() {
-        this.havingDatum.setColumnHandler(GroupType.VARIANCE);
+        this.havingDataBlock.setColumnHandler(GroupType.VARIANCE);
         return this;
     }
 }

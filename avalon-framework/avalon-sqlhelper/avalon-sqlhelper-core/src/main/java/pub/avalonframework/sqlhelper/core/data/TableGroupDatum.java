@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data;
 
+import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.List;
@@ -11,21 +12,21 @@ public final class TableGroupDatum {
 
     private String tableAlias;
 
-    private List<GroupDatum> groupData;
+    private List<GroupDataBlock> groupDataBlocks;
 
-    public TableGroupDatum(String tableAlias, List<GroupDatum> groupData) {
+    public TableGroupDatum(String tableAlias, List<GroupDataBlock> groupDataBlocks) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }
         this.tableAlias = tableAlias;
-        this.groupData = groupData;
+        this.groupDataBlocks = groupDataBlocks;
     }
 
     public String getTableAlias() {
         return tableAlias;
     }
 
-    public List<GroupDatum> getGroupData() {
-        return groupData;
+    public List<GroupDataBlock> getGroupDataBlocks() {
+        return groupDataBlocks;
     }
 }

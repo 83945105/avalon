@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
-import pub.avalonframework.sqlhelper.core.api.config.SqlPartDatumBuilderConfiguration;
+import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
@@ -8,6 +8,11 @@ import pub.avalonframework.sqlhelper.core.data.*;
 import pub.avalonframework.sqlhelper.core.data.beans.ColumnType;
 import pub.avalonframework.sqlhelper.core.data.beans.Type;
 import pub.avalonframework.sqlhelper.core.data.beans.ValueType;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
+import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
@@ -22,24 +27,24 @@ import java.util.*;
 public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTemplate {
 
     @Override
-    public SqlBuilderResult buildSelectColumn(SqlDataConsumer sqlDataConsumer) {
-        List<TableColumnDatum> tableColumnData = sqlDataConsumer.getSelectTableColumnData();
+    public SqlBuilderResult buildSelectColumn(CrudConsumer consumer) {
+        List<TableColumnDatum> tableColumnData = consumer.getSelectTableColumnData();
         boolean hasC = tableColumnData != null && tableColumnData.size() != 0;
         StringBuilder sql = new StringBuilder(128);
         List<Object> args = new ArrayList<>(16);
         if (!hasC) {
-            SqlhelperConfiguration configuration = sqlDataConsumer.getConfiguration();
-            SqlPartDatumBuilderConfiguration sqlPartDatumBuilderConfiguration = configuration.getSqlBuilder().getSqlPartDatumBuilder();
-            boolean selectAllColumnForMainTable = sqlPartDatumBuilderConfiguration.getSelectAllColumnForMainTable();
-            boolean selectAllColumnForJoinTable = sqlPartDatumBuilderConfiguration.getSelectAllColumnForJoinTable();
+            SqlhelperConfiguration configuration = consumer.getConfiguration();
+            DataBlockBuilderConfiguration dataBlockBuilder = configuration.getSqlBuilder().getDataBlockBuilder();
+            boolean selectAllColumnForMainTable = dataBlockBuilder.getSelectAllColumnForMainTable();
+            boolean selectAllColumnForJoinTable = dataBlockBuilder.getSelectAllColumnForJoinTable();
             if (!selectAllColumnForMainTable && !selectAllColumnForJoinTable) {
                 ExceptionUtils.selectColumnNullException();
             }
             if (selectAllColumnForMainTable) {
-                this.appendColumnSqlArgs(sql, args, HelperManager.defaultColumnData(sqlDataConsumer.getMainTableDatum().getTableHelperClass(), sqlDataConsumer.getMainTableDatum().getTableAlias()));
+                this.appendColumnSqlArgs(sql, args, HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias()));
             }
             if (selectAllColumnForJoinTable) {
-                LinkedHashMap<String, JoinTableDatum> aliasJoinTableData = sqlDataConsumer.getAliasJoinTableData();
+                LinkedHashMap<String, JoinTableDatum> aliasJoinTableData = consumer.getAliasJoinTableData();
                 if (aliasJoinTableData != null && aliasJoinTableData.size() > 0) {
                     for (Map.Entry<String, JoinTableDatum> entry : aliasJoinTableData.entrySet()) {
                         this.appendColumnSqlArgs(sql, args, HelperManager.defaultColumnData(entry.getValue().getTableHelperClass(), entry.getKey()));
@@ -53,8 +58,8 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @Override
-    public SqlBuilderResult buildJoin(SqlDataConsumer sqlDataConsumer) {
-        LinkedHashMap<String, JoinTableDatum> joinTableDataAliasMap = sqlDataConsumer.getAliasJoinTableData();
+    public SqlBuilderResult buildJoin(CrudConsumer consumer) {
+        LinkedHashMap<String, JoinTableDatum> joinTableDataAliasMap = consumer.getAliasJoinTableData();
         if (joinTableDataAliasMap == null || joinTableDataAliasMap.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -90,8 +95,8 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @Override
-    public SqlBuilderResult buildWhere(SqlDataConsumer sqlDataConsumer) {
-        List<TableWhereDatum> tableWhereData = sqlDataConsumer.getTableWhereData();
+    public SqlBuilderResult buildWhere(CrudConsumer consumer) {
+        List<TableWhereDatum> tableWhereData = consumer.getTableWhereData();
         if (tableWhereData == null || tableWhereData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -109,21 +114,21 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @Override
-    public SqlBuilderResult buildGroup(SqlDataConsumer sqlDataConsumer) {
-        List<TableGroupDatum> tableGroupData = sqlDataConsumer.getTableGroupData();
+    public SqlBuilderResult buildGroup(CrudConsumer consumer) {
+        List<TableGroupDatum> tableGroupData = consumer.getTableGroupData();
         if (tableGroupData == null || tableGroupData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
         StringBuilder sql = new StringBuilder(32);
         sql.append(" group by ");
         int i = 0;
-        List<GroupDatum> groupData;
+        List<GroupDataBlock> groupDataBlocks;
         for (TableGroupDatum tableGroupDatum : tableGroupData) {
-            groupData = tableGroupDatum.getGroupData();
-            if (groupData == null || groupData.size() == 0) {
+            groupDataBlocks = tableGroupDatum.getGroupDataBlocks();
+            if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
                 continue;
             }
-            for (GroupDatum columnName : groupData) {
+            for (GroupDataBlock columnName : groupDataBlocks) {
                 if (i++ > 0) {
                     sql.append(",");
                 }
@@ -137,8 +142,8 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @Override
-    public SqlBuilderResult buildHaving(SqlDataConsumer sqlDataConsumer) {
-        List<TableHavingDatum> tableHavingData = sqlDataConsumer.getTableHavingData();
+    public SqlBuilderResult buildHaving(CrudConsumer consumer) {
+        List<TableHavingDatum> tableHavingData = consumer.getTableHavingData();
         if (tableHavingData == null || tableHavingData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -156,29 +161,29 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @Override
-    public SqlBuilderResult buildSort(SqlDataConsumer sqlDataConsumer) {
-        List<TableSortDatum> tableSortData = sqlDataConsumer.getTableSortData();
+    public SqlBuilderResult buildSort(CrudConsumer consumer) {
+        List<TableSortDatum> tableSortData = consumer.getTableSortData();
         if (tableSortData == null || tableSortData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
         StringBuilder sql = new StringBuilder(32);
         sql.append(" order by ");
         int i = 0;
-        List<SortDatum> sortData;
+        List<SortDataBlock> sortDataBlocks;
         for (TableSortDatum tableSortDatum : tableSortData) {
-            sortData = tableSortDatum.getSortData();
-            if (sortData == null || sortData.size() == 0) {
+            sortDataBlocks = tableSortDatum.getSortDataBlocks();
+            if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
                 continue;
             }
-            for (SortDatum sortDatum : sortData) {
+            for (SortDataBlock sortDataBlock : sortDataBlocks) {
                 if (i++ > 0) {
                     sql.append(",");
                 }
-                sql.append(sortDatum.getTableAlias())
+                sql.append(sortDataBlock.getTableAlias())
                         .append(".`")
-                        .append(sortDatum.getColumnName())
+                        .append(sortDataBlock.getColumnName())
                         .append("`");
-                switch (sortDatum.getSortType()) {
+                switch (sortDataBlock.getSortType()) {
                     case ASC:
                         sql.append(" asc");
                         continue;
@@ -194,9 +199,9 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @Override
-    public SqlBuilderResult buildLimit(SqlDataConsumer sqlDataConsumer) {
-        Long limit = sqlDataConsumer.getLimit();
-        Long offset = sqlDataConsumer.getOffset();
+    public SqlBuilderResult buildLimit(CrudConsumer consumer) {
+        Long limit = consumer.getLimit();
+        Long offset = consumer.getOffset();
         if (limit == null) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -206,25 +211,25 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         return FinalSqlBuilderResult.newInstance(" limit ? offset ?", Arrays.asList(limit, offset));
     }
 
-    private void appendColumnSqlArgs(StringBuilder sql, List<Object> args, List<ColumnDatum> columnData) {
+    private void appendColumnSqlArgs(StringBuilder sql, List<Object> args, List<ColumnDataBlock> columnDataBlocks) {
         int i = 0;
-        for (ColumnDatum columnDatum : columnData) {
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
             if (i++ > 0) {
                 sql.append(",");
             } else {
                 sql.append(" ");
             }
-            switch (columnDatum.getType()) {
+            switch (columnDataBlock.getType()) {
                 case DEFAULT:
-                    sql.append(columnDatum.getTableAlias())
+                    sql.append(columnDataBlock.getTableAlias())
                             .append(".`")
-                            .append(columnDatum.getColumnName())
+                            .append(columnDataBlock.getColumnName())
                             .append("` `")
-                            .append(columnDatum.getColumnAlias())
+                            .append(columnDataBlock.getColumnAlias())
                             .append("`");
                     continue;
                 case VIRTUAL:
-                    Object columnValue = columnDatum.getColumnValue();
+                    Object columnValue = columnDataBlock.getColumnValue();
                     if (columnValue == null) {
                         sql.append("null");
                     } else if (columnValue instanceof Integer) {
@@ -236,17 +241,17 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                     } else {
                         sql.append("'").append(columnValue).append("'");
                     }
-                    sql.append(" `").append(columnDatum.getColumnAlias()).append("`");
+                    sql.append(" `").append(columnDataBlock.getColumnAlias()).append("`");
                     continue;
                 case SUB_QUERY:
                     sql.append("(");
-                    SqlBuilderResult sqlBuilderResult = columnDatum.getSqlBuilderResult();
-                    sql.append(sqlBuilderResult.getPreparedStatementSql()).append(") `").append(columnDatum.getColumnAlias()).append("`");
+                    SqlBuilderResult sqlBuilderResult = columnDataBlock.getSqlBuilderResult();
+                    sql.append(sqlBuilderResult.getPreparedStatementSql()).append(") `").append(columnDataBlock.getColumnAlias()).append("`");
                     args.addAll(sqlBuilderResult.getPreparedStatementArgs());
                     continue;
                 case HANDLER:
-                    ColumnHandler[] columnHandlers = columnDatum.getColumnHandlers();
-                    String columnSql = columnDatum.getTableAlias() + ".`" + columnDatum.getColumnName() + "`";
+                    ColumnHandler[] columnHandlers = columnDataBlock.getColumnHandlers();
+                    String columnSql = columnDataBlock.getTableAlias() + ".`" + columnDataBlock.getColumnName() + "`";
                     if (columnHandlers != null && columnHandlers.length > 0) {
                         for (ColumnHandler columnHandler : columnHandlers) {
                             columnSql = columnHandler.execute(columnSql);
@@ -254,11 +259,11 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                     }
                     sql.append(columnSql)
                             .append(" `")
-                            .append(columnDatum.getColumnAlias())
+                            .append(columnDataBlock.getColumnAlias())
                             .append("`");
                     continue;
                 case SQL_PART:
-                    sql.append(columnDatum.getSqlPart());
+                    sql.append(columnDataBlock.getSqlPart());
                     continue;
                 default:
                     ExceptionUtils.columnTypeNotSupportException();
@@ -268,29 +273,29 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     private void appendTableColumnSqlArgs(StringBuilder sql, List<Object> args, List<TableColumnDatum> tableColumnData) {
         int i = 0;
-        List<ColumnDatum> columnData;
+        List<ColumnDataBlock> columnDataBlocks;
         for (TableColumnDatum tableColumnDatum : tableColumnData) {
-            columnData = tableColumnDatum.getColumnData();
-            if (columnData.size() == 0) {
+            columnDataBlocks = tableColumnDatum.getColumnDataBlocks();
+            if (columnDataBlocks.size() == 0) {
                 continue;
             }
-            for (ColumnDatum columnDatum : columnData) {
+            for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
                 if (i++ > 0) {
                     sql.append(",");
                 } else {
                     sql.append(" ");
                 }
-                switch (columnDatum.getType()) {
+                switch (columnDataBlock.getType()) {
                     case DEFAULT:
-                        sql.append(columnDatum.getTableAlias())
+                        sql.append(columnDataBlock.getTableAlias())
                                 .append(".`")
-                                .append(columnDatum.getColumnName())
+                                .append(columnDataBlock.getColumnName())
                                 .append("` `")
-                                .append(columnDatum.getColumnAlias())
+                                .append(columnDataBlock.getColumnAlias())
                                 .append("`");
                         continue;
                     case VIRTUAL:
-                        Object columnValue = columnDatum.getColumnValue();
+                        Object columnValue = columnDataBlock.getColumnValue();
                         if (columnValue == null) {
                             sql.append("null");
                         } else if (columnValue instanceof Integer) {
@@ -302,17 +307,17 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                         } else {
                             sql.append("'").append(columnValue).append("'");
                         }
-                        sql.append(" `").append(columnDatum.getColumnAlias()).append("`");
+                        sql.append(" `").append(columnDataBlock.getColumnAlias()).append("`");
                         continue;
                     case SUB_QUERY:
                         sql.append("(");
-                        SqlBuilderResult sqlBuilderResult = columnDatum.getSqlBuilderResult();
-                        sql.append(sqlBuilderResult.getPreparedStatementSql()).append(") `").append(columnDatum.getColumnAlias()).append("`");
+                        SqlBuilderResult sqlBuilderResult = columnDataBlock.getSqlBuilderResult();
+                        sql.append(sqlBuilderResult.getPreparedStatementSql()).append(") `").append(columnDataBlock.getColumnAlias()).append("`");
                         args.addAll(sqlBuilderResult.getPreparedStatementArgs());
                         continue;
                     case HANDLER:
-                        ColumnHandler[] columnHandlers = columnDatum.getColumnHandlers();
-                        String columnSql = columnDatum.getTableAlias() + ".`" + columnDatum.getColumnName() + "`";
+                        ColumnHandler[] columnHandlers = columnDataBlock.getColumnHandlers();
+                        String columnSql = columnDataBlock.getTableAlias() + ".`" + columnDataBlock.getColumnName() + "`";
                         if (columnHandlers != null && columnHandlers.length > 0) {
                             for (ColumnHandler columnHandler : columnHandlers) {
                                 columnSql = columnHandler.execute(columnSql);
@@ -320,11 +325,11 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                         }
                         sql.append(columnSql)
                                 .append(" `")
-                                .append(columnDatum.getColumnAlias())
+                                .append(columnDataBlock.getColumnAlias())
                                 .append("`");
                         continue;
                     case SQL_PART:
-                        sql.append(columnDatum.getSqlPart());
+                        sql.append(columnDataBlock.getSqlPart());
                         continue;
                     default:
                         ExceptionUtils.columnTypeNotSupportException();
@@ -333,38 +338,38 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendType(StringBuilder sql, AbstractComparisonSqlPartDatum sqlPartDatum) {
-        Type type = sqlPartDatum.getType();
+    private void appendType(StringBuilder sql, AbstractComparisonSqlPartDatum dataBlock) {
+        Type type = dataBlock.getType();
         switch (type) {
             case DEFAULT:
                 return;
             case SQL_PART:
-                sql.append(sqlPartDatum.getSqlPart());
+                sql.append(dataBlock.getSqlPart());
                 return;
             default:
                 ExceptionUtils.unsupportedTypeException(type);
         }
     }
 
-    private void appendColumnType(StringBuilder sql, AbstractComparisonSqlPartDatum sqlPartDatum) {
-        ColumnType columnType = sqlPartDatum.getColumnType();
+    private void appendColumnType(StringBuilder sql, AbstractComparisonSqlPartDatum dataBlock) {
+        ColumnType columnType = dataBlock.getColumnType();
         switch (columnType) {
             case DEFAULT:
-                sql.append(sqlPartDatum.getTableAlias())
+                sql.append(dataBlock.getTableAlias())
                         .append(".`")
-                        .append(sqlPartDatum.getColumnName())
+                        .append(dataBlock.getColumnName())
                         .append("`");
                 return;
             case HANDLER:
-                sql.append(sqlPartDatum.getColumnHandler().execute(sqlPartDatum.getTableAlias() + ".`" + sqlPartDatum.getColumnName() + "`"));
+                sql.append(dataBlock.getColumnHandler().execute(dataBlock.getTableAlias() + ".`" + dataBlock.getColumnName() + "`"));
                 return;
             default:
                 ExceptionUtils.unsupportedColumnTypeException(columnType);
         }
     }
 
-    private void appendComparisonType(StringBuilder sql, AbstractComparisonSqlPartDatum sqlPartDatum) {
-        ComparisonType comparisonType = sqlPartDatum.getComparisonType();
+    private void appendComparisonType(StringBuilder sql, AbstractComparisonSqlPartDatum dataBlock) {
+        ComparisonType comparisonType = dataBlock.getComparisonType();
         switch (comparisonType) {
             case NONE:
                 return;
@@ -410,22 +415,22 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
     }
 
     @SuppressWarnings("unchecked")
-    private void appendValueType(StringBuilder sql, List<Object> args, AbstractComparisonSqlPartDatum sqlPartDatum) {
-        ValueType valueType = sqlPartDatum.getValueType();
+    private void appendValueType(StringBuilder sql, List<Object> args, AbstractComparisonSqlPartDatum dataBlock) {
+        ValueType valueType = dataBlock.getValueType();
         switch (valueType) {
             case NONE_VALUE:
                 return;
             case SINGLE_VALUE:
                 sql.append("?");
-                args.add(sqlPartDatum.getTargetValue());
+                args.add(dataBlock.getTargetValue());
                 return;
             case PAIR_VALUE:
                 sql.append("? and ?");
-                args.add(sqlPartDatum.getTargetValue());
-                args.add(sqlPartDatum.getTargetSecondValue());
+                args.add(dataBlock.getTargetValue());
+                args.add(dataBlock.getTargetSecondValue());
                 return;
             case MULTI_VALUE:
-                Object value = sqlPartDatum.getTargetValue();
+                Object value = dataBlock.getTargetValue();
                 sql.append("(");
                 int i = 0;
                 if (value instanceof Collection) {
@@ -450,23 +455,23 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                 sql.append(")");
                 return;
             case SUB_QUERY:
-                SqlBuilderResult sqlBuilderResult = sqlPartDatum.getTargetSubQuery();
+                SqlBuilderResult sqlBuilderResult = dataBlock.getTargetSubQuery();
                 sql.append("(").append(sqlBuilderResult.getPreparedStatementSql()).append(")");
                 args.addAll(sqlBuilderResult.getPreparedStatementArgs());
                 return;
             case SQL_PART:
-                sql.append(sqlPartDatum.getTargetSqlPart());
+                sql.append(dataBlock.getTargetSqlPart());
                 return;
             case SINGLE_SQL_PART_DATUM:
-                AbstractSqlPartDatum targetSqlPartDatum = sqlPartDatum.getTargetSqlPartDatum();
+                AbstractDataBlock targetSqlPartDatum = dataBlock.getTargetSqlPartDatum();
                 sql.append(targetSqlPartDatum.getTableAlias())
                         .append(".`")
                         .append(targetSqlPartDatum.getColumnName())
                         .append("`");
                 return;
             case PAIR_SQL_PART_DATUM:
-                targetSqlPartDatum = sqlPartDatum.getTargetSqlPartDatum();
-                AbstractSqlPartDatum targetSecondSqlPartDatum = sqlPartDatum.getTargetSecondSqlPartDatum();
+                targetSqlPartDatum = dataBlock.getTargetSqlPartDatum();
+                AbstractDataBlock targetSecondSqlPartDatum = dataBlock.getTargetSecondSqlPartDatum();
                 sql.append(targetSqlPartDatum.getTableAlias())
                         .append(".`")
                         .append(targetSqlPartDatum.getColumnName())
@@ -477,16 +482,16 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                         .append("`");
                 return;
             case MULTI_SQL_PART_DATUM:
-                List<AbstractSqlPartDatum> sqlPartData = sqlPartDatum.getTargetMultiSqlPartDatum();
+                List<AbstractDataBlock> dataBlocks = dataBlock.getTargetMultiSqlPartDatum();
                 sql.append("(");
                 int j = 0;
-                for (AbstractSqlPartDatum spd : sqlPartData) {
+                for (AbstractDataBlock db : dataBlocks) {
                     if (j++ > 0) {
                         sql.append(",");
                     }
-                    sql.append(spd.getTableAlias())
+                    sql.append(db.getTableAlias())
                             .append(".`")
-                            .append(spd.getColumnName())
+                            .append(db.getColumnName())
                             .append("`");
                 }
                 sql.append(")");
@@ -496,24 +501,24 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendSqlPartData(StringBuilder sql, List<Object> args, List<? extends AbstractComparisonSqlPartDatum> sqlPartData, LinkType linkType) {
-        if (sqlPartData == null || sqlPartData.size() == 0) {
+    private void appendSqlPartData(StringBuilder sql, List<Object> args, List<? extends AbstractComparisonSqlPartDatum> dataBlocks, LinkType linkType) {
+        if (dataBlocks == null || dataBlocks.size() == 0) {
             return;
         }
-        if (linkType == LinkType.OR && sqlPartData.size() > 1) {
+        if (linkType == LinkType.OR && dataBlocks.size() > 1) {
             sql.append("(");
         }
         int i = 0;
-        for (AbstractComparisonSqlPartDatum sqlPartDatum : sqlPartData) {
+        for (AbstractComparisonSqlPartDatum dataBlock : dataBlocks) {
             if (i++ > 0) {
                 sql.append(" and ");
             }
-            appendType(sql, sqlPartDatum);
-            appendColumnType(sql, sqlPartDatum);
-            appendComparisonType(sql, sqlPartDatum);
-            appendValueType(sql, args, sqlPartDatum);
+            appendType(sql, dataBlock);
+            appendColumnType(sql, dataBlock);
+            appendComparisonType(sql, dataBlock);
+            appendValueType(sql, args, dataBlock);
         }
-        if (linkType == LinkType.OR && sqlPartData.size() > 1) {
+        if (linkType == LinkType.OR && dataBlocks.size() > 1) {
             sql.append(")");
         }
     }

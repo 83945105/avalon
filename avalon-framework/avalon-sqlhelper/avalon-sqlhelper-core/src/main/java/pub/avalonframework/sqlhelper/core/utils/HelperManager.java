@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.cache.ClassCacheManager;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheConfigurationBuilder;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheManager;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheManagerBuilder;
-import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.spi.cache.Cache;
 
@@ -53,29 +53,29 @@ public class HelperManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<ColumnDatum> defaultColumnData(Class<?> clazz, String tableAlias) {
+    public static List<ColumnDataBlock> defaultColumnData(Class<?> clazz, String tableAlias) {
         ColumnDataCache columnDataCache = DEFAULT_COLUMN_DATA_CACHE.get(clazz);
         if (columnDataCache == null) {
             columnDataCache = new ColumnDataCache();
         }
-        ColumnDatumList columnData = columnDataCache.get(tableAlias);
-        if (columnData == null) {
+        ColumnDataBlockList columnDataBlockList = columnDataCache.get(tableAlias);
+        if (columnDataBlockList == null) {
             Set<TableColumn> tableColumns = defaultTableHelper(clazz).getTableColumns();
             if (tableColumns == null) {
                 return Collections.emptyList();
             }
-            columnData = new ColumnDatumList(tableColumns.size());
+            columnDataBlockList = new ColumnDataBlockList(tableColumns.size());
             for (TableColumn tableColumn : tableColumns) {
-                ColumnDatum columnDatum = new ColumnDatum(tableColumn.getTableName(), tableColumn.getTableAlias(), tableColumn.getName(), tableColumn.getAlias(), tableColumn.getAlias());
-                columnDatum.setTableAlias(tableAlias);
-                columnData.add(columnDatum);
+                ColumnDataBlock columnDataBlock = new ColumnDataBlock(tableColumn.getTableName(), tableColumn.getTableAlias(), tableColumn.getName(), tableColumn.getAlias(), tableColumn.getAlias());
+                columnDataBlock.setTableAlias(tableAlias);
+                columnDataBlockList.add(columnDataBlock);
             }
-            columnDataCache.put(tableAlias, columnData);
+            columnDataCache.put(tableAlias, columnDataBlockList);
         }
-        return columnData;
+        return columnDataBlockList;
     }
 
-    public static List<ColumnDatum> defaultColumnData(ColumnHelper columnHelper) {
+    public static List<ColumnDataBlock> defaultColumnData(ColumnHelper columnHelper) {
         return defaultColumnData(columnHelper.getDefaultTableHelper().getClass(), columnHelper.getTableAlias());
     }
 
@@ -148,30 +148,30 @@ public class HelperManager {
         return getExpectAncestorsClassGenricType(clazz.getSuperclass(), expectClass);
     }
 
-    private final static class ColumnDatumList extends ArrayList<ColumnDatum> {
-        private ColumnDatumList(int initialCapacity) {
+    private final static class ColumnDataBlockList extends ArrayList<ColumnDataBlock> {
+        private ColumnDataBlockList(int initialCapacity) {
             super(initialCapacity);
         }
     }
 
-    private final static class ColumnDataCache implements Cache<String, ColumnDatumList> {
+    private final static class ColumnDataCache implements Cache<String, ColumnDataBlockList> {
 
         private final static String COLUMN_DATA_CACHE_NAME = "COLUMN_DATA_CACHE";
 
-        private final Cache<String, ColumnDatumList> columnDataCache;
+        private final Cache<String, ColumnDataBlockList> columnDataCache;
 
         public ColumnDataCache() {
             columnDataCache = CacheManagerBuilder.newCacheManagerBuilder().build()
-                    .createCache(COLUMN_DATA_CACHE_NAME, CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, ColumnDatumList.class));
+                    .createCache(COLUMN_DATA_CACHE_NAME, CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, ColumnDataBlockList.class));
         }
 
         @Override
-        public ColumnDatumList get(String key) {
+        public ColumnDataBlockList get(String key) {
             return columnDataCache.get(key);
         }
 
         @Override
-        public void put(String key, ColumnDatumList value) {
+        public void put(String key, ColumnDataBlockList value) {
             columnDataCache.put(key, value);
         }
 
@@ -186,12 +186,12 @@ public class HelperManager {
         }
 
         @Override
-        public Map<String, ColumnDatumList> getAll(Set<? extends String> keys) {
+        public Map<String, ColumnDataBlockList> getAll(Set<? extends String> keys) {
             return columnDataCache.getAll(keys);
         }
 
         @Override
-        public void putAll(Map<? extends String, ? extends ColumnDatumList> entries) {
+        public void putAll(Map<? extends String, ? extends ColumnDataBlockList> entries) {
             columnDataCache.putAll(entries);
         }
 
@@ -206,22 +206,22 @@ public class HelperManager {
         }
 
         @Override
-        public ColumnDatumList putIfAbsent(String key, ColumnDatumList value) {
+        public ColumnDataBlockList putIfAbsent(String key, ColumnDataBlockList value) {
             return columnDataCache.putIfAbsent(key, value);
         }
 
         @Override
-        public boolean remove(String key, ColumnDatumList value) {
+        public boolean remove(String key, ColumnDataBlockList value) {
             return columnDataCache.remove(key, value);
         }
 
         @Override
-        public ColumnDatumList replace(String key, ColumnDatumList value) {
+        public ColumnDataBlockList replace(String key, ColumnDataBlockList value) {
             return columnDataCache.replace(key, value);
         }
 
         @Override
-        public boolean replace(String key, ColumnDatumList oldValue, ColumnDatumList newValue) {
+        public boolean replace(String key, ColumnDataBlockList oldValue, ColumnDataBlockList newValue) {
             return columnDataCache.replace(key, oldValue, newValue);
         }
     }

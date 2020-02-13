@@ -98,8 +98,8 @@ public final class ExceptionUtils {
         throw new RuntimeException("valueCount must be greater than 0, but the actual is " + valueCount);
     }
 
-    public static void columnDataSizeNotEqualException() {
-        throw new RuntimeException("columnData size must be equal.");
+    public static void columnDataBlocksSizeNotEqualException() {
+        throw new RuntimeException("columnDataBlocks size must be equal.");
     }
 
 

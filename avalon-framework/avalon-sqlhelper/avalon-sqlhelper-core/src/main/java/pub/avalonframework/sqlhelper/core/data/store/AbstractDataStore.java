@@ -1,4 +1,6 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.store;
+
+import pub.avalonframework.sqlhelper.core.data.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +8,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlData extends AbstractSqlDataCache {
+public abstract class AbstractDataStore extends AbstractDataStoreCache {
 
     private List<TableColumnDatum> selectTableColumnData;
 
@@ -26,7 +28,7 @@ public abstract class AbstractSqlData extends AbstractSqlDataCache {
 
     private Long offset;
 
-    public AbstractSqlData(MainTableDatum mainTableDatum) {
+    public AbstractDataStore(MainTableDatum mainTableDatum) {
         super(mainTableDatum);
     }
 

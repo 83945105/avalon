@@ -3,16 +3,16 @@ package pub.avalonframework.sqlhelper.core.data.builder;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
-import pub.avalonframework.sqlhelper.core.data.OnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.OnComparisonOperator;
 
 /**
  * @author baichao
  */
-public final class OnSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, OnDatum> implements OnComparisonOperator<T> {
+public final class OnSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, OnDataBlock> implements OnComparisonOperator<T> {
 
-    private OnDatum onDatum;
+    private OnDataBlock onDataBlock;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
@@ -22,13 +22,13 @@ public final class OnSqlPartDatumBuilder<T extends Helper> extends AbstractCompa
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.onDatum = new OnDatum(templateTableName, templateTableAlias, sqlPart)
+        this.onDataBlock = new OnDataBlock(templateTableName, templateTableAlias, sqlPart)
                 .setTableAlias(this.tableAlias);
     }
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.onDatum = new OnDatum(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
+        this.onDataBlock = new OnDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
                 .setTableAlias(this.tableAlias);
     }
 
@@ -43,17 +43,17 @@ public final class OnSqlPartDatumBuilder<T extends Helper> extends AbstractCompa
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<OnDatum> abstractComparisonSqlPartDatum) {
-        super.addSqlPartDatum((OnDatum) abstractComparisonSqlPartDatum);
+    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<OnDataBlock> abstractComparisonSqlPartDatum) {
+        super.addDataBlock((OnDataBlock) abstractComparisonSqlPartDatum);
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<OnDatum> getAbstractComparisonSqlPartDatum() {
-        return this.onDatum;
+    public AbstractComparisonSqlPartDatum<OnDataBlock> getAbstractComparisonSqlPartDatum() {
+        return this.onDataBlock;
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<OnDatum> getCloneComparisonSqlPartDatum() {
-        return this.onDatum.getCloneComparisonSqlPartDatum();
+    public AbstractComparisonSqlPartDatum<OnDataBlock> getCloneComparisonSqlPartDatum() {
+        return this.onDataBlock.getCloneComparisonSqlPartDatum();
     }
 }

@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.beans;
 
 import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.OnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
             return this;
         }
         ComparisonSqlPartDataLinker onDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
-        List<OnDatum> onData = onHelper.takeoutSqlPartData();
-        if (onData == null || onData.size() == 0) {
+        List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
+        if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
         }
-        onDataLinker.setComparisonSqlPartData(onData);
+        onDataLinker.setComparisonSqlPartData(onDataBlocks);
         this.comparisonSqlPartDataLinkers.add(onDataLinker);
         return this;
     }
@@ -64,11 +64,11 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
             return this;
         }
         ComparisonSqlPartDataLinker onDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
-        List<OnDatum> onData = onHelper.takeoutSqlPartData();
-        if (onData == null || onData.size() == 0) {
+        List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
+        if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
         }
-        onDataLinker.setComparisonSqlPartData(onData);
+        onDataLinker.setComparisonSqlPartData(onDataBlocks);
         this.comparisonSqlPartDataLinkers.add(onDataLinker);
         return this;
     }

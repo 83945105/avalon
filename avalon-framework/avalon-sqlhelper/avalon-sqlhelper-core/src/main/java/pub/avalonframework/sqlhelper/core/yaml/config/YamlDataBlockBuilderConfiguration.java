@@ -1,11 +1,12 @@
-package pub.avalonframework.sqlhelper.core.api.config;
+package pub.avalonframework.sqlhelper.core.yaml.config;
 
+import pub.avalonframework.core.yaml.config.YamlConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 
 /**
  * @author baichao
  */
-public class SqlPartDatumBuilderConfiguration {
+public class YamlDataBlockBuilderConfiguration implements YamlConfiguration {
 
     private Boolean selectAllColumnForMainTable;
 

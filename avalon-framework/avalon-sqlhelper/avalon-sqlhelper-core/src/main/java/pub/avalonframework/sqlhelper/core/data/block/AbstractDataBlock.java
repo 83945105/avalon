@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 /**
  * @author baichao
  */
-public abstract class AbstractSqlPartDatum<T extends AbstractSqlPartDatum<T>> implements SqlPartDatum {
+public abstract class AbstractDataBlock<T extends AbstractDataBlock<T>> implements DataBlock {
 
     private String templateTableName;
 
@@ -21,11 +21,11 @@ public abstract class AbstractSqlPartDatum<T extends AbstractSqlPartDatum<T>> im
 
     private String columnAlias;
 
-    public AbstractSqlPartDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
+    public AbstractDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         this(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, templateColumnAlias);
     }
 
-    public AbstractSqlPartDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    public AbstractDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         this.templateTableName = templateTableName;
         this.templateTableAlias = templateTableAlias;
         this.templateColumnName = templateColumnName;
@@ -36,7 +36,7 @@ public abstract class AbstractSqlPartDatum<T extends AbstractSqlPartDatum<T>> im
         this.columnAlias = mappingFieldName;
     }
 
-    public AbstractSqlPartDatum<T> setTableName(String tableName) {
+    public AbstractDataBlock<T> setTableName(String tableName) {
         if (tableName == null) {
             return this;
         }
@@ -44,7 +44,7 @@ public abstract class AbstractSqlPartDatum<T extends AbstractSqlPartDatum<T>> im
         return this;
     }
 
-    public AbstractSqlPartDatum<T> setTableAlias(String tableAlias) {
+    public AbstractDataBlock<T> setTableAlias(String tableAlias) {
         if (tableAlias == null) {
             return this;
         }
@@ -52,7 +52,7 @@ public abstract class AbstractSqlPartDatum<T extends AbstractSqlPartDatum<T>> im
         return this;
     }
 
-    public AbstractSqlPartDatum<T> setColumnName(String columnName) {
+    public AbstractDataBlock<T> setColumnName(String columnName) {
         if (columnName == null) {
             return this;
         }
@@ -60,7 +60,7 @@ public abstract class AbstractSqlPartDatum<T extends AbstractSqlPartDatum<T>> im
         return this;
     }
 
-    public AbstractSqlPartDatum<T> setColumnAlias(String columnAlias) {
+    public AbstractDataBlock<T> setColumnAlias(String columnAlias) {
         if (columnAlias == null) {
             return this;
         }

@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
+import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.HavingDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.impl.*;
 
@@ -10,18 +10,18 @@ import pub.avalonframework.sqlhelper.core.rules.impl.*;
  * @author baichao
  */
 public interface HavingComparisonOperator<T extends Helper> extends BaseComparisonOperator<T>,
-        BaseComparisonOperatorImpl<T, HavingDatum>,
+        BaseComparisonOperatorImpl<T, HavingDataBlock>,
         ToColumnComparisonOperator<T>,
-        ToColumnComparisonOperatorImpl<T, HavingDatum>,
+        ToColumnComparisonOperatorImpl<T, HavingDataBlock>,
         ToColumnCallbackComparisonOperator<T>,
         ToColumnCallbackComparisonOperatorImpl<T>,
         ToSubQueryComparisonOperator<T>,
-        ToSubQueryComparisonOperatorImpl<T, HavingDatum>,
+        ToSubQueryComparisonOperatorImpl<T, HavingDataBlock>,
         ToSqlPartBuilderComparisonOperator<T, HavingSqlPartDatumBuilder>,
-        ToSqlPartBuilderComparisonOperatorImpl<T, HavingDatum, HavingSqlPartDatumBuilder> {
+        ToSqlPartBuilderComparisonOperatorImpl<T, HavingDataBlock, HavingSqlPartDatumBuilder> {
 
     @Override
     default ComparisonRule getComparisonRule() {
-        return getSqlBuilderConfiguration().getSqlPartDatumBuilder().getHavingComparisonRule();
+        return getSqlBuilderConfiguration().getDataBlockBuilder().getHavingComparisonRule();
     }
 }

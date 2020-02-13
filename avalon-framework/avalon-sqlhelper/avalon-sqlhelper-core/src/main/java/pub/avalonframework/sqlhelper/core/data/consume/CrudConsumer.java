@@ -1,6 +1,7 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.consume;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
+import pub.avalonframework.sqlhelper.core.data.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,10 +9,10 @@ import java.util.List;
 /**
  * @author baichao
  */
-public interface SqlDataConsumer {
+public interface CrudConsumer {
 
     /**
-     * get sqlhelper configuration.
+     * get configuration.
      *
      * @return {@link SqlhelperConfiguration}
      */

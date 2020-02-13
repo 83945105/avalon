@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.beans.SortType;
 
 /**
  * @author baichao
  */
-public final class SortDatum extends AbstractSqlPartDatum<SortDatum> {
+public final class SortDataBlock extends AbstractDataBlock<SortDataBlock> {
 
     private SortType sortType = SortType.ASC;
 
@@ -13,15 +13,15 @@ public final class SortDatum extends AbstractSqlPartDatum<SortDatum> {
 
     private String sqlPart;
 
-    public SortDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
+    public SortDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
     }
 
-    public SortDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    public SortDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
     }
 
-    public SortDatum(String templateTableName, String templateTableAlias, String sqlPart) {
+    public SortDataBlock(String templateTableName, String templateTableAlias, String sqlPart) {
         super(templateTableName, templateTableAlias, null, null);
         this.sqlPart = sqlPart;
         this.type = Type.SQL_PART;
@@ -39,12 +39,12 @@ public final class SortDatum extends AbstractSqlPartDatum<SortDatum> {
         return sqlPart;
     }
 
-    public SortDatum setSortType(SortType sortType) {
+    public SortDataBlock setSortType(SortType sortType) {
         this.sortType = sortType;
         return this;
     }
 
-    public SortDatum setType(Type type) {
+    public SortDataBlock setType(Type type) {
         this.type = type;
         return this;
     }
@@ -62,25 +62,25 @@ public final class SortDatum extends AbstractSqlPartDatum<SortDatum> {
 
 
     @Override
-    public SortDatum setTableName(String tableName) {
+    public SortDataBlock setTableName(String tableName) {
         super.setTableName(tableName);
         return this;
     }
 
     @Override
-    public SortDatum setTableAlias(String tableAlias) {
+    public SortDataBlock setTableAlias(String tableAlias) {
         super.setTableAlias(tableAlias);
         return this;
     }
 
     @Override
-    public SortDatum setColumnName(String columnName) {
+    public SortDataBlock setColumnName(String columnName) {
         super.setColumnName(columnName);
         return this;
     }
 
     @Override
-    public SortDatum setColumnAlias(String columnAlias) {
+    public SortDataBlock setColumnAlias(String columnAlias) {
         super.setColumnAlias(columnAlias);
         return this;
     }

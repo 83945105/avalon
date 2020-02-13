@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.sqlbuilder;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
-import pub.avalonframework.sqlhelper.core.data.SqlData;
+import pub.avalonframework.sqlhelper.core.data.store.DataStore;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
 
 import java.lang.reflect.Method;
@@ -15,18 +15,18 @@ public final class CrudSqlBuilderProxyBuilder implements MethodInterceptor {
 
     private CrudSqlBuilder crudSqlBuilder;
 
-    private SqlData sqlData;
+    private DataStore dataStore;
 
-    public CrudSqlBuilderProxyBuilder(SqlData sqlData) {
-        this.sqlData = sqlData;
-        this.crudSqlBuilder = new SupperCrudSqlBuilder(sqlData);
+    public CrudSqlBuilderProxyBuilder(DataStore dataStore) {
+        this.dataStore = dataStore;
+        this.crudSqlBuilder = new SupperCrudSqlBuilder(dataStore);
     }
 
     public CrudSqlBuilder createCrudSqlBuilder() {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(this.crudSqlBuilder.getClass());
         enhancer.setCallback(this);
-        return (CrudSqlBuilder) enhancer.create(new Class[]{SqlData.class}, new Object[]{sqlData});
+        return (CrudSqlBuilder) enhancer.create(new Class[]{DataStore.class}, new Object[]{dataStore});
     }
 
     @Override
@@ -36,10 +36,10 @@ public final class CrudSqlBuilderProxyBuilder implements MethodInterceptor {
     }
 
     private void switchSqlBuilderTemplate(SupperCrudSqlBuilder supperCrudSqlBuilder) {
-        switch (sqlData.getConfiguration().getDatabaseType()) {
+        switch (dataStore.getConfiguration().getDatabaseType()) {
             case MYSQL:
-                supperCrudSqlBuilder.sqlBuilderTemplate = sqlData.getConfiguration().getSqlBuilder().getMysqlSqlBuilderTemplate();
-                supperCrudSqlBuilder.sqlBuilderTemplate.setSqlPartBuilderTemplate(sqlData.getConfiguration().getSqlBuilder().getMysqlSqlPartBuilderTemplate());
+                supperCrudSqlBuilder.sqlBuilderTemplate = dataStore.getConfiguration().getSqlBuilder().getMysqlSqlBuilderTemplate();
+                supperCrudSqlBuilder.sqlBuilderTemplate.setSqlPartBuilderTemplate(dataStore.getConfiguration().getSqlBuilder().getMysqlSqlPartBuilderTemplate());
                 break;
             default:
                 throw new SqlException("SqlBuilder do not support this database type temporarily.");

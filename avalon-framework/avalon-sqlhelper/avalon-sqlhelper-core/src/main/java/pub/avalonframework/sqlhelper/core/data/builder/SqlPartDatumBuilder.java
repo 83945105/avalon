@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.data.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.data.SqlPartDatum;
+import pub.avalonframework.sqlhelper.core.data.block.DataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public interface SqlPartDatumBuilder<T extends Helper, S extends SqlPartDatum> {
+public interface SqlPartDatumBuilder<T extends Helper, S extends DataBlock> {
 
     /**
      * get table alias
@@ -41,16 +41,16 @@ public interface SqlPartDatumBuilder<T extends Helper, S extends SqlPartDatum> {
     void setHelper(T helper);
 
     /**
-     * add sql part datum
+     * add data block.
      *
-     * @param sqlPartDatum implements {@link SqlPartDatum} object
+     * @param dataBlock implements {@link DataBlock} object
      */
-    void addSqlPartDatum(S sqlPartDatum);
+    void addDataBlock(S dataBlock);
 
     /**
      * Clean up after each takeout.
      *
-     * @return implements {@link SqlPartDatum} objects
+     * @return implements {@link DataBlock} objects
      */
     List<S> takeoutSqlPartData();
 

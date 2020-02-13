@@ -7,10 +7,10 @@ import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.callback.SubQueryColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
 import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
@@ -44,16 +44,16 @@ public final class CallbackBlockExecutor {
         TC tc = t.newColumnHelper(tableAlias);
         tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         tc = columnCallback.apply(tc);
-        List<ColumnDatum> columnData = tc.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = tc.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return null;
         }
-        columnData.forEach(columnDatum -> columnDatum.setColumnHandlers(groupType));
-        return new TableColumnDatum(tableAlias, columnData);
+        columnDataBlocks.forEach(columnDataBlock -> columnDataBlock.setColumnHandlers(groupType));
+        return new TableColumnDatum(tableAlias, columnDataBlocks);
     }
 
     public static TableColumnDatum executeVirtualColumn(String tableAlias, Object columnValue, String columnAlias) {
-        return columnAlias == null ? null : new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDatum(null, null, columnValue, columnAlias)));
+        return columnAlias == null ? null : new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDataBlock(null, null, columnValue, columnAlias)));
     }
 
     public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
@@ -70,7 +70,7 @@ public final class CallbackBlockExecutor {
         TC tc = t.newColumnHelper(tableAlias);
         tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         SqlBuilderResult sqlBuilderResult = subQueryColumnCallback.apply(tc);
-        return new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDatum(null, null, sqlBuilderResult, columnAlias)));
+        return new TableColumnDatum(tableAlias, Collections.singletonList(new ColumnDataBlock(null, null, sqlBuilderResult, columnAlias)));
     }
 
     public static <TO extends OnHelper<TO>,

@@ -2,10 +2,10 @@ package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.FinalSqlData;
 import pub.avalonframework.sqlhelper.core.data.MainTableDatum;
-import pub.avalonframework.sqlhelper.core.data.SqlData;
 import pub.avalonframework.sqlhelper.core.data.inject.ConfigurationInjector;
+import pub.avalonframework.sqlhelper.core.data.store.DataStore;
+import pub.avalonframework.sqlhelper.core.data.store.SqlDataStore;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.mgt.SqlhelperManager;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
@@ -28,7 +28,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
 
     protected String tableAlias;
 
-    protected SqlData sqlData;
+    protected DataStore dataStore;
 
     protected CrudSqlBuilder crudSqlBuilder;
 
@@ -65,8 +65,9 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         }
         this.tableHelperClass = tableHelperClass;
         this.tableAlias = tableAlias;
-        this.sqlData = new FinalSqlData(databaseType, new MainTableDatum(tableHelperClass, tableName, this.tableAlias), configuration);
-        this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.sqlData).createCrudSqlBuilder();
+        configuration.setDatabaseType(databaseType);
+        this.dataStore = new SqlDataStore(new MainTableDatum(tableHelperClass, tableName, this.tableAlias), configuration);
+        this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createCrudSqlBuilder();
     }
 
     @Override
@@ -81,11 +82,11 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
 
     @Override
     public SqlhelperConfiguration getConfiguration() {
-        return this.sqlData.getConfiguration();
+        return this.dataStore.getConfiguration();
     }
 
     @Override
     public void setConfiguration(SqlhelperConfiguration configuration) {
-        this.sqlData.setConfiguration(configuration);
+        this.dataStore.setConfiguration(configuration);
     }
 }

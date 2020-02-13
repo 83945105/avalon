@@ -70,6 +70,6 @@ public abstract class AbstractInsertEngine<T extends TableHelper<T, TC, TO, TW, 
 
     @Override
     public void addInsertTableColumnDatum(TableColumnDatum tableColumnDatum) {
-        this.sqlData.addInsertTableColumnDatum(tableColumnDatum);
+        this.dataStore.addInsertTableColumnDatum(tableColumnDatum);
     }
 }

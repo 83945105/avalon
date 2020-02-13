@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.builder;
 
-import pub.avalonframework.sqlhelper.core.data.SqlPartDatum;
+import pub.avalonframework.sqlhelper.core.data.block.DataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlPartDatumBuilder<T extends Helper, S extends SqlPartDatum> implements SqlPartDatumBuilder<T, S> {
+public abstract class AbstractSqlPartDatumBuilder<T extends Helper, S extends DataBlock> implements SqlPartDatumBuilder<T, S> {
 
     protected String tableAlias;
     private T helper;
@@ -23,7 +23,7 @@ public abstract class AbstractSqlPartDatumBuilder<T extends Helper, S extends Sq
         this.helper = helper;
     }
 
-    private List<S> sqlPartData = null;
+    private List<S> dataBlocks = null;
 
     @Override
     public String getTableAlias() {
@@ -46,20 +46,20 @@ public abstract class AbstractSqlPartDatumBuilder<T extends Helper, S extends Sq
     }
 
     @Override
-    public void addSqlPartDatum(S sqlPartDatum) {
-        if (sqlPartDatum == null) {
+    public void addDataBlock(S dataBlock) {
+        if (dataBlock == null) {
             return;
         }
-        if (this.sqlPartData == null) {
-            this.sqlPartData = new ArrayList<>();
+        if (this.dataBlocks == null) {
+            this.dataBlocks = new ArrayList<>();
         }
-        this.sqlPartData.add(sqlPartDatum);
+        this.dataBlocks.add(dataBlock);
     }
 
     @Override
     public List<S> takeoutSqlPartData() {
-        List<S> sqlModelData = this.sqlPartData;
-        this.sqlPartData = null;
-        return sqlModelData;
+        List<S> dataBlocks = this.dataBlocks;
+        this.dataBlocks = null;
+        return dataBlocks;
     }
 }

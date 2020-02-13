@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 /**
  * @author baichao
  */
-public final class ColumnDatum extends AbstractSqlPartDatum<ColumnDatum> {
+public final class ColumnDataBlock extends AbstractDataBlock<ColumnDataBlock> {
 
     private Type type = Type.DEFAULT;
 
@@ -18,39 +18,39 @@ public final class ColumnDatum extends AbstractSqlPartDatum<ColumnDatum> {
 
     private SqlBuilderResult sqlBuilderResult;
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
     }
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
     }
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, Object columnValue, String mappingFieldName) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, Object columnValue, String mappingFieldName) {
         super(templateTableName, templateTableAlias, null, null, mappingFieldName);
         this.columnValue = columnValue;
         this.type = Type.VIRTUAL;
     }
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, SqlBuilderResult sqlBuilderResult, String mappingFieldName) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, SqlBuilderResult sqlBuilderResult, String mappingFieldName) {
         super(templateTableName, templateTableAlias, null, null, mappingFieldName);
         this.sqlBuilderResult = sqlBuilderResult;
         this.type = Type.SUB_QUERY;
     }
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, ColumnHandler... columnHandlers) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, ColumnHandler... columnHandlers) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
         this.columnHandlers = columnHandlers;
         this.type = Type.HANDLER;
     }
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
         this.columnHandlers = columnHandlers;
         this.type = Type.HANDLER;
     }
 
-    public ColumnDatum(String templateTableName, String templateTableAlias, String sqlPart) {
+    public ColumnDataBlock(String templateTableName, String templateTableAlias, String sqlPart) {
         super(templateTableName, templateTableAlias, null, null);
         this.sqlPart = sqlPart;
         this.type = Type.SQL_PART;
@@ -76,25 +76,25 @@ public final class ColumnDatum extends AbstractSqlPartDatum<ColumnDatum> {
         return sqlBuilderResult;
     }
 
-    public ColumnDatum setType(Type type) {
+    public ColumnDataBlock setType(Type type) {
         this.type = type;
         return this;
     }
 
-    public ColumnDatum setColumnHandlers(ColumnHandler... columnHandlers) {
+    public ColumnDataBlock setColumnHandlers(ColumnHandler... columnHandlers) {
         this.columnHandlers = columnHandlers;
         this.setType(Type.HANDLER);
         return this;
     }
 
-    public ColumnDatum setVirtualColumn(Object columnValue, String columnAlias) {
+    public ColumnDataBlock setVirtualColumn(Object columnValue, String columnAlias) {
         this.columnValue = columnValue;
         this.setColumnAlias(columnAlias);
         this.setType(Type.VIRTUAL);
         return this;
     }
 
-    public ColumnDatum setSubQueryColumn(SqlBuilderResult sqlBuilderResult, String columnAlias) {
+    public ColumnDataBlock setSubQueryColumn(SqlBuilderResult sqlBuilderResult, String columnAlias) {
         this.sqlBuilderResult = sqlBuilderResult;
         this.setColumnAlias(columnAlias);
         this.setType(Type.SUB_QUERY);
@@ -125,25 +125,25 @@ public final class ColumnDatum extends AbstractSqlPartDatum<ColumnDatum> {
     }
 
     @Override
-    public ColumnDatum setTableName(String tableName) {
+    public ColumnDataBlock setTableName(String tableName) {
         super.setTableName(tableName);
         return this;
     }
 
     @Override
-    public ColumnDatum setTableAlias(String tableAlias) {
+    public ColumnDataBlock setTableAlias(String tableAlias) {
         super.setTableAlias(tableAlias);
         return this;
     }
 
     @Override
-    public ColumnDatum setColumnName(String columnName) {
+    public ColumnDataBlock setColumnName(String columnName) {
         super.setColumnName(columnName);
         return this;
     }
 
     @Override
-    public ColumnDatum setColumnAlias(String columnAlias) {
+    public ColumnDataBlock setColumnAlias(String columnAlias) {
         super.setColumnAlias(columnAlias);
         return this;
     }

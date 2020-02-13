@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.beans;
 
 import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.HavingDatum;
+import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
             return this;
         }
         ComparisonSqlPartDataLinker havingDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
-        List<HavingDatum> havingData = havingHelper.takeoutSqlPartData();
-        if (havingData == null || havingData.size() == 0) {
+        List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
+        if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return this;
         }
-        havingDataLinker.setComparisonSqlPartData(havingData);
+        havingDataLinker.setComparisonSqlPartData(havingDataBlocks);
         this.comparisonSqlPartDataLinkers.add(havingDataLinker);
         return this;
     }
@@ -64,11 +64,11 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
             return this;
         }
         ComparisonSqlPartDataLinker havingDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
-        List<HavingDatum> havingData = havingHelper.takeoutSqlPartData();
-        if (havingData == null || havingData.size() == 0) {
+        List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
+        if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return this;
         }
-        havingDataLinker.setComparisonSqlPartData(havingData);
+        havingDataLinker.setComparisonSqlPartData(havingDataBlocks);
         this.comparisonSqlPartDataLinkers.add(havingDataLinker);
         return this;
     }

@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.data.SortDatum;
 import pub.avalonframework.sqlhelper.core.data.TableSortDatum;
+import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
 import pub.avalonframework.sqlhelper.core.data.builder.SortSqlPartDatumBuilder;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public abstract class SortHelper<T extends SortHelper<T>> extends Helper {
         return this.sortSqlPartDatumBuilder;
     }
 
-    public List<SortDatum> takeoutSqlPartData() {
+    public List<SortDataBlock> takeoutSqlPartData() {
         return this.sortSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
@@ -51,11 +51,11 @@ public abstract class SortHelper<T extends SortHelper<T>> extends Helper {
     }
 
     public static TableSortDatum execute(SortHelper<?> sortHelper) {
-        List<SortDatum> sortData = sortHelper.takeoutSqlPartData();
-        if (sortData == null || sortData.size() == 0) {
+        List<SortDataBlock> sortDataBlocks = sortHelper.takeoutSqlPartData();
+        if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
             return null;
         }
-        return new TableSortDatum(sortHelper.getTableAlias(), sortData);
+        return new TableSortDatum(sortHelper.getTableAlias(), sortDataBlocks);
     }
 
     public static List<TableSortDatum> execute(SortHelper<?>... sortHelpers) {

@@ -63,46 +63,46 @@ public abstract class AbstractSelectEngine<T extends TableHelper<T, TC, TO, TW, 
 
     @Override
     public void addJoinTableDatum(JoinTableDatum joinTableDatum) {
-        this.sqlData.addJoinTableDatum(joinTableDatum);
+        this.dataStore.addJoinTableDatum(joinTableDatum);
     }
 
     @Override
     public void addTableOnDatum(TableOnDatum tableOnDatum) {
-        this.sqlData.addTableOnDatum(tableOnDatum);
+        this.dataStore.addTableOnDatum(tableOnDatum);
     }
 
     @Override
     public void addSelectTableColumnDatum(TableColumnDatum tableColumnDatum) {
-        this.sqlData.addSelectTableColumnDatum(tableColumnDatum);
+        this.dataStore.addSelectTableColumnDatum(tableColumnDatum);
     }
 
     @Override
     public void addTableWhereDatum(TableWhereDatum tableWhereDatum) {
-        this.sqlData.addTableWhereDatum(tableWhereDatum);
+        this.dataStore.addTableWhereDatum(tableWhereDatum);
     }
 
     @Override
     public void addTableGroupDatum(TableGroupDatum tableGroupDatum) {
-        this.sqlData.addTableGroupDatum(tableGroupDatum);
+        this.dataStore.addTableGroupDatum(tableGroupDatum);
     }
 
     @Override
     public void addTableHavingDatum(TableHavingDatum tableHavingDatum) {
-        this.sqlData.addTableHavingDatum(tableHavingDatum);
+        this.dataStore.addTableHavingDatum(tableHavingDatum);
     }
 
     @Override
     public void addTableSortDatum(TableSortDatum tableSortDatum) {
-        this.sqlData.addTableSortDatum(tableSortDatum);
+        this.dataStore.addTableSortDatum(tableSortDatum);
     }
 
     @Override
     public void setLimit(Long limit) {
-        this.sqlData.setLimit(limit);
+        this.dataStore.setLimit(limit);
     }
 
     @Override
     public void setOffset(Long offset) {
-        this.sqlData.setOffset(offset);
+        this.dataStore.setOffset(offset);
     }
 }

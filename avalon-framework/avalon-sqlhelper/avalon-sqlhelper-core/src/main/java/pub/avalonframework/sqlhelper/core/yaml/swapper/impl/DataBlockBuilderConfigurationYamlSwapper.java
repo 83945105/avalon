@@ -1,14 +1,14 @@
 package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
-import pub.avalonframework.sqlhelper.core.api.config.SqlPartDatumBuilderConfiguration;
+import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
-import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlPartDatumBuilderConfiguration;
+import pub.avalonframework.sqlhelper.core.yaml.config.YamlDataBlockBuilderConfiguration;
 
 /**
  * @author baichao
  */
-public final class SqlPartDatumBuilderConfigurationYamlSwapper implements YamlSwapper<YamlSqlPartDatumBuilderConfiguration, SqlPartDatumBuilderConfiguration> {
+public final class DataBlockBuilderConfigurationYamlSwapper implements YamlSwapper<YamlDataBlockBuilderConfiguration, DataBlockBuilderConfiguration> {
 
     private final static Boolean DEFAULT_SELECT_ALL_COLUMN_FOR_MAIN_TABLE = Boolean.FALSE;
 
@@ -21,9 +21,9 @@ public final class SqlPartDatumBuilderConfigurationYamlSwapper implements YamlSw
     private final static ComparisonRule DEFAULT_HAVING_COMPARISON_RULE = ComparisonRule.NULL_SKIP;
 
     @Override
-    public YamlSqlPartDatumBuilderConfiguration swap(SqlPartDatumBuilderConfiguration data) {
-        data = data == null ? new SqlPartDatumBuilderConfiguration() : data;
-        YamlSqlPartDatumBuilderConfiguration configuration = new YamlSqlPartDatumBuilderConfiguration();
+    public YamlDataBlockBuilderConfiguration swap(DataBlockBuilderConfiguration data) {
+        data = data == null ? new DataBlockBuilderConfiguration() : data;
+        YamlDataBlockBuilderConfiguration configuration = new YamlDataBlockBuilderConfiguration();
         Boolean selectAllColumnForMainTable = data.getSelectAllColumnForMainTable();
         configuration.setSelectAllColumnForMainTable(selectAllColumnForMainTable == null ? DEFAULT_SELECT_ALL_COLUMN_FOR_MAIN_TABLE : selectAllColumnForMainTable);
         Boolean selectAllColumnForJoinTable = data.getSelectAllColumnForJoinTable();
@@ -38,9 +38,9 @@ public final class SqlPartDatumBuilderConfigurationYamlSwapper implements YamlSw
     }
 
     @Override
-    public SqlPartDatumBuilderConfiguration swap(YamlSqlPartDatumBuilderConfiguration yamlConfiguration) {
-        yamlConfiguration = yamlConfiguration == null ? new YamlSqlPartDatumBuilderConfiguration() : yamlConfiguration;
-        SqlPartDatumBuilderConfiguration configuration = new SqlPartDatumBuilderConfiguration();
+    public DataBlockBuilderConfiguration swap(YamlDataBlockBuilderConfiguration yamlConfiguration) {
+        yamlConfiguration = yamlConfiguration == null ? new YamlDataBlockBuilderConfiguration() : yamlConfiguration;
+        DataBlockBuilderConfiguration configuration = new DataBlockBuilderConfiguration();
         Boolean selectAllColumnForMainTable = yamlConfiguration.getSelectAllColumnForMainTable();
         configuration.setSelectAllColumnForMainTable(selectAllColumnForMainTable == null ? DEFAULT_SELECT_ALL_COLUMN_FOR_MAIN_TABLE : selectAllColumnForMainTable);
         Boolean selectAllColumnForJoinTable = yamlConfiguration.getSelectAllColumnForJoinTable();

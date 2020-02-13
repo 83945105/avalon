@@ -8,18 +8,18 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlPartBuilderTemp
  */
 public class SqlBuilderConfiguration {
 
-    private SqlPartDatumBuilderConfiguration sqlPartDatumBuilder;
+    private DataBlockBuilderConfiguration dataBlockBuilder;
 
     private SqlPartBuilderTemplate mysqlSqlPartBuilderTemplate;
 
     private SqlBuilderTemplate mysqlSqlBuilderTemplate;
 
-    public SqlPartDatumBuilderConfiguration getSqlPartDatumBuilder() {
-        return sqlPartDatumBuilder;
+    public DataBlockBuilderConfiguration getDataBlockBuilder() {
+        return dataBlockBuilder;
     }
 
-    public void setSqlPartDatumBuilder(SqlPartDatumBuilderConfiguration sqlPartDatumBuilder) {
-        this.sqlPartDatumBuilder = sqlPartDatumBuilder;
+    public void setDataBlockBuilder(DataBlockBuilderConfiguration dataBlockBuilder) {
+        this.dataBlockBuilder = dataBlockBuilder;
     }
 
     public SqlPartBuilderTemplate getMysqlSqlPartBuilderTemplate() {

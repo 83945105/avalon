@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
-import pub.avalonframework.sqlhelper.core.data.SqlDataConsumer;
+import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 
 /**
@@ -11,56 +11,56 @@ public interface SqlPartBuilderTemplate {
     /**
      * build select column sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}
+     * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildSelectColumn(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildSelectColumn(CrudConsumer consumer);
 
     /**
      * build join sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}
+     * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildJoin(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildJoin(CrudConsumer consumer);
 
     /**
      * build where sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}
+     * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildWhere(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildWhere(CrudConsumer consumer);
 
     /**
      * build group sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}
+     * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildGroup(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildGroup(CrudConsumer consumer);
 
     /**
      * build having sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}er
+     * @param consumer {@link CrudConsumer}er
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildHaving(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildHaving(CrudConsumer consumer);
 
     /**
      * build sort sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}
+     * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildSort(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildSort(CrudConsumer consumer);
 
     /**
      * build limit sql part result
      *
-     * @param sqlDataConsumer {@link SqlDataConsumer}
+     * @param consumer {@link CrudConsumer}
      * @return {@link SqlBuilderResult}
      */
-    SqlBuilderResult buildLimit(SqlDataConsumer sqlDataConsumer);
+    SqlBuilderResult buildLimit(CrudConsumer consumer);
 }

@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data;
 
+import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.List;
@@ -11,21 +12,21 @@ public final class TableSortDatum {
 
     private String tableAlias;
 
-    private List<SortDatum> sortData;
+    private List<SortDataBlock> sortDataBlocks;
 
-    public TableSortDatum(String tableAlias, List<SortDatum> sortData) {
+    public TableSortDatum(String tableAlias, List<SortDataBlock> sortDataBlocks) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }
         this.tableAlias = tableAlias;
-        this.sortData = sortData;
+        this.sortDataBlocks = sortDataBlocks;
     }
 
     public String getTableAlias() {
         return tableAlias;
     }
 
-    public List<SortDatum> getSortData() {
-        return sortData;
+    public List<SortDataBlock> getSortDataBlocks() {
+        return sortDataBlocks;
     }
 }

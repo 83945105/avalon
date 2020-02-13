@@ -1,6 +1,9 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.store;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
+import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
+import pub.avalonframework.sqlhelper.core.data.MainTableDatum;
+import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.LinkedHashMap;
@@ -8,7 +11,7 @@ import java.util.LinkedHashMap;
 /**
  * @author baichao
  */
-public abstract class AbstractSqlDataCache implements SqlData {
+public abstract class AbstractDataStoreCache implements DataStore {
 
     private MainTableDatum mainTableDatum;
 
@@ -16,7 +19,7 @@ public abstract class AbstractSqlDataCache implements SqlData {
 
     private LinkedHashMap<String, JoinTableDatum> aliasJoinTableData;
 
-    public AbstractSqlDataCache(MainTableDatum mainTableDatum) {
+    public AbstractDataStoreCache(MainTableDatum mainTableDatum) {
         this.mainTableDatum = mainTableDatum;
     }
 

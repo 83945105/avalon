@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
-import pub.avalonframework.sqlhelper.core.data.WhereDatum;
+import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.builder.WhereSqlPartDatumBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.impl.*;
@@ -10,18 +10,18 @@ import pub.avalonframework.sqlhelper.core.rules.impl.*;
  * @author baichao
  */
 public interface WhereComparisonOperator<T extends Helper> extends BaseComparisonOperator<T>,
-        BaseComparisonOperatorImpl<T, WhereDatum>,
+        BaseComparisonOperatorImpl<T, WhereDataBlock>,
         ToColumnComparisonOperator<T>,
-        ToColumnComparisonOperatorImpl<T, WhereDatum>,
+        ToColumnComparisonOperatorImpl<T, WhereDataBlock>,
         ToColumnCallbackComparisonOperator<T>,
         ToColumnCallbackComparisonOperatorImpl<T>,
         ToSubQueryComparisonOperator<T>,
-        ToSubQueryComparisonOperatorImpl<T, WhereDatum>,
+        ToSubQueryComparisonOperatorImpl<T, WhereDataBlock>,
         ToSqlPartBuilderComparisonOperator<T, WhereSqlPartDatumBuilder>,
-        ToSqlPartBuilderComparisonOperatorImpl<T, WhereDatum, WhereSqlPartDatumBuilder> {
+        ToSqlPartBuilderComparisonOperatorImpl<T, WhereDataBlock, WhereSqlPartDatumBuilder> {
 
     @Override
     default ComparisonRule getComparisonRule() {
-        return getSqlBuilderConfiguration().getSqlPartDatumBuilder().getWhereComparisonRule();
+        return getSqlBuilderConfiguration().getDataBlockBuilder().getWhereComparisonRule();
     }
 }

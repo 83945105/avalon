@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.beans;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinLinkerCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.WhereDatum;
+import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -30,11 +30,11 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
             return this;
         }
         ComparisonSqlPartDataLinker comparisonSqlPartDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
-        List<WhereDatum> whereData = whereHelper.takeoutSqlPartData();
-        if (whereData == null || whereData.size() == 0) {
+        List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutSqlPartData();
+        if (whereDataBlocks == null || whereDataBlocks.size() == 0) {
             return this;
         }
-        comparisonSqlPartDataLinker.setComparisonSqlPartData(whereData);
+        comparisonSqlPartDataLinker.setComparisonSqlPartData(whereDataBlocks);
         this.comparisonSqlPartDataLinkers.add(comparisonSqlPartDataLinker);
         return this;
     }
@@ -90,11 +90,11 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
             return this;
         }
         ComparisonSqlPartDataLinker whereDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
-        List<WhereDatum> whereData = whereHelper.takeoutSqlPartData();
-        if (whereData == null || whereData.size() == 0) {
+        List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutSqlPartData();
+        if (whereDataBlocks == null || whereDataBlocks.size() == 0) {
             return this;
         }
-        whereDataLinker.setComparisonSqlPartData(whereData);
+        whereDataLinker.setComparisonSqlPartData(whereDataBlocks);
         this.comparisonSqlPartDataLinkers.add(whereDataLinker);
         return this;
     }

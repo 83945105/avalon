@@ -3,8 +3,8 @@ package pub.avalonframework.sqlhelper.core.helper;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.OnDatum;
 import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
 
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
         return this.onSqlPartDatumBuilder;
     }
 
-    public List<OnDatum> takeoutSqlPartData() {
+    public List<OnDataBlock> takeoutSqlPartData() {
         return this.onSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
@@ -53,12 +53,12 @@ public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
     }
 
     public static TableOnDatum execute(OnHelper<?> onHelper) {
-        List<OnDatum> onData = onHelper.takeoutSqlPartData();
-        if (onData == null || onData.size() == 0) {
+        List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
+        if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return null;
         }
         return new TableOnDatum(onHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonSqlPartDataLinker(LinkType.AND).setComparisonSqlPartData(onData)));
+                Collections.singletonList(new ComparisonSqlPartDataLinker(LinkType.AND).setComparisonSqlPartData(onDataBlocks)));
     }
 
     public static List<TableOnDatum> execute(OnHelper<?>... onHelpers) {

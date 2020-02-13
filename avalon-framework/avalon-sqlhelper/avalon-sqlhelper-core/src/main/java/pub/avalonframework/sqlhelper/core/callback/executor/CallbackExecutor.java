@@ -4,6 +4,9 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.*;
 import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.data.*;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SelectSqlBuilderResult;
@@ -30,11 +33,11 @@ public final class CallbackExecutor {
         }
         columnHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         columnHelper = columnCallback.apply(columnHelper);
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
-            columnData = HelperManager.defaultColumnData(columnHelper);
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
+            columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
         }
-        return new TableColumnDatum(columnHelper.getTableAlias(), columnData);
+        return new TableColumnDatum(columnHelper.getTableAlias(), columnDataBlocks);
     }
 
     public static <TG extends GroupHelper<TG>> TableGroupDatum execute(TG groupHelper, GroupCallback<TG> groupCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -46,11 +49,11 @@ public final class CallbackExecutor {
         }
         groupHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         groupHelper = groupCallback.apply(groupHelper);
-        List<GroupDatum> groupData = groupHelper.takeoutSqlPartData();
-        if (groupData == null || groupData.size() == 0) {
+        List<GroupDataBlock> groupDataBlocks = groupHelper.takeoutSqlPartData();
+        if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
             return null;
         }
-        return new TableGroupDatum(groupHelper.getTableAlias(), groupData);
+        return new TableGroupDatum(groupHelper.getTableAlias(), groupDataBlocks);
     }
 
     public static <TS extends SortHelper<TS>> TableSortDatum execute(TS sortHelper, SortCallback<TS> sortCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
@@ -62,11 +65,11 @@ public final class CallbackExecutor {
         }
         sortHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         sortHelper = sortCallback.apply(sortHelper);
-        List<SortDatum> sortData = sortHelper.takeoutSqlPartData();
-        if (sortData == null || sortData.size() == 0) {
+        List<SortDataBlock> sortDataBlocks = sortHelper.takeoutSqlPartData();
+        if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
             return null;
         }
-        return new TableSortDatum(sortHelper.getTableAlias(), sortData);
+        return new TableSortDatum(sortHelper.getTableAlias(), sortDataBlocks);
     }
 
     public static <TO extends OnHelper<TO>> TableOnDatum execute(TO onHelper, OnCallback<TO> onCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {

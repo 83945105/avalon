@@ -3,16 +3,16 @@ package pub.avalonframework.sqlhelper.core.data.builder;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
-import pub.avalonframework.sqlhelper.core.data.WhereDatum;
+import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.WhereComparisonOperator;
 
 /**
  * @author baichao
  */
-public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, WhereDatum> implements WhereComparisonOperator<T> {
+public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractComparisonSqlPartDatumBuilder<T, WhereDataBlock> implements WhereComparisonOperator<T> {
 
-    private WhereDatum whereDatum;
+    private WhereDataBlock whereDatum;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
@@ -22,13 +22,13 @@ public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractCo
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.whereDatum = new WhereDatum(templateTableName, templateTableAlias, sqlPart)
+        this.whereDatum = new WhereDataBlock(templateTableName, templateTableAlias, sqlPart)
                 .setTableAlias(this.tableAlias);
     }
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.whereDatum = new WhereDatum(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
+        this.whereDatum = new WhereDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
                 .setTableAlias(this.tableAlias);
     }
 
@@ -43,17 +43,17 @@ public final class WhereSqlPartDatumBuilder<T extends Helper> extends AbstractCo
     }
 
     @Override
-    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<WhereDatum> abstractComparisonSqlPartDatum) {
-        super.addSqlPartDatum((WhereDatum) abstractComparisonSqlPartDatum);
+    public void addAbstractComparisonSqlPartDatum(AbstractComparisonSqlPartDatum<WhereDataBlock> abstractComparisonSqlPartDatum) {
+        super.addDataBlock((WhereDataBlock) abstractComparisonSqlPartDatum);
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<WhereDatum> getAbstractComparisonSqlPartDatum() {
+    public AbstractComparisonSqlPartDatum<WhereDataBlock> getAbstractComparisonSqlPartDatum() {
         return this.whereDatum;
     }
 
     @Override
-    public AbstractComparisonSqlPartDatum<WhereDatum> getCloneComparisonSqlPartDatum() {
+    public AbstractComparisonSqlPartDatum<WhereDataBlock> getCloneComparisonSqlPartDatum() {
         return this.whereDatum.getCloneComparisonSqlPartDatum();
     }
 }

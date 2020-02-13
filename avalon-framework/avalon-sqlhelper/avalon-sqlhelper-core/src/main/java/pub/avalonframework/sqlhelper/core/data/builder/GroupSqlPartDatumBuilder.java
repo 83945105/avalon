@@ -2,13 +2,13 @@ package pub.avalonframework.sqlhelper.core.data.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.data.GroupDatum;
+import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
  * @author baichao
  */
-public final class GroupSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, GroupDatum> {
+public final class GroupSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, GroupDataBlock> {
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
@@ -18,13 +18,13 @@ public final class GroupSqlPartDatumBuilder<T extends Helper> extends AbstractSq
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.addSqlPartDatum(new GroupDatum(templateTableName, templateTableAlias, sqlPart)
+        this.addDataBlock(new GroupDataBlock(templateTableName, templateTableAlias, sqlPart)
                 .setTableAlias(this.tableAlias));
     }
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.addSqlPartDatum(new GroupDatum(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias)
+        this.addDataBlock(new GroupDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias)
                 .setTableAlias(this.tableAlias));
     }
 

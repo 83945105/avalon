@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.rules;
 
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
+import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.builder.OnSqlPartDatumBuilder;
-import pub.avalonframework.sqlhelper.core.data.OnDatum;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.impl.*;
 
@@ -10,18 +10,18 @@ import pub.avalonframework.sqlhelper.core.rules.impl.*;
  * @author baichao
  */
 public interface OnComparisonOperator<T extends Helper> extends BaseComparisonOperator<T>,
-        BaseComparisonOperatorImpl<T, OnDatum>,
+        BaseComparisonOperatorImpl<T, OnDataBlock>,
         ToColumnComparisonOperator<T>,
-        ToColumnComparisonOperatorImpl<T, OnDatum>,
+        ToColumnComparisonOperatorImpl<T, OnDataBlock>,
         ToColumnCallbackComparisonOperator<T>,
         ToColumnCallbackComparisonOperatorImpl<T>,
         ToSubQueryComparisonOperator<T>,
-        ToSubQueryComparisonOperatorImpl<T, OnDatum>,
+        ToSubQueryComparisonOperatorImpl<T, OnDataBlock>,
         ToSqlPartBuilderComparisonOperator<T, OnSqlPartDatumBuilder>,
-        ToSqlPartBuilderComparisonOperatorImpl<T, OnDatum, OnSqlPartDatumBuilder> {
+        ToSqlPartBuilderComparisonOperatorImpl<T, OnDataBlock, OnSqlPartDatumBuilder> {
 
     @Override
     default ComparisonRule getComparisonRule() {
-        return getSqlBuilderConfiguration().getSqlPartDatumBuilder().getOnComparisonRule();
+        return getSqlBuilderConfiguration().getDataBlockBuilder().getOnComparisonRule();
     }
 }

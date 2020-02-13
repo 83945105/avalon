@@ -3,15 +3,15 @@ package pub.avalonframework.sqlhelper.core.data.builder;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.SortType;
-import pub.avalonframework.sqlhelper.core.data.SortDatum;
+import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
  * @author baichao
  */
-public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, SortDatum> {
+public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSqlPartDatumBuilder<T, SortDataBlock> {
 
-    private SortDatum sortDatum;
+    private SortDataBlock sortDataBlock;
 
     private SqlBuilderConfiguration sqlBuilderConfiguration;
 
@@ -21,13 +21,13 @@ public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSql
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String sqlPart) {
-        this.sortDatum = new SortDatum(templateTableName, templateTableAlias, sqlPart)
+        this.sortDataBlock = new SortDataBlock(templateTableName, templateTableAlias, sqlPart)
                 .setTableAlias(this.tableAlias);
     }
 
     @Override
     public void accept(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName, ColumnHandler... columnHandlers) {
-        this.sortDatum = new SortDatum(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
+        this.sortDataBlock = new SortDataBlock(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName)
                 .setTableAlias(this.tableAlias);
     }
 
@@ -42,14 +42,14 @@ public final class SortSqlPartDatumBuilder<T extends Helper> extends AbstractSql
     }
 
     public T asc() {
-        this.sortDatum.setSortType(SortType.ASC);
-        this.addSqlPartDatum(this.sortDatum);
+        this.sortDataBlock.setSortType(SortType.ASC);
+        this.addDataBlock(this.sortDataBlock);
         return this.getHelper();
     }
 
     public T desc() {
-        this.sortDatum.setSortType(SortType.DESC);
-        this.addSqlPartDatum(this.sortDatum);
+        this.sortDataBlock.setSortType(SortType.DESC);
+        this.addDataBlock(this.sortDataBlock);
         return this.getHelper();
     }
 }

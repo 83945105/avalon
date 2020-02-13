@@ -4,8 +4,8 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.HavingDatum;
 import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
+import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.data.builder.HavingSqlPartDatumBuilder;
 
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
         return this.havingSqlPartDatumBuilder;
     }
 
-    public List<HavingDatum> takeoutSqlPartData() {
+    public List<HavingDataBlock> takeoutSqlPartData() {
         return this.havingSqlPartDatumBuilder.takeoutSqlPartData();
     }
 
@@ -59,12 +59,12 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
     }
 
     public static TableHavingDatum execute(HavingHelper<?> havingHelper) {
-        List<HavingDatum> havingData = havingHelper.takeoutSqlPartData();
-        if (havingData == null || havingData.size() == 0) {
+        List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
+        if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return null;
         }
         return new TableHavingDatum(havingHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonSqlPartDataLinker(LinkType.AND).setComparisonSqlPartData(havingData)));
+                Collections.singletonList(new ComparisonSqlPartDataLinker(LinkType.AND).setComparisonSqlPartData(havingDataBlocks)));
     }
 
     public static List<TableHavingDatum> execute(HavingHelper<?>... havingHelpers) {

@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.rules.impl;
 
 import pub.avalonframework.sqlhelper.core.data.AbstractComparisonSqlPartDatum;
-import pub.avalonframework.sqlhelper.core.data.AbstractSqlPartDatum;
-import pub.avalonframework.sqlhelper.core.data.ColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
+import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.rules.ToColumnComparisonOperator;
@@ -40,130 +40,130 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonS
 
     @Override
     default T equalTo(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.EQUAL, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.EQUAL, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T notEqualTo(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.NOT_EQUAL, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.NOT_EQUAL, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T greaterThan(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.GREATER, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.GREATER, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T greaterThanAndEqualTo(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.GREATER_EQUAL, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.GREATER_EQUAL, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T lessThan(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LESS, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LESS, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T lessThanAndEqualTo(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LESS_EQUAL, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LESS_EQUAL, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T between(ColumnHelper<?> columnHelper, ColumnHelper<?> secondColumnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        List<ColumnDatum> secondColumnData = secondColumnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0 || secondColumnData == null || secondColumnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        List<ColumnDataBlock> secondColumnDataBlocks = secondColumnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0 || secondColumnDataBlocks == null || secondColumnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        if (columnData.size() != secondColumnData.size()) {
-            ExceptionUtils.columnDataSizeNotEqualException();
+        if (columnDataBlocks.size() != secondColumnDataBlocks.size()) {
+            ExceptionUtils.columnDataBlocksSizeNotEqualException();
         }
-        int size = columnData.size();
+        int size = columnDataBlocks.size();
         for (int i = 0; i < size; i++) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetPairSqlPartDatum(ComparisonType.BETWEEN, columnData.get(i), secondColumnData.get(i)));
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetPairSqlPartDatum(ComparisonType.BETWEEN, columnDataBlocks.get(i), secondColumnDataBlocks.get(i)));
         }
         return this.getHelper();
     }
 
     @Override
     default T like(ColumnHelper<?> columnHelper) {
-        List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-        if (columnData == null || columnData.size() == 0) {
+        List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+        if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
         }
-        for (ColumnDatum columnDatum : columnData) {
-            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LIKE, columnDatum));
+        for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
+            this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetSingleSqlPartDatum(ComparisonType.LIKE, columnDataBlock));
         }
         return this.getHelper();
     }
 
     @Override
     default T in(ColumnHelper<?>... columnHelpers) {
-        List<AbstractSqlPartDatum> sqlPartData = new ArrayList<>(columnHelpers.length * 2);
+        List<AbstractDataBlock> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
         for (ColumnHelper<?> columnHelper : columnHelpers) {
-            List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-            if (columnData == null || columnData.size() == 0) {
+            List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+            if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
                 continue;
             }
-            sqlPartData.addAll(columnData);
+            dataBlocks.addAll(columnDataBlocks);
         }
-        this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetMultiSqlPartDatum(ComparisonType.IN, sqlPartData));
+        this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetMultiSqlPartDatum(ComparisonType.IN, dataBlocks));
         return this.getHelper();
     }
 
     @Override
     default T notIn(ColumnHelper<?>... columnHelpers) {
-        List<AbstractSqlPartDatum> sqlPartData = new ArrayList<>(columnHelpers.length * 2);
+        List<AbstractDataBlock> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
         for (ColumnHelper<?> columnHelper : columnHelpers) {
-            List<ColumnDatum> columnData = columnHelper.takeoutSqlPartData();
-            if (columnData == null || columnData.size() == 0) {
+            List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
+            if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
                 continue;
             }
-            sqlPartData.addAll(columnData);
+            dataBlocks.addAll(columnDataBlocks);
         }
-        this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetMultiSqlPartDatum(ComparisonType.NOT_IN, sqlPartData));
+        this.addAbstractComparisonSqlPartDatum(this.getCloneComparisonSqlPartDatum().setTargetMultiSqlPartDatum(ComparisonType.NOT_IN, dataBlocks));
         return this.getHelper();
     }
 }

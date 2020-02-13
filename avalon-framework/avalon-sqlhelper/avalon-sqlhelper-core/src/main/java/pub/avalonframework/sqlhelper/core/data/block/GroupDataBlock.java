@@ -1,23 +1,23 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 /**
  * @author baichao
  */
-public final class GroupDatum extends AbstractSqlPartDatum<GroupDatum> {
+public final class GroupDataBlock extends AbstractDataBlock<GroupDataBlock> {
 
     private Type type = Type.DEFAULT;
 
     private String sqlPart;
 
-    public GroupDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
+    public GroupDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
     }
 
-    public GroupDatum(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
+    public GroupDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias, String mappingFieldName) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias, mappingFieldName);
     }
 
-    public GroupDatum(String templateTableName, String templateTableAlias, String sqlPart) {
+    public GroupDataBlock(String templateTableName, String templateTableAlias, String sqlPart) {
         super(templateTableName, templateTableAlias, null, null);
         this.sqlPart = sqlPart;
         this.type = Type.SQL_PART;
@@ -31,7 +31,7 @@ public final class GroupDatum extends AbstractSqlPartDatum<GroupDatum> {
         return sqlPart;
     }
 
-    public GroupDatum setType(Type type) {
+    public GroupDataBlock setType(Type type) {
         this.type = type;
         return this;
     }
@@ -48,25 +48,25 @@ public final class GroupDatum extends AbstractSqlPartDatum<GroupDatum> {
     }
 
     @Override
-    public GroupDatum setTableName(String tableName) {
+    public GroupDataBlock setTableName(String tableName) {
         super.setTableName(tableName);
         return this;
     }
 
     @Override
-    public GroupDatum setTableAlias(String tableAlias) {
+    public GroupDataBlock setTableAlias(String tableAlias) {
         super.setTableAlias(tableAlias);
         return this;
     }
 
     @Override
-    public GroupDatum setColumnName(String columnName) {
+    public GroupDataBlock setColumnName(String columnName) {
         super.setColumnName(columnName);
         return this;
     }
 
     @Override
-    public GroupDatum setColumnAlias(String columnAlias) {
+    public GroupDataBlock setColumnAlias(String columnAlias) {
         super.setColumnAlias(columnAlias);
         return this;
     }

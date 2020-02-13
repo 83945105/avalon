@@ -9,18 +9,18 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlPartBuilderTemp
  */
 public class YamlSqlBuilderConfiguration implements YamlConfiguration {
 
-    private YamlSqlPartDatumBuilderConfiguration sqlPartDatumBuilder;
+    private YamlDataBlockBuilderConfiguration dataBlockBuilder;
 
     private SqlPartBuilderTemplate mysqlSqlPartBuilderTemplate;
 
     private SqlBuilderTemplate mysqlSqlBuilderTemplate;
 
-    public YamlSqlPartDatumBuilderConfiguration getSqlPartDatumBuilder() {
-        return sqlPartDatumBuilder;
+    public YamlDataBlockBuilderConfiguration getDataBlockBuilder() {
+        return dataBlockBuilder;
     }
 
-    public void setSqlPartDatumBuilder(YamlSqlPartDatumBuilderConfiguration sqlPartDatumBuilder) {
-        this.sqlPartDatumBuilder = sqlPartDatumBuilder;
+    public void setDataBlockBuilder(YamlDataBlockBuilderConfiguration dataBlockBuilder) {
+        this.dataBlockBuilder = dataBlockBuilder;
     }
 
     public SqlPartBuilderTemplate getMysqlSqlPartBuilderTemplate() {
