@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.inject;
 
-import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 
 /**
  * @author baichao
@@ -10,7 +10,7 @@ public interface UpdateInjector extends ConfigurationInjector, JoinDataInjector,
     /**
      * add update table column data
      *
-     * @param tableColumnDatum {@link TableColumnDatum}
+     * @param tableColumnDatum {@link TableColumnDataBlock}
      */
-    void addUpdateTableColumnDatum(TableColumnDatum tableColumnDatum);
+    void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum);
 }

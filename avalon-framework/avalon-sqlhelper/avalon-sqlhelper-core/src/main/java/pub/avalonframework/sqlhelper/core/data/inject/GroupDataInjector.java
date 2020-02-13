@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.inject;
 
-import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
 
 /**
  * @author baichao
@@ -10,7 +10,7 @@ public interface GroupDataInjector {
     /**
      * add table group data
      *
-     * @param tableGroupDatum {@link TableGroupDatum}
+     * @param tableGroupDatum {@link TableGroupDataBlock}
      */
-    void addTableGroupDatum(TableGroupDatum tableGroupDatum);
+    void addTableGroupDatum(TableGroupDataBlock tableGroupDatum);
 }

@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public final class WhereBuilderBean<TW extends WhereHelper<TW>> extends Abstract
     }
 
     @Override
-    public List<TableWhereDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableWhereDatum> tableWhereData = new ArrayList<>(1);
+    public List<TableWhereDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        List<TableWhereDataBlock> tableWhereData = new ArrayList<>(1);
         if (this.whereHelpers != null) {
             for (WhereHelper<?> whereHelper : this.whereHelpers) {
                 tableWhereData.add(whereHelper.execute());

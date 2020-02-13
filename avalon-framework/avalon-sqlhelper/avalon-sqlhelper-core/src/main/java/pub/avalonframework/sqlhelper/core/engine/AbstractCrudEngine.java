@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.*;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.CrudInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
@@ -156,47 +156,47 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
     }
 
     @Override
-    public void addJoinTableDatum(JoinTableDatum joinTableDatum) {
+    public void addJoinTableDatum(TableJoinDataBlock joinTableDatum) {
         this.dataStore.addJoinTableDatum(joinTableDatum);
     }
 
     @Override
-    public void addTableOnDatum(TableOnDatum tableOnDatum) {
+    public void addTableOnDatum(TableOnDataBlock tableOnDatum) {
         this.dataStore.addTableOnDatum(tableOnDatum);
     }
 
     @Override
-    public void addSelectTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addSelectTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         this.dataStore.addSelectTableColumnDatum(tableColumnDatum);
     }
 
     @Override
-    public void addInsertTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addInsertTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         this.dataStore.addInsertTableColumnDatum(tableColumnDatum);
     }
 
     @Override
-    public void addUpdateTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         this.dataStore.addUpdateTableColumnDatum(tableColumnDatum);
     }
 
     @Override
-    public void addTableWhereDatum(TableWhereDatum tableWhereDatum) {
+    public void addTableWhereDatum(TableWhereDataBlock tableWhereDatum) {
         this.dataStore.addTableWhereDatum(tableWhereDatum);
     }
 
     @Override
-    public void addTableGroupDatum(TableGroupDatum tableGroupDatum) {
+    public void addTableGroupDatum(TableGroupDataBlock tableGroupDatum) {
         this.dataStore.addTableGroupDatum(tableGroupDatum);
     }
 
     @Override
-    public void addTableHavingDatum(TableHavingDatum tableHavingDatum) {
+    public void addTableHavingDatum(TableHavingDataBlock tableHavingDatum) {
         this.dataStore.addTableHavingDatum(tableHavingDatum);
     }
 
     @Override
-    public void addTableSortDatum(TableSortDatum tableSortDatum) {
+    public void addTableSortDatum(TableSortDataBlock tableSortDatum) {
         this.dataStore.addTableSortDatum(tableSortDatum);
     }
 

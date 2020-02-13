@@ -3,8 +3,8 @@ package pub.avalonframework.sqlhelper.core.helper;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.ColumnDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -57,19 +57,19 @@ public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
         this.columnSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
-    public TableColumnDatum execute() {
+    public TableColumnDataBlock execute() {
         return execute(this);
     }
 
-    public static TableColumnDatum execute(ColumnHelper<?> columnHelper) {
+    public static TableColumnDataBlock execute(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutSqlPartData();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
         }
-        return new TableColumnDatum(columnHelper.getTableAlias(), columnDataBlocks);
+        return new TableColumnDataBlock(columnHelper.getTableAlias(), columnDataBlocks);
     }
 
-    public static List<TableColumnDatum> execute(ColumnHelper<?>... columnHelpers) {
+    public static List<TableColumnDataBlock> execute(ColumnHelper<?>... columnHelpers) {
         if (columnHelpers == null || columnHelpers.length == 0) {
             return Collections.emptyList();
         }

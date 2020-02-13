@@ -1,6 +1,5 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
-import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.List;
@@ -8,13 +7,13 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class TableColumnDatum {
+public final class TableColumnDataBlock {
 
     private String tableAlias;
 
     private List<ColumnDataBlock> columnDataBlocks;
 
-    public TableColumnDatum(String tableAlias, List<ColumnDataBlock> columnDataBlocks) {
+    public TableColumnDataBlock(String tableAlias, List<ColumnDataBlock> columnDataBlocks) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }

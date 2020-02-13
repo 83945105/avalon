@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.store;
 
-import pub.avalonframework.sqlhelper.core.data.*;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,60 +10,60 @@ import java.util.List;
  */
 public abstract class AbstractDataStore extends AbstractDataStoreCache {
 
-    private List<TableColumnDatum> selectTableColumnData;
+    private List<TableColumnDataBlock> selectTableColumnData;
 
-    private List<TableColumnDatum> insertTabColumnData;
+    private List<TableColumnDataBlock> insertTabColumnData;
 
-    private List<TableColumnDatum> updateTabColumnData;
+    private List<TableColumnDataBlock> updateTabColumnData;
 
-    private List<TableWhereDatum> tableWhereData;
+    private List<TableWhereDataBlock> tableWhereData;
 
-    private List<TableGroupDatum> tableGroupData;
+    private List<TableGroupDataBlock> tableGroupData;
 
-    private List<TableHavingDatum> tableHavingData;
+    private List<TableHavingDataBlock> tableHavingData;
 
-    private List<TableSortDatum> tableSortData;
+    private List<TableSortDataBlock> tableSortData;
 
     private Long limit;
 
     private Long offset;
 
-    public AbstractDataStore(MainTableDatum mainTableDatum) {
+    public AbstractDataStore(TableMainDataBlock mainTableDatum) {
         super(mainTableDatum);
     }
 
     @Override
-    public List<TableColumnDatum> getSelectTableColumnData() {
+    public List<TableColumnDataBlock> getSelectTableColumnData() {
         return this.selectTableColumnData;
     }
 
     @Override
-    public List<TableColumnDatum> getInsertTableColumnData() {
+    public List<TableColumnDataBlock> getInsertTableColumnData() {
         return this.insertTabColumnData;
     }
 
     @Override
-    public List<TableColumnDatum> getUpdateTableColumnData() {
+    public List<TableColumnDataBlock> getUpdateTableColumnData() {
         return this.updateTabColumnData;
     }
 
     @Override
-    public List<TableWhereDatum> getTableWhereData() {
+    public List<TableWhereDataBlock> getTableWhereData() {
         return this.tableWhereData;
     }
 
     @Override
-    public List<TableGroupDatum> getTableGroupData() {
+    public List<TableGroupDataBlock> getTableGroupData() {
         return this.tableGroupData;
     }
 
     @Override
-    public List<TableHavingDatum> getTableHavingData() {
+    public List<TableHavingDataBlock> getTableHavingData() {
         return this.tableHavingData;
     }
 
     @Override
-    public List<TableSortDatum> getTableSortData() {
+    public List<TableSortDataBlock> getTableSortData() {
         return this.tableSortData;
     }
 
@@ -78,7 +78,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addSelectTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addSelectTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         if (tableColumnDatum == null) {
             return;
         }
@@ -89,7 +89,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addInsertTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addInsertTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         if (tableColumnDatum == null) {
             return;
         }
@@ -100,7 +100,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addUpdateTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         if (tableColumnDatum == null) {
             return;
         }
@@ -111,7 +111,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addTableWhereDatum(TableWhereDatum tableWhereDatum) {
+    public void addTableWhereDatum(TableWhereDataBlock tableWhereDatum) {
         if (tableWhereDatum == null) {
             return;
         }
@@ -122,7 +122,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addTableGroupDatum(TableGroupDatum tableGroupDatum) {
+    public void addTableGroupDatum(TableGroupDataBlock tableGroupDatum) {
         if (tableGroupDatum == null) {
             return;
         }
@@ -133,7 +133,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addTableHavingDatum(TableHavingDatum tableHavingDatum) {
+    public void addTableHavingDatum(TableHavingDataBlock tableHavingDatum) {
         if (tableHavingDatum == null) {
             return;
         }
@@ -144,7 +144,7 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addTableSortDatum(TableSortDatum tableSortDatum) {
+    public void addTableSortDatum(TableSortDataBlock tableSortDatum) {
         if (tableSortDatum == null) {
             return;
         }

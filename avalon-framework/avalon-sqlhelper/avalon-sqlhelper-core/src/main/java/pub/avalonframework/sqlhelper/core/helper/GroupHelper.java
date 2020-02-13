@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
 import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.GroupDataBlockBuilder;
 
 import java.util.Arrays;
@@ -46,19 +46,19 @@ public abstract class GroupHelper<T extends GroupHelper<T>> extends Helper {
         this.groupSqlPartDatumBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
-    public TableGroupDatum execute() {
+    public TableGroupDataBlock execute() {
         return execute(this);
     }
 
-    public static TableGroupDatum execute(GroupHelper<?> groupHelper) {
+    public static TableGroupDataBlock execute(GroupHelper<?> groupHelper) {
         List<GroupDataBlock> groupDataBlocks = groupHelper.takeoutSqlPartData();
         if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
             return null;
         }
-        return new TableGroupDatum(groupHelper.getTableAlias(), groupDataBlocks);
+        return new TableGroupDataBlock(groupHelper.getTableAlias(), groupDataBlocks);
     }
 
-    public static List<TableGroupDatum> execute(GroupHelper<?>... groupHelpers) {
+    public static List<TableGroupDataBlock> execute(GroupHelper<?>... groupHelpers) {
         if (groupHelpers == null || groupHelpers.length == 0) {
             return Collections.emptyList();
         }

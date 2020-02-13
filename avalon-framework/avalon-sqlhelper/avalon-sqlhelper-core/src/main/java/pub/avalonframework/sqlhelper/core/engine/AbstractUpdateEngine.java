@@ -2,10 +2,10 @@ package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
-import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
-import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
-import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.UpdateSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.UpdateSqlBuilderResult;
@@ -88,22 +88,22 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
     }
 
     @Override
-    public void addJoinTableDatum(JoinTableDatum joinTableDatum) {
+    public void addJoinTableDatum(TableJoinDataBlock joinTableDatum) {
         this.dataStore.addJoinTableDatum(joinTableDatum);
     }
 
     @Override
-    public void addTableOnDatum(TableOnDatum tableOnDatum) {
+    public void addTableOnDatum(TableOnDataBlock tableOnDatum) {
         this.dataStore.addTableOnDatum(tableOnDatum);
     }
 
     @Override
-    public void addUpdateTableColumnDatum(TableColumnDatum tableColumnDatum) {
+    public void addUpdateTableColumnDatum(TableColumnDataBlock tableColumnDatum) {
         this.dataStore.addUpdateTableColumnDatum(tableColumnDatum);
     }
 
     @Override
-    public void addTableWhereDatum(TableWhereDatum tableWhereDatum) {
+    public void addTableWhereDatum(TableWhereDataBlock tableWhereDatum) {
         this.dataStore.addTableWhereDatum(tableWhereDatum);
     }
 }

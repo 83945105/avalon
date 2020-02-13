@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.Collections;
@@ -31,7 +31,7 @@ public final class GroupBuilderBeanJoin<T extends TableHelper<T, TC, TO, TW, TG,
     }
 
     @Override
-    public List<TableGroupDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableGroupDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, this.groupCallback, sqlBuilderConfiguration));
     }
 }

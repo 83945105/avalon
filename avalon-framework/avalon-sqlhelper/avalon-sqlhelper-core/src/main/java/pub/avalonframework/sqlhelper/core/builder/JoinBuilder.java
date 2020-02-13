@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.block.helper.HelperJoinBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractJoinBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.JoinBuilderBean;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
-import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -58,11 +58,11 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
         return joinBuilderBeans;
     }
 
-    public List<JoinTableDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableJoinDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return execute(this, sqlBuilderConfiguration);
     }
 
-    public static <FO extends OnHelper<FO>> List<JoinTableDatum> execute(JoinBuilder<FO> joinBuilder, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <FO extends OnHelper<FO>> List<TableJoinDataBlock> execute(JoinBuilder<FO> joinBuilder, SqlBuilderConfiguration sqlBuilderConfiguration) {
         return joinBuilder.getJoinBuilderBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderConfiguration)).collect(Collectors.toList());
     }
 }

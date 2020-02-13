@@ -2,8 +2,8 @@ package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
-import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.TableWhereDatum;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
 
@@ -48,20 +48,20 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
         this.whereDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
-    public TableWhereDatum execute() {
+    public TableWhereDataBlock execute() {
         return execute(this);
     }
 
-    public static TableWhereDatum execute(WhereHelper<?> whereHelper) {
+    public static TableWhereDataBlock execute(WhereHelper<?> whereHelper) {
         List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutSqlPartData();
         if (whereDataBlocks == null || whereDataBlocks.size() == 0) {
             return null;
         }
-        return new TableWhereDatum(whereHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonSqlPartDataLinker(LinkType.AND).setComparisonSqlPartData(whereDataBlocks)));
+        return new TableWhereDataBlock(whereHelper.getTableAlias(),
+                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonSqlPartData(whereDataBlocks)));
     }
 
-    public static List<TableWhereDatum> execute(WhereHelper<?>... whereHelpers) {
+    public static List<TableWhereDataBlock> execute(WhereHelper<?>... whereHelpers) {
         if (whereHelpers == null || whereHelpers.length == 0) {
             return Collections.emptyList();
         }

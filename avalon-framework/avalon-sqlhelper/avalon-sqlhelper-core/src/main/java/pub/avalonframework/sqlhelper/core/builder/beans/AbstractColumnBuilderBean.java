@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public abstract class AbstractColumnBuilderBean extends BuilderBean {
         super(tableAlias);
     }
 
-    abstract public List<TableColumnDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration);
+    abstract public List<TableColumnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

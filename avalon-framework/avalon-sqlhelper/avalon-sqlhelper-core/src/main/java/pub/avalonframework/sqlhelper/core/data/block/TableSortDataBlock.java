@@ -1,6 +1,5 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
-import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.List;
@@ -8,13 +7,13 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class TableSortDatum {
+public final class TableSortDataBlock {
 
     private String tableAlias;
 
     private List<SortDataBlock> sortDataBlocks;
 
-    public TableSortDatum(String tableAlias, List<SortDataBlock> sortDataBlocks) {
+    public TableSortDataBlock(String tableAlias, List<SortDataBlock> sortDataBlocks) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }

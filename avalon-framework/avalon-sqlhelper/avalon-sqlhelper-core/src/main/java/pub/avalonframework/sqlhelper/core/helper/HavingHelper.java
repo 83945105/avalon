@@ -3,9 +3,9 @@ package pub.avalonframework.sqlhelper.core.helper;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
-import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
-import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableHavingDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
 
 import java.util.Arrays;
@@ -54,20 +54,20 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
         this.havingDataBlockBuilder.setSqlBuilderConfiguration(sqlBuilderConfiguration);
     }
 
-    public TableHavingDatum execute() {
+    public TableHavingDataBlock execute() {
         return execute(this);
     }
 
-    public static TableHavingDatum execute(HavingHelper<?> havingHelper) {
+    public static TableHavingDataBlock execute(HavingHelper<?> havingHelper) {
         List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
         if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return null;
         }
-        return new TableHavingDatum(havingHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonSqlPartDataLinker(LinkType.AND).setComparisonSqlPartData(havingDataBlocks)));
+        return new TableHavingDataBlock(havingHelper.getTableAlias(),
+                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonSqlPartData(havingDataBlocks)));
     }
 
-    public static List<TableHavingDatum> execute(HavingHelper<?>... havingHelpers) {
+    public static List<TableHavingDataBlock> execute(HavingHelper<?>... havingHelpers) {
         if (havingHelpers == null || havingHelpers.length == 0) {
             return Collections.emptyList();
         }

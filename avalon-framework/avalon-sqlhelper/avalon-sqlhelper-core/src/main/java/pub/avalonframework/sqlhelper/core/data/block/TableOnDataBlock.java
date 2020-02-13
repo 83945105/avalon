@@ -1,5 +1,6 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.ArrayList;
@@ -8,13 +9,13 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class TableOnDatum {
+public final class TableOnDataBlock {
 
     private String tableAlias;
 
-    private List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers;
+    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers;
 
-    public TableOnDatum(String tableAlias, List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers) {
+    public TableOnDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }
@@ -26,11 +27,11 @@ public final class TableOnDatum {
         return tableAlias;
     }
 
-    public List<ComparisonSqlPartDataLinker> getComparisonSqlPartDataLinkers() {
+    public List<ComparisonDataBlockLinker> getComparisonSqlPartDataLinkers() {
         return comparisonSqlPartDataLinkers;
     }
 
-    public void merge(TableOnDatum tableOnDatum) {
+    public void merge(TableOnDataBlock tableOnDatum) {
         if (tableOnDatum == null) {
             return;
         }
@@ -40,7 +41,7 @@ public final class TableOnDatum {
         this.addAllComparisonSqlPartDataLinkers(tableOnDatum.getComparisonSqlPartDataLinkers());
     }
 
-    public void addAllComparisonSqlPartDataLinkers(List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers) {
+    public void addAllComparisonSqlPartDataLinkers(List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
         if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
             return;
         }

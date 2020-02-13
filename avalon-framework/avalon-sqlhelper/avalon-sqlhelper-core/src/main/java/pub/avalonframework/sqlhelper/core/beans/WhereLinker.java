@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.beans;
 
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinLinkerCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereLinkerCallback;
-import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.List;
@@ -15,9 +15,9 @@ public interface WhereLinker<TW extends WhereHelper<TW>> {
     /**
      * Clean up after each takeout.
      *
-     * @return list {@link ComparisonSqlPartDataLinker}
+     * @return list {@link ComparisonDataBlockLinker}
      */
-    List<ComparisonSqlPartDataLinker> takeoutComparisonSqlPartDataLinkers();
+    List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers();
 
     /**
      * and

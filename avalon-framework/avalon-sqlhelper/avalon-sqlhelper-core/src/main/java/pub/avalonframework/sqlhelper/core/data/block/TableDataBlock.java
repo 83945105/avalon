@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.helper.TableHelper;
 
 /**
  * @author baichao
  */
-public interface TableDatum {
+public interface TableDataBlock {
 
     /**
      * get extends {@link TableHelper} class

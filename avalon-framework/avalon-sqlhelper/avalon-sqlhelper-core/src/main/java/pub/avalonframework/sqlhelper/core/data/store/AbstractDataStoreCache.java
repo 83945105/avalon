@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.data.store;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.JoinTableDatum;
-import pub.avalonframework.sqlhelper.core.data.MainTableDatum;
-import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableMainDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.LinkedHashMap;
@@ -13,13 +13,13 @@ import java.util.LinkedHashMap;
  */
 public abstract class AbstractDataStoreCache implements DataStore {
 
-    private MainTableDatum mainTableDatum;
+    private TableMainDataBlock mainTableDatum;
 
     private SqlhelperConfiguration configuration;
 
-    private LinkedHashMap<String, JoinTableDatum> aliasJoinTableData;
+    private LinkedHashMap<String, TableJoinDataBlock> aliasJoinTableData;
 
-    public AbstractDataStoreCache(MainTableDatum mainTableDatum) {
+    public AbstractDataStoreCache(TableMainDataBlock mainTableDatum) {
         this.mainTableDatum = mainTableDatum;
     }
 
@@ -29,12 +29,12 @@ public abstract class AbstractDataStoreCache implements DataStore {
     }
 
     @Override
-    public MainTableDatum getMainTableDatum() {
+    public TableMainDataBlock getMainTableDatum() {
         return this.mainTableDatum;
     }
 
     @Override
-    public LinkedHashMap<String, JoinTableDatum> getAliasJoinTableData() {
+    public LinkedHashMap<String, TableJoinDataBlock> getAliasJoinTableData() {
         return this.aliasJoinTableData;
     }
 
@@ -44,14 +44,14 @@ public abstract class AbstractDataStoreCache implements DataStore {
     }
 
     @Override
-    public void addJoinTableDatum(JoinTableDatum joinTableDatum) {
+    public void addJoinTableDatum(TableJoinDataBlock joinTableDatum) {
         if (joinTableDatum == null) {
             return;
         }
         if (this.aliasJoinTableData == null) {
             this.aliasJoinTableData = new LinkedHashMap<>();
         }
-        JoinTableDatum cache = this.aliasJoinTableData.get(joinTableDatum.getTableAlias());
+        TableJoinDataBlock cache = this.aliasJoinTableData.get(joinTableDatum.getTableAlias());
         if (cache == null) {
             this.aliasJoinTableData.put(joinTableDatum.getTableAlias(), joinTableDatum);
             return;
@@ -60,11 +60,11 @@ public abstract class AbstractDataStoreCache implements DataStore {
     }
 
     @Override
-    public void addTableOnDatum(TableOnDatum tableOnDatum) {
+    public void addTableOnDatum(TableOnDataBlock tableOnDatum) {
         if (tableOnDatum == null) {
             return;
         }
-        JoinTableDatum joinTableDatum = this.aliasJoinTableData.get(tableOnDatum.getTableAlias());
+        TableJoinDataBlock joinTableDatum = this.aliasJoinTableData.get(tableOnDatum.getTableAlias());
         if (joinTableDatum == null) {
             ExceptionUtils.notJoinException(tableOnDatum.getTableAlias());
         }

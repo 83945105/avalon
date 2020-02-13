@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 import java.util.Objects;
 
 /**
  * @author baichao
  */
-public abstract class AbstractTableDatum implements TableDatum {
+public abstract class AbstractTableDataBlock implements TableDataBlock {
 
     private Class<?> tableHelperClass;
 
@@ -13,7 +13,7 @@ public abstract class AbstractTableDatum implements TableDatum {
 
     protected String tableAlias;
 
-    public AbstractTableDatum(Class<?> tableHelperClass, String tableName, String tableAlias) {
+    public AbstractTableDataBlock(Class<?> tableHelperClass, String tableName, String tableAlias) {
         this.tableHelperClass = tableHelperClass;
         this.tableName = tableName;
         this.tableAlias = tableAlias;
@@ -58,7 +58,7 @@ public abstract class AbstractTableDatum implements TableDatum {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AbstractTableDatum tableData = (AbstractTableDatum) o;
+        AbstractTableDataBlock tableData = (AbstractTableDataBlock) o;
         return Objects.equals(tableAlias, tableData.tableAlias);
     }
 

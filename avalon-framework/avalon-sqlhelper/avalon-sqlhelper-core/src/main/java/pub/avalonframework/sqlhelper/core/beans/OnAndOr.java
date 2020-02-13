@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.beans;
 
 import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
-import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
@@ -13,11 +13,11 @@ import java.util.List;
  */
 public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
 
-    private List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = new ArrayList<>();
+    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = new ArrayList<>();
 
     @Override
-    public List<ComparisonSqlPartDataLinker> takeoutComparisonSqlPartDataLinkers() {
-        List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = this.comparisonSqlPartDataLinkers;
+    public List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers() {
+        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = this.comparisonSqlPartDataLinkers;
         this.comparisonSqlPartDataLinkers = new ArrayList<>();
         return comparisonSqlPartDataLinkers;
     }
@@ -27,7 +27,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (onHelper == null) {
             return this;
         }
-        ComparisonSqlPartDataLinker onDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
+        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
         List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
@@ -43,11 +43,11 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
             return this;
         }
         OnLinker<TO> onLinker = onLinkerCallback.apply(new OnAndOr<>());
-        List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
         if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
             return this;
         }
-        ComparisonSqlPartDataLinker onDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
+        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
         onDataLinker.setComparisonSqlPartDataLinkers(comparisonSqlPartDataLinkers);
         this.comparisonSqlPartDataLinkers.add(onDataLinker);
         return this;
@@ -63,7 +63,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (onHelper == null) {
             return this;
         }
-        ComparisonSqlPartDataLinker onDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
+        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
         List<OnDataBlock> onDataBlocks = onHelper.takeoutSqlPartData();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
@@ -84,11 +84,11 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
             return this;
         }
         OnLinker<TO> onLinker = onLinkerCallback.apply(new OnAndOr<>());
-        List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
         if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
             return this;
         }
-        ComparisonSqlPartDataLinker onDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
+        ComparisonDataBlockLinker onDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
         onDataLinker.setComparisonSqlPartDataLinkers(comparisonSqlPartDataLinkers);
         this.comparisonSqlPartDataLinkers.add(onDataLinker);
         return this;

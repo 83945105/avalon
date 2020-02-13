@@ -5,9 +5,6 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.*;
-import pub.avalonframework.sqlhelper.core.data.beans.ColumnType;
-import pub.avalonframework.sqlhelper.core.data.beans.Type;
-import pub.avalonframework.sqlhelper.core.data.beans.ValueType;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
@@ -25,7 +22,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     @Override
     public SqlBuilderResult buildSelectColumn(CrudConsumer consumer) {
-        List<TableColumnDatum> tableColumnData = consumer.getSelectTableColumnData();
+        List<TableColumnDataBlock> tableColumnData = consumer.getSelectTableColumnData();
         boolean hasC = tableColumnData != null && tableColumnData.size() != 0;
         StringBuilder sql = new StringBuilder(128);
         List<Object> args = new ArrayList<>(16);
@@ -41,9 +38,9 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                 this.appendColumnSqlArgs(sql, args, HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias()));
             }
             if (selectAllColumnForJoinTable) {
-                LinkedHashMap<String, JoinTableDatum> aliasJoinTableData = consumer.getAliasJoinTableData();
+                LinkedHashMap<String, TableJoinDataBlock> aliasJoinTableData = consumer.getAliasJoinTableData();
                 if (aliasJoinTableData != null && aliasJoinTableData.size() > 0) {
-                    for (Map.Entry<String, JoinTableDatum> entry : aliasJoinTableData.entrySet()) {
+                    for (Map.Entry<String, TableJoinDataBlock> entry : aliasJoinTableData.entrySet()) {
                         this.appendColumnSqlArgs(sql, args, HelperManager.defaultColumnData(entry.getValue().getTableHelperClass(), entry.getKey()));
                     }
                 }
@@ -56,14 +53,14 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     @Override
     public SqlBuilderResult buildJoin(CrudConsumer consumer) {
-        LinkedHashMap<String, JoinTableDatum> joinTableDataAliasMap = consumer.getAliasJoinTableData();
+        LinkedHashMap<String, TableJoinDataBlock> joinTableDataAliasMap = consumer.getAliasJoinTableData();
         if (joinTableDataAliasMap == null || joinTableDataAliasMap.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
         StringBuilder sql = new StringBuilder(128);
         List<Object> args = new ArrayList<>(16);
-        JoinTableDatum joinTableDatum;
-        for (Map.Entry<String, JoinTableDatum> entry : joinTableDataAliasMap.entrySet()) {
+        TableJoinDataBlock joinTableDatum;
+        for (Map.Entry<String, TableJoinDataBlock> entry : joinTableDataAliasMap.entrySet()) {
             joinTableDatum = entry.getValue();
             switch (joinTableDatum.getJoinType()) {
                 case INNER:
@@ -82,7 +79,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
                     .append(joinTableDatum.getTableName())
                     .append("` ")
                     .append(joinTableDatum.getTableAlias());
-            List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = joinTableDatum.getTableOnDatum().getComparisonSqlPartDataLinkers();
+            List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = joinTableDatum.getTableOnDatum().getComparisonSqlPartDataLinkers();
             if (comparisonSqlPartDataLinkers != null && comparisonSqlPartDataLinkers.size() > 0) {
                 sql.append(" on ");
                 this.appendComparisonSqlPartDataLinkersSqlArgs(sql, args, comparisonSqlPartDataLinkers, LinkType.AND, false);
@@ -93,7 +90,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     @Override
     public SqlBuilderResult buildWhere(CrudConsumer consumer) {
-        List<TableWhereDatum> tableWhereData = consumer.getTableWhereData();
+        List<TableWhereDataBlock> tableWhereData = consumer.getTableWhereData();
         if (tableWhereData == null || tableWhereData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -101,7 +98,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         List<Object> args = new ArrayList<>(16);
         sql.append(" where ");
         int i = 0;
-        for (TableWhereDatum tableWhereDatum : tableWhereData) {
+        for (TableWhereDataBlock tableWhereDatum : tableWhereData) {
             if (i++ > 0) {
                 sql.append(" and ");
             }
@@ -112,7 +109,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     @Override
     public SqlBuilderResult buildGroup(CrudConsumer consumer) {
-        List<TableGroupDatum> tableGroupData = consumer.getTableGroupData();
+        List<TableGroupDataBlock> tableGroupData = consumer.getTableGroupData();
         if (tableGroupData == null || tableGroupData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -120,7 +117,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         sql.append(" group by ");
         int i = 0;
         List<GroupDataBlock> groupDataBlocks;
-        for (TableGroupDatum tableGroupDatum : tableGroupData) {
+        for (TableGroupDataBlock tableGroupDatum : tableGroupData) {
             groupDataBlocks = tableGroupDatum.getGroupDataBlocks();
             if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
                 continue;
@@ -140,7 +137,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     @Override
     public SqlBuilderResult buildHaving(CrudConsumer consumer) {
-        List<TableHavingDatum> tableHavingData = consumer.getTableHavingData();
+        List<TableHavingDataBlock> tableHavingData = consumer.getTableHavingData();
         if (tableHavingData == null || tableHavingData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -148,7 +145,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         List<Object> args = new ArrayList<>(16);
         sql.append(" having ");
         int i = 0;
-        for (TableHavingDatum tableHavingDatum : tableHavingData) {
+        for (TableHavingDataBlock tableHavingDatum : tableHavingData) {
             if (i++ > 0) {
                 sql.append(" and ");
             }
@@ -159,7 +156,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
 
     @Override
     public SqlBuilderResult buildSort(CrudConsumer consumer) {
-        List<TableSortDatum> tableSortData = consumer.getTableSortData();
+        List<TableSortDataBlock> tableSortData = consumer.getTableSortData();
         if (tableSortData == null || tableSortData.size() == 0) {
             return FinalSqlBuilderResult.NONE;
         }
@@ -167,7 +164,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         sql.append(" order by ");
         int i = 0;
         List<SortDataBlock> sortDataBlocks;
-        for (TableSortDatum tableSortDatum : tableSortData) {
+        for (TableSortDataBlock tableSortDatum : tableSortData) {
             sortDataBlocks = tableSortDatum.getSortDataBlocks();
             if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
                 continue;
@@ -268,10 +265,10 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendTableColumnSqlArgs(StringBuilder sql, List<Object> args, List<TableColumnDatum> tableColumnData) {
+    private void appendTableColumnSqlArgs(StringBuilder sql, List<Object> args, List<TableColumnDataBlock> tableColumnData) {
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks;
-        for (TableColumnDatum tableColumnDatum : tableColumnData) {
+        for (TableColumnDataBlock tableColumnDatum : tableColumnData) {
             columnDataBlocks = tableColumnDatum.getColumnDataBlocks();
             if (columnDataBlocks.size() == 0) {
                 continue;
@@ -520,7 +517,7 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         }
     }
 
-    private void appendComparisonSqlPartDataLinkersSqlArgs(StringBuilder sql, List<Object> args, List<ComparisonSqlPartDataLinker> onDataLinkers, LinkType linkType, boolean checkBrackets) {
+    private void appendComparisonSqlPartDataLinkersSqlArgs(StringBuilder sql, List<Object> args, List<ComparisonDataBlockLinker> onDataLinkers, LinkType linkType, boolean checkBrackets) {
         if (onDataLinkers == null || onDataLinkers.size() == 0) {
             return;
         }
@@ -528,9 +525,9 @@ public final class DefaultMySqlPartBuilderTemplate implements MySqlPartBuilderTe
         List<? extends AbstractComparisonDataBlock> comparisonSqlPartData;
         int i = 0;
         boolean brackets = false;
-        for (ComparisonSqlPartDataLinker comparisonSqlPartDataLinker : onDataLinkers) {
+        for (ComparisonDataBlockLinker comparisonSqlPartDataLinker : onDataLinkers) {
             comparisonSqlPartData = comparisonSqlPartDataLinker.getComparisonSqlPartData();
-            List<ComparisonSqlPartDataLinker> childComparisonSqlPartDataLinkers = comparisonSqlPartDataLinker.getComparisonSqlPartDataLinkers();
+            List<ComparisonDataBlockLinker> childComparisonSqlPartDataLinkers = comparisonSqlPartDataLinker.getComparisonSqlPartDataLinkers();
             if (comparisonSqlPartData != null && comparisonSqlPartData.size() > 0) {
                 switch (comparisonSqlPartDataLinker.getLinkType()) {
                     case AND:

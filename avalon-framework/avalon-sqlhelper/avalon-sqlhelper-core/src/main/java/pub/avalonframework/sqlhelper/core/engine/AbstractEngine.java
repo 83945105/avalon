@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.MainTableDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableMainDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.ConfigurationInjector;
 import pub.avalonframework.sqlhelper.core.data.store.DataStore;
 import pub.avalonframework.sqlhelper.core.data.store.SqlDataStore;
@@ -66,7 +66,7 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
         this.tableHelperClass = tableHelperClass;
         this.tableAlias = tableAlias;
         configuration.setDatabaseType(databaseType);
-        this.dataStore = new SqlDataStore(new MainTableDatum(tableHelperClass, tableName, this.tableAlias), configuration);
+        this.dataStore = new SqlDataStore(new TableMainDataBlock(tableHelperClass, tableName, this.tableAlias), configuration);
         this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createCrudSqlBuilder();
     }
 

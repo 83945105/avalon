@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.TableGroupDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.GroupHelper;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public final class GroupBuilderBean<TG extends GroupHelper<TG>> extends Abstract
     }
 
     @Override
-    public List<TableGroupDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableGroupDatum> tableGroupData = new ArrayList<>(1);
+    public List<TableGroupDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        List<TableGroupDataBlock> tableGroupData = new ArrayList<>(1);
         if (this.groupHelpers != null) {
             for (GroupHelper<?> groupHelper : this.groupHelpers) {
                 tableGroupData.add(groupHelper.execute());

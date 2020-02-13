@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.data.consume;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.*;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,65 +21,65 @@ public interface CrudConsumer {
     /**
      * get main table data
      *
-     * @return {@link MainTableDatum}
+     * @return {@link TableMainDataBlock}
      */
-    MainTableDatum getMainTableDatum();
+    TableMainDataBlock getMainTableDatum();
 
     /**
      * get select table column data
      *
-     * @return {@link TableColumnDatum}
+     * @return {@link TableColumnDataBlock}
      */
-    List<TableColumnDatum> getSelectTableColumnData();
+    List<TableColumnDataBlock> getSelectTableColumnData();
 
     /**
      * get insert table column data
      *
-     * @return {@link TableColumnDatum}
+     * @return {@link TableColumnDataBlock}
      */
-    List<TableColumnDatum> getInsertTableColumnData();
+    List<TableColumnDataBlock> getInsertTableColumnData();
 
     /**
      * get update table column data
      *
-     * @return {@link TableColumnDatum}
+     * @return {@link TableColumnDataBlock}
      */
-    List<TableColumnDatum> getUpdateTableColumnData();
+    List<TableColumnDataBlock> getUpdateTableColumnData();
 
     /**
      * get join table alias and data
      *
-     * @return key - table alias | value - {@link JoinTableDatum}
+     * @return key - table alias | value - {@link TableJoinDataBlock}
      */
-    LinkedHashMap<String, JoinTableDatum> getAliasJoinTableData();
+    LinkedHashMap<String, TableJoinDataBlock> getAliasJoinTableData();
 
     /**
      * get table where data
      *
-     * @return {@link TableWhereDatum}
+     * @return {@link TableWhereDataBlock}
      */
-    List<TableWhereDatum> getTableWhereData();
+    List<TableWhereDataBlock> getTableWhereData();
 
     /**
      * get table group data
      *
-     * @return {@link TableGroupDatum}
+     * @return {@link TableGroupDataBlock}
      */
-    List<TableGroupDatum> getTableGroupData();
+    List<TableGroupDataBlock> getTableGroupData();
 
     /**
      * get table having data
      *
-     * @return {@link TableHavingDatum}
+     * @return {@link TableHavingDataBlock}
      */
-    List<TableHavingDatum> getTableHavingData();
+    List<TableHavingDataBlock> getTableHavingData();
 
     /**
      * get table sort data
      *
-     * @return {@link TableSortDatum}
+     * @return {@link TableSortDataBlock}
      */
-    List<TableSortDatum> getTableSortData();
+    List<TableSortDataBlock> getTableSortData();
 
     /**
      * get limit data

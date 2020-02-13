@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data.beans;
+package pub.avalonframework.sqlhelper.core.data;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 

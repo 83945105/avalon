@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public final class ColumnBuilderBean<TC extends ColumnHelper<TC>> extends Abstra
     }
 
     @Override
-    public List<TableColumnDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableColumnDatum> tableColumnData = new ArrayList<>(1);
+    public List<TableColumnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        List<TableColumnDataBlock> tableColumnData = new ArrayList<>(1);
         if (this.columnHelpers != null) {
             for (ColumnHelper<?> columnHelper : this.columnHelpers) {
                 tableColumnData.add(columnHelper.execute());

@@ -1,34 +1,34 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
 
 /**
  * @author baichao
  */
-public final class JoinTableDatum extends AbstractTableDatum {
+public final class TableJoinDataBlock extends AbstractTableDataBlock {
 
     private JoinType joinType;
 
-    public JoinTableDatum(JoinType joinType, Class<?> tableHelperClass, String tableName, String tableAlias) {
+    public TableJoinDataBlock(JoinType joinType, Class<?> tableHelperClass, String tableName, String tableAlias) {
         super(tableHelperClass, tableName, tableAlias);
         this.joinType = joinType;
     }
 
-    private TableOnDatum tableOnDatum;
+    private TableOnDataBlock tableOnDatum;
 
     public JoinType getJoinType() {
         return joinType;
     }
 
-    public TableOnDatum getTableOnDatum() {
+    public TableOnDataBlock getTableOnDatum() {
         return tableOnDatum;
     }
 
-    public void setTableOnDatum(TableOnDatum tableOnDatum) {
+    public void setTableOnDatum(TableOnDataBlock tableOnDatum) {
         this.tableOnDatum = tableOnDatum;
     }
 
-    public JoinTableDatum appendTableOnDatum(TableOnDatum tableOnDatum) {
+    public TableJoinDataBlock appendTableOnDatum(TableOnDataBlock tableOnDatum) {
         if (tableOnDatum == null) {
             return this;
         }
@@ -40,7 +40,7 @@ public final class JoinTableDatum extends AbstractTableDatum {
         return this;
     }
 
-    public JoinTableDatum merge(JoinTableDatum joinTableDatum) {
+    public TableJoinDataBlock merge(TableJoinDataBlock joinTableDatum) {
         if (joinTableDatum == null) {
             return this;
         }

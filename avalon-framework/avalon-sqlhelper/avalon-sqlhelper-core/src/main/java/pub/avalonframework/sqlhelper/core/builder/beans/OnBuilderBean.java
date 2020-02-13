@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.OnCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.TableOnDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public final class OnBuilderBean<TO extends OnHelper<TO>> extends AbstractOnBuil
     }
 
     @Override
-    public List<TableOnDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableOnDatum> tableOnData = new ArrayList<>(1);
+    public List<TableOnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        List<TableOnDataBlock> tableOnData = new ArrayList<>(1);
         if (this.onHelpers != null) {
             for (OnHelper<?> onHelper : this.onHelpers) {
                 tableOnData.add(onHelper.execute());

@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.utils;
 
+import pub.avalonframework.sqlhelper.core.data.ColumnType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
-import pub.avalonframework.sqlhelper.core.data.beans.ColumnType;
-import pub.avalonframework.sqlhelper.core.data.beans.Type;
-import pub.avalonframework.sqlhelper.core.data.beans.ValueType;
+import pub.avalonframework.sqlhelper.core.data.Type;
+import pub.avalonframework.sqlhelper.core.data.ValueType;
 import pub.avalonframework.sqlhelper.core.exception.ComparisonRuleNullException;
 
 /**

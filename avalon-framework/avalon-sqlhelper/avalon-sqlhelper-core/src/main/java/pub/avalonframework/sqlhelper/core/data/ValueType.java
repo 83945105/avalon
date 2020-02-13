@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.data.beans;
+package pub.avalonframework.sqlhelper.core.data;
 
 /**
  * @author baichao

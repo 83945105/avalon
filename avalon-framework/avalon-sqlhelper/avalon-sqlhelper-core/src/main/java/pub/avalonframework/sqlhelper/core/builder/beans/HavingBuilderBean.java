@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.builder.beans;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
-import pub.avalonframework.sqlhelper.core.data.TableHavingDatum;
+import pub.avalonframework.sqlhelper.core.data.block.TableHavingDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends Abstra
     }
 
     @Override
-    public List<TableHavingDatum> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        List<TableHavingDatum> tableHavingData = new ArrayList<>(1);
+    public List<TableHavingDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+        List<TableHavingDataBlock> tableHavingData = new ArrayList<>(1);
         if (this.havingHelpers != null) {
             for (HavingHelper<?> havingHelper : this.havingHelpers) {
                 tableHavingData.add(havingHelper.execute());

@@ -3,10 +3,8 @@ package pub.avalonframework.sqlhelper.core.callback.executor;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.*;
 import pub.avalonframework.sqlhelper.core.callback.*;
-import pub.avalonframework.sqlhelper.core.data.*;
-import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.GroupDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.SortDataBlock;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SelectSqlBuilderResult;
@@ -24,7 +22,7 @@ public final class CallbackExecutor {
     private CallbackExecutor() {
     }
 
-    public static <TC extends ColumnHelper<TC>> TableColumnDatum execute(TC columnHelper, ColumnCallback<TC> columnCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <TC extends ColumnHelper<TC>> TableColumnDataBlock execute(TC columnHelper, ColumnCallback<TC> columnCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (columnHelper == null) {
             ExceptionUtils.columnHelperNullException();
         }
@@ -37,10 +35,10 @@ public final class CallbackExecutor {
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
         }
-        return new TableColumnDatum(columnHelper.getTableAlias(), columnDataBlocks);
+        return new TableColumnDataBlock(columnHelper.getTableAlias(), columnDataBlocks);
     }
 
-    public static <TG extends GroupHelper<TG>> TableGroupDatum execute(TG groupHelper, GroupCallback<TG> groupCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <TG extends GroupHelper<TG>> TableGroupDataBlock execute(TG groupHelper, GroupCallback<TG> groupCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (groupHelper == null) {
             ExceptionUtils.groupHelperNullException();
         }
@@ -53,10 +51,10 @@ public final class CallbackExecutor {
         if (groupDataBlocks == null || groupDataBlocks.size() == 0) {
             return null;
         }
-        return new TableGroupDatum(groupHelper.getTableAlias(), groupDataBlocks);
+        return new TableGroupDataBlock(groupHelper.getTableAlias(), groupDataBlocks);
     }
 
-    public static <TS extends SortHelper<TS>> TableSortDatum execute(TS sortHelper, SortCallback<TS> sortCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <TS extends SortHelper<TS>> TableSortDataBlock execute(TS sortHelper, SortCallback<TS> sortCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (sortHelper == null) {
             ExceptionUtils.sortHelperNullException();
         }
@@ -69,10 +67,10 @@ public final class CallbackExecutor {
         if (sortDataBlocks == null || sortDataBlocks.size() == 0) {
             return null;
         }
-        return new TableSortDatum(sortHelper.getTableAlias(), sortDataBlocks);
+        return new TableSortDataBlock(sortHelper.getTableAlias(), sortDataBlocks);
     }
 
-    public static <TO extends OnHelper<TO>> TableOnDatum execute(TO onHelper, OnCallback<TO> onCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <TO extends OnHelper<TO>> TableOnDataBlock execute(TO onHelper, OnCallback<TO> onCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (onHelper == null) {
             ExceptionUtils.onHelperNullException();
         }
@@ -81,11 +79,11 @@ public final class CallbackExecutor {
         }
         onHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         OnLinker<TO> onLinker = onCallback.apply(new OnAndOr<>(), onHelper);
-        List<ComparisonSqlPartDataLinker> onDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> onDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
         if (onDataLinkers == null || onDataLinkers.size() == 0) {
             return null;
         }
-        return new TableOnDatum(onHelper.getTableAlias(), onDataLinkers);
+        return new TableOnDataBlock(onHelper.getTableAlias(), onDataLinkers);
     }
 
     public static <TO extends OnHelper<TO>,
@@ -95,7 +93,7 @@ public final class CallbackExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> TableOnDatum execute(TO mainOnHelper, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            SS extends SortHelper<SS>> TableOnDataBlock execute(TO mainOnHelper, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (mainOnHelper == null) {
             ExceptionUtils.onHelperNullException();
         }
@@ -108,14 +106,14 @@ public final class CallbackExecutor {
         SO so = s.newOnHelper(joinTableAlias);
         so.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         OnLinker<TO> onLinker = onJoinCallback.apply(new OnAndOr<>(), so, mainOnHelper);
-        List<ComparisonSqlPartDataLinker> onDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> onDataLinkers = onLinker.takeoutComparisonSqlPartDataLinkers();
         if (onDataLinkers == null || onDataLinkers.size() == 0) {
             return null;
         }
-        return new TableOnDatum(joinTableAlias, onDataLinkers);
+        return new TableOnDataBlock(joinTableAlias, onDataLinkers);
     }
 
-    public static <TW extends WhereHelper<TW>> TableWhereDatum execute(TW whereHelper, WhereCallback<TW> whereCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <TW extends WhereHelper<TW>> TableWhereDataBlock execute(TW whereHelper, WhereCallback<TW> whereCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (whereHelper == null) {
             ExceptionUtils.whereHelperNullException();
         }
@@ -124,11 +122,11 @@ public final class CallbackExecutor {
         }
         whereHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         WhereLinker<TW> whereLinker = whereCallback.apply(new WhereAndOr<>(), whereHelper);
-        List<ComparisonSqlPartDataLinker> whereDataLinkers = whereLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> whereDataLinkers = whereLinker.takeoutComparisonSqlPartDataLinkers();
         if (whereDataLinkers == null || whereDataLinkers.size() == 0) {
             return null;
         }
-        return new TableWhereDatum(whereHelper.getTableAlias(), whereDataLinkers);
+        return new TableWhereDataBlock(whereHelper.getTableAlias(), whereDataLinkers);
     }
 
     public static <TW extends WhereHelper<TW>,
@@ -138,7 +136,7 @@ public final class CallbackExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> TableWhereDatum execute(TW mainWhereHelper, Class<S> joinTableHelperClass, String joinTableAlias, WhereJoinCallback<TW, SW> whereJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            SS extends SortHelper<SS>> TableWhereDataBlock execute(TW mainWhereHelper, Class<S> joinTableHelperClass, String joinTableAlias, WhereJoinCallback<TW, SW> whereJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (mainWhereHelper == null) {
             ExceptionUtils.whereHelperNullException();
         }
@@ -151,14 +149,14 @@ public final class CallbackExecutor {
         SW sw = s.newWhereHelper(joinTableAlias);
         sw.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         WhereLinker<TW> whereLinker = whereJoinCallback.apply(new WhereAndOr<>(), sw, mainWhereHelper);
-        List<ComparisonSqlPartDataLinker> whereDataLinkers = whereLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> whereDataLinkers = whereLinker.takeoutComparisonSqlPartDataLinkers();
         if (whereDataLinkers == null || whereDataLinkers.size() == 0) {
             return null;
         }
-        return new TableWhereDatum(joinTableAlias, whereDataLinkers);
+        return new TableWhereDataBlock(joinTableAlias, whereDataLinkers);
     }
 
-    public static <TH extends HavingHelper<TH>> TableHavingDatum execute(TH havingHelper, HavingCallback<TH> havingCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public static <TH extends HavingHelper<TH>> TableHavingDataBlock execute(TH havingHelper, HavingCallback<TH> havingCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (havingHelper == null) {
             ExceptionUtils.havingHelperNullException();
         }
@@ -167,11 +165,11 @@ public final class CallbackExecutor {
         }
         havingHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         HavingLinker<TH> havingLinker = havingCallback.apply(new HavingAndOr<>(), havingHelper);
-        List<ComparisonSqlPartDataLinker> havingDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> havingDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
         if (havingDataLinkers == null || havingDataLinkers.size() == 0) {
             return null;
         }
-        return new TableHavingDatum(havingHelper.getTableAlias(), havingDataLinkers);
+        return new TableHavingDataBlock(havingHelper.getTableAlias(), havingDataLinkers);
     }
 
     public static <TH extends HavingHelper<TH>,
@@ -181,7 +179,7 @@ public final class CallbackExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> TableHavingDatum execute(TH mainHavingHelper, Class<S> joinTableHelperClass, String joinTableAlias, HavingJoinCallback<TH, SH> havingJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            SS extends SortHelper<SS>> TableHavingDataBlock execute(TH mainHavingHelper, Class<S> joinTableHelperClass, String joinTableAlias, HavingJoinCallback<TH, SH> havingJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (mainHavingHelper == null) {
             ExceptionUtils.havingHelperNullException();
         }
@@ -194,11 +192,11 @@ public final class CallbackExecutor {
         SH sh = s.newHavingHelper(joinTableAlias);
         sh.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         HavingLinker<TH> havingLinker = havingJoinCallback.apply(new HavingAndOr<>(), sh, mainHavingHelper);
-        List<ComparisonSqlPartDataLinker> havingDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> havingDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
         if (havingDataLinkers == null || havingDataLinkers.size() == 0) {
             return null;
         }
-        return new TableHavingDatum(joinTableAlias, havingDataLinkers);
+        return new TableHavingDataBlock(joinTableAlias, havingDataLinkers);
     }
 
     public static <T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
@@ -207,7 +205,7 @@ public final class CallbackExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableColumnDatum execute(Class<T> tableHelperClass, String tableAlias, ColumnCallback<TC> columnCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            TS extends SortHelper<TS>> TableColumnDataBlock execute(Class<T> tableHelperClass, String tableAlias, ColumnCallback<TC> columnCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -222,7 +220,7 @@ public final class CallbackExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableGroupDatum execute(Class<T> tableHelperClass, String tableAlias, GroupCallback<TG> groupCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            TS extends SortHelper<TS>> TableGroupDataBlock execute(Class<T> tableHelperClass, String tableAlias, GroupCallback<TG> groupCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -237,7 +235,7 @@ public final class CallbackExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableSortDatum execute(Class<T> tableHelperClass, String tableAlias, SortCallback<TS> sortCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            TS extends SortHelper<TS>> TableSortDataBlock execute(Class<T> tableHelperClass, String tableAlias, SortCallback<TS> sortCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -252,7 +250,7 @@ public final class CallbackExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableOnDatum execute(Class<T> tableHelperClass, String tableAlias, OnCallback<TO> onCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            TS extends SortHelper<TS>> TableOnDataBlock execute(Class<T> tableHelperClass, String tableAlias, OnCallback<TO> onCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -274,7 +272,7 @@ public final class CallbackExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> TableOnDatum execute(Class<T> mainTableHelperClass, String mainTableAlias, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            SS extends SortHelper<SS>> TableOnDataBlock execute(Class<T> mainTableHelperClass, String mainTableAlias, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (mainTableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -289,7 +287,7 @@ public final class CallbackExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableWhereDatum execute(Class<T> tableHelperClass, String tableAlias, WhereCallback<TW> whereCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            TS extends SortHelper<TS>> TableWhereDataBlock execute(Class<T> tableHelperClass, String tableAlias, WhereCallback<TW> whereCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -311,7 +309,7 @@ public final class CallbackExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> TableWhereDatum execute(Class<T> mainTableHelperClass, String mainTableAlias, Class<S> joinTableHelperClass, String joinTableAlias, WhereJoinCallback<TW, SW> whereJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            SS extends SortHelper<SS>> TableWhereDataBlock execute(Class<T> mainTableHelperClass, String mainTableAlias, Class<S> joinTableHelperClass, String joinTableAlias, WhereJoinCallback<TW, SW> whereJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (mainTableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -326,7 +324,7 @@ public final class CallbackExecutor {
             TW extends WhereHelper<TW>,
             TG extends GroupHelper<TG>,
             TH extends HavingHelper<TH>,
-            TS extends SortHelper<TS>> TableHavingDatum execute(Class<T> tableHelperClass, String tableAlias, HavingCallback<TH> havingCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            TS extends SortHelper<TS>> TableHavingDataBlock execute(Class<T> tableHelperClass, String tableAlias, HavingCallback<TH> havingCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
@@ -348,7 +346,7 @@ public final class CallbackExecutor {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> TableHavingDatum execute(Class<T> mainTableHelperClass, String mainTableAlias, Class<S> joinTableHelperClass, String joinTableAlias, HavingJoinCallback<TH, SH> havingJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
+            SS extends SortHelper<SS>> TableHavingDataBlock execute(Class<T> mainTableHelperClass, String mainTableAlias, Class<S> joinTableHelperClass, String joinTableAlias, HavingJoinCallback<TH, SH> havingJoinCallback, SqlBuilderConfiguration sqlBuilderConfiguration) {
         if (mainTableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }

@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.beans;
 
 import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
-import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.List;
@@ -14,9 +14,9 @@ public interface HavingLinker<TH extends HavingHelper<TH>> {
     /**
      * Clean up after each takeout.
      *
-     * @return list {@link ComparisonSqlPartDataLinker}
+     * @return list {@link ComparisonDataBlockLinker}
      */
-    List<ComparisonSqlPartDataLinker> takeoutComparisonSqlPartDataLinkers();
+    List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers();
 
     /**
      * and

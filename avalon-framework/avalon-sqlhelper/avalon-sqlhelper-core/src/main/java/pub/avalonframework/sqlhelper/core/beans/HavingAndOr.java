@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.beans;
 
 import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
-import pub.avalonframework.sqlhelper.core.data.ComparisonSqlPartDataLinker;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
@@ -13,11 +13,11 @@ import java.util.List;
  */
 public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLinker<TH> {
 
-    private List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = new ArrayList<>();
+    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = new ArrayList<>();
 
     @Override
-    public List<ComparisonSqlPartDataLinker> takeoutComparisonSqlPartDataLinkers() {
-        List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = this.comparisonSqlPartDataLinkers;
+    public List<ComparisonDataBlockLinker> takeoutComparisonSqlPartDataLinkers() {
+        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = this.comparisonSqlPartDataLinkers;
         this.comparisonSqlPartDataLinkers = new ArrayList<>();
         return comparisonSqlPartDataLinkers;
     }
@@ -27,7 +27,7 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
         if (havingHelper == null) {
             return this;
         }
-        ComparisonSqlPartDataLinker havingDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
+        ComparisonDataBlockLinker havingDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
         List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
         if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return this;
@@ -43,11 +43,11 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
             return this;
         }
         HavingLinker<TH> havingLinker = havingLinkerCallback.apply(new HavingAndOr<>());
-        List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
         if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
             return this;
         }
-        ComparisonSqlPartDataLinker havingDataLinker = new ComparisonSqlPartDataLinker(LinkType.AND);
+        ComparisonDataBlockLinker havingDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
         havingDataLinker.setComparisonSqlPartDataLinkers(comparisonSqlPartDataLinkers);
         this.comparisonSqlPartDataLinkers.add(havingDataLinker);
         return this;
@@ -63,7 +63,7 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
         if (havingHelper == null) {
             return this;
         }
-        ComparisonSqlPartDataLinker havingDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
+        ComparisonDataBlockLinker havingDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
         List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutSqlPartData();
         if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return this;
@@ -84,11 +84,11 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
             return this;
         }
         HavingLinker<TH> havingLinker = havingLinkerCallback.apply(new HavingAndOr<>());
-        List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
+        List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers = havingLinker.takeoutComparisonSqlPartDataLinkers();
         if (comparisonSqlPartDataLinkers == null || comparisonSqlPartDataLinkers.size() == 0) {
             return this;
         }
-        ComparisonSqlPartDataLinker havingDataLinker = new ComparisonSqlPartDataLinker(LinkType.OR);
+        ComparisonDataBlockLinker havingDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
         havingDataLinker.setComparisonSqlPartDataLinkers(comparisonSqlPartDataLinkers);
         this.comparisonSqlPartDataLinkers.add(havingDataLinker);
         return this;

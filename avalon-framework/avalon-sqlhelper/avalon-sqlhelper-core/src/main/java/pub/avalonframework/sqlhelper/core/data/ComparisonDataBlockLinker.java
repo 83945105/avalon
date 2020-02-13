@@ -8,17 +8,17 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class ComparisonSqlPartDataLinker {
+public final class ComparisonDataBlockLinker {
 
     private LinkType linkType;
 
-    public ComparisonSqlPartDataLinker(LinkType linkType) {
+    public ComparisonDataBlockLinker(LinkType linkType) {
         this.linkType = linkType;
     }
 
     private List<? extends AbstractComparisonDataBlock> comparisonSqlPartData;
 
-    private List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers;
+    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers;
 
     public LinkType getLinkType() {
         return linkType;
@@ -28,16 +28,16 @@ public final class ComparisonSqlPartDataLinker {
         return comparisonSqlPartData;
     }
 
-    public ComparisonSqlPartDataLinker setComparisonSqlPartData(List<? extends AbstractComparisonDataBlock> comparisonSqlPartData) {
+    public ComparisonDataBlockLinker setComparisonSqlPartData(List<? extends AbstractComparisonDataBlock> comparisonSqlPartData) {
         this.comparisonSqlPartData = comparisonSqlPartData;
         return this;
     }
 
-    public List<ComparisonSqlPartDataLinker> getComparisonSqlPartDataLinkers() {
+    public List<ComparisonDataBlockLinker> getComparisonSqlPartDataLinkers() {
         return comparisonSqlPartDataLinkers;
     }
 
-    public ComparisonSqlPartDataLinker setComparisonSqlPartDataLinkers(List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers) {
+    public ComparisonDataBlockLinker setComparisonSqlPartDataLinkers(List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
         this.comparisonSqlPartDataLinkers = comparisonSqlPartDataLinkers;
         return this;
     }

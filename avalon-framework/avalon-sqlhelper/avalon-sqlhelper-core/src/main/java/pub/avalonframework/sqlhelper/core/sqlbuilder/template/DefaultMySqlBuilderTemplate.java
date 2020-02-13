@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
 import pub.avalonframework.common.utils.BeanUtils;
-import pub.avalonframework.sqlhelper.core.data.TableColumnDatum;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
 import pub.avalonframework.sqlhelper.core.helper.TableHelper;
@@ -69,7 +69,7 @@ public final class DefaultMySqlBuilderTemplate implements MySqlBuilderTemplate {
 
     private List<ColumnDataBlock> getOnlyInsertTableDefaultColumnData(CrudConsumer consumer) {
         List<ColumnDataBlock> columnDataBlocks;
-        List<TableColumnDatum> tableColumnData = consumer.getInsertTableColumnData();
+        List<TableColumnDataBlock> tableColumnData = consumer.getInsertTableColumnData();
         if (tableColumnData == null || tableColumnData.size() == 0) {
             return HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias());
         }
@@ -85,7 +85,7 @@ public final class DefaultMySqlBuilderTemplate implements MySqlBuilderTemplate {
 
     private List<ColumnDataBlock> getOnlyUpdateTableDefaultColumnData(CrudConsumer consumer) {
         List<ColumnDataBlock> columnDataBlocks;
-        List<TableColumnDatum> tableColumnData = consumer.getUpdateTableColumnData();
+        List<TableColumnDataBlock> tableColumnData = consumer.getUpdateTableColumnData();
         if (tableColumnData == null || tableColumnData.size() == 0) {
             return HelperManager.defaultColumnData(consumer.getMainTableDatum().getTableHelperClass(), consumer.getMainTableDatum().getTableAlias());
         }

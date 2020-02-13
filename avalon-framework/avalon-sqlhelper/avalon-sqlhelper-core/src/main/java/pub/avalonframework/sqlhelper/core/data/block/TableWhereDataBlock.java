@@ -1,5 +1,6 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.List;
@@ -7,13 +8,13 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class TableWhereDatum {
+public final class TableWhereDataBlock {
 
     private String tableAlias;
 
-    private List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers;
+    private List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers;
 
-    public TableWhereDatum(String tableAlias, List<ComparisonSqlPartDataLinker> comparisonSqlPartDataLinkers) {
+    public TableWhereDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonSqlPartDataLinkers) {
         if (tableAlias == null) {
             ExceptionUtils.tableAliasNullException();
         }
@@ -25,7 +26,7 @@ public final class TableWhereDatum {
         return tableAlias;
     }
 
-    public List<ComparisonSqlPartDataLinker> getComparisonSqlPartDataLinkers() {
+    public List<ComparisonDataBlockLinker> getComparisonSqlPartDataLinkers() {
         return comparisonSqlPartDataLinkers;
     }
 }
