@@ -2,13 +2,15 @@ package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
+import pub.avalonframework.sqlhelper.core.data.store.DataStore;
+import pub.avalonframework.sqlhelper.core.data.store.SqlDataStore;
 import pub.avalonframework.sqlhelper.core.helper.*;
+import pub.avalonframework.sqlhelper.core.mgt.SqlhelperManager;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilderProxyBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.UpdateSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.UpdateSqlBuilderResult;
+import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 import java.util.Collection;
 
@@ -21,35 +23,45 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements
-        UpdateSqlBuilder, UpdateEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements UpdateSqlBuilder, UpdateEngine<T, TC, TO, TW, TG, TH, TS> {
+
+    private DataStore<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> dataStore;
+
+    private CrudSqlBuilder crudSqlBuilder;
 
     public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass) {
-        super(databaseType, tableHelperClass);
+        this(databaseType, tableHelperClass, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(databaseType, tableHelperClass, configuration);
+        this(databaseType, null, tableHelperClass, null, configuration);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass) {
-        super(databaseType, tableName, tableHelperClass);
+        this(databaseType, tableName, tableHelperClass, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(databaseType, tableName, tableHelperClass, configuration);
+        this(databaseType, tableName, tableHelperClass, null, configuration);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, Class<T> tableHelperClass, String tableAlias) {
-        super(databaseType, tableHelperClass, tableAlias);
+        this(databaseType, null, tableHelperClass, tableAlias);
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        super(databaseType, tableName, tableHelperClass, tableAlias);
+        this(databaseType, tableName, tableHelperClass, tableAlias, SqlhelperManager.getDefaultConfiguration());
     }
 
     public AbstractUpdateEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(databaseType, tableName, tableHelperClass, tableAlias, configuration);
+        super(tableHelperClass, tableAlias);
+        if (tableName == null || tableAlias == null) {
+            T t = HelperManager.newTableHelper(tableHelperClass);
+            tableName = tableName == null ? t.getTableName() : tableName;
+            tableAlias = tableAlias == null ? t.getTableAlias() : tableAlias;
+        }
+        this.dataStore = new SqlDataStore<>(this, tableName, tableHelperClass, tableAlias, configuration.setDatabaseType(databaseType));
+        this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createCrudSqlBuilder();
     }
 
     @Override
@@ -88,22 +100,12 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
     }
 
     @Override
-    public void addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock) {
-        this.dataStore.addTableJoinDataBlock(tableJoinDataBlock);
+    public DataStore<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> getDataStore() {
+        return dataStore;
     }
 
     @Override
-    public void addTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
-        this.dataStore.addTableOnDataBlock(tableOnDataBlock);
-    }
-
-    @Override
-    public void addUpdateTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
-        this.dataStore.addUpdateTableColumnDataBlock(tableColumnDataBlock);
-    }
-
-    @Override
-    public void addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock) {
-        this.dataStore.addTableWhereDataBlock(tableWhereDataBlock);
+    public SqlhelperConfiguration getConfiguration() {
+        return getDataStore().getConfiguration();
     }
 }

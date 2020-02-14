@@ -19,23 +19,26 @@ public class SqlhelperConfiguration {
         return databaseType;
     }
 
-    public void setDatabaseType(DatabaseType databaseType) {
+    public SqlhelperConfiguration setDatabaseType(DatabaseType databaseType) {
         this.databaseType = databaseType;
+        return this;
     }
 
     public SqlPrintConfiguration getSqlPrint() {
         return sqlPrint;
     }
 
-    public void setSqlPrint(SqlPrintConfiguration sqlPrint) {
+    public SqlhelperConfiguration setSqlPrint(SqlPrintConfiguration sqlPrint) {
         this.sqlPrint = sqlPrint;
+        return this;
     }
 
     public SqlBuilderConfiguration getSqlBuilder() {
         return sqlBuilder;
     }
 
-    public void setSqlBuilder(SqlBuilderConfiguration sqlBuilder) {
+    public SqlhelperConfiguration setSqlBuilder(SqlBuilderConfiguration sqlBuilder) {
         this.sqlBuilder = sqlBuilder;
+        return this;
     }
 }

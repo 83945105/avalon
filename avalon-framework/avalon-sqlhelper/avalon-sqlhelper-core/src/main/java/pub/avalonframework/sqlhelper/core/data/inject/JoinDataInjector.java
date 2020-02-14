@@ -5,12 +5,15 @@ import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 /**
  * @author baichao
  */
-public interface JoinDataInjector {
+public interface JoinDataInjector<R> extends DataInjector<R> {
 
     /**
      * Add table join data block.
      *
      * @param tableJoinDataBlock {@link TableJoinDataBlock}
+     * @return
      */
-    void addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock);
+    default R addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock) {
+        return getDataStore().addTableJoinDataBlock(tableJoinDataBlock);
+    }
 }

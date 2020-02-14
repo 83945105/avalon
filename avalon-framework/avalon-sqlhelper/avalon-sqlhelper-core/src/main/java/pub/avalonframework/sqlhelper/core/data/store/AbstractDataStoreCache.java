@@ -11,7 +11,9 @@ import java.util.LinkedHashMap;
 /**
  * @author baichao
  */
-public abstract class AbstractDataStoreCache implements DataStore {
+public abstract class AbstractDataStoreCache<R> implements DataStore<R> {
+
+    protected R owner;
 
     private TableMainDataBlock tableMainDataBlock;
 
@@ -19,8 +21,13 @@ public abstract class AbstractDataStoreCache implements DataStore {
 
     private LinkedHashMap<String, TableJoinDataBlock> aliasTableJoinDataBlockCache;
 
-    public AbstractDataStoreCache(TableMainDataBlock tableMainDataBlock) {
+    public AbstractDataStoreCache(R owner, TableMainDataBlock tableMainDataBlock) {
+        this.owner = owner;
         this.tableMainDataBlock = tableMainDataBlock;
+    }
+
+    public R getOwner() {
+        return owner;
     }
 
     @Override
@@ -39,14 +46,20 @@ public abstract class AbstractDataStoreCache implements DataStore {
     }
 
     @Override
-    public void setConfiguration(SqlhelperConfiguration configuration) {
-        this.configuration = configuration;
+    public DataStore<R> getDataStore() {
+        return this;
     }
 
     @Override
-    public void addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock) {
+    public R setConfiguration(SqlhelperConfiguration configuration) {
+        this.configuration = configuration;
+        return owner;
+    }
+
+    @Override
+    public R addTableJoinDataBlock(TableJoinDataBlock tableJoinDataBlock) {
         if (tableJoinDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.aliasTableJoinDataBlockCache == null) {
             this.aliasTableJoinDataBlockCache = new LinkedHashMap<>();
@@ -54,20 +67,22 @@ public abstract class AbstractDataStoreCache implements DataStore {
         TableJoinDataBlock cache = this.aliasTableJoinDataBlockCache.get(tableJoinDataBlock.getTableAlias());
         if (cache == null) {
             this.aliasTableJoinDataBlockCache.put(tableJoinDataBlock.getTableAlias(), tableJoinDataBlock);
-            return;
+            return owner;
         }
         cache.merge(tableJoinDataBlock);
+        return owner;
     }
 
     @Override
-    public void addTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
+    public R addTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
         if (tableOnDataBlock == null) {
-            return;
+            return owner;
         }
         TableJoinDataBlock tableJoinDataBlock = this.aliasTableJoinDataBlockCache.get(tableOnDataBlock.getTableAlias());
         if (tableJoinDataBlock == null) {
             ExceptionUtils.notJoinException(tableOnDataBlock.getTableAlias());
         }
         tableJoinDataBlock.appendTableOnDataBlock(tableOnDataBlock);
+        return owner;
     }
 }

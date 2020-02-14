@@ -5,12 +5,15 @@ import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 /**
  * @author baichao
  */
-public interface OnDataInjector {
+public interface OnDataInjector<R> extends DataInjector<R> {
 
     /**
      * Add table on data block.
      *
      * @param tableOnDataBlock {@link TableOnDataBlock}
+     * @return
      */
-    void addTableOnDataBlock(TableOnDataBlock tableOnDataBlock);
+    default R addTableOnDataBlock(TableOnDataBlock tableOnDataBlock) {
+        return getDataStore().addTableOnDataBlock(tableOnDataBlock);
+    }
 }

@@ -5,12 +5,15 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 /**
  * @author baichao
  */
-public interface ConfigurationInjector {
+public interface ConfigurationInjector<R> extends DataInjector<R> {
 
     /**
      * Set configuration.
      *
      * @param configuration {@link SqlhelperConfiguration}
+     * @return
      */
-    void setConfiguration(SqlhelperConfiguration configuration);
+    default R setConfiguration(SqlhelperConfiguration configuration) {
+        return this.getDataStore().setConfiguration(configuration);
+    }
 }

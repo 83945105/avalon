@@ -5,12 +5,15 @@ import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 /**
  * @author baichao
  */
-public interface InsertInjector extends ConfigurationInjector {
+public interface InsertInjector<R> extends ConfigurationInjector<R> {
 
     /**
      * Add insert table column data block.
      *
      * @param tableColumnDataBlock {@link TableColumnDataBlock}
+     * @return
      */
-    void addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock);
+    default R addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+        return getDataStore().addInsertTableColumnDataBlock(tableColumnDataBlock);
+    }
 }

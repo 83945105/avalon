@@ -3,19 +3,25 @@ package pub.avalonframework.sqlhelper.core.data.inject;
 /**
  * @author baichao
  */
-public interface LimitDataInjector {
+public interface LimitDataInjector<R> extends DataInjector<R> {
 
     /**
-     * set limit data
+     * Set limit data.
      *
      * @param limit The limit data
+     * @return
      */
-    void setLimit(Long limit);
+    default R setLimit(Long limit) {
+        return getDataStore().setLimit(limit);
+    }
 
     /**
-     * set offset data
+     * Set offset data
      *
      * @param offset The offset data
+     * @return
      */
-    void setOffset(Long offset);
+    default R setOffset(Long offset) {
+        return getDataStore().setOffset(offset);
+    }
 }

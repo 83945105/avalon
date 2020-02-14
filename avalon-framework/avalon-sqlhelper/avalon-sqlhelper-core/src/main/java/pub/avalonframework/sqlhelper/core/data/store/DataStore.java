@@ -6,6 +6,6 @@ import pub.avalonframework.sqlhelper.core.data.inject.CrudInjector;
 /**
  * @author baichao
  */
-public interface DataStore extends CrudInjector, CrudConsumer {
+public interface DataStore<R> extends CrudInjector<R>, CrudConsumer {
 
 }

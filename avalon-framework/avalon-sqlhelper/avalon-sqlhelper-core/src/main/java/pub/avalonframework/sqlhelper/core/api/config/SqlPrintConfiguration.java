@@ -19,31 +19,35 @@ public class SqlPrintConfiguration {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public SqlPrintConfiguration setEnabled(Boolean enabled) {
         this.enabled = enabled;
+        return this;
     }
 
     public Boolean getColourEnabled() {
         return colourEnabled;
     }
 
-    public void setColourEnabled(Boolean colourEnabled) {
+    public SqlPrintConfiguration setColourEnabled(Boolean colourEnabled) {
         this.colourEnabled = colourEnabled;
+        return this;
     }
 
     public Boolean getSqlEnabled() {
         return sqlEnabled;
     }
 
-    public void setSqlEnabled(Boolean sqlEnabled) {
+    public SqlPrintConfiguration setSqlEnabled(Boolean sqlEnabled) {
         this.sqlEnabled = sqlEnabled;
+        return this;
     }
 
     public Boolean getArgsEnabled() {
         return argsEnabled;
     }
 
-    public void setArgsEnabled(Boolean argsEnabled) {
+    public SqlPrintConfiguration setArgsEnabled(Boolean argsEnabled) {
         this.argsEnabled = argsEnabled;
+        return this;
     }
 }

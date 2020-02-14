@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public abstract class AbstractDataStore extends AbstractDataStoreCache {
+public abstract class AbstractDataStore<R> extends AbstractDataStoreCache<R> {
 
     private List<TableColumnDataBlock> selectTableColumnDataBlocks;
 
@@ -28,8 +28,8 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
 
     private Long offset;
 
-    public AbstractDataStore(TableMainDataBlock tableMainDataBlock) {
-        super(tableMainDataBlock);
+    public AbstractDataStore(R owner, TableMainDataBlock tableMainDataBlock) {
+        super(owner, tableMainDataBlock);
     }
 
     @Override
@@ -78,95 +78,104 @@ public abstract class AbstractDataStore extends AbstractDataStoreCache {
     }
 
     @Override
-    public void addSelectTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+    public R addSelectTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
         if (tableColumnDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.selectTableColumnDataBlocks == null) {
             this.selectTableColumnDataBlocks = new ArrayList<>();
         }
         this.selectTableColumnDataBlocks.add(tableColumnDataBlock);
+        return owner;
     }
 
     @Override
-    public void addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+    public R addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
         if (tableColumnDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.insertTableColumnDataBlocks == null) {
             this.insertTableColumnDataBlocks = new ArrayList<>();
         }
         this.insertTableColumnDataBlocks.add(tableColumnDataBlock);
+        return owner;
     }
 
     @Override
-    public void addUpdateTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
+    public R addUpdateTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
         if (tableColumnDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.updateTableColumnDataBlocks == null) {
             this.updateTableColumnDataBlocks = new ArrayList<>();
         }
         this.updateTableColumnDataBlocks.add(tableColumnDataBlock);
+        return owner;
     }
 
     @Override
-    public void addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock) {
+    public R addTableWhereDataBlock(TableWhereDataBlock tableWhereDataBlock) {
         if (tableWhereDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.tableWhereDataBlocks == null) {
             this.tableWhereDataBlocks = new ArrayList<>();
         }
         this.tableWhereDataBlocks.add(tableWhereDataBlock);
+        return owner;
     }
 
     @Override
-    public void addTableGroupDataBlock(TableGroupDataBlock tableGroupDataBlock) {
+    public R addTableGroupDataBlock(TableGroupDataBlock tableGroupDataBlock) {
         if (tableGroupDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.tableGroupDataBlocks == null) {
             this.tableGroupDataBlocks = new ArrayList<>();
         }
         this.tableGroupDataBlocks.add(tableGroupDataBlock);
+        return owner;
     }
 
     @Override
-    public void addTableHavingDataBlock(TableHavingDataBlock tableHavingDataBlock) {
+    public R addTableHavingDataBlock(TableHavingDataBlock tableHavingDataBlock) {
         if (tableHavingDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.tableHavingDataBlocks == null) {
             this.tableHavingDataBlocks = new ArrayList<>();
         }
         this.tableHavingDataBlocks.add(tableHavingDataBlock);
+        return owner;
     }
 
     @Override
-    public void addTableSortDataBlock(TableSortDataBlock tableSortDataBlock) {
+    public R addTableSortDataBlock(TableSortDataBlock tableSortDataBlock) {
         if (tableSortDataBlock == null) {
-            return;
+            return owner;
         }
         if (this.tableSortDataBlocks == null) {
             this.tableSortDataBlocks = new ArrayList<>();
         }
         this.tableSortDataBlocks.add(tableSortDataBlock);
+        return owner;
     }
 
     @Override
-    public void setLimit(Long limit) {
+    public R setLimit(Long limit) {
         if (limit == null) {
-            return;
+            return owner;
         }
         this.limit = limit;
+        return owner;
     }
 
     @Override
-    public void setOffset(Long offset) {
+    public R setOffset(Long offset) {
         if (offset == null) {
-            return;
+            return owner;
         }
         this.offset = offset;
+        return owner;
     }
 }

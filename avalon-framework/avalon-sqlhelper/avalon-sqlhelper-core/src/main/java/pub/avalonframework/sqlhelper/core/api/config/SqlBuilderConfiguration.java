@@ -18,23 +18,26 @@ public class SqlBuilderConfiguration {
         return dataBlockBuilder;
     }
 
-    public void setDataBlockBuilder(DataBlockBuilderConfiguration dataBlockBuilder) {
+    public SqlBuilderConfiguration setDataBlockBuilder(DataBlockBuilderConfiguration dataBlockBuilder) {
         this.dataBlockBuilder = dataBlockBuilder;
+        return this;
     }
 
     public DataBlockBuilderTemplate getMysqlDataBlockBuilderTemplate() {
         return mysqlDataBlockBuilderTemplate;
     }
 
-    public void setMysqlDataBlockBuilderTemplate(DataBlockBuilderTemplate mysqlDataBlockBuilderTemplate) {
+    public SqlBuilderConfiguration setMysqlDataBlockBuilderTemplate(DataBlockBuilderTemplate mysqlDataBlockBuilderTemplate) {
         this.mysqlDataBlockBuilderTemplate = mysqlDataBlockBuilderTemplate;
+        return this;
     }
 
     public SqlBuilderTemplate getMysqlSqlBuilderTemplate() {
         return mysqlSqlBuilderTemplate;
     }
 
-    public void setMysqlSqlBuilderTemplate(SqlBuilderTemplate mysqlSqlBuilderTemplate) {
+    public SqlBuilderConfiguration setMysqlSqlBuilderTemplate(SqlBuilderTemplate mysqlSqlBuilderTemplate) {
         this.mysqlSqlBuilderTemplate = mysqlSqlBuilderTemplate;
+        return this;
     }
 }

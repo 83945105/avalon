@@ -21,39 +21,44 @@ public class DataBlockBuilderConfiguration {
         return selectAllColumnForMainTable;
     }
 
-    public void setSelectAllColumnForMainTable(Boolean selectAllColumnForMainTable) {
+    public DataBlockBuilderConfiguration setSelectAllColumnForMainTable(Boolean selectAllColumnForMainTable) {
         this.selectAllColumnForMainTable = selectAllColumnForMainTable;
+        return this;
     }
 
     public Boolean getSelectAllColumnForJoinTable() {
         return selectAllColumnForJoinTable;
     }
 
-    public void setSelectAllColumnForJoinTable(Boolean selectAllColumnForJoinTable) {
+    public DataBlockBuilderConfiguration setSelectAllColumnForJoinTable(Boolean selectAllColumnForJoinTable) {
         this.selectAllColumnForJoinTable = selectAllColumnForJoinTable;
+        return this;
     }
 
     public ComparisonRule getWhereComparisonRule() {
         return whereComparisonRule;
     }
 
-    public void setWhereComparisonRule(ComparisonRule whereComparisonRule) {
+    public DataBlockBuilderConfiguration setWhereComparisonRule(ComparisonRule whereComparisonRule) {
         this.whereComparisonRule = whereComparisonRule;
+        return this;
     }
 
     public ComparisonRule getOnComparisonRule() {
         return onComparisonRule;
     }
 
-    public void setOnComparisonRule(ComparisonRule onComparisonRule) {
+    public DataBlockBuilderConfiguration setOnComparisonRule(ComparisonRule onComparisonRule) {
         this.onComparisonRule = onComparisonRule;
+        return this;
     }
 
     public ComparisonRule getHavingComparisonRule() {
         return havingComparisonRule;
     }
 
-    public void setHavingComparisonRule(ComparisonRule havingComparisonRule) {
+    public DataBlockBuilderConfiguration setHavingComparisonRule(ComparisonRule havingComparisonRule) {
         this.havingComparisonRule = havingComparisonRule;
+        return this;
     }
 }
