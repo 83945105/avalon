@@ -31,11 +31,11 @@ public final class BeanPropertyInfo {
     }
 
     public Object getValue(Object javaBean) {
-        return BeanUtils.getProperty(javaBean, this.name);
+        return BeanUtils.getPropertyValue(javaBean, this.name);
     }
 
     public void setValue(Object javaBean, Object value) {
-        BeanUtils.setProperty(javaBean, this.name, value);
+        BeanUtils.setPropertyValue(javaBean, this.name, value);
     }
 
     public String getName() {

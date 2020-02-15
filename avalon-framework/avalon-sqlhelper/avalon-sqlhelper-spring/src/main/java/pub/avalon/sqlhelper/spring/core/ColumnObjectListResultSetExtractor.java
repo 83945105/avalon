@@ -60,7 +60,7 @@ public final class ColumnObjectListResultSetExtractor<K, T> implements ResultSet
                 }
                 for (int i = 1; i <= columnCount; i++) {
                     name = JdbcTools.getColumnKey(JdbcUtils.lookupColumnName(rsd, i));
-                    pub.avalonframework.common.utils.BeanUtils.setProperty(javaBean, name, JdbcTools.getColumnValue(rs, i));
+                    pub.avalonframework.common.utils.BeanUtils.setPropertyValue(javaBean, name, JdbcTools.getColumnValue(rs, i));
                 }
                 result.computeIfAbsent((K) key, k -> new ArrayList<>()).add(javaBean);
             }
@@ -76,7 +76,7 @@ public final class ColumnObjectListResultSetExtractor<K, T> implements ResultSet
                     if (name.equals(keyColumnName)) {
                         key = JdbcTools.getColumnValue(rs, i);
                     }
-                    pub.avalonframework.common.utils.BeanUtils.setProperty(javaBean, name, JdbcTools.getColumnValue(rs, i));
+                    pub.avalonframework.common.utils.BeanUtils.setPropertyValue(javaBean, name, JdbcTools.getColumnValue(rs, i));
                 }
                 result.computeIfAbsent((K) key, k -> new ArrayList<>()).add(javaBean);
             }

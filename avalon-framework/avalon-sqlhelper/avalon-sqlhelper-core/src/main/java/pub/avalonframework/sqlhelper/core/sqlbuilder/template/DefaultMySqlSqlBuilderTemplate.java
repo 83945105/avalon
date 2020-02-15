@@ -141,7 +141,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 preparedStatementSql.append(",");
             }
             preparedStatementSql.append("`").append(columnDataBlock.getColumnName()).append("`");
-            preparedStatementArgs.add(BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias()));
+            preparedStatementArgs.add(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
         }
         preparedStatementSql.append(") values (");
         for (; i > 0; i--) {
@@ -166,7 +166,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         Object value;
         List<ColumnDataBlock> columnDataBlocks = getOnlyInsertTableDefaultColumnData(consumer);
         for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
-            value = BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias());
+            value = BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias());
             if (value == null) {
                 continue;
             }
@@ -218,7 +218,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             }
             preparedStatementSql.append(valPart.toString());
             for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
-                preparedStatementArgs.add(BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias()));
+                preparedStatementArgs.add(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
             }
         }
         return FinalSqlBuilderResult.newInstance(preparedStatementSql.toString(), preparedStatementArgs);
@@ -290,7 +290,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 sqlBuilderResult.appendSqlPart(",");
             }
             sqlBuilderResult.appendSqlPart(tableAlias).appendSqlPart(".`").appendSqlPart(columnDataBlock.getColumnName()).appendSqlPart("`").appendSqlPart(" = ?");
-            sqlBuilderResult.appendArg(BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias()));
+            sqlBuilderResult.appendArg(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
         }
         sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
         return sqlBuilderResult;
@@ -310,7 +310,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         Object value;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
         for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
-            value = BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias());
+            value = BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias());
             if (value == null) {
                 continue;
             }
@@ -367,7 +367,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 sqlBuilderResult.appendSqlPart(",");
             }
             sqlBuilderResult.appendSqlPart("`").appendSqlPart(columnDataBlock.getColumnName()).appendSqlPart("`").appendSqlPart(" = ?");
-            sqlBuilderResult.appendArg(BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias()));
+            sqlBuilderResult.appendArg(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
         }
         sqlBuilderResult.appendSqlPart(" where `")
                 .appendSqlPart(primaryKeyName)
@@ -390,7 +390,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             if (columnDataBlock.getColumnName().equals(primaryKeyName)) {
                 continue;
             }
-            value = BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias());
+            value = BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias());
             if (value == null) {
                 continue;
             }
@@ -437,7 +437,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 inSql.append("?");
                 inArgs.add(keyValue);
             } else {
-                keyValue = BeanUtils.getProperty(javaBean, primaryKeyAlias);
+                keyValue = BeanUtils.getPropertyValue(javaBean, primaryKeyAlias);
                 if (i++ > 0) {
                     inSql.append(",");
                 }
@@ -475,7 +475,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 if (javaBean instanceof Map) {
                     sqlBuilderResult.appendArg(((Map) javaBean).get(columnDataBlock.getColumnAlias()));
                 } else {
-                    sqlBuilderResult.appendArg(BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias()));
+                    sqlBuilderResult.appendArg(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
                 }
             }
         }
@@ -524,7 +524,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             }
             sqlBuilderResult.appendSqlPart(valueSql.toString());
             for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
-                sqlBuilderResult.appendArg(BeanUtils.getProperty(javaBean, columnDataBlock.getColumnAlias()));
+                sqlBuilderResult.appendArg(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
             }
         }
         sqlBuilderResult.appendSqlPart(" on duplicate key update ").appendSqlPart(onSql.toString());

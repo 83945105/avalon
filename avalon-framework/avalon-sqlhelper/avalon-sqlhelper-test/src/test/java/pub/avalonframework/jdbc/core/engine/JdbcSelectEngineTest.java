@@ -3,7 +3,6 @@ package pub.avalonframework.jdbc.core.engine;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.jdbc.core.api.config.SqlhelperJdbcConfiguration;
 import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 
@@ -28,7 +27,7 @@ public class JdbcSelectEngineTest {
                 .orderBy(SysUserHelper.orderBy().id().asc())
                 .limit(1L)
                 .offset(1L)
-                .setConfiguration(new SqlhelperJdbcConfiguration())
+                .setConfiguration(new SqlhelperConfiguration())
                 .fetch((ResultSetExtractor<List<Map<String, String>>>) rs -> null);
     }
 }

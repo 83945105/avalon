@@ -24,11 +24,11 @@ public class BeanUtils {
     private BeanUtils() {
     }
 
-    private final static Map<Class, FieldAccess> CLASS_FIELD_ACCESS_CACHE = new ConcurrentHashMap<>();
+    private final static ConcurrentHashMap<Class, FieldAccess> CLASS_FIELD_ACCESS_CACHE = new ConcurrentHashMap<>(64);
 
-    private final static Map<Class, MethodAccess> CLASS_METHOD_ACCESS_CACHE = new ConcurrentHashMap<>();
+    private final static ConcurrentHashMap<Class, MethodAccess> CLASS_METHOD_ACCESS_CACHE = new ConcurrentHashMap<>(64);
 
-    private final static Map<Class, Map<String, BeanPropertyInfo>> CLASS_BEAN_PROPERTY_INFO_CACHE = new ConcurrentHashMap<>();
+    private final static ConcurrentHashMap<Class, Map<String, BeanPropertyInfo>> CLASS_BEAN_PROPERTY_INFO_CACHE = new ConcurrentHashMap<>(64);
 
     public static List<String> getPropertyNames(Class clazz, boolean parentProperty) {
         if (clazz == null) {
@@ -139,13 +139,13 @@ public class BeanUtils {
     }
 
     /**
-     * Get property.
+     * Get property value.
      *
      * @param javaBean     The java bean.
      * @param propertyName The property name.
      * @return The property.
      */
-    public static Object getProperty(Object javaBean, String propertyName) {
+    public static Object getPropertyValue(Object javaBean, String propertyName) {
         if (javaBean instanceof Map) {
             return ((Map) javaBean).get(propertyName);
         }
@@ -159,14 +159,14 @@ public class BeanUtils {
     }
 
     /**
-     * Set property.
+     * Set property value.
      *
      * @param javaBean      The java bean.
      * @param propertyName  The property name.
      * @param propertyValue The property value.
      */
     @SuppressWarnings("unchecked")
-    public static void setProperty(Object javaBean, String propertyName, Object propertyValue) {
+    public static void setPropertyValue(Object javaBean, String propertyName, Object propertyValue) {
         if (javaBean instanceof Map) {
             ((Map) javaBean).put(propertyName, propertyValue);
             return;
@@ -192,7 +192,7 @@ public class BeanUtils {
         Map<String, Object> map = new LinkedHashMap<>(propertyNames.size());
         Object value;
         for (String propertyName : propertyNames) {
-            value = getProperty(javaBean, propertyName);
+            value = getPropertyValue(javaBean, propertyName);
             if (filter.apply(value)) {
                 map.put(propertyName, value);
             }

@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.sqlbuilder;
 
+import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.store.DataStore;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlBuilderTemplate;
@@ -122,5 +123,10 @@ public class SupperCrudSqlBuilder implements CrudSqlBuilder {
     @Override
     public SelectSqlBuilderResult queryByPrimaryKey(Object primaryKeyValue) {
         return this.sqlBuilderTemplate.buildQueryByPrimaryKey(this.dataStore, primaryKeyValue);
+    }
+
+    @Override
+    public SqlhelperConfiguration getConfiguration() {
+        return this.dataStore.getConfiguration();
     }
 }

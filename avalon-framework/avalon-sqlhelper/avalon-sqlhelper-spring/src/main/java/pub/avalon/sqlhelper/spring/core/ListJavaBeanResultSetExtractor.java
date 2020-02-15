@@ -45,7 +45,7 @@ public final class ListJavaBeanResultSetExtractor<T> implements ResultSetExtract
             int columnCount = rsd.getColumnCount();
             for (int i = 1; i <= columnCount; i++) {
                 name = JdbcTools.getColumnKey(JdbcUtils.lookupColumnName(rsd, i));
-                pub.avalonframework.common.utils.BeanUtils.setProperty(javaBean, name, JdbcTools.getColumnValue(rs, i));
+                pub.avalonframework.common.utils.BeanUtils.setPropertyValue(javaBean, name, JdbcTools.getColumnValue(rs, i));
             }
             results.add(javaBean);
         }

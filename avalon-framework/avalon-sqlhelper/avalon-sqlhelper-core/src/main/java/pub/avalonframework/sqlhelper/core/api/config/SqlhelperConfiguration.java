@@ -15,6 +15,8 @@ public class SqlhelperConfiguration {
 
     private SqlBuilderConfiguration sqlBuilder;
 
+    private JdbcConfiguration jdbc;
+
     public DatabaseType getDatabaseType() {
         return databaseType;
     }
@@ -40,5 +42,13 @@ public class SqlhelperConfiguration {
     public SqlhelperConfiguration setSqlBuilder(SqlBuilderConfiguration sqlBuilder) {
         this.sqlBuilder = sqlBuilder;
         return this;
+    }
+
+    public JdbcConfiguration getJdbc() {
+        return jdbc;
+    }
+
+    public void setJdbc(JdbcConfiguration jdbc) {
+        this.jdbc = jdbc;
     }
 }

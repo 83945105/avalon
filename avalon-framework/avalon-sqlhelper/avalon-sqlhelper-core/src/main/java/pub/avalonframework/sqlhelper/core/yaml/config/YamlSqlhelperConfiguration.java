@@ -14,6 +14,8 @@ public class YamlSqlhelperConfiguration implements YamlConfiguration {
 
     private YamlSqlBuilderConfiguration sqlBuilder;
 
+    private YamlJdbcConfiguration jdbc;
+
     public DatabaseType getDatabaseType() {
         return databaseType;
     }
@@ -36,5 +38,13 @@ public class YamlSqlhelperConfiguration implements YamlConfiguration {
 
     public void setSqlBuilder(YamlSqlBuilderConfiguration sqlBuilder) {
         this.sqlBuilder = sqlBuilder;
+    }
+
+    public YamlJdbcConfiguration getJdbc() {
+        return jdbc;
+    }
+
+    public void setJdbc(YamlJdbcConfiguration jdbc) {
+        this.jdbc = jdbc;
     }
 }

@@ -2,9 +2,11 @@ package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
 import pub.avalonframework.database.DatabaseType;
+import pub.avalonframework.sqlhelper.core.api.config.JdbcConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlPrintConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
+import pub.avalonframework.sqlhelper.core.yaml.config.YamlJdbcConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlPrintConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlhelperConfiguration;
@@ -24,6 +26,8 @@ public final class SqlhelperConfigurationYamlSwapper implements YamlSwapper<Yaml
         configuration.setSqlPrint(new SqlPrintConfigurationYamlSwapper().swap(sqlPrint));
         SqlBuilderConfiguration sqlBuilder = data.getSqlBuilder();
         configuration.setSqlBuilder(new SqlBuilderConfigurationYamlSwapper().swap(sqlBuilder));
+        JdbcConfiguration jdbc = data.getJdbc();
+        configuration.setJdbc(new JdbcConfigurationYamlSwapper().swap(jdbc));
         return configuration;
     }
 
@@ -37,6 +41,8 @@ public final class SqlhelperConfigurationYamlSwapper implements YamlSwapper<Yaml
         configuration.setSqlPrint(new SqlPrintConfigurationYamlSwapper().swap(sqlPrint));
         YamlSqlBuilderConfiguration sqlBuilder = yamlConfiguration.getSqlBuilder();
         configuration.setSqlBuilder(new SqlBuilderConfigurationYamlSwapper().swap(sqlBuilder));
+        YamlJdbcConfiguration jdbc = yamlConfiguration.getJdbc();
+        configuration.setJdbc(new JdbcConfigurationYamlSwapper().swap(jdbc));
         return configuration;
     }
 }
