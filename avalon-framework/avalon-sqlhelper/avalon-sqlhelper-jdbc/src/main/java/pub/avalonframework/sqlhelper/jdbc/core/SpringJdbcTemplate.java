@@ -1,5 +1,10 @@
 package pub.avalonframework.sqlhelper.jdbc.core;
 
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
@@ -11,6 +16,11 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
 import pub.avalonframework.sqlhelper.jdbc.core.utils.JdbcTools;
 
+import javax.sql.DataSource;
+import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,24 +28,83 @@ import java.util.Map;
 /**
  * @author baichao
  */
-public class SpringJdbcTemplate implements JdbcTemplate {
+public class SpringJdbcTemplate implements JdbcTemplate, MethodInterceptor {
 
     private org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
 
     private JdbcConfiguration jdbcConfiguration;
 
-    public SpringJdbcTemplate(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate) {
+    private DatabaseType databaseType;
+
+    protected SpringJdbcTemplate(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate) {
         this(jdbcTemplate, SqlhelperManager.getDefaultConfiguration().getJdbc());
     }
 
-    public SpringJdbcTemplate(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate, JdbcConfiguration jdbcConfiguration) {
+    protected SpringJdbcTemplate(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate, JdbcConfiguration jdbcConfiguration) {
         this.jdbcTemplate = jdbcTemplate;
         this.jdbcConfiguration = jdbcConfiguration;
     }
 
+    private DatabaseType findDatabaseType(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate) {
+        DataSource dataSource = jdbcTemplate.getDataSource();
+        if (dataSource == null) {
+            throw new DataSourceIsNotSetException();
+        }
+        Connection connection;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new CannotGetJdbcConnectionException(e.getMessage(), e);
+        }
+        String databaseProductName;
+        try {
+            DatabaseMetaData databaseMetaData = connection.getMetaData();
+            databaseProductName = databaseMetaData.getDatabaseProductName();
+        } catch (SQLException e) {
+            throw new DataAccessResourceFailureException(e.getMessage(), e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return DatabaseType.valueOf(databaseProductName.toUpperCase());
+    }
+
+    public static SpringJdbcTemplate getInstance(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate) {
+        return new SpringJdbcTemplate(jdbcTemplate).createProxy();
+    }
+
+    public static SpringJdbcTemplate getInstance(org.springframework.jdbc.core.JdbcTemplate jdbcTemplate, JdbcConfiguration jdbcConfiguration) {
+        return new SpringJdbcTemplate(jdbcTemplate, jdbcConfiguration).createProxy();
+    }
+
+    private SpringJdbcTemplate createProxy() {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(this.getClass());
+        enhancer.setCallback(this);
+        SpringJdbcTemplate springJdbcTemplate = (SpringJdbcTemplate) enhancer.create(new Class[]{org.springframework.jdbc.core.JdbcTemplate.class, JdbcConfiguration.class}, new Object[]{this.jdbcTemplate, this.jdbcConfiguration});
+        DatabaseType databaseType = findDatabaseType(this.jdbcTemplate);
+        this.databaseType = databaseType;
+        springJdbcTemplate.databaseType = databaseType;
+        return springJdbcTemplate;
+    }
+
+    @Override
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+        for (Object arg : args) {
+            if (arg instanceof SqlBuilder) {
+                ((SqlBuilder) arg).getConfiguration().setDatabaseType(this.getDatabaseType());
+                return methodProxy.invokeSuper(obj, args);
+            }
+        }
+        return methodProxy.invokeSuper(obj, args);
+    }
+
     @Override
     public DatabaseType getDatabaseType() {
-        return null;
+        return databaseType;
     }
 
     @Override
