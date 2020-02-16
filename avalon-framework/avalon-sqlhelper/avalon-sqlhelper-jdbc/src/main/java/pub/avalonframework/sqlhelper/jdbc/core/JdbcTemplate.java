@@ -1,5 +1,8 @@
 package pub.avalonframework.sqlhelper.jdbc.core;
 
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.*;
 
@@ -32,9 +35,15 @@ public interface JdbcTemplate {
 
     <T> T queryByPrimaryKey(Object keyValue, SelectSqlBuilder selectSqlBuilder, Class<T> returnType);
 
+    <T> T queryOne(SelectSqlBuilder selectSqlBuilder, RowMapper<T> rowMapper);
+
     Map<String, Object> queryOne(SelectSqlBuilder selectSqlBuilder);
 
     <T> T queryOne(SelectSqlBuilder selectSqlBuilder, Class<T> returnType);
+
+    <T> List<T> query(SelectSqlBuilder selectSqlBuilder, ResultSetExtractor<List<T>> resultSetExtractor);
+
+    <T> List<T> query(SelectSqlBuilder selectSqlBuilder, RowMapper<T> rowMapper);
 
     List<Map<String, Object>> query(SelectSqlBuilder selectSqlBuilder);
 

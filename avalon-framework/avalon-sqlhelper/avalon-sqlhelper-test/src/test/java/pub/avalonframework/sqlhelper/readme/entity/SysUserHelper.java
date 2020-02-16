@@ -2,10 +2,7 @@ package pub.avalonframework.sqlhelper.readme.entity;
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
-import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
-import pub.avalonframework.sqlhelper.core.data.block.builder.SortDataBlockBuilder;
-import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;
@@ -32,7 +29,7 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
      * primary key alias
      */
         public final static String PRIMARY_KEY_ALIAS = "id";
-
+    
             /**
      * 主键ID
      */
@@ -57,7 +54,7 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
      * 登录名 alias
      */
         public final static String LOGIN_NAME_ALIAS = "loginName";
-
+    
         /**
      * table columns
      */
@@ -76,20 +73,20 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
         return new SysUserHelper();
     }
 
-    public static On on() {
-        return new On(TABLE_ALIAS);
-    }
-
-    public static On on(String tableAlias) {
-        return new On(tableAlias);
-    }
-
     public static Column column() {
         return new Column(TABLE_ALIAS);
     }
 
     public static Column column(String tableAlias) {
         return new Column(tableAlias);
+    }
+
+    public static On on() {
+        return new On(TABLE_ALIAS);
+    }
+
+    public static On on(String tableAlias) {
+        return new On(tableAlias);
     }
 
     public static Where where() {
@@ -184,40 +181,6 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
         return orderBy(tableAlias);
     }
 
-    public final static class On extends OnHelper<On> {
-
-        public On() {
-            super(TABLE_ALIAS);
-        }
-
-        public On(String tableAlias) {
-            super(tableAlias);
-        }
-
-        @Override
-        public SysUserHelper getDefaultTableHelper() {
-            return DEFAULT_INSTANCE.getDefaultInstance();
-        }
-
-        public OnDataBlockBuilder<On> sqlPart(String sqlPart) {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
-        }
-
-        public OnDataBlockBuilder<On> primaryKey() {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
-        }
-
-                public OnDataBlockBuilder<On> id() {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
-        }
-                public OnDataBlockBuilder<On> userName() {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS);
-        }
-                public OnDataBlockBuilder<On> loginName() {
-            return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS);
-        }
-            }
-
     public final static class Column extends ColumnHelper<Column> {
 
         public Column() {
@@ -297,6 +260,40 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
 
         public Column loginName(String alias, ColumnHandler... columnHandlers) {
             return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, alias, columnHandlers).getHelper();
+        }
+            }
+
+    public final static class On extends OnHelper<On> {
+
+        public On() {
+            super(TABLE_ALIAS);
+        }
+
+        public On(String tableAlias) {
+            super(tableAlias);
+        }
+
+        @Override
+        public SysUserHelper getDefaultTableHelper() {
+            return DEFAULT_INSTANCE.getDefaultInstance();
+        }
+
+        public OnDataBlockBuilder<On> sqlPart(String sqlPart) {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, sqlPart);
+        }
+
+        public OnDataBlockBuilder<On> primaryKey() {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, PRIMARY_KEY_NAME, PRIMARY_KEY_ALIAS, PRIMARY_KEY_ALIAS);
+        }
+
+                    public OnDataBlockBuilder<On> id() {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, ID, ID_ALIAS, ID_ALIAS);
+        }
+                    public OnDataBlockBuilder<On> userName() {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, USER_NAME, USER_NAME_ALIAS, USER_NAME_ALIAS);
+        }
+                    public OnDataBlockBuilder<On> loginName() {
+            return this.apply(TABLE_NAME, TABLE_ALIAS, LOGIN_NAME, LOGIN_NAME_ALIAS, LOGIN_NAME_ALIAS);
         }
             }
 

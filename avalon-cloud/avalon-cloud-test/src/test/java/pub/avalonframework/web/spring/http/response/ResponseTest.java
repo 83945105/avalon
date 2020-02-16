@@ -1,14 +1,12 @@
 package pub.avalonframework.web.spring.http.response;
 
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.test.context.junit4.SpringRunner;
 import pub.avalonframework.web.spring.http.response.api.UserApi;
 import pub.avalonframework.web.spring.http.response.controller.UserController;
 import pub.avalonframework.web.spring.http.response.entity.User;
@@ -17,7 +15,6 @@ import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
 /**
  * @author baichao
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = {
                 UserController.class
@@ -40,7 +37,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void TestGetUser() throws Exception {
+    void TestGetUser() throws Exception {
         User userDTO = new User();
         userDTO.setId("1");
         userDTO.setUsername("测试用户");

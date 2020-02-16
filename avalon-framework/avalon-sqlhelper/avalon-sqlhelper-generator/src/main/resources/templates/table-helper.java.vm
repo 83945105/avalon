@@ -2,7 +2,7 @@ package $!{setting.packagePath};
 
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.block.*;
+import pub.avalonframework.sqlhelper.core.data.block.builder.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;

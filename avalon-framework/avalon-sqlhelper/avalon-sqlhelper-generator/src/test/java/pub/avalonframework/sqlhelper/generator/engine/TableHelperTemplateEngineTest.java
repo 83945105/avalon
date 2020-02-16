@@ -18,7 +18,7 @@ public class TableHelperTemplateEngineTest {
     @Test
     void Test_generateJavaFile_deleteFiles() {
         JdbcTemplate jdbcTemplate = JdbcTemplateBuilder.newJdbcTemplateBuilder()
-                .setDriverClassName("com.mysql.cj.jdbc.Driver")
+                .setDriverClassName("com.mysql.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
                 .setPassword("root")
@@ -46,7 +46,7 @@ public class TableHelperTemplateEngineTest {
     @Test
     void Test_generateClassFile_deleteFiles() {
         JdbcTemplate jdbcTemplate = JdbcTemplateBuilder.newJdbcTemplateBuilder()
-                .setDriverClassName("com.mysql.cj.jdbc.Driver")
+                .setDriverClassName("com.mysql.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
                 .setPassword("root")
@@ -74,7 +74,7 @@ public class TableHelperTemplateEngineTest {
     @Test
     void Test_generateClassFile_customGenerateOptions_deleteFiles() {
         JdbcTemplate jdbcTemplate = JdbcTemplateBuilder.newJdbcTemplateBuilder()
-                .setDriverClassName("com.mysql.cj.jdbc.Driver")
+                .setDriverClassName("com.mysql.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
                 .setPassword("root")

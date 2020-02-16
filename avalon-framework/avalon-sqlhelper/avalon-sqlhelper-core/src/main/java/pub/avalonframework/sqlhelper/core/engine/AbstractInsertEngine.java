@@ -54,13 +54,9 @@ public abstract class AbstractInsertEngine<T extends TableHelper<T, TC, TO, TW, 
     }
 
     public AbstractInsertEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(tableHelperClass, tableAlias);
-        if (tableName == null || tableAlias == null) {
-            T t = HelperManager.newTableHelper(tableHelperClass);
-            tableName = tableName == null ? t.getTableName() : tableName;
-            tableAlias = tableAlias == null ? t.getTableAlias() : tableAlias;
-        }
-        this.dataStore = new SqlDataStore<>(this, tableName, tableHelperClass, tableAlias, configuration.setDatabaseType(databaseType));
+        super(tableHelperClass, tableAlias == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias);
+        this.dataStore = new SqlDataStore<>(this, tableName == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableName() : tableName,
+                tableHelperClass, this.tableAlias, configuration.setDatabaseType(databaseType));
         this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createCrudSqlBuilder();
     }
 

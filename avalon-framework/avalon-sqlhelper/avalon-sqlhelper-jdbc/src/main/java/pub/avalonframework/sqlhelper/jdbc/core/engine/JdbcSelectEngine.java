@@ -1,7 +1,9 @@
 package pub.avalonframework.sqlhelper.jdbc.core.engine;
 
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
@@ -822,19 +824,24 @@ public class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         return this;
     }
 
-    public <R> R fetch(ResultSetExtractor<R> resultSetExtractor) {
-        return null;
+    public <R> List<R> fetch(ResultSetExtractor<List<R>> resultSetExtractor) {
+        return this.jdbcTemplate.query(this, resultSetExtractor);
     }
 
     public <R> List<R> fetch(RowMapper<R> rowMapper) {
-        return null;
+        return this.jdbcTemplate.query(this, rowMapper);
     }
 
     public List<Map<String, Object>> fetch() {
-        return null;
+        return fetch(new ColumnMapRowMapper());
+    }
+
+    public <R> R fetchOne(RowMapper<R> rowMapper) {
+        return this.jdbcTemplate.queryOne(this, rowMapper);
     }
 
     public Map<String, Object> fetchOne() {
-        return null;
+        return this.jdbcTemplate.queryOne(this, new ColumnMapRowMapper());
     }
+
 }

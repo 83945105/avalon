@@ -20,7 +20,7 @@ public class MySqlDynamicEngineTest extends AbstractTest {
      */
     void ready() throws SQLException {
 /*        JdbcSourceEngine engine = JdbcSourceEngine.newMySqlEngine(
-                "com.mysql.cj.jdbc.Driver",
+                "com.mysql.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/sqlhelper?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai",
                 "root", "root");
 

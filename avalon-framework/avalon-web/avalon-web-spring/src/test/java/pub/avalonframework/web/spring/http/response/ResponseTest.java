@@ -3,13 +3,11 @@ package pub.avalonframework.web.spring.http.response;
 import feign.Feign;
 import feign.Retryer;
 import feign.jackson.JacksonEncoder;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import pub.avalonframework.web.spring.http.response.api.UserApi;
 import pub.avalonframework.web.spring.http.response.controller.UserController;
 import pub.avalonframework.web.spring.http.response.entity.User;
@@ -19,7 +17,6 @@ import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
 /**
  * @author baichao
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = {
                 UserController.class
@@ -32,7 +29,7 @@ public class ResponseTest {
     // 使用原生Feign方式调用接口
     private UserApi userApiByFeign;
 
-    @Before
+    @BeforeAll
     public void before() {
         this.userApiByFeign = Feign.builder()
                 .encoder(new JacksonEncoder())

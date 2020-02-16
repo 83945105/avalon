@@ -5,10 +5,7 @@ import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.ColumnMapRowMapper;
-import org.springframework.jdbc.core.RowMapperResultSetExtractor;
-import org.springframework.jdbc.core.SingleColumnRowMapper;
+import org.springframework.jdbc.core.*;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.JdbcConfiguration;
 import pub.avalonframework.sqlhelper.core.mgt.SqlhelperManager;
@@ -171,6 +168,14 @@ public class SpringJdbcTemplate implements JdbcTemplate, MethodInterceptor {
     }
 
     @Override
+    public <T> T queryOne(SelectSqlBuilder selectSqlBuilder, RowMapper<T> rowMapper) {
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
+        List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
+                new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new RowMapperResultSetExtractor<>(rowMapper, 1));
+        return JdbcTools.nullableSingleResult(results);
+    }
+
+    @Override
     public Map<String, Object> queryOne(SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         List<Map<String, Object>> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
@@ -184,6 +189,20 @@ public class SpringJdbcTemplate implements JdbcTemplate, MethodInterceptor {
         List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new RowMapperResultSetExtractor<>(new BeanPropertyRowMapper<>(returnType), 1));
         return JdbcTools.nullableSingleResult(results);
+    }
+
+    @Override
+    public <T> List<T> query(SelectSqlBuilder selectSqlBuilder, ResultSetExtractor<List<T>> resultSetExtractor) {
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
+        return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
+                new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), resultSetExtractor);
+    }
+
+    @Override
+    public <T> List<T> query(SelectSqlBuilder selectSqlBuilder, RowMapper<T> rowMapper) {
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
+        return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
+                new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new RowMapperResultSetExtractor<>(rowMapper));
     }
 
     @Override
