@@ -18,8 +18,6 @@
         <module>avalon-redis</module>
         <module>avalon-scaffold</module>
         <module>avalon-security</module>
-        <module>avalon-shiro</module>
-        <module>avalon-spring</module>
         <module>avalon-sqlhelper</module>
         <module>avalon-web</module>
     </modules>

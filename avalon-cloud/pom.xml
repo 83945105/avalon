@@ -56,7 +56,7 @@
             </dependency>
             <dependency>
                 <groupId>pub.avalonframework</groupId>
-                <artifactId>avalon-security</artifactId>
+                <artifactId>avalon-security-core</artifactId>
                 <version>${avalon-framework.version}</version>
             </dependency>
             <dependency>
