@@ -10,7 +10,7 @@ public class YamlSqlhelperConfiguration implements YamlConfiguration {
 
     private DatabaseType databaseType;
 
-    private YamlSqlPrintConfiguration sqlPrint;
+    private YamlPrintConfiguration print;
 
     private YamlSqlBuilderConfiguration sqlBuilder;
 
@@ -24,12 +24,12 @@ public class YamlSqlhelperConfiguration implements YamlConfiguration {
         this.databaseType = databaseType;
     }
 
-    public YamlSqlPrintConfiguration getSqlPrint() {
-        return sqlPrint;
+    public YamlPrintConfiguration getPrint() {
+        return print;
     }
 
-    public void setSqlPrint(YamlSqlPrintConfiguration sqlPrint) {
-        this.sqlPrint = sqlPrint;
+    public void setPrint(YamlPrintConfiguration print) {
+        this.print = print;
     }
 
     public YamlSqlBuilderConfiguration getSqlBuilder() {

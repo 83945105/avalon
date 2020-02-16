@@ -5,7 +5,7 @@ package pub.avalonframework.sqlhelper.core.api.config;
  *
  * @author baichao
  */
-public class SqlPrintConfiguration {
+public class PrintConfiguration {
 
     private Boolean enabled;
 
@@ -19,7 +19,7 @@ public class SqlPrintConfiguration {
         return enabled;
     }
 
-    public SqlPrintConfiguration setEnabled(Boolean enabled) {
+    public PrintConfiguration setEnabled(Boolean enabled) {
         this.enabled = enabled;
         return this;
     }
@@ -28,7 +28,7 @@ public class SqlPrintConfiguration {
         return colourEnabled;
     }
 
-    public SqlPrintConfiguration setColourEnabled(Boolean colourEnabled) {
+    public PrintConfiguration setColourEnabled(Boolean colourEnabled) {
         this.colourEnabled = colourEnabled;
         return this;
     }
@@ -37,7 +37,7 @@ public class SqlPrintConfiguration {
         return sqlEnabled;
     }
 
-    public SqlPrintConfiguration setSqlEnabled(Boolean sqlEnabled) {
+    public PrintConfiguration setSqlEnabled(Boolean sqlEnabled) {
         this.sqlEnabled = sqlEnabled;
         return this;
     }
@@ -46,7 +46,7 @@ public class SqlPrintConfiguration {
         return argsEnabled;
     }
 
-    public SqlPrintConfiguration setArgsEnabled(Boolean argsEnabled) {
+    public PrintConfiguration setArgsEnabled(Boolean argsEnabled) {
         this.argsEnabled = argsEnabled;
         return this;
     }

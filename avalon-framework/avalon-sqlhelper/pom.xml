@@ -16,6 +16,7 @@
         <module>avalon-sqlhelper-generator</module>
         <module>avalon-sqlhelper-jdbc</module>
         <module>avalon-sqlhelper-maven-plugin</module>
+        <module>avalon-sqlhelper-spring-boot-starter</module>
         <module>avalon-sqlhelper-test</module>
     </modules>
 </project>

@@ -11,6 +11,10 @@ public final class JdbcFactory {
 
     private JdbcTemplate jdbcTemplate;
 
+    public JdbcFactory(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public JdbcSelectEngineBuilder select(ColumnHelper<?>... columnHelpers) {
         return new JdbcSelectEngineBuilder(columnHelpers);
     }

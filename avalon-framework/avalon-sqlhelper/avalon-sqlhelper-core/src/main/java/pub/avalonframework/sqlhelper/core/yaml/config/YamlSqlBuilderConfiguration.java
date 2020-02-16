@@ -1,19 +1,23 @@
 package pub.avalonframework.sqlhelper.core.yaml.config;
 
 import pub.avalonframework.core.yaml.config.YamlConfiguration;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DataBlockBuilderTemplate;
-import pub.avalonframework.sqlhelper.core.sqlbuilder.template.SqlBuilderTemplate;
 
 /**
  * @author baichao
  */
 public class YamlSqlBuilderConfiguration implements YamlConfiguration {
 
+    private String mysqlSqlBuilderTemplateName;
+
     private YamlDataBlockBuilderConfiguration dataBlockBuilder;
 
-    private DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate;
+    public String getMysqlSqlBuilderTemplateName() {
+        return mysqlSqlBuilderTemplateName;
+    }
 
-    private SqlBuilderTemplate mysqlSqlBuilderTemplate;
+    public void setMysqlSqlBuilderTemplateName(String mysqlSqlBuilderTemplateName) {
+        this.mysqlSqlBuilderTemplateName = mysqlSqlBuilderTemplateName;
+    }
 
     public YamlDataBlockBuilderConfiguration getDataBlockBuilder() {
         return dataBlockBuilder;
@@ -21,21 +25,5 @@ public class YamlSqlBuilderConfiguration implements YamlConfiguration {
 
     public void setDataBlockBuilder(YamlDataBlockBuilderConfiguration dataBlockBuilder) {
         this.dataBlockBuilder = dataBlockBuilder;
-    }
-
-    public DataBlockBuilderTemplate getMysqlSqlPartBuilderTemplate() {
-        return mysqlSqlPartBuilderTemplate;
-    }
-
-    public void setMysqlSqlPartBuilderTemplate(DataBlockBuilderTemplate mysqlSqlPartBuilderTemplate) {
-        this.mysqlSqlPartBuilderTemplate = mysqlSqlPartBuilderTemplate;
-    }
-
-    public SqlBuilderTemplate getMysqlSqlBuilderTemplate() {
-        return mysqlSqlBuilderTemplate;
-    }
-
-    public void setMysqlSqlBuilderTemplate(SqlBuilderTemplate mysqlSqlBuilderTemplate) {
-        this.mysqlSqlBuilderTemplate = mysqlSqlBuilderTemplate;
     }
 }

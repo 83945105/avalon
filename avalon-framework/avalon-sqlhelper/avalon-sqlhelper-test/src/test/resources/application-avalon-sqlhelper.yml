@@ -1,0 +1,20 @@
+spring:
+  avalon:
+    sqlhelper:
+      database-type: mysql
+      sqlPrint:
+        enabled: true
+        sql-enabled: true
+        args-enabled: true
+        colour-enabled: true
+      sqlBuilder:
+        mysql-sql-builder-template-name: pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlSqlBuilderTemplate
+        dataBlockBuilder:
+          mysql-data-block-builder-template-name: pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlDataBlockBuilderTemplate
+          select-all-column-for-main-table: true
+          select-all-column-for-join-table: false
+          on-comparison-rule: null_skip
+          where-comparison-rule: null_skip
+          having-comparison-rule: null_skip
+      jdbc:
+        allow-return-null: true

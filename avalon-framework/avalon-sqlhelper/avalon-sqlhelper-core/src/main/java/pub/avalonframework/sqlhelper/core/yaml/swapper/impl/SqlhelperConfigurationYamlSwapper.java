@@ -3,12 +3,12 @@ package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
 import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.api.config.JdbcConfiguration;
+import pub.avalonframework.sqlhelper.core.api.config.PrintConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.api.config.SqlPrintConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlJdbcConfiguration;
+import pub.avalonframework.sqlhelper.core.yaml.config.YamlPrintConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlPrintConfiguration;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlhelperConfiguration;
 
 /**
@@ -22,8 +22,8 @@ public final class SqlhelperConfigurationYamlSwapper implements YamlSwapper<Yaml
         YamlSqlhelperConfiguration configuration = new YamlSqlhelperConfiguration();
         DatabaseType databaseType = data.getDatabaseType();
         configuration.setDatabaseType(databaseType);
-        SqlPrintConfiguration sqlPrint = data.getSqlPrint();
-        configuration.setSqlPrint(new SqlPrintConfigurationYamlSwapper().swap(sqlPrint));
+        PrintConfiguration print = data.getPrint();
+        configuration.setPrint(new PrintConfigurationYamlSwapper().swap(print));
         SqlBuilderConfiguration sqlBuilder = data.getSqlBuilder();
         configuration.setSqlBuilder(new SqlBuilderConfigurationYamlSwapper().swap(sqlBuilder));
         JdbcConfiguration jdbc = data.getJdbc();
@@ -37,8 +37,8 @@ public final class SqlhelperConfigurationYamlSwapper implements YamlSwapper<Yaml
         SqlhelperConfiguration configuration = new SqlhelperConfiguration();
         DatabaseType databaseType = yamlConfiguration.getDatabaseType();
         configuration.setDatabaseType(databaseType);
-        YamlSqlPrintConfiguration sqlPrint = yamlConfiguration.getSqlPrint();
-        configuration.setSqlPrint(new SqlPrintConfigurationYamlSwapper().swap(sqlPrint));
+        YamlPrintConfiguration print = yamlConfiguration.getPrint();
+        configuration.setPrint(new PrintConfigurationYamlSwapper().swap(print));
         YamlSqlBuilderConfiguration sqlBuilder = yamlConfiguration.getSqlBuilder();
         configuration.setSqlBuilder(new SqlBuilderConfigurationYamlSwapper().swap(sqlBuilder));
         YamlJdbcConfiguration jdbc = yamlConfiguration.getJdbc();

@@ -11,7 +11,7 @@ public class SqlhelperConfiguration {
 
     private DatabaseType databaseType;
 
-    private SqlPrintConfiguration sqlPrint;
+    private PrintConfiguration print;
 
     private SqlBuilderConfiguration sqlBuilder;
 
@@ -26,12 +26,12 @@ public class SqlhelperConfiguration {
         return this;
     }
 
-    public SqlPrintConfiguration getSqlPrint() {
-        return sqlPrint;
+    public PrintConfiguration getPrint() {
+        return print;
     }
 
-    public SqlhelperConfiguration setSqlPrint(SqlPrintConfiguration sqlPrint) {
-        this.sqlPrint = sqlPrint;
+    public SqlhelperConfiguration setPrint(PrintConfiguration print) {
+        this.print = print;
         return this;
     }
 

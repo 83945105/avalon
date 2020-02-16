@@ -11,11 +11,11 @@ import java.util.Collection;
 public interface SqlBuilderTemplate {
 
     /**
-     * Set sql part builder template
+     * Set data block builder template
      *
-     * @param sqlPartBuilderTemplate {@link DataBlockBuilderTemplate}
+     * @param dataBlockBuilderTemplate {@link DataBlockBuilderTemplate}
      */
-    void setSqlPartBuilderTemplate(DataBlockBuilderTemplate sqlPartBuilderTemplate);
+    void setDataBlockBuilderTemplate(DataBlockBuilderTemplate dataBlockBuilderTemplate);
 
     /**
      * Build copy table result

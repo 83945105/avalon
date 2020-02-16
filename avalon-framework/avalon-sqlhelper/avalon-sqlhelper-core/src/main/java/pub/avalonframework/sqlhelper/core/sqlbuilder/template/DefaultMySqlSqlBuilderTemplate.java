@@ -17,11 +17,11 @@ import java.util.*;
  */
 public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemplate {
 
-    private DataBlockBuilderTemplate sqlPartBuilderTemplate;
+    private DataBlockBuilderTemplate dataBlockBuilderTemplate;
 
     @Override
-    public void setSqlPartBuilderTemplate(DataBlockBuilderTemplate sqlPartBuilderTemplate) {
-        this.sqlPartBuilderTemplate = sqlPartBuilderTemplate;
+    public void setDataBlockBuilderTemplate(DataBlockBuilderTemplate dataBlockBuilderTemplate) {
+        this.dataBlockBuilderTemplate = dataBlockBuilderTemplate;
     }
 
     @Override
@@ -236,8 +236,8 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 .append("` ")
                 .append(tableAlias);
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.newInstance(preparedStatementSql.toString(), preparedStatementArgs);
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildWhere(consumer));
         return sqlBuilderResult;
     }
 
@@ -281,7 +281,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(tableAlias);
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.appendSqlPart(" set ");
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
@@ -292,7 +292,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             sqlBuilderResult.appendSqlPart(tableAlias).appendSqlPart(".`").appendSqlPart(columnDataBlock.getColumnName()).appendSqlPart("`").appendSqlPart(" = ?");
             sqlBuilderResult.appendArg(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
         }
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildWhere(consumer));
         return sqlBuilderResult;
     }
 
@@ -304,7 +304,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(tableAlias);
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.appendSqlPart(" set ");
         int i = 0;
         Object value;
@@ -320,7 +320,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             sqlBuilderResult.appendSqlPart(tableAlias).appendSqlPart(".`").appendSqlPart(columnDataBlock.getColumnName()).appendSqlPart("`").appendSqlPart(" = ?");
             sqlBuilderResult.appendArg(value);
         }
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildWhere(consumer));
         return sqlBuilderResult;
     }
 
@@ -415,7 +415,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(tableAlias);
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.appendSqlPart(" set ");
         int i = 0;
         TableHelper tableHelper = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass());
@@ -535,25 +535,25 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public SelectSqlBuilderResult buildQuery(CrudConsumer consumer) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(1024), new ArrayList<>(32));
         sqlBuilderResult.appendSqlPart("select");
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildSelectColumn(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildSelectColumn(consumer));
         sqlBuilderResult.appendSqlPart(" from `")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias());
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildGroup(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildHaving(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildSort(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildLimit(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildWhere(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildGroup(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildHaving(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildSort(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildLimit(consumer));
         return sqlBuilderResult;
     }
 
     @Override
     public SelectSqlBuilderResult buildQueryCount(CrudConsumer consumer) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(1024), new ArrayList<>(32));
-        SqlBuilderResult group = this.sqlPartBuilderTemplate.buildGroup(consumer);
-        SqlBuilderResult limit = this.sqlPartBuilderTemplate.buildLimit(consumer);
+        SqlBuilderResult group = this.dataBlockBuilderTemplate.buildGroup(consumer);
+        SqlBuilderResult limit = this.dataBlockBuilderTemplate.buildLimit(consumer);
         boolean hasGroup = group.hasPreparedStatementSql();
         boolean hasLimit = limit.hasPreparedStatementSql();
         if (hasGroup || hasLimit) {
@@ -568,8 +568,8 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias());
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildJoin(consumer));
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildWhere(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildWhere(consumer));
         if (hasGroup || hasLimit) {
             if (hasGroup) {
                 sqlBuilderResult.append(group);
@@ -586,7 +586,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
     public SelectSqlBuilderResult buildQueryByPrimaryKey(CrudConsumer consumer, Object primaryKeyValue) {
         FinalSqlBuilderResult sqlBuilderResult = FinalSqlBuilderResult.init(new StringBuilder(128), Collections.singletonList(primaryKeyValue));
         sqlBuilderResult.appendSqlPart("select");
-        sqlBuilderResult.append(this.sqlPartBuilderTemplate.buildSelectColumn(consumer));
+        sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildSelectColumn(consumer));
         sqlBuilderResult.appendSqlPart(" from `")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` ")

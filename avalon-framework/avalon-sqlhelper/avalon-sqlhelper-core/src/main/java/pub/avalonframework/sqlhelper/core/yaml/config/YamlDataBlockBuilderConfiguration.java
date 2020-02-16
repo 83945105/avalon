@@ -8,6 +8,8 @@ import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
  */
 public class YamlDataBlockBuilderConfiguration implements YamlConfiguration {
 
+    private String mysqlDataBlockBuilderTemplateName;
+
     private Boolean selectAllColumnForMainTable;
 
     private Boolean selectAllColumnForJoinTable;
@@ -17,6 +19,14 @@ public class YamlDataBlockBuilderConfiguration implements YamlConfiguration {
     private ComparisonRule onComparisonRule;
 
     private ComparisonRule havingComparisonRule;
+
+    public String getMysqlDataBlockBuilderTemplateName() {
+        return mysqlDataBlockBuilderTemplateName;
+    }
+
+    public void setMysqlDataBlockBuilderTemplateName(String mysqlDataBlockBuilderTemplateName) {
+        this.mysqlDataBlockBuilderTemplateName = mysqlDataBlockBuilderTemplateName;
+    }
 
     public Boolean getSelectAllColumnForMainTable() {
         return selectAllColumnForMainTable;

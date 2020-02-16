@@ -1,11 +1,14 @@
 package pub.avalonframework.sqlhelper.core.api.config;
 
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DataBlockBuilderTemplate;
 
 /**
  * @author baichao
  */
 public class DataBlockBuilderConfiguration {
+
+    private DataBlockBuilderTemplate mysqlDataBlockBuilderTemplate;
 
     private Boolean selectAllColumnForMainTable;
 
@@ -16,6 +19,15 @@ public class DataBlockBuilderConfiguration {
     private ComparisonRule onComparisonRule;
 
     private ComparisonRule havingComparisonRule;
+
+    public DataBlockBuilderTemplate getMysqlDataBlockBuilderTemplate() {
+        return mysqlDataBlockBuilderTemplate;
+    }
+
+    public DataBlockBuilderConfiguration setMysqlDataBlockBuilderTemplate(DataBlockBuilderTemplate mysqlDataBlockBuilderTemplate) {
+        this.mysqlDataBlockBuilderTemplate = mysqlDataBlockBuilderTemplate;
+        return this;
+    }
 
     public Boolean getSelectAllColumnForMainTable() {
         return selectAllColumnForMainTable;

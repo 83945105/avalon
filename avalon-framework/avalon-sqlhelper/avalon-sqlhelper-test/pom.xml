@@ -14,28 +14,35 @@
     <dependencies>
         <dependency>
             <groupId>pub.avalonframework</groupId>
+            <artifactId>avalon-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>pub.avalonframework</groupId>
             <artifactId>avalon-sqlhelper-core</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>pub.avalonframework</groupId>
             <artifactId>avalon-sqlhelper-jdbc</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>pub.avalonframework</groupId>
+            <artifactId>avalon-sqlhelper-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>pub.avalonframework</groupId>
             <artifactId>avalon-sqlhelper-generator</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -90,7 +97,9 @@
                             <username>root</username>
                             <password>root</password>
                             <defaultOutputOptions>
-                                <folderPath>D:\git_repertory\avalon\avalon-framework\avalon-sqlhelper\avalon-sqlhelper-test\src\test\java</folderPath>
+                                <folderPath>
+                                    D:\git_repertory\avalon\avalon-framework\avalon-sqlhelper\avalon-sqlhelper-test\src\test\java
+                                </folderPath>
                             </defaultOutputOptions>
                             <tables>
                                 <table>

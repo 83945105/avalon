@@ -5,7 +5,7 @@ import pub.avalonframework.core.yaml.config.YamlConfiguration;
 /**
  * @author baichao
  */
-public class YamlSqlPrintConfiguration implements YamlConfiguration {
+public class YamlPrintConfiguration implements YamlConfiguration {
 
     private Boolean enabled;
 

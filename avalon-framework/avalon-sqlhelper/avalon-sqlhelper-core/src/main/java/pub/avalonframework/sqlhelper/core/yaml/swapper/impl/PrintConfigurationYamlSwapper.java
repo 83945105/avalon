@@ -1,13 +1,13 @@
 package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
-import pub.avalonframework.sqlhelper.core.api.config.SqlPrintConfiguration;
-import pub.avalonframework.sqlhelper.core.yaml.config.YamlSqlPrintConfiguration;
+import pub.avalonframework.sqlhelper.core.api.config.PrintConfiguration;
+import pub.avalonframework.sqlhelper.core.yaml.config.YamlPrintConfiguration;
 
 /**
  * @author baichao
  */
-public final class SqlPrintConfigurationYamlSwapper implements YamlSwapper<YamlSqlPrintConfiguration, SqlPrintConfiguration> {
+public final class PrintConfigurationYamlSwapper implements YamlSwapper<YamlPrintConfiguration, PrintConfiguration> {
 
     private final static Boolean DEFAULT_ENABLED = Boolean.FALSE;
 
@@ -18,9 +18,9 @@ public final class SqlPrintConfigurationYamlSwapper implements YamlSwapper<YamlS
     private final static Boolean DEFAULT_ARGS_ENABLED = Boolean.TRUE;
 
     @Override
-    public YamlSqlPrintConfiguration swap(SqlPrintConfiguration data) {
-        data = data == null ? new SqlPrintConfiguration() : data;
-        YamlSqlPrintConfiguration configuration = new YamlSqlPrintConfiguration();
+    public YamlPrintConfiguration swap(PrintConfiguration data) {
+        data = data == null ? new PrintConfiguration() : data;
+        YamlPrintConfiguration configuration = new YamlPrintConfiguration();
         Boolean enabled = data.getEnabled();
         configuration.setEnabled(enabled == null ? DEFAULT_ENABLED : enabled);
         Boolean colourEnabled = data.getColourEnabled();
@@ -33,9 +33,9 @@ public final class SqlPrintConfigurationYamlSwapper implements YamlSwapper<YamlS
     }
 
     @Override
-    public SqlPrintConfiguration swap(YamlSqlPrintConfiguration yamlConfiguration) {
-        yamlConfiguration = yamlConfiguration == null ? new YamlSqlPrintConfiguration() : yamlConfiguration;
-        SqlPrintConfiguration configuration = new SqlPrintConfiguration();
+    public PrintConfiguration swap(YamlPrintConfiguration yamlConfiguration) {
+        yamlConfiguration = yamlConfiguration == null ? new YamlPrintConfiguration() : yamlConfiguration;
+        PrintConfiguration configuration = new PrintConfiguration();
         Boolean enabled = yamlConfiguration.getEnabled();
         configuration.setEnabled(enabled == null ? DEFAULT_ENABLED : enabled);
         Boolean colourEnabled = yamlConfiguration.getColourEnabled();

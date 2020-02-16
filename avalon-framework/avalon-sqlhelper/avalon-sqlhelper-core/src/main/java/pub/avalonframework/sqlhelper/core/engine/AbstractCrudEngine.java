@@ -56,7 +56,7 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         super(tableHelperClass, tableAlias == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias);
         this.dataStore = new SqlDataStore<>(this, tableName == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableName() : tableName,
                 tableHelperClass, this.tableAlias, configuration.setDatabaseType(databaseType));
-        this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createCrudSqlBuilder();
+        this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createProxy();
     }
 
     @Override
