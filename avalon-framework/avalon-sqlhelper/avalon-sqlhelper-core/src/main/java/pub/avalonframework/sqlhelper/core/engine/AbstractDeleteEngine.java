@@ -21,7 +21,7 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements DeleteSqlBuilder, DeleteEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements DeleteEngine<T, TC, TO, TW, TG, TH, TS>, DeleteSqlBuilder {
 
     private DataStore<DeleteEngine<T, TC, TO, TW, TG, TH, TS>> dataStore;
 

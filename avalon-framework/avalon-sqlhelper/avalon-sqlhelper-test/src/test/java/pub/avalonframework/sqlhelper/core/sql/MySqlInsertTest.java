@@ -17,52 +17,6 @@ import java.util.List;
 public class MySqlInsertTest {
 
     /**
-     * 插入参数
-     */
-    @Test
-    void Test_insertArgs() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
-                .insertArgs("1", "2", "3");
-        Assertions.assertEquals("insert into `sys_user` (`id`,`user_name`,`login_name`) values (?,?,?)", sqlBuilderResult.getPreparedStatementSql());
-        Assertions.assertArrayEquals(new String[]{"1", "2", "3"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
-    }
-
-    /**
-     * 插入参数 - 指定表名
-     */
-    @Test
-    void Test_insertArgs_assignTableName() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, "sys_user_custom", SysUserHelper.class)
-                .insertArgs("1", "2", "3");
-        Assertions.assertEquals("insert into `sys_user_custom` (`id`,`user_name`,`login_name`) values (?,?,?)", sqlBuilderResult.getPreparedStatementSql());
-        Assertions.assertArrayEquals(new String[]{"1", "2", "3"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
-    }
-
-    /**
-     * 插入参数 - 指定列
-     */
-    @Test
-    void Test_insertArgs_assignColumns() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
-                .insert(SysUserHelper.Column::id)
-                .insertArgs("1", "2", "3");
-        Assertions.assertEquals("insert into `sys_user` (`id`) values (?)", sqlBuilderResult.getPreparedStatementSql());
-        Assertions.assertArrayEquals(new String[]{"1"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
-    }
-
-    /**
-     * 插入参数 - 指定表名 & 指定列
-     */
-    @Test
-    void Test_insertArgs_assignTableName_assignColumns() {
-        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, "sys_user_custom", SysUserHelper.class)
-                .insert(SysUserHelper.Column::id)
-                .insertArgs("1", "2", "3");
-        Assertions.assertEquals("insert into `sys_user_custom` (`id`) values (?)", sqlBuilderResult.getPreparedStatementSql());
-        Assertions.assertArrayEquals(new String[]{"1"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
-    }
-
-    /**
      * 插入JavaBean
      */
     @Test

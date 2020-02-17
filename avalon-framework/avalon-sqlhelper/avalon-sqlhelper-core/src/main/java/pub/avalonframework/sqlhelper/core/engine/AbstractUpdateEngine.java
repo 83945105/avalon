@@ -23,7 +23,7 @@ public abstract class AbstractUpdateEngine<T extends TableHelper<T, TC, TO, TW, 
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements UpdateSqlBuilder, UpdateEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements UpdateEngine<T, TC, TO, TW, TG, TH, TS>, UpdateSqlBuilder {
 
     private DataStore<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> dataStore;
 

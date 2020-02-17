@@ -23,7 +23,7 @@ public abstract class AbstractInsertEngine<T extends TableHelper<T, TC, TO, TW, 
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements InsertSqlBuilder, InsertEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements InsertEngine<T, TC, TO, TW, TG, TH, TS>, InsertSqlBuilder {
 
     private DataStore<InsertEngine<T, TC, TO, TW, TG, TH, TS>> dataStore;
 
@@ -58,11 +58,6 @@ public abstract class AbstractInsertEngine<T extends TableHelper<T, TC, TO, TW, 
         this.dataStore = new SqlDataStore<>(this, tableName == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableName() : tableName,
                 tableHelperClass, this.tableAlias, configuration.setDatabaseType(databaseType));
         this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createProxy();
-    }
-
-    @Override
-    public InsertSqlBuilderResult insertArgs(Object... args) {
-        return this.crudSqlBuilder.insertArgs(args);
     }
 
     @Override

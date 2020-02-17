@@ -152,6 +152,14 @@ public class SpringJdbcTemplate implements JdbcTemplate, MethodInterceptor {
     }
 
     @Override
+    public <T> T queryByPrimaryKey(Object keyValue, SelectSqlBuilder selectSqlBuilder, RowMapper<T> rowMapper) {
+        SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.queryByPrimaryKey(keyValue);
+        List<T> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
+                new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()), new RowMapperResultSetExtractor<>(rowMapper, 1));
+        return JdbcTools.nullableSingleResult(results);
+    }
+
+    @Override
     public Map<String, Object> queryByPrimaryKey(Object keyValue, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.queryByPrimaryKey(keyValue);
         List<Map<String, Object>> results = this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),

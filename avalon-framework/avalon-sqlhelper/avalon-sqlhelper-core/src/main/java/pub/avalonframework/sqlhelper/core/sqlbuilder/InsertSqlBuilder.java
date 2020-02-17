@@ -10,14 +10,6 @@ import java.util.Collection;
 public interface InsertSqlBuilder extends SqlBuilder {
 
     /**
-     * Insert args
-     *
-     * @param args args
-     * @return {@link InsertSqlBuilderResult}
-     */
-    InsertSqlBuilderResult insertArgs(Object... args);
-
-    /**
      * Insert javaBean
      *
      * @param javaBean javaBean

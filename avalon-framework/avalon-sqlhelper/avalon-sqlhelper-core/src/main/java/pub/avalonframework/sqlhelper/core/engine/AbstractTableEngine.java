@@ -21,7 +21,7 @@ public abstract class AbstractTableEngine<T extends TableHelper<T, TC, TO, TW, T
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements TableSqlBuilder, TableEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements TableEngine<T, TC, TO, TW, TG, TH, TS>, TableSqlBuilder {
 
     private DataStore<TableEngine<T, TC, TO, TW, TG, TH, TS>> dataStore;
 

@@ -1,23 +1,24 @@
-package pub.avalonframework.sqlhelper.jdbc.core;
+/*
+package pub.avalonframework.jdbc.core.engine;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.RowMapperResultSetExtractor;
-import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.*;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * @author baichao
- */
-public interface JdbcTemplate {
+ *//*
 
-    DatabaseType getDatabaseType();
+public class SysUserDao {
 
-    void copyTable(String targetTableName, boolean copyData, TableSqlBuilder tableSqlBuilder);
+    public void copyTable(String targetTableName, boolean copyData) {
+        new
+    }
 
     void deleteTable(TableSqlBuilder tableSqlBuilder);
 
@@ -30,8 +31,6 @@ public interface JdbcTemplate {
     int insertJavaBeanSelective(Object javaBean, InsertSqlBuilder insertSqlBuilder);
 
     int batchInsertJavaBeans(Collection<?> javaBeans, InsertSqlBuilder insertSqlBuilder);
-
-    <T> T queryByPrimaryKey(Object keyValue, SelectSqlBuilder selectSqlBuilder, RowMapper<T> rowMapper);
 
     Map<String, Object> queryByPrimaryKey(Object keyValue, SelectSqlBuilder selectSqlBuilder);
 
@@ -103,3 +102,4 @@ public interface JdbcTemplate {
 
     int delete(DeleteSqlBuilder deleteSqlBuilder);
 }
+*/

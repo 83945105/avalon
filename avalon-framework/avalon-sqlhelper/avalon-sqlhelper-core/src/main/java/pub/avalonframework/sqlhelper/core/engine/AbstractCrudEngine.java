@@ -22,7 +22,7 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
         TW extends WhereHelper<TW>,
         TG extends GroupHelper<TG>,
         TH extends HavingHelper<TH>,
-        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements CrudSqlBuilder, CrudEngine<T, TC, TO, TW, TG, TH, TS> {
+        TS extends SortHelper<TS>> extends AbstractEngine<T, TC, TO, TW, TG, TH, TS> implements CrudEngine<T, TC, TO, TW, TG, TH, TS>, CrudSqlBuilder {
 
     private DataStore<CrudEngine<T, TC, TO, TW, TG, TH, TS>> dataStore;
 
@@ -77,11 +77,6 @@ public abstract class AbstractCrudEngine<T extends TableHelper<T, TC, TO, TW, TG
     @Override
     public TableSqlBuilderResult isTableExist() {
         return this.crudSqlBuilder.isTableExist();
-    }
-
-    @Override
-    public InsertSqlBuilderResult insertArgs(Object... args) {
-        return this.crudSqlBuilder.insertArgs(args);
     }
 
     @Override

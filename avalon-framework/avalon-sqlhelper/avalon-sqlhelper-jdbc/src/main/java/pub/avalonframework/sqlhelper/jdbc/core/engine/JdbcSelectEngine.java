@@ -3,7 +3,6 @@ package pub.avalonframework.sqlhelper.jdbc.core.engine;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.beans.JoinType;
@@ -20,7 +19,7 @@ import java.util.Map;
 /**
  * @author baichao
  */
-public class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
+public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TC extends ColumnHelper<TC>,
         TO extends OnHelper<TO>,
         TW extends WhereHelper<TW>,
@@ -844,4 +843,11 @@ public class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         return this.jdbcTemplate.queryOne(this, new ColumnMapRowMapper());
     }
 
+    public <R> R fetchByPrimaryKey(Object keyValue, RowMapper<R> rowMapper) {
+        return this.jdbcTemplate.queryByPrimaryKey(keyValue, this, rowMapper);
+    }
+
+    public Map<String, Object> fetchByPrimaryKey(Object keyValue) {
+        return this.jdbcTemplate.queryByPrimaryKey(keyValue, this, new ColumnMapRowMapper());
+    }
 }

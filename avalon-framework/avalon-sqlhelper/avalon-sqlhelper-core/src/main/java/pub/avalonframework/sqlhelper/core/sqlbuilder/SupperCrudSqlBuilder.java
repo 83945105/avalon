@@ -41,11 +41,6 @@ public class SupperCrudSqlBuilder implements CrudSqlBuilder {
     }
 
     @Override
-    public InsertSqlBuilderResult insertArgs(Object... args) {
-        return this.sqlBuilderTemplate.buildInsertArgs(this.dataStore, args);
-    }
-
-    @Override
     public InsertSqlBuilderResult insertJavaBean(Object javaBean) {
         return this.sqlBuilderTemplate.buildInsertJavaBean(this.dataStore, javaBean);
     }
