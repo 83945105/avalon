@@ -15,7 +15,6 @@
         <module>avalon-common-utils</module>
         <module>avalon-core</module>
         <module>avalon-database</module>
-        <module>avalon-redis</module>
         <module>avalon-scaffold</module>
         <module>avalon-security</module>
         <module>avalon-sqlhelper</module>

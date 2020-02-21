@@ -24,6 +24,7 @@ public class RedisCacheTest {
         configuration.setHostName("localhost");
         configuration.setPort(6379);
         configuration.setDatabase(0);
+        configuration.setPassword("root");
         redisTemplate = new RedisTemplate<>
                 (
                         new JedisConnectionFactory(configuration),

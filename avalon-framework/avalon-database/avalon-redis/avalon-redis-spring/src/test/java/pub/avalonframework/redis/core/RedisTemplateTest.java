@@ -25,6 +25,7 @@ public class RedisTemplateTest {
         redisStandaloneConfiguration.setHostName("localhost");
         redisStandaloneConfiguration.setPort(6379);
         redisStandaloneConfiguration.setDatabase(0);
+        redisStandaloneConfiguration.setPassword("root");
         redisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 

@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>pub.avalonframework</groupId>
-            <artifactId>avalon-database</artifactId>
+            <artifactId>avalon-database-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
