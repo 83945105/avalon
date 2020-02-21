@@ -14,7 +14,7 @@ public interface Limit {
      *
      * @return The total
      */
-    long getTotal();
+    Long getTotal();
 
     /**
      * Set total
@@ -28,7 +28,7 @@ public interface Limit {
      *
      * @return The current page
      */
-    long getCurrentPage();
+    Long getCurrentPage();
 
     /**
      * Set current page
@@ -42,7 +42,7 @@ public interface Limit {
      *
      * @return The page size
      */
-    long getPageSize();
+    Long getPageSize();
 
     /**
      * Set page size
@@ -56,21 +56,21 @@ public interface Limit {
      *
      * @return The page count
      */
-    long getPageCount();
+    Long getPageCount();
 
     /**
      * Get limit
      *
      * @return The limit
      */
-    long getLimit();
+    Long getLimit();
 
     /**
      * Get offset
      *
      * @return The offset
      */
-    long getOffset();
+    Long getOffset();
 
     /**
      * execute limit

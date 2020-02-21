@@ -28,7 +28,7 @@ public class Pagination implements Limit {
     }
 
     @Override
-    public long getTotal() {
+    public Long getTotal() {
         return this.total;
     }
 
@@ -38,7 +38,7 @@ public class Pagination implements Limit {
     }
 
     @Override
-    public long getCurrentPage() {
+    public Long getCurrentPage() {
         return this.currentPage;
     }
 
@@ -48,7 +48,7 @@ public class Pagination implements Limit {
     }
 
     @Override
-    public long getPageSize() {
+    public Long getPageSize() {
         return this.pageSize;
     }
 
@@ -58,7 +58,7 @@ public class Pagination implements Limit {
     }
 
     @Override
-    public long getPageCount() {
+    public Long getPageCount() {
         if (this.total <= 0) {
             return 1L;
         }
@@ -72,12 +72,12 @@ public class Pagination implements Limit {
     }
 
     @Override
-    public long getLimit() {
+    public Long getLimit() {
         return this.pageSize;
     }
 
     @Override
-    public long getOffset() {
+    public Long getOffset() {
         return (this.currentPage - 1) * this.pageSize;
     }
 }

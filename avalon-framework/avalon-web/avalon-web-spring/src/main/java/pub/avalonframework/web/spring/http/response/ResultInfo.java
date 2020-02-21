@@ -1,13 +1,10 @@
 package pub.avalonframework.web.spring.http.response;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 /**
  * The result info.
  *
  * @author baichao
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public interface ResultInfo {
 
     /**
