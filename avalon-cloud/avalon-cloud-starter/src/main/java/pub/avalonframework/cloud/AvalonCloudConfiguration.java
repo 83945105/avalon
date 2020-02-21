@@ -94,7 +94,7 @@ public class AvalonCloudConfiguration {
     }
 
     @Configuration
-    protected static class WeiqueWebMvcConfigurationSupport extends WebMvcConfigurationSupport {
+    protected static class AvalonWebMvcConfigurationSupport extends WebMvcConfigurationSupport {
 
         @Value("${spring.mvc.static-path-pattern:/**}")
         private String staticPathPattern;
