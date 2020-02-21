@@ -1,17 +1,3 @@
-#开发环境配置
-web:
-  #文件上传路径
-  upload-path: D:/dms_V1.0.0.20190428_beta/project/client/dist/DMS_FILES/
-  #跨域
-  cors:
-    #是否允许
-    allow: true
-  #事务配置
-  transaction:
-    #控制切面
-    pointcut: (execution (* pub.avalon.**..service.*.*(..)) or execution (* pub.avalon.gar.service..*.*(..)))
-    #超时回滚时间(秒)
-    timeout: 600
 spring:
   servlet:
     multipart:
