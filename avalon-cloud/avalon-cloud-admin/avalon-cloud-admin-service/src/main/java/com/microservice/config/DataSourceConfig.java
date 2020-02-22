@@ -1,7 +1,6 @@
 package com.microservice.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +20,6 @@ import javax.sql.DataSource;
  */
 @Configuration
 public class DataSourceConfig {
-
-    @Value("${web.upload-path}")
-    private String uploadPath;
 
     @Bean(name = "ds0MasterDataSource")
     @Qualifier("ds0MasterDataSource")

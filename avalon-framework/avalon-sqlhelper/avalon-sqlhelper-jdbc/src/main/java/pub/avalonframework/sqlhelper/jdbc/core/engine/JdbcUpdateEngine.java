@@ -13,7 +13,7 @@ import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.engine.AbstractUpdateEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
 import java.util.Collection;
 
@@ -28,38 +28,38 @@ public final class JdbcUpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractUpdateEngine<T, TC, TO, TW, TG, TH, TS> {
 
-    private JdbcTemplate jdbcTemplate;
+    private JdbcHelper jdbcHelper;
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass);
     }
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, configuration);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, configuration);
     }
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass);
     }
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, configuration);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, configuration);
     }
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, tableAlias);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, tableAlias);
     }
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias);
     }
 
-    public JdbcUpdateEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
+    public JdbcUpdateEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public JdbcHelper getJdbcHelper() {
+        return jdbcHelper;
     }
 
     @Override
@@ -585,7 +585,7 @@ public final class JdbcUpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public int execute(Object javaBean, boolean selective) {
-        return selective ? this.jdbcTemplate.updateJavaBeanSelective(javaBean, this) : this.jdbcTemplate.updateJavaBean(javaBean, this);
+        return selective ? this.jdbcHelper.updateJavaBeanSelective(javaBean, this) : this.jdbcHelper.updateJavaBean(javaBean, this);
     }
 
     public int execute(Object javaBean) {
@@ -593,10 +593,10 @@ public final class JdbcUpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public int executeByPrimaryKey(Object keyValue, Object javaBean, boolean selective) {
-        return selective ? this.jdbcTemplate.updateJavaBeanByPrimaryKeySelective(keyValue, javaBean, this) : this.jdbcTemplate.updateJavaBeanByPrimaryKey(keyValue, javaBean, this);
+        return selective ? this.jdbcHelper.updateJavaBeanByPrimaryKeySelective(keyValue, javaBean, this) : this.jdbcHelper.updateJavaBeanByPrimaryKey(keyValue, javaBean, this);
     }
 
     public int executeBatchByPrimaryKeys(Collection<?> primaryKeys) {
-        return this.jdbcTemplate.batchUpdateJavaBeansByPrimaryKeys(primaryKeys, this);
+        return this.jdbcHelper.batchUpdateJavaBeansByPrimaryKeys(primaryKeys, this);
     }
 }

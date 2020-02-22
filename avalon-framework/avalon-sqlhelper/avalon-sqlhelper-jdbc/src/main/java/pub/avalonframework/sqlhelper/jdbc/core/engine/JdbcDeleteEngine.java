@@ -14,7 +14,7 @@ import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.engine.AbstractDeleteEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
 import java.util.Collection;
 
@@ -29,38 +29,38 @@ public final class JdbcDeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractDeleteEngine<T, TC, TO, TW, TG, TH, TS> {
 
-    private JdbcTemplate jdbcTemplate;
+    private JdbcHelper jdbcHelper;
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass);
     }
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, configuration);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, configuration);
     }
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass);
     }
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, configuration);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, configuration);
     }
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, tableAlias);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, tableAlias);
     }
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias);
     }
 
-    public JdbcDeleteEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
+    public JdbcDeleteEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public JdbcHelper getJdbcHelper() {
+        return jdbcHelper;
     }
 
     @Override
@@ -562,14 +562,14 @@ public final class JdbcDeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public int execute() {
-        return this.jdbcTemplate.delete(this);
+        return this.jdbcHelper.delete(this);
     }
 
     public int executeByPrimaryKey(Object keyValue) {
-        return this.jdbcTemplate.deleteByPrimaryKey(keyValue, this);
+        return this.jdbcHelper.deleteByPrimaryKey(keyValue, this);
     }
 
     public int executeBatchByPrimaryKeys(Collection<?> keyValues) {
-        return this.jdbcTemplate.batchDeleteByPrimaryKeys(keyValues, this);
+        return this.jdbcHelper.batchDeleteByPrimaryKeys(keyValues, this);
     }
 }

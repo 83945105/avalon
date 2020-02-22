@@ -35,8 +35,6 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         }
     }
 
-    @Value("${web.upload-path}")
-    private String uploadPath;
     @Value("${spring.mvc.static-path-pattern:/**}")
     private String staticPathPattern;
     @Value("${spring.resources.static-locations:classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/}")

@@ -7,10 +7,11 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import pub.avalonframework.sqlhelper.core.api.config.*;
 import pub.avalonframework.sqlhelper.core.yaml.swapper.impl.*;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcTemplate;
-import pub.avalonframework.sqlhelper.jdbc.core.SpringJdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
+import pub.avalonframework.sqlhelper.jdbc.core.SpringJdbcHelper;
 import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
 
 /**
@@ -29,7 +30,7 @@ import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
 public class SqlhelperSpringBootConfiguration implements EnvironmentAware {
 
     @Autowired
-    private org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     private final SpringBootPrintConfigurationProperties printConfigurationProperties;
 
@@ -88,15 +89,15 @@ public class SqlhelperSpringBootConfiguration implements EnvironmentAware {
     }
 
     @Bean
-    @ConditionalOnMissingBean(JdbcTemplate.class)
-    public SpringJdbcTemplate springJdbcTemplate(SqlhelperConfiguration sqlhelperConfiguration) {
-        return SpringJdbcTemplate.getInstance(jdbcTemplate, sqlhelperConfiguration.getJdbc());
+    @ConditionalOnMissingBean(JdbcHelper.class)
+    public JdbcHelper jdbcHelper(SqlhelperConfiguration sqlhelperConfiguration) {
+        return SpringJdbcHelper.getInstance(jdbcTemplate, sqlhelperConfiguration.getJdbc());
     }
 
     @Bean
     @ConditionalOnMissingBean(JdbcFactory.class)
-    public JdbcFactory jdbcFactory(JdbcTemplate jdbcTemplate) {
-        return new JdbcFactory(jdbcTemplate);
+    public JdbcFactory jdbcFactory(JdbcHelper jdbcHelper) {
+        return new JdbcFactory(jdbcHelper);
     }
 
     @Override

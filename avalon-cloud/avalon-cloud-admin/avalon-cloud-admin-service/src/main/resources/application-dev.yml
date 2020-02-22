@@ -13,7 +13,7 @@ spring:
 #服务器
 server:
   #端口号
-  port: 8887
+  port: 8080
 #日志
 logging:
   file: D:/log/my_log.log

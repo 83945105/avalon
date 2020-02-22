@@ -11,7 +11,7 @@ import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.engine.AbstractSelectEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -27,38 +27,38 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractSelectEngine<T, TC, TO, TW, TG, TH, TS> {
 
-    private JdbcTemplate jdbcTemplate;
+    private JdbcHelper jdbcHelper;
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, configuration);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, configuration);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, configuration);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, configuration);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, tableAlias);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, tableAlias);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias);
     }
 
-    public JdbcSelectEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
+    public JdbcSelectEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public JdbcHelper getJdbcHelper() {
+        return jdbcHelper;
     }
 
     @Override
@@ -824,11 +824,11 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public <R> List<R> fetch(ResultSetExtractor<List<R>> resultSetExtractor) {
-        return this.jdbcTemplate.query(this, resultSetExtractor);
+        return this.jdbcHelper.query(this, resultSetExtractor);
     }
 
     public <R> List<R> fetch(RowMapper<R> rowMapper) {
-        return this.jdbcTemplate.query(this, rowMapper);
+        return this.jdbcHelper.query(this, rowMapper);
     }
 
     public List<Map<String, Object>> fetch() {
@@ -836,18 +836,18 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public <R> R fetchOne(RowMapper<R> rowMapper) {
-        return this.jdbcTemplate.queryOne(this, rowMapper);
+        return this.jdbcHelper.queryOne(this, rowMapper);
     }
 
     public Map<String, Object> fetchOne() {
-        return this.jdbcTemplate.queryOne(this, new ColumnMapRowMapper());
+        return this.jdbcHelper.queryOne(this, new ColumnMapRowMapper());
     }
 
     public <R> R fetchByPrimaryKey(Object keyValue, RowMapper<R> rowMapper) {
-        return this.jdbcTemplate.queryByPrimaryKey(keyValue, this, rowMapper);
+        return this.jdbcHelper.queryByPrimaryKey(keyValue, this, rowMapper);
     }
 
     public Map<String, Object> fetchByPrimaryKey(Object keyValue) {
-        return this.jdbcTemplate.queryByPrimaryKey(keyValue, this, new ColumnMapRowMapper());
+        return this.jdbcHelper.queryByPrimaryKey(keyValue, this, new ColumnMapRowMapper());
     }
 }

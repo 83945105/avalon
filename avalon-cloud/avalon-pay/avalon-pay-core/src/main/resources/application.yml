@@ -31,7 +31,7 @@ spring:
     static-path-pattern: /resource/**
   resources:
     #这个配置,表示映射路径,静态资源访问不要带上该路径
-    static-locations: classpath:/static/,classpath:/public/,file:${web.upload-path}
+    static-locations: classpath:/static/,classpath:/public/
   #数据库访问配置
   datasource:
     #使用 druid数据源

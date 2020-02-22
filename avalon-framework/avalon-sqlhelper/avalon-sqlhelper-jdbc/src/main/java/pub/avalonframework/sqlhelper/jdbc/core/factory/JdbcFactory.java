@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.jdbc.core.factory;
 
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 import pub.avalonframework.sqlhelper.jdbc.core.engine.JdbcSelectEngine;
 
 /**
@@ -9,10 +9,10 @@ import pub.avalonframework.sqlhelper.jdbc.core.engine.JdbcSelectEngine;
  */
 public final class JdbcFactory {
 
-    private JdbcTemplate jdbcTemplate;
+    private JdbcHelper jdbcHelper;
 
-    public JdbcFactory(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public JdbcFactory(JdbcHelper jdbcHelper) {
+        this.jdbcHelper = jdbcHelper;
     }
 
     public JdbcSelectEngineBuilder select(ColumnHelper<?>... columnHelpers) {
@@ -44,7 +44,7 @@ public final class JdbcFactory {
                 TG extends GroupHelper<TG>,
                 TH extends HavingHelper<TH>,
                 TS extends SortHelper<TS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> from(Class<T> table) {
-            return new JdbcSelectEngine<>(JdbcFactory.this.jdbcTemplate, table).select(columnHelpers);
+            return new JdbcSelectEngine<>(JdbcFactory.this.jdbcHelper, table).select(columnHelpers);
         }
     }
 }

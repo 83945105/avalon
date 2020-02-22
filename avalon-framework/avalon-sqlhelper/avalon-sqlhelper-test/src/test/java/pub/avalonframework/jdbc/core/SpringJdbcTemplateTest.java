@@ -3,9 +3,8 @@ package pub.avalonframework.jdbc.core;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import pub.avalonframework.sqlhelper.jdbc.core.SpringJdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.SpringJdbcHelper;
 
 import javax.sql.DataSource;
 
@@ -14,7 +13,7 @@ import javax.sql.DataSource;
  */
 public class SpringJdbcTemplateTest {
 
-    private static SpringJdbcTemplate springJdbcTemplate;
+    private static SpringJdbcHelper springJdbcHelper;
 
     @BeforeAll
     static void beforeAll() {
@@ -25,11 +24,11 @@ public class SpringJdbcTemplateTest {
                 .password("root")
                 .build();
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        springJdbcTemplate = SpringJdbcTemplate.getInstance(jdbcTemplate);
+        springJdbcHelper = SpringJdbcHelper.getInstance(jdbcTemplate);
     }
 
     @Test
     void Test() {
-        System.out.println(springJdbcTemplate.getDatabaseType());
+        System.out.println(springJdbcHelper.getDatabaseType());
     }
 }

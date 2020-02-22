@@ -1,5 +1,6 @@
 package pub;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "pub.avalonframework.cloud.gar.service.impl",
         "pub.avalonframework.cloud.gar.controller"
 })
+@MapperScan(basePackages = "pub.avalonframework.cloud.**.mapper")
 public class GarServiceApplication {
 
     public static void main(String[] args) {

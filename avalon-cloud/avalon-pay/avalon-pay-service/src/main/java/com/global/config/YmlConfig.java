@@ -63,12 +63,6 @@ public class YmlConfig {
         ACTIVE = active;
     }
 
-    @Value("${web.upload-path}")
-    public void setUploadPath(String uploadPath) {
-        UPLOAD_PATH = uploadPath;
-    }
-
-
     private static final Pattern STATIC_PATH_PATTERN_REGEX = Pattern.compile("^(.*?)/\\*\\*$");
     private static final String ROOT_PATH = "/**";
 

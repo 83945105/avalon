@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.engine.AbstractInsertEngine;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcTemplate;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
 import java.util.Collection;
 
@@ -21,38 +21,38 @@ public final class JdbcInsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> extends AbstractInsertEngine<T, TC, TO, TW, TG, TH, TS> {
 
-    private JdbcTemplate jdbcTemplate;
+    private JdbcHelper jdbcHelper;
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass);
     }
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, configuration);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, configuration);
     }
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass);
     }
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, configuration);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, configuration);
     }
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableHelperClass, tableAlias);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableHelperClass, tableAlias);
     }
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias);
     }
 
-    public JdbcInsertEngine(JdbcTemplate jdbcTemplate, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(jdbcTemplate.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
+    public JdbcInsertEngine(JdbcHelper jdbcHelper, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
+        super(jdbcHelper.getDatabaseType(), tableName, tableHelperClass, tableAlias, configuration);
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public JdbcHelper getJdbcHelper() {
+        return jdbcHelper;
     }
 
     @Override
@@ -86,7 +86,7 @@ public final class JdbcInsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public int execute(Object javaBean, boolean selective) {
-        return selective ? this.jdbcTemplate.insertJavaBeanSelective(javaBean, this) : this.jdbcTemplate.insertJavaBean(javaBean, this);
+        return selective ? this.jdbcHelper.insertJavaBeanSelective(javaBean, this) : this.jdbcHelper.insertJavaBean(javaBean, this);
     }
 
     public int execute(Object javaBean) {
@@ -94,6 +94,6 @@ public final class JdbcInsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     public int executeBatch(Collection<?> javaBeans) {
-        return this.jdbcTemplate.batchInsertJavaBeans(javaBeans, this);
+        return this.jdbcHelper.batchInsertJavaBeans(javaBeans, this);
     }
 }

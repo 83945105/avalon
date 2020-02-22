@@ -14,7 +14,7 @@ spring:
     static-path-pattern: /resource/**
   resources:
     #这个配置,表示映射路径,静态资源访问不要带上该路径
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
   profiles:
     include: optimize,global,mybatis,avalon-security
     active: dev
