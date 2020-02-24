@@ -1,6 +1,6 @@
 package pub.avalonframework.web.spring.http.response.exception.impl;
 
-import pub.avalonframework.web.spring.http.response.DefaultResultInfo;
+import pub.avalonframework.web.spring.http.response.AbstractResultInfo;
 import pub.avalonframework.web.spring.http.response.ResponseType;
 
 /**
@@ -9,18 +9,34 @@ import pub.avalonframework.web.spring.http.response.ResponseType;
 public class FailMessageException extends MessageException {
 
     public FailMessageException() {
-        super(new DefaultResultInfo(ResponseType.FAIL));
+        super(new FailExceptionResultInfo());
     }
 
     public FailMessageException(String message) {
-        super(new DefaultResultInfo(ResponseType.FAIL, message));
+        super(new FailExceptionResultInfo(message));
     }
 
     public FailMessageException(Throwable cause) {
-        super(new DefaultResultInfo(ResponseType.FAIL), cause);
+        super(new FailExceptionResultInfo(), cause);
     }
 
     public FailMessageException(String message, Throwable cause) {
-        super(new DefaultResultInfo(ResponseType.FAIL, message), cause);
+        super(new FailExceptionResultInfo(message), cause);
+    }
+
+    private final static class FailExceptionResultInfo extends AbstractResultInfo {
+
+        public FailExceptionResultInfo() {
+            this(ResponseType.FAIL.name());
+        }
+
+        public FailExceptionResultInfo(String message) {
+            this.init(message);
+        }
+
+        private void init(String message) {
+            this.message = message;
+            this.fail = true;
+        }
     }
 }

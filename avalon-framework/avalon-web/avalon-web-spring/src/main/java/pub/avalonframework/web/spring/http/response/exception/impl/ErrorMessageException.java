@@ -1,6 +1,6 @@
 package pub.avalonframework.web.spring.http.response.exception.impl;
 
-import pub.avalonframework.web.spring.http.response.DefaultResultInfo;
+import pub.avalonframework.web.spring.http.response.AbstractResultInfo;
 import pub.avalonframework.web.spring.http.response.ResponseType;
 
 /**
@@ -9,18 +9,34 @@ import pub.avalonframework.web.spring.http.response.ResponseType;
 public class ErrorMessageException extends MessageException {
 
     public ErrorMessageException() {
-        super(new DefaultResultInfo(ResponseType.ERROR));
+        super(new ErrorExceptionResultInfo());
     }
 
     public ErrorMessageException(String message) {
-        super(new DefaultResultInfo(ResponseType.ERROR, message));
+        super(new ErrorExceptionResultInfo(message));
     }
 
     public ErrorMessageException(Throwable cause) {
-        super(new DefaultResultInfo(ResponseType.ERROR), cause);
+        super(new ErrorExceptionResultInfo(), cause);
     }
 
     public ErrorMessageException(String message, Throwable cause) {
-        super(new DefaultResultInfo(ResponseType.ERROR, message), cause);
+        super(new ErrorExceptionResultInfo(message), cause);
+    }
+
+    private final static class ErrorExceptionResultInfo extends AbstractResultInfo {
+
+        public ErrorExceptionResultInfo() {
+            this(ResponseType.ERROR.name());
+        }
+
+        public ErrorExceptionResultInfo(String message) {
+            this.init(message);
+        }
+
+        private void init(String message) {
+            this.message = message;
+            this.error = true;
+        }
     }
 }
