@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pub.avalonframework.cloud.gar.mapper.GarMenuMapper" >
+  <resultMap id="BaseResultMap" type="pub.avalonframework.cloud.gar.entity.GarMenu" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="module_id" property="moduleId" jdbcType="VARCHAR" />
+    <result column="sub_module_id" property="subModuleId" jdbcType="VARCHAR" />
+    <result column="sub_module_name" property="subModuleName" jdbcType="VARCHAR" />
+    <result column="menu_group_id" property="menuGroupId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="icon_name" property="iconName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="use_tab" property="useTab" jdbcType="VARCHAR" />
+    <result column="init_open_in_tab" property="initOpenInTab" jdbcType="VARCHAR" />
+    <result column="closable_in_tab" property="closableInTab" jdbcType="VARCHAR" />
+    <result column="cache_in_tab" property="cacheInTab" jdbcType="VARCHAR" />
+    <result column="index" property="index" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="delete_time" property="deleteTime" jdbcType="VARCHAR" />
+    <result column="create_time_stamp" property="createTimeStamp" jdbcType="BIGINT" />
+    <result column="update_time_stamp" property="updateTimeStamp" jdbcType="BIGINT" />
+    <result column="delete_time_stamp" property="deleteTimeStamp" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="pub.avalonframework.cloud.gar.entity.GarMenu" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, module_id, sub_module_id, sub_module_name, menu_group_id, name, value, icon_name, 
+    parent_id, parent_ids, use_tab, init_open_in_tab, closable_in_tab, cache_in_tab, 
+    index, status, create_time, update_time, delete_time, create_time_stamp, update_time_stamp, 
+    delete_time_stamp
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gar_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gar_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="pub.avalonframework.cloud.gar.entity.GarMenu" >
+    insert into gar_menu (id, module_id, sub_module_id, 
+      sub_module_name, menu_group_id, name, 
+      value, icon_name, parent_id, 
+      parent_ids, use_tab, init_open_in_tab, 
+      closable_in_tab, cache_in_tab, index, 
+      status, create_time, update_time, 
+      delete_time, create_time_stamp, update_time_stamp, 
+      delete_time_stamp, description)
+    values (#{id,jdbcType=VARCHAR}, #{moduleId,jdbcType=VARCHAR}, #{subModuleId,jdbcType=VARCHAR}, 
+      #{subModuleName,jdbcType=VARCHAR}, #{menuGroupId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{iconName,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{parentIds,jdbcType=VARCHAR}, #{useTab,jdbcType=VARCHAR}, #{initOpenInTab,jdbcType=VARCHAR}, 
+      #{closableInTab,jdbcType=VARCHAR}, #{cacheInTab,jdbcType=VARCHAR}, #{index,jdbcType=BIGINT}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{deleteTime,jdbcType=VARCHAR}, #{createTimeStamp,jdbcType=BIGINT}, #{updateTimeStamp,jdbcType=BIGINT}, 
+      #{deleteTimeStamp,jdbcType=BIGINT}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pub.avalonframework.cloud.gar.entity.GarMenu" >
+    insert into gar_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="moduleId != null" >
+        module_id,
+      </if>
+      <if test="subModuleId != null" >
+        sub_module_id,
+      </if>
+      <if test="subModuleName != null" >
+        sub_module_name,
+      </if>
+      <if test="menuGroupId != null" >
+        menu_group_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="iconName != null" >
+        icon_name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="parentIds != null" >
+        parent_ids,
+      </if>
+      <if test="useTab != null" >
+        use_tab,
+      </if>
+      <if test="initOpenInTab != null" >
+        init_open_in_tab,
+      </if>
+      <if test="closableInTab != null" >
+        closable_in_tab,
+      </if>
+      <if test="cacheInTab != null" >
+        cache_in_tab,
+      </if>
+      <if test="index != null" >
+        index,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
+      <if test="createTimeStamp != null" >
+        create_time_stamp,
+      </if>
+      <if test="updateTimeStamp != null" >
+        update_time_stamp,
+      </if>
+      <if test="deleteTimeStamp != null" >
+        delete_time_stamp,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="subModuleId != null" >
+        #{subModuleId,jdbcType=VARCHAR},
+      </if>
+      <if test="subModuleName != null" >
+        #{subModuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuGroupId != null" >
+        #{menuGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="iconName != null" >
+        #{iconName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIds != null" >
+        #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="useTab != null" >
+        #{useTab,jdbcType=VARCHAR},
+      </if>
+      <if test="initOpenInTab != null" >
+        #{initOpenInTab,jdbcType=VARCHAR},
+      </if>
+      <if test="closableInTab != null" >
+        #{closableInTab,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheInTab != null" >
+        #{cacheInTab,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTimeStamp != null" >
+        #{createTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="updateTimeStamp != null" >
+        #{updateTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="deleteTimeStamp != null" >
+        #{deleteTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pub.avalonframework.cloud.gar.entity.GarMenu" >
+    update gar_menu
+    <set >
+      <if test="moduleId != null" >
+        module_id = #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="subModuleId != null" >
+        sub_module_id = #{subModuleId,jdbcType=VARCHAR},
+      </if>
+      <if test="subModuleName != null" >
+        sub_module_name = #{subModuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuGroupId != null" >
+        menu_group_id = #{menuGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="iconName != null" >
+        icon_name = #{iconName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIds != null" >
+        parent_ids = #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="useTab != null" >
+        use_tab = #{useTab,jdbcType=VARCHAR},
+      </if>
+      <if test="initOpenInTab != null" >
+        init_open_in_tab = #{initOpenInTab,jdbcType=VARCHAR},
+      </if>
+      <if test="closableInTab != null" >
+        closable_in_tab = #{closableInTab,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheInTab != null" >
+        cache_in_tab = #{cacheInTab,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        index = #{index,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTimeStamp != null" >
+        create_time_stamp = #{createTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="updateTimeStamp != null" >
+        update_time_stamp = #{updateTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="deleteTimeStamp != null" >
+        delete_time_stamp = #{deleteTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pub.avalonframework.cloud.gar.entity.GarMenu" >
+    update gar_menu
+    set module_id = #{moduleId,jdbcType=VARCHAR},
+      sub_module_id = #{subModuleId,jdbcType=VARCHAR},
+      sub_module_name = #{subModuleName,jdbcType=VARCHAR},
+      menu_group_id = #{menuGroupId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      icon_name = #{iconName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      parent_ids = #{parentIds,jdbcType=VARCHAR},
+      use_tab = #{useTab,jdbcType=VARCHAR},
+      init_open_in_tab = #{initOpenInTab,jdbcType=VARCHAR},
+      closable_in_tab = #{closableInTab,jdbcType=VARCHAR},
+      cache_in_tab = #{cacheInTab,jdbcType=VARCHAR},
+      index = #{index,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      delete_time = #{deleteTime,jdbcType=VARCHAR},
+      create_time_stamp = #{createTimeStamp,jdbcType=BIGINT},
+      update_time_stamp = #{updateTimeStamp,jdbcType=BIGINT},
+      delete_time_stamp = #{deleteTimeStamp,jdbcType=BIGINT},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pub.avalonframework.cloud.gar.entity.GarMenu" >
+    update gar_menu
+    set module_id = #{moduleId,jdbcType=VARCHAR},
+      sub_module_id = #{subModuleId,jdbcType=VARCHAR},
+      sub_module_name = #{subModuleName,jdbcType=VARCHAR},
+      menu_group_id = #{menuGroupId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      icon_name = #{iconName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      parent_ids = #{parentIds,jdbcType=VARCHAR},
+      use_tab = #{useTab,jdbcType=VARCHAR},
+      init_open_in_tab = #{initOpenInTab,jdbcType=VARCHAR},
+      closable_in_tab = #{closableInTab,jdbcType=VARCHAR},
+      cache_in_tab = #{cacheInTab,jdbcType=VARCHAR},
+      index = #{index,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      delete_time = #{deleteTime,jdbcType=VARCHAR},
+      create_time_stamp = #{createTimeStamp,jdbcType=BIGINT},
+      update_time_stamp = #{updateTimeStamp,jdbcType=BIGINT},
+      delete_time_stamp = #{deleteTimeStamp,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

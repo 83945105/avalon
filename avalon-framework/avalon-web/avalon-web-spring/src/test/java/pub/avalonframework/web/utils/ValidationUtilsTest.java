@@ -1,9 +1,9 @@
 package pub.avalonframework.web.utils;
 
-import pub.avalonframework.web.spring.http.response.exception.impl.ErrorMessageException;
-import pub.avalonframework.web.spring.http.response.exception.impl.FailMessageException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pub.avalonframework.web.spring.http.response.exception.impl.ErrorMessageException;
+import pub.avalonframework.web.spring.http.response.exception.impl.FailMessageException;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
