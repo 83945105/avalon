@@ -115,7 +115,7 @@ export default class ResponseParser {
         return this;
     };
 
-    executeBefore({data, response}) {
+    executeBefore({data, limit, response}) {
         let {callback: beforeCallback} = this._options.beforeOptions;
         isFunction(beforeCallback) && beforeCallback(data, response);
     };
@@ -125,7 +125,7 @@ export default class ResponseParser {
         return this;
     };
 
-    executeSuccess({data, response}) {
+    executeSuccess({data, limit, response}) {
         let {callback: successCallback} = this._options.successOptions;
         isFunction(successCallback) && successCallback(data, response);
     };
@@ -145,7 +145,7 @@ export default class ResponseParser {
         return this;
     };
 
-    executeFinally({data, response}) {
+    executeFinally({data, limit, response}) {
         let {callback: finallyCallback} = this._options.finallyOptions;
         isFunction(finallyCallback) && finallyCallback(data, response);
     };
