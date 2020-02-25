@@ -35,8 +35,10 @@ public class FailMessageException extends MessageException {
         }
 
         private void init(String message) {
+            this.code = 500;
             this.message = message;
             this.fail = true;
+            this.responseType = ResponseType.FAIL;
         }
     }
 }

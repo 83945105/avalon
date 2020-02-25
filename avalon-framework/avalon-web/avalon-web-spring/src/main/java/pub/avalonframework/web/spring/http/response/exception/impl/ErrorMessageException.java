@@ -35,8 +35,10 @@ public class ErrorMessageException extends MessageException {
         }
 
         private void init(String message) {
+            this.code = 500;
             this.message = message;
             this.error = true;
+            this.responseType = ResponseType.ERROR;
         }
     }
 }
