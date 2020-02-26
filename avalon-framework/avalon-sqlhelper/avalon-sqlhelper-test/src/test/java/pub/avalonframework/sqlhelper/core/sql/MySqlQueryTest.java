@@ -65,29 +65,29 @@ public class MySqlQueryTest extends AbstractTest {
 
                                 .id().isNotNull()
 
-                                .id().equalTo("A-1")
-                                .id().equalTo("A-2", ComparisonRule.NULL_SKIP)
+                                .id().eq("A-1")
+                                .id().eq("A-2", ComparisonRule.NULL_SKIP)
 
-                                .id().notEqualTo("B-1")
-                                .id().notEqualTo("B-2", ComparisonRule.NULL_SKIP)
+                                .id().neq("B-1")
+                                .id().neq("B-2", ComparisonRule.NULL_SKIP)
 
-                                .id().greaterThan("C-1")
-                                .id().greaterThan("C-2", ComparisonRule.NULL_SKIP)
+                                .id().gt("C-1")
+                                .id().gt("C-2", ComparisonRule.NULL_SKIP)
 
-                                .id().greaterThanAndEqualTo("D-1")
-                                .id().greaterThanAndEqualTo("D-2", ComparisonRule.NULL_SKIP)
+                                .id().gte("D-1")
+                                .id().gte("D-2", ComparisonRule.NULL_SKIP)
 
-                                .id().lessThan("E-1")
-                                .id().lessThan("E-2", ComparisonRule.NULL_SKIP)
+                                .id().lt("E-1")
+                                .id().lt("E-2", ComparisonRule.NULL_SKIP)
 
-                                .id().lessThanAndEqualTo("F-1")
-                                .id().lessThanAndEqualTo("F-2", ComparisonRule.NULL_SKIP)
+                                .id().lte("F-1")
+                                .id().lte("F-2", ComparisonRule.NULL_SKIP)
 
-                                .id().between("G-1", "G-2")
-                                .id().between("G-3", "G-4", ComparisonRule.NULL_SKIP)
+                                .id().bt("G-1", "G-2")
+                                .id().bt("G-3", "G-4", ComparisonRule.NULL_SKIP)
 
-                                .id().like("H-1")
-                                .id().like("H-2", ComparisonRule.NULL_SKIP)
+                                .id().lk("H-1")
+                                .id().lk("H-2", ComparisonRule.NULL_SKIP)
 
                                 .id().in(new Object[]{"I-1", "I-2"}, ComparisonRule.NULL_SKIP)
 
@@ -101,17 +101,17 @@ public class MySqlQueryTest extends AbstractTest {
                                 .id().in(Arrays.asList("K-1", "K-2"))
                                 .id().in(Arrays.asList("K-3", "K-4"), ComparisonRule.NULL_SKIP)
 
-                                .id().notIn(new Object[]{"L-1", "L-2"}, ComparisonRule.NULL_SKIP)
+                                .id().nin(new Object[]{"L-1", "L-2"}, ComparisonRule.NULL_SKIP)
 
-                                .id().notIn(ComparisonRule.NULL_SKIP)
-                                .id().notIn(ComparisonRule.NULL_SKIP, "M-1")
-                                .id().notIn(ComparisonRule.NULL_SKIP, new Object[]{"M-2", "M-3"})
-                                .id().notIn("M-4")
-                                .id().notIn(new Object[]{"M-5", "M-6"})
-                                .id().notIn("M-7", "M-8")
+                                .id().nin(ComparisonRule.NULL_SKIP)
+                                .id().nin(ComparisonRule.NULL_SKIP, "M-1")
+                                .id().nin(ComparisonRule.NULL_SKIP, new Object[]{"M-2", "M-3"})
+                                .id().nin("M-4")
+                                .id().nin(new Object[]{"M-5", "M-6"})
+                                .id().nin("M-7", "M-8")
 
-                                .id().notIn(Arrays.asList("N-1", "N-2"))
-                                .id().notIn(Arrays.asList("N-3", "N-4"), ComparisonRule.NULL_SKIP)
+                                .id().nin(Arrays.asList("N-1", "N-2"))
+                                .id().nin(Arrays.asList("N-3", "N-4"), ComparisonRule.NULL_SKIP)
                         ))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user` SysUser where SysUser.`id` is null and SysUser.`id` is not null and SysUser.`id` = ? and SysUser.`id` = ? and SysUser.`id` != ? and SysUser.`id` != ? and SysUser.`id` > ? and SysUser.`id` > ? and SysUser.`id` >= ? and SysUser.`id` >= ? and SysUser.`id` < ? and SysUser.`id` < ? and SysUser.`id` <= ? and SysUser.`id` <= ? and SysUser.`id` between ? and ? and SysUser.`id` between ? and ? and SysUser.`id` like ? and SysUser.`id` like ? and SysUser.`id` in (?,?) and SysUser.`id` in (?) and SysUser.`id` in (?,?) and SysUser.`id` in (?) and SysUser.`id` in (?,?) and SysUser.`id` in (?,?) and SysUser.`id` in (?,?) and SysUser.`id` in (?,?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?,?)", sqlBuilderResult.getPreparedStatementSql());
@@ -140,7 +140,7 @@ public class MySqlQueryTest extends AbstractTest {
     void Test_count_assignJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -153,7 +153,7 @@ public class MySqlQueryTest extends AbstractTest {
     void Test_count_assignTableName_assignJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, "sys_user_custom", SysUserHelper.class)
                 .join(JoinType.INNER, "user_role_custom", UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user_custom` SysUser inner join `user_role_custom` UserRole on UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -166,7 +166,7 @@ public class MySqlQueryTest extends AbstractTest {
     void Test_count_assignTableName_assignTableAlias_assignJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, "sys_user_custom", SysUserHelper.class, "A")
                 .join(JoinType.INNER, "user_role_custom", UserRoleHelper.class, "B", (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user_custom` A inner join `user_role_custom` B on B.`role_id` = A.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -184,29 +184,29 @@ public class MySqlQueryTest extends AbstractTest {
 
                                 .id().isNotNull()
 
-                                .id().equalTo("A-1")
-                                .id().equalTo("A-2", ComparisonRule.NULL_SKIP)
+                                .id().eq("A-1")
+                                .id().eq("A-2", ComparisonRule.NULL_SKIP)
 
-                                .id().notEqualTo("B-1")
-                                .id().notEqualTo("B-2", ComparisonRule.NULL_SKIP)
+                                .id().neq("B-1")
+                                .id().neq("B-2", ComparisonRule.NULL_SKIP)
 
-                                .id().greaterThan("C-1")
-                                .id().greaterThan("C-2", ComparisonRule.NULL_SKIP)
+                                .id().gt("C-1")
+                                .id().gt("C-2", ComparisonRule.NULL_SKIP)
 
-                                .id().greaterThanAndEqualTo("D-1")
-                                .id().greaterThanAndEqualTo("D-2", ComparisonRule.NULL_SKIP)
+                                .id().gte("D-1")
+                                .id().gte("D-2", ComparisonRule.NULL_SKIP)
 
-                                .id().lessThan("E-1")
-                                .id().lessThan("E-2", ComparisonRule.NULL_SKIP)
+                                .id().lt("E-1")
+                                .id().lt("E-2", ComparisonRule.NULL_SKIP)
 
-                                .id().lessThanAndEqualTo("F-1")
-                                .id().lessThanAndEqualTo("F-2", ComparisonRule.NULL_SKIP)
+                                .id().lte("F-1")
+                                .id().lte("F-2", ComparisonRule.NULL_SKIP)
 
-                                .id().between("G-1", "G-2")
-                                .id().between("G-3", "G-4", ComparisonRule.NULL_SKIP)
+                                .id().bt("G-1", "G-2")
+                                .id().bt("G-3", "G-4", ComparisonRule.NULL_SKIP)
 
-                                .id().like("H-1")
-                                .id().like("H-2", ComparisonRule.NULL_SKIP)
+                                .id().lk("H-1")
+                                .id().lk("H-2", ComparisonRule.NULL_SKIP)
 
                                 .id().in(new Object[]{"I-1", "I-2"}, ComparisonRule.NULL_SKIP)
 
@@ -220,17 +220,17 @@ public class MySqlQueryTest extends AbstractTest {
                                 .id().in(Arrays.asList("K-1", "K-2"))
                                 .id().in(Arrays.asList("K-3", "K-4"), ComparisonRule.NULL_SKIP)
 
-                                .id().notIn(new Object[]{"L-1", "L-2"}, ComparisonRule.NULL_SKIP)
+                                .id().nin(new Object[]{"L-1", "L-2"}, ComparisonRule.NULL_SKIP)
 
-                                .id().notIn(ComparisonRule.NULL_SKIP)
-                                .id().notIn(ComparisonRule.NULL_SKIP, "M-1")
-                                .id().notIn(ComparisonRule.NULL_SKIP, new Object[]{"M-2", "M-3"})
-                                .id().notIn("M-4")
-                                .id().notIn(new Object[]{"M-5", "M-6"})
-                                .id().notIn("M-7", "M-8")
+                                .id().nin(ComparisonRule.NULL_SKIP)
+                                .id().nin(ComparisonRule.NULL_SKIP, "M-1")
+                                .id().nin(ComparisonRule.NULL_SKIP, new Object[]{"M-2", "M-3"})
+                                .id().nin("M-4")
+                                .id().nin(new Object[]{"M-5", "M-6"})
+                                .id().nin("M-7", "M-8")
 
-                                .id().notIn(Arrays.asList("N-1", "N-2"))
-                                .id().notIn(Arrays.asList("N-3", "N-4"), ComparisonRule.NULL_SKIP)
+                                .id().nin(Arrays.asList("N-1", "N-2"))
+                                .id().nin(Arrays.asList("N-3", "N-4"), ComparisonRule.NULL_SKIP)
 
                         ))
                 .queryCount();
@@ -260,7 +260,7 @@ public class MySqlQueryTest extends AbstractTest {
     void Test_count_assignInnerJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -273,7 +273,7 @@ public class MySqlQueryTest extends AbstractTest {
     void Test_count_assignLeftJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .leftJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user` SysUser left join `user_role` UserRole on UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -286,7 +286,7 @@ public class MySqlQueryTest extends AbstractTest {
     void Test_count_assignRightJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .rightJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user` SysUser right join `user_role` UserRole on UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -368,7 +368,7 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())))
+                        .and(mainTable.userName().eq(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`user_name` = ?");
     }
@@ -378,8 +378,8 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())
-                                .loginName().equalTo(arg())))
+                        .and(mainTable.userName().eq(arg())
+                                .loginName().eq(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ?");
     }
@@ -389,9 +389,9 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())
-                                .loginName().equalTo(arg()))
-                        .or(mainTable.id().greaterThan(arg())))
+                        .and(mainTable.userName().eq(arg())
+                                .loginName().eq(arg()))
+                        .or(mainTable.id().gt(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ? or SysUser.`id` > ?");
     }
@@ -401,11 +401,11 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())
-                                .loginName().equalTo(arg()))
-                        .or(mainTable.id().greaterThan(arg())
-                                .loginName().between(arg(), arg()))
-                        .and(mainTable.loginName().like(arg())))
+                        .and(mainTable.userName().eq(arg())
+                                .loginName().eq(arg()))
+                        .or(mainTable.id().gt(arg())
+                                .loginName().bt(arg(), arg()))
+                        .and(mainTable.loginName().lk(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ? or (SysUser.`id` > ? and SysUser.`login_name` between ? and ?) and SysUser.`login_name` like ?");
     }
@@ -416,13 +416,13 @@ public class MySqlQueryTest extends AbstractTest {
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
                         .and(cd -> cd
-                                .and(mainTable.userName().notEqualTo(arg()))
-                                .or(mainTable.loginName().greaterThan(arg())))
-                        .or(mainTable.id().greaterThan(arg())
-                                .userName().between(arg(), arg()))
+                                .and(mainTable.userName().neq(arg()))
+                                .or(mainTable.loginName().gt(arg())))
+                        .or(mainTable.id().gt(arg())
+                                .userName().bt(arg(), arg()))
                         .and(cd -> cd
-                                .and(mainTable.userName().equalTo(arg()))
-                                .or(mainTable.loginName().equalTo(arg()))))
+                                .and(mainTable.userName().eq(arg()))
+                                .or(mainTable.loginName().eq(arg()))))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where (SysUser.`user_name` != ? or SysUser.`login_name` > ?) or (SysUser.`id` > ? and SysUser.`user_name` between ? and ?) and (SysUser.`user_name` = ? or SysUser.`login_name` = ?)");
     }
@@ -433,17 +433,17 @@ public class MySqlQueryTest extends AbstractTest {
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
                         .and(cd -> cd
-                                .and(mainTable.userName().notEqualTo(arg()))
-                                .or(mainTable.userName().greaterThan(arg())))
-                        .or(mainTable.id().greaterThan(arg())
-                                .userName().between(arg(), arg()))
+                                .and(mainTable.userName().neq(arg()))
+                                .or(mainTable.userName().gt(arg())))
+                        .or(mainTable.id().gt(arg())
+                                .userName().bt(arg(), arg()))
                         .and(cd -> cd
-                                .and(mainTable.userName().equalTo(arg()))
-                                .or(mainTable.loginName().equalTo(arg()))))
+                                .and(mainTable.userName().eq(arg()))
+                                .or(mainTable.loginName().eq(arg()))))
                 .where((condition, mainTable) -> condition
                         .and(cd -> cd
-                                .and(mainTable.userName().greaterThanAndEqualTo(arg()))
-                                .or(mainTable.loginName().lessThanAndEqualTo(arg()))))
+                                .and(mainTable.userName().gte(arg()))
+                                .or(mainTable.loginName().lte(arg()))))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where ((SysUser.`user_name` != ? or SysUser.`user_name` > ?) or (SysUser.`id` > ? and SysUser.`user_name` between ? and ?) and (SysUser.`user_name` = ? or SysUser.`login_name` = ?)) and (SysUser.`user_name` >= ? or SysUser.`login_name` <= ?)");
     }
@@ -453,7 +453,7 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id`");
     }
@@ -463,7 +463,7 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id()).roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id()).roleName().eq(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ?");
     }
@@ -473,9 +473,9 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id()).roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id()).roleName().eq(arg())))
                 .leftJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ? left join `role_resource` RoleResource on RoleResource.`role_id` = SysUser.`id`");
     }
@@ -485,11 +485,11 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id()).roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id()).roleName().eq(arg())))
                 .leftJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .rightJoin(UserRoleHelper.class, "UR", (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ? left join `role_resource` RoleResource on RoleResource.`role_id` = SysUser.`id` right join `user_role` UR on UR.`role_id` = SysUser.`id`");
     }
@@ -499,9 +499,9 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .where(UserRoleHelper.class, (condition, table, mainTable) -> condition
-                        .and(table.roleName().like(arg())))
+                        .and(table.roleName().lk(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` where UserRole.`role_name` like ?");
 
@@ -512,13 +512,13 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())
-                                .roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id())
+                                .roleName().eq(arg())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().notEqualTo(arg()))
-                        .or(mainTable.loginName().equalTo(arg())))
+                        .and(mainTable.userName().neq(arg()))
+                        .or(mainTable.loginName().eq(arg())))
                 .where(UserRoleHelper.class, (condition, table, mainTable) -> condition
-                        .and(table.roleName().equalTo(arg())))
+                        .and(table.roleName().eq(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ? where (SysUser.`user_name` != ? or SysUser.`login_name` = ?) and UserRole.`role_name` = ?");
     }
@@ -528,10 +528,10 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id()).roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id()).roleName().eq(arg())))
                 .leftJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id()))
-                        .and(joinTable.roleId().equalTo(UserRoleHelper.class, UserRoleHelper.Column::roleId)))
+                        .and(joinTable.roleId().eq(mainTable.id()))
+                        .and(joinTable.roleId().eq(UserRoleHelper.class, UserRoleHelper.Column::roleId)))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ? left join `role_resource` RoleResource on RoleResource.`role_id` = SysUser.`id` and RoleResource.`role_id` = UserRole.`role_id`");
     }
@@ -541,15 +541,15 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())
-                                .roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id())
+                                .roleName().eq(arg())))
                 .rightJoin(UserRoleHelper.class, "UR", (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .leftJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())
-                                .roleId().lessThan(UserRoleHelper.class, "UR", UserRoleHelper.Column::roleId)))
+                        .and(joinTable.roleId().eq(mainTable.id())
+                                .roleId().lt(UserRoleHelper.class, "UR", UserRoleHelper.Column::roleId)))
                 .where(UserRoleHelper.class, "UR", (condition, table, mainTable) -> condition
-                        .and(table.roleName().equalTo(arg())))
+                        .and(table.roleName().eq(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ? right join `user_role` UR on UR.`role_id` = SysUser.`id` left join `role_resource` RoleResource on RoleResource.`role_id` = SysUser.`id` and RoleResource.`role_id` < UR.`role_id` where UR.`role_name` = ?");
     }
@@ -559,18 +559,18 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())
-                                .roleName().equalTo(arg())))
+                        .and(joinTable.roleId().eq(mainTable.id())
+                                .roleName().eq(arg())))
                 .rightJoin(UserRoleHelper.class, "UR", (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .leftJoin(RoleResourceHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())
-                                .roleId().lessThan(UserRoleHelper.class, "UR", UserRoleHelper.Column::roleId)))
+                        .and(joinTable.roleId().eq(mainTable.id())
+                                .roleId().lt(UserRoleHelper.class, "UR", UserRoleHelper.Column::roleId)))
                 .where(UserRoleHelper.class, "UR", (condition, table, mainTable) -> condition
                         .and(cd -> cd
-                                .and(table.roleName().equalTo(arg()))
-                                .or(table.roleId().equalTo(arg())))
-                        .and(table.sortIndex().equalTo(arg())))
+                                .and(table.roleName().eq(arg()))
+                                .or(table.roleId().eq(arg())))
+                        .and(table.sortIndex().eq(arg())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` and UserRole.`role_name` = ? right join `user_role` UR on UR.`role_id` = SysUser.`id` left join `role_resource` RoleResource on RoleResource.`role_id` = SysUser.`id` and RoleResource.`role_id` < UR.`role_id` where (UR.`role_name` = ? or UR.`role_id` = ?) and UR.`sort_index` = ?");
     }
@@ -599,7 +599,7 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())))
+                        .and(mainTable.userName().eq(arg())))
                 .groupBy(table -> table.id().loginName())
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`user_name` = ? group by SysUser.`id`,SysUser.`login_name`");
@@ -611,9 +611,9 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())))
+                        .and(mainTable.userName().eq(arg())))
                 .groupBy(table -> table.userName().id())
                 .groupBy(UserRoleHelper.class, UserRoleHelper.Group::roleId)
                 .query();
@@ -652,7 +652,7 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, "UserRoleAlias", (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .orderBy(table -> table.id().asc().userName().desc())
                 .orderBy(UserRoleHelper.class, "UserRoleAlias", table -> table.sortIndex().desc())
                 .query();
@@ -664,7 +664,7 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(arg())))
+                        .and(mainTable.userName().eq(arg())))
                 .orderBy(table -> table.id().desc())
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`user_name` = ? order by SysUser.`id` desc");
@@ -676,9 +676,9 @@ public class MySqlQueryTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.id().equalTo(arg())))
+                        .and(mainTable.id().eq(arg())))
                 .orderBy(UserRoleHelper.class, table -> table.id().desc())
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` where SysUser.`id` = ? order by UserRole.`id` desc");
@@ -700,9 +700,9 @@ public class MySqlQueryTest extends AbstractTest {
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(o -> o
-                                .and(joinTable.id().equalTo(mainTable.userName()))
-                                .or(joinTable.roleName().equalTo(mainTable.primaryKey())))
-                        .or(joinTable.id().equalTo(mainTable.loginName())))
+                                .and(joinTable.id().eq(mainTable.userName()))
+                                .or(joinTable.roleName().eq(mainTable.primaryKey())))
+                        .or(joinTable.id().eq(mainTable.loginName())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on (UserRole.`id` = SysUser.`user_name` or UserRole.`role_name` = SysUser.`id`) or UserRole.`id` = SysUser.`login_name`");
 
@@ -714,13 +714,13 @@ public class MySqlQueryTest extends AbstractTest {
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(o -> o
-                                .and(joinTable.id().equalTo(mainTable.userName()).roleId().equalTo(arg()))
-                                .or(joinTable.roleName().equalTo(mainTable.loginName()))
+                                .and(joinTable.id().eq(mainTable.userName()).roleId().eq(arg()))
+                                .or(joinTable.roleName().eq(mainTable.loginName()))
                                 .and(o1 -> o1
-                                        .and(joinTable.id().equalTo(arg())
-                                                .roleName().equalTo(arg()))))
-                        .or(joinTable.roleName().equalTo(arg()))
-                        .or(joinTable.id().equalTo(mainTable.userName())))
+                                        .and(joinTable.id().eq(arg())
+                                                .roleName().eq(arg()))))
+                        .or(joinTable.roleName().eq(arg()))
+                        .or(joinTable.id().eq(mainTable.userName())))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on (UserRole.`id` = SysUser.`user_name` and UserRole.`role_id` = ? or UserRole.`role_name` = SysUser.`login_name` and UserRole.`id` = ? and UserRole.`role_name` = ?) or UserRole.`role_name` = ? or UserRole.`id` = SysUser.`user_name`");
     }
@@ -731,11 +731,11 @@ public class MySqlQueryTest extends AbstractTest {
                 .select(table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(o -> o
-                                .and(joinTable.id().equalTo(mainTable.userName()))
-                                .or(joinTable.roleName().equalTo(mainTable.primaryKey())))
-                        .or(joinTable.id().equalTo(mainTable.loginName())))
+                                .and(joinTable.id().eq(mainTable.userName()))
+                                .or(joinTable.roleName().eq(mainTable.primaryKey())))
+                        .or(joinTable.id().eq(mainTable.loginName())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(UserRoleHelper.class, UserRoleHelper.Column::roleName)))
+                        .and(mainTable.userName().eq(UserRoleHelper.class, UserRoleHelper.Column::roleName)))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on (UserRole.`id` = SysUser.`user_name` or UserRole.`role_name` = SysUser.`id`) or UserRole.`id` = SysUser.`login_name` where SysUser.`user_name` = UserRole.`role_name`");
     }
@@ -746,11 +746,11 @@ public class MySqlQueryTest extends AbstractTest {
                 .select(table -> table)
                 .innerJoin("user_role_20190413", UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         .and(o -> o
-                                .and(joinTable.id().equalTo(mainTable.userName()))
-                                .or(joinTable.roleName().equalTo(mainTable.primaryKey())))
-                        .or(joinTable.id().equalTo(mainTable.loginName())))
+                                .and(joinTable.id().eq(mainTable.userName()))
+                                .or(joinTable.roleName().eq(mainTable.primaryKey())))
+                        .or(joinTable.id().eq(mainTable.loginName())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().equalTo(UserRoleHelper.class, UserRoleHelper.Column::id)))
+                        .and(mainTable.userName().eq(UserRoleHelper.class, UserRoleHelper.Column::id)))
                 .query();
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role_20190413` UserRole on (UserRole.`id` = SysUser.`user_name` or UserRole.`role_name` = SysUser.`id`) or UserRole.`id` = SysUser.`login_name` where SysUser.`user_name` = UserRole.`id`");
     }

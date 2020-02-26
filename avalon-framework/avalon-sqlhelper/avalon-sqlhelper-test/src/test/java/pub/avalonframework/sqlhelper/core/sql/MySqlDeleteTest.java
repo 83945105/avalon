@@ -97,29 +97,29 @@ public class MySqlDeleteTest {
 
                                 .id().isNotNull()
 
-                                .id().equalTo("A-1")
-                                .id().equalTo("A-2", ComparisonRule.NULL_SKIP)
+                                .id().eq("A-1")
+                                .id().eq("A-2", ComparisonRule.NULL_SKIP)
 
-                                .id().notEqualTo("B-1")
-                                .id().notEqualTo("B-2", ComparisonRule.NULL_SKIP)
+                                .id().neq("B-1")
+                                .id().neq("B-2", ComparisonRule.NULL_SKIP)
 
-                                .id().greaterThan("C-1")
-                                .id().greaterThan("C-2", ComparisonRule.NULL_SKIP)
+                                .id().gt("C-1")
+                                .id().gt("C-2", ComparisonRule.NULL_SKIP)
 
-                                .id().greaterThanAndEqualTo("D-1")
-                                .id().greaterThanAndEqualTo("D-2", ComparisonRule.NULL_SKIP)
+                                .id().gte("D-1")
+                                .id().gte("D-2", ComparisonRule.NULL_SKIP)
 
-                                .id().lessThan("E-1")
-                                .id().lessThan("E-2", ComparisonRule.NULL_SKIP)
+                                .id().lt("E-1")
+                                .id().lt("E-2", ComparisonRule.NULL_SKIP)
 
-                                .id().lessThanAndEqualTo("F-1")
-                                .id().lessThanAndEqualTo("F-2", ComparisonRule.NULL_SKIP)
+                                .id().lte("F-1")
+                                .id().lte("F-2", ComparisonRule.NULL_SKIP)
 
-                                .id().between("G-1", "G-2")
-                                .id().between("G-3", "G-4", ComparisonRule.NULL_SKIP)
+                                .id().bt("G-1", "G-2")
+                                .id().bt("G-3", "G-4", ComparisonRule.NULL_SKIP)
 
-                                .id().like("H-1")
-                                .id().like("H-2", ComparisonRule.NULL_SKIP)
+                                .id().lk("H-1")
+                                .id().lk("H-2", ComparisonRule.NULL_SKIP)
 
                                 .id().in(new Object[]{"I-1", "I-2"}, ComparisonRule.NULL_SKIP)
 
@@ -133,17 +133,17 @@ public class MySqlDeleteTest {
                                 .id().in(Arrays.asList("K-1", "K-2"))
                                 .id().in(Arrays.asList("K-3", "K-4"), ComparisonRule.NULL_SKIP)
 
-                                .id().notIn(new Object[]{"L-1", "L-2"}, ComparisonRule.NULL_SKIP)
+                                .id().nin(new Object[]{"L-1", "L-2"}, ComparisonRule.NULL_SKIP)
 
-                                .id().notIn(ComparisonRule.NULL_SKIP)
-                                .id().notIn(ComparisonRule.NULL_SKIP, "M-1")
-                                .id().notIn(ComparisonRule.NULL_SKIP, new Object[]{"M-2", "M-3"})
-                                .id().notIn("M-4")
-                                .id().notIn(new Object[]{"M-5", "M-6"})
-                                .id().notIn("M-7", "M-8")
+                                .id().nin(ComparisonRule.NULL_SKIP)
+                                .id().nin(ComparisonRule.NULL_SKIP, "M-1")
+                                .id().nin(ComparisonRule.NULL_SKIP, new Object[]{"M-2", "M-3"})
+                                .id().nin("M-4")
+                                .id().nin(new Object[]{"M-5", "M-6"})
+                                .id().nin("M-7", "M-8")
 
-                                .id().notIn(Arrays.asList("N-1", "N-2"))
-                                .id().notIn(Arrays.asList("N-3", "N-4"), ComparisonRule.NULL_SKIP)
+                                .id().nin(Arrays.asList("N-1", "N-2"))
+                                .id().nin(Arrays.asList("N-3", "N-4"), ComparisonRule.NULL_SKIP)
                         ))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser where SysUser.`id` is null and SysUser.`id` is not null and SysUser.`id` = ? and SysUser.`id` = ? and SysUser.`id` != ? and SysUser.`id` != ? and SysUser.`id` > ? and SysUser.`id` > ? and SysUser.`id` >= ? and SysUser.`id` >= ? and SysUser.`id` < ? and SysUser.`id` < ? and SysUser.`id` <= ? and SysUser.`id` <= ? and SysUser.`id` between ? and ? and SysUser.`id` between ? and ? and SysUser.`id` like ? and SysUser.`id` like ? and SysUser.`id` in (?,?) and SysUser.`id` in (?) and SysUser.`id` in (?,?) and SysUser.`id` in (?) and SysUser.`id` in (?,?) and SysUser.`id` in (?,?) and SysUser.`id` in (?,?) and SysUser.`id` in (?,?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?,?) and SysUser.`id` not in (?,?)",
@@ -174,24 +174,24 @@ public class MySqlDeleteTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .where((condition, mainTable) -> condition
                         .and(mainTable
-                                .id().greaterThan("A-1").id().greaterThan("A-2")
-                                .id().greaterThanAndEqualTo("B-1").id().greaterThanAndEqualTo("B-2"))
+                                .id().gt("A-1").id().gt("A-2")
+                                .id().gte("B-1").id().gte("B-2"))
                         .and(mainTable
-                                .id().lessThan("C-1").id().lessThan("C-2")
-                                .id().lessThanAndEqualTo("D-1").id().lessThanAndEqualTo("D-2"))
+                                .id().lt("C-1").id().lt("C-2")
+                                .id().lte("D-1").id().lte("D-2"))
                         .or(mainTable
-                                .id().equalTo("E-1"))
+                                .id().eq("E-1"))
 
                         .or(mainTable
-                                .id().equalTo("F-1").id().equalTo("F-2"))
+                                .id().eq("F-1").id().eq("F-2"))
                         .or(cd -> cd
-                                .and(mainTable.id().equalTo("G-1").id().equalTo("G-2"))
-                                .and(mainTable.id().equalTo("H-1")))
+                                .and(mainTable.id().eq("G-1").id().eq("G-2"))
+                                .and(mainTable.id().eq("H-1")))
                         .and(cd -> cd
-                                .and(mainTable.id().equalTo("I-1"))
-                                .or(mainTable.id().equalTo("J-1"))))
+                                .and(mainTable.id().eq("I-1"))
+                                .or(mainTable.id().eq("J-1"))))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.id().equalTo("K-1")))
+                        .and(mainTable.id().eq("K-1")))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser where (SysUser.`id` > ? and SysUser.`id` > ? and SysUser.`id` >= ? and SysUser.`id` >= ? and SysUser.`id` < ? and SysUser.`id` < ? and SysUser.`id` <= ? and SysUser.`id` <= ? or SysUser.`id` = ? or (SysUser.`id` = ? and SysUser.`id` = ?) or (SysUser.`id` = ? and SysUser.`id` = ? and SysUser.`id` = ?) and (SysUser.`id` = ? or SysUser.`id` = ?)) and SysUser.`id` = ?",
                 sqlBuilderResult.getPreparedStatementSql());
@@ -217,7 +217,7 @@ public class MySqlDeleteTest {
     void Test_delete_assignInnerJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`",
                 sqlBuilderResult.getPreparedStatementSql());
@@ -231,7 +231,7 @@ public class MySqlDeleteTest {
     void Test_delete_assignLeftJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .join(JoinType.LEFT, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser left join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`",
                 sqlBuilderResult.getPreparedStatementSql());
@@ -245,7 +245,7 @@ public class MySqlDeleteTest {
     void Test_delete_assignRightJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .join(JoinType.RIGHT, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser right join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`",
                 sqlBuilderResult.getPreparedStatementSql());
@@ -259,21 +259,21 @@ public class MySqlDeleteTest {
     void Test_delete_allWhereJoin() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .where(UserRoleHelper.class, (condition, joinTable, mainTable) -> condition
                         .and(joinTable
                                 .userId().isNull()
                                 .userId().isNotNull()
-                                .userId().equalTo(mainTable.id())
-                                .userId().notEqualTo(mainTable.id())
-                                .userId().greaterThan(mainTable.id())
-                                .userId().greaterThanAndEqualTo(mainTable.id())
-                                .userId().lessThan(mainTable.id())
-                                .userId().lessThanAndEqualTo(mainTable.id())
-                                .userId().between(mainTable.id(), mainTable.id())
-                                .userId().like(mainTable.id())
+                                .userId().eq(mainTable.id())
+                                .userId().neq(mainTable.id())
+                                .userId().gt(mainTable.id())
+                                .userId().gte(mainTable.id())
+                                .userId().lt(mainTable.id())
+                                .userId().lte(mainTable.id())
+                                .userId().bt(mainTable.id(), mainTable.id())
+                                .userId().lk(mainTable.id())
                                 .userId().in(mainTable.id())
-                                .userId().notIn(mainTable.id())
+                                .userId().nin(mainTable.id())
                         ))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id` where UserRole.`user_id` is null and UserRole.`user_id` is not null and UserRole.`user_id` = SysUser.`id` and UserRole.`user_id` != SysUser.`id` and UserRole.`user_id` > SysUser.`id` and UserRole.`user_id` >= SysUser.`id` and UserRole.`user_id` < SysUser.`id` and UserRole.`user_id` <= SysUser.`id` and UserRole.`user_id` between SysUser.`id` and SysUser.`id` and UserRole.`user_id` like SysUser.`id` and UserRole.`user_id` in (SysUser.`id`) and UserRole.`user_id` not in (SysUser.`id`)",
@@ -288,32 +288,32 @@ public class MySqlDeleteTest {
     void Test_delete_allWhereColumn() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .join(JoinType.INNER, RoleResourceHelper.class, "RR", (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(UserRoleHelper.class, UserRoleHelper.Column::id)))
+                        .and(joinTable.roleId().eq(UserRoleHelper.class, UserRoleHelper.Column::id)))
                 .where((condition, mainTable) -> condition
                         .and(mainTable
-                                .id().equalTo(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().notEqualTo(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().greaterThan(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().greaterThanAndEqualTo(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().lessThan(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().lessThanAndEqualTo(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().between(UserRoleHelper.class, table -> table.roleId().roleName(), table -> table.roleId().roleId())
-                                .id().like(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().eq(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().neq(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().gt(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().gte(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().lt(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().lte(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().bt(UserRoleHelper.class, table -> table.roleId().roleName(), table -> table.roleId().roleId())
+                                .id().lk(UserRoleHelper.class, table -> table.roleId().roleName())
                                 .id().in(UserRoleHelper.class, table -> table.roleId().roleName())
-                                .id().notIn(UserRoleHelper.class, table -> table.roleId().roleName())
+                                .id().nin(UserRoleHelper.class, table -> table.roleId().roleName())
 
-                                .id().equalTo(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().notEqualTo(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().greaterThan(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().greaterThanAndEqualTo(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().lessThan(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().lessThanAndEqualTo(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().between(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName(), table -> table.resourceName().resourceName())
-                                .id().like(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().eq(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().neq(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().gt(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().gte(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().lt(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().lte(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().bt(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName(), table -> table.resourceName().resourceName())
+                                .id().lk(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
                                 .id().in(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
-                                .id().notIn(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
+                                .id().nin(RoleResourceHelper.class, "RR", table -> table.resourceId().resourceName())
                         ))
                 .delete();
         Assertions.assertEquals("delete SysUser from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id` inner join `role_resource` RR on RR.`role_id` = UserRole.`id` where SysUser.`id` = UserRole.`role_id` and SysUser.`id` = UserRole.`role_name` and SysUser.`id` != UserRole.`role_id` and SysUser.`id` != UserRole.`role_name` and SysUser.`id` > UserRole.`role_id` and SysUser.`id` > UserRole.`role_name` and SysUser.`id` >= UserRole.`role_id` and SysUser.`id` >= UserRole.`role_name` and SysUser.`id` < UserRole.`role_id` and SysUser.`id` < UserRole.`role_name` and SysUser.`id` <= UserRole.`role_id` and SysUser.`id` <= UserRole.`role_name` and SysUser.`id` between UserRole.`role_id` and UserRole.`role_id` and SysUser.`id` between UserRole.`role_name` and UserRole.`role_id` and SysUser.`id` like UserRole.`role_id` and SysUser.`id` like UserRole.`role_name` and SysUser.`id` in (UserRole.`role_id`,UserRole.`role_name`) and SysUser.`id` not in (UserRole.`role_id`,UserRole.`role_name`) and SysUser.`id` = RR.`resource_id` and SysUser.`id` = RR.`resource_name` and SysUser.`id` != RR.`resource_id` and SysUser.`id` != RR.`resource_name` and SysUser.`id` > RR.`resource_id` and SysUser.`id` > RR.`resource_name` and SysUser.`id` >= RR.`resource_id` and SysUser.`id` >= RR.`resource_name` and SysUser.`id` < RR.`resource_id` and SysUser.`id` < RR.`resource_name` and SysUser.`id` <= RR.`resource_id` and SysUser.`id` <= RR.`resource_name` and SysUser.`id` between RR.`resource_id` and RR.`resource_name` and SysUser.`id` between RR.`resource_name` and RR.`resource_name` and SysUser.`id` like RR.`resource_id` and SysUser.`id` like RR.`resource_name` and SysUser.`id` in (RR.`resource_id`,RR.`resource_name`) and SysUser.`id` not in (RR.`resource_id`,RR.`resource_name`)",

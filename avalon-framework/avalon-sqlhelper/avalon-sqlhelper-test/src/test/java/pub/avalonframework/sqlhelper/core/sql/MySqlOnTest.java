@@ -23,7 +23,7 @@ public class MySqlOnTest {
                 .select(table -> table)
                 .join(JoinType.INNER, UserRoleHelper.class)
                 .on(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -39,9 +39,9 @@ public class MySqlOnTest {
                 .join(JoinType.INNER, UserRoleHelper.class)
                 .join(JoinType.INNER, UserRoleHelper.class)
                 .on(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .on(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id` and UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -56,7 +56,7 @@ public class MySqlOnTest {
                 .select(table -> table)
                 .join(JoinType.INNER, "user_role_custom", UserRoleHelper.class, "B")
                 .on(UserRoleHelper.class, "B", (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select A.`id` `id`,A.`user_name` `userName`,A.`login_name` `loginName` from `sys_user_custom` A inner join `user_role_custom` B on B.`user_id` = A.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());

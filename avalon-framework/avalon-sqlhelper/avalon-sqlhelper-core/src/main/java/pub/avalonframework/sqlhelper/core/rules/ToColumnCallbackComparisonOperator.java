@@ -22,7 +22,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T equalTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T eq(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Equal to
@@ -37,8 +37,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T equalTo(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return equalTo(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T eq(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return eq(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -55,7 +55,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T notEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T neq(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Not equal to
@@ -70,8 +70,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T notEqualTo(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return notEqualTo(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T neq(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return neq(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -88,7 +88,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T greaterThan(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T gt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Greater than
@@ -103,8 +103,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T greaterThan(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return greaterThan(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T gt(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return gt(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -121,7 +121,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T greaterThanAndEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T gte(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Greater than or equal to
@@ -136,8 +136,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T greaterThanAndEqualTo(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return greaterThanAndEqualTo(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T gte(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return gte(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -154,7 +154,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lessThan(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T lt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Less than
@@ -169,8 +169,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lessThan(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return lessThan(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T lt(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return lt(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -187,7 +187,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lessThanAndEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T lte(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Less than or equal to
@@ -202,8 +202,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lessThanAndEqualTo(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return lessThanAndEqualTo(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T lte(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return lte(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -221,7 +221,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T between(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback);
+            SS extends SortHelper<SS>> T bt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback);
 
     /**
      * Between ... and ...
@@ -237,8 +237,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T between(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback) {
-        return between(tableHelperClass, null, columnCallback, secondColumnCallback);
+            SS extends SortHelper<SS>> T bt(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback) {
+        return bt(tableHelperClass, null, columnCallback, secondColumnCallback);
     }
 
     /**
@@ -255,7 +255,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T like(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T lk(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Like
@@ -270,8 +270,8 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T like(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return like(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T lk(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return lk(tableHelperClass, null, columnCallback);
     }
 
     /**
@@ -321,7 +321,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T notIn(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
+            SS extends SortHelper<SS>> T nin(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback);
 
     /**
      * Not in
@@ -336,7 +336,7 @@ public interface ToColumnCallbackComparisonOperator<T> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T notIn(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        return notIn(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> T nin(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
+        return nin(tableHelperClass, null, columnCallback);
     }
 }

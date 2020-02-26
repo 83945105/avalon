@@ -39,7 +39,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     void addComparisonDataBlock(AbstractComparisonDataBlock<S> comparisonDataBlock);
 
     @Override
-    default T equalTo(ColumnHelper<?> columnHelper) {
+    default T eq(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -51,7 +51,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T notEqualTo(ColumnHelper<?> columnHelper) {
+    default T neq(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -63,7 +63,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T greaterThan(ColumnHelper<?> columnHelper) {
+    default T gt(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -75,7 +75,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T greaterThanAndEqualTo(ColumnHelper<?> columnHelper) {
+    default T gte(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -87,7 +87,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T lessThan(ColumnHelper<?> columnHelper) {
+    default T lt(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -99,7 +99,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T lessThanAndEqualTo(ColumnHelper<?> columnHelper) {
+    default T lte(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -111,7 +111,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T between(ColumnHelper<?> columnHelper, ColumnHelper<?> secondColumnHelper) {
+    default T bt(ColumnHelper<?> columnHelper, ColumnHelper<?> secondColumnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         List<ColumnDataBlock> secondColumnDataBlocks = secondColumnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0 || secondColumnDataBlocks == null || secondColumnDataBlocks.size() == 0) {
@@ -128,7 +128,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T like(ColumnHelper<?> columnHelper) {
+    default T lk(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
             return this.getHelper();
@@ -154,7 +154,7 @@ public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonD
     }
 
     @Override
-    default T notIn(ColumnHelper<?>... columnHelpers) {
+    default T nin(ColumnHelper<?>... columnHelpers) {
         List<AbstractDataBlock> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
         for (ColumnHelper<?> columnHelper : columnHelpers) {
             List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();

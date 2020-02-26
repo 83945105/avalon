@@ -78,7 +78,7 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                 //mainTable - 主表,也就是你操作的出发表，这里为对应SysUserModel对应的表
                 .where((condition, mainTable) -> condition
                         //添加一个and条件，条件为当主表的userName字段模糊匹配“白”开头的字符
-                        .and(mainTable.userName().like(arg("白%"))))
+                        .and(mainTable.userName().lk(arg("白%"))))
                 //查询，注意这里就用不了queryByPrimaryKey方法了
                 .query();
 
@@ -89,9 +89,9 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                 .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         //添加一个and条件 userName 等于 1
-                        .and(mainTable.userName().equalTo(arg("1"))
+                        .and(mainTable.userName().eq(arg("1"))
                                 //继续追加一个and条件 loginName 等于2
-                                .loginName().equalTo(arg("2"))))
+                                .loginName().eq(arg("2"))))
                 .query();
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ?");
@@ -101,9 +101,9 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                 .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         //添加一个and条件 userName 等于 1
-                        .and(mainTable.userName().equalTo(arg("1")))
+                        .and(mainTable.userName().eq(arg("1")))
                         //继续追加一个and条件 loginName 等于2
-                        .and(mainTable.loginName().equalTo(arg("2"))))
+                        .and(mainTable.loginName().eq(arg("2"))))
                 .query();
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`user_name` = ? and SysUser.`login_name` = ?");
@@ -113,9 +113,9 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                 .select(table -> table.id().userName("userNameAlias"))
                 .where((condition, mainTable) -> condition
                         //添加一个and条件 userName 等于 1
-                        .and(mainTable.userName().equalTo(arg("1")))
+                        .and(mainTable.userName().eq(arg("1")))
                         //继续追加一个or条件 loginName 等于2
-                        .or(mainTable.loginName().equalTo(arg("2"))))
+                        .or(mainTable.loginName().eq(arg("2"))))
                 .query();
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where SysUser.`user_name` = ? or SysUser.`login_name` = ?");
@@ -133,9 +133,9 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                         // and条件继续使用lambda获取新的condition取名为cd(防止重名)、新的mainTable取名为mt
                         // 同样or条件也支持, 这里就不举例了
                         .and(cd -> cd
-                                .and(mainTable.userName().like(arg()))
-                                .or(mainTable.loginName().like(arg())))
-                        .and(mainTable.userName().equalTo(arg())))
+                                .and(mainTable.userName().lk(arg()))
+                                .or(mainTable.loginName().lk(arg())))
+                        .and(mainTable.userName().eq(arg())))
                 .query();
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser where (SysUser.`user_name` like ? or SysUser.`login_name` like ?) and SysUser.`user_name` = ?");
@@ -154,12 +154,12 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
                         // 从lambda函数获取参数 on - on条件、joinTable - 当前连接表(UserRoleModel对应的表)、mainTable - 主表(SysUserModel对应的表)
                         // 表示内连接user_role表,连接条件是user_role表的user_id字段等于主表的id字段
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 // 使用innerJoin可以省略连接类型参数
                 //.innerJoin(UserRoleModel.class, (on, joinTable, mainTable) -> on
                 //        .and(joinTable.userId().equalTo(mainTable.id())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().like(arg())))
+                        .and(mainTable.userName().lk(arg())))
                 .query();
 
         setSqlBuilder(sqlBuilderResult, "select SysUser.`id` `id`,SysUser.`user_name` `userNameAlias` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id` where SysUser.`user_name` like ?");
@@ -172,9 +172,9 @@ public class MySqlDynamicEngineTest extends AbstractTest {
                 //将默认不会查询主表字段，此时如果你想查询出主表字段需手动声明，这里的写法(table -> table)表示查询出主表所有字段
                 .select(table -> table)
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.userName().like(arg())))
+                        .and(mainTable.userName().lk(arg())))
                 .query();
 
         setSqlBuilder(sqlBuilderResult, "select UserRole.`id` `userRoleId`,UserRole.`role_id` `roleId`,UserRole.`role_name` `roleName`,SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id` where SysUser.`user_name` like ?");

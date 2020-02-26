@@ -18,10 +18,10 @@ public class Test {
 
     public static void main(String[] args) {
         RoleResourceHelper.Column column = RoleResourceHelper.column().id().id();
-        SysUserHelper.On join = SysUserHelper.on().id().equalTo(column.resourceName());
+        SysUserHelper.On join = SysUserHelper.on().id().eq(column.resourceName());
 
         SysUserHelper.Column joinColumn = SysUserHelper.column().userName().userName("");
-        RoleResourceHelper.Where where = RoleResourceHelper.where().id().equalTo("1").id().like("");
+        RoleResourceHelper.Where where = RoleResourceHelper.where().id().eq("1").id().lk("");
         RoleResourceHelper.Group group = RoleResourceHelper.groupBy().id().id();
         SysUserHelper.Group joinGroup = SysUserHelper.groupBy().userName().userName();
         RoleResourceHelper.Sort sort = RoleResourceHelper.orderBy().id().asc().id().desc();
@@ -77,7 +77,7 @@ public class Test {
                 .subQueryColumn("", parentTable -> {
                     return new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                             .where((condition, mainTable) -> condition
-                                    .and(mainTable.id().equalTo(parentTable.resourceName())))
+                                    .and(mainTable.id().eq(parentTable.resourceName())))
                             .query();
                 })
 
@@ -86,60 +86,60 @@ public class Test {
                 .groupColumn(SysUserHelper.class, GroupType.MIN, table -> table.userName().userName(""))
                 .groupColumn(SysUserHelper.class, "", GroupType.MIN, table -> table.userName().userName(""))
                 .innerJoin(SysUserHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userName().equalTo(mainTable.id()))
-                        .and(mainTable.id().equalTo(joinTable.userName()))
-                        .or(joinTable.userName().equalTo("")))
+                        .and(joinTable.userName().eq(mainTable.id()))
+                        .and(mainTable.id().eq(joinTable.userName()))
+                        .or(joinTable.userName().eq("")))
                 .join(JoinType.INNER, UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(SysUserHelper.class, table -> table.userName().userName())))
+                        .and(joinTable.roleId().eq(SysUserHelper.class, table -> table.userName().userName())))
                 .join(JoinType.INNER, UserRoleHelper.class)
                 .on(join)
                 .on(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.roleId())))
-                .on((on, mainTable) -> on.and(mainTable.id().equalTo("")))
+                        .and(joinTable.roleId().eq(mainTable.roleId())))
+                .on((on, mainTable) -> on.and(mainTable.id().eq("")))
                 .innerJoin(SysUserHelper.class, (on, joinTable, mainTable) -> on
                         .and(o -> o
-                                .and(joinTable.userName().equalTo(mainTable.id()))
-                                .or(mainTable.id().equalTo(joinTable.userName())))
+                                .and(joinTable.userName().eq(mainTable.id()))
+                                .or(mainTable.id().eq(joinTable.userName())))
                         .or(o -> o
-                                .and(joinTable.userName().equalTo(mainTable.id()))
-                                .or(mainTable.id().equalTo(joinTable.userName()))))
+                                .and(joinTable.userName().eq(mainTable.id()))
+                                .or(mainTable.id().eq(joinTable.userName()))))
                 .where((condition, mainTable) -> condition
                         .and(where)
-                        .and(mainTable.sqlPart("").sqlPart("").id().equalTo("")
-                                .id().greaterThan("")))
+                        .and(mainTable.sqlPart("").sqlPart("").id().eq("")
+                                .id().gt("")))
                 .where((condition, mainTable) -> condition
                         .and(cd -> cd
-                                .and(mainTable.id().equalTo(""))
-                                .or(mainTable.id().equalTo(""))))
+                                .and(mainTable.id().eq(""))
+                                .or(mainTable.id().eq(""))))
                 .where(SysUserHelper.class, (condition, joinTable, mainTable) -> condition
-                        .and(mainTable.id().equalTo(joinTable.userName()))
-                        .and(joinTable.userName().equalTo(mainTable.id()))
-                        .or(joinTable.userName().equalTo(mainTable.id())))
+                        .and(mainTable.id().eq(joinTable.userName()))
+                        .and(joinTable.userName().eq(mainTable.id()))
+                        .or(joinTable.userName().eq(mainTable.id())))
                 .where(SysUserHelper.class, (condition, joinTable, mainTable) -> condition
                         .and(cd -> cd
-                                .and(joinTable.userName().equalTo(mainTable.id()))
-                                .or(joinTable.userName().equalTo(mainTable.id())))
+                                .and(joinTable.userName().eq(mainTable.id()))
+                                .or(joinTable.userName().eq(mainTable.id())))
                         .or(cd -> cd
-                                .and(joinTable.userName().equalTo(mainTable.id()))))
+                                .and(joinTable.userName().eq(mainTable.id()))))
                 .where((condition, mainTable) -> condition
                         .and(UserRoleHelper.class, (cd, joinTable) -> cd
-                                .and(joinTable.roleId().equalTo(""))
-                                .and(joinTable.roleId().equalTo(mainTable.id()))
-                                .and(mainTable.id().equalTo(joinTable.roleId()))))
+                                .and(joinTable.roleId().eq(""))
+                                .and(joinTable.roleId().eq(mainTable.id()))
+                                .and(mainTable.id().eq(joinTable.roleId()))))
                 .where(SysUserHelper.class, (condition, joinTable, mainTable) -> condition
                         .and(UserRoleHelper.class, (cd, UserRoleTable) -> cd
-                                .and(joinTable.userName().equalTo(UserRoleTable.roleId())))
+                                .and(joinTable.userName().eq(UserRoleTable.roleId())))
                         .or(UserRoleHelper.class, (cd, UserRoleTable) -> cd
-                                .and(joinTable.userName().equalTo(UserRoleTable.roleId()))))
+                                .and(joinTable.userName().eq(UserRoleTable.roleId()))))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.id().equalTo(SysUserHelper.class, table -> table.userName().userName())))
+                        .and(mainTable.id().eq(SysUserHelper.class, table -> table.userName().userName())))
                 .where((condition, mainTable) -> condition
-                        .and(mainTable.id().equalToSubQuery(() -> {
+                        .and(mainTable.id().eqSq(() -> {
 
 
                             return new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                                     .where((cd, mt) -> cd
-                                            .and(mt.id().equalTo("")))
+                                            .and(mt.id().eq("")))
                                     .query();
 
 
@@ -151,7 +151,7 @@ public class Test {
                 .groupBy(table -> group)
                 .groupBy(SysUserHelper.class, table -> joinGroup)
                 .groupBy(group, joinGroup)
-                .having((having, mainTable) -> having.and(mainTable.id().max().equalTo("")))
+                .having((having, mainTable) -> having.and(mainTable.id().max().eq("")))
                 .orderBy(table -> table.id().asc().id().desc())
                 .orderBy(SysUserHelper.class, table -> table.userName().asc().userName().desc())
                 .orderBy(table -> sort)

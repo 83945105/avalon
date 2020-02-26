@@ -15,7 +15,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T equalTo(SB dataBlockBuilder);
+    T eq(SB dataBlockBuilder);
 
     /**
      * Not equal to
@@ -23,7 +23,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T notEqualTo(SB dataBlockBuilder);
+    T neq(SB dataBlockBuilder);
 
     /**
      * Greater than
@@ -31,7 +31,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T greaterThan(SB dataBlockBuilder);
+    T gt(SB dataBlockBuilder);
 
     /**
      * Greater than or equal to
@@ -39,7 +39,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T greaterThanAndEqualTo(SB dataBlockBuilder);
+    T gte(SB dataBlockBuilder);
 
     /**
      * Less than
@@ -47,7 +47,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lessThan(SB dataBlockBuilder);
+    T lt(SB dataBlockBuilder);
 
     /**
      * Less than or equal to
@@ -55,7 +55,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lessThanAndEqualTo(SB dataBlockBuilder);
+    T lte(SB dataBlockBuilder);
 
     /**
      * Between ... and ...
@@ -64,7 +64,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param secondDataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T between(SB dataBlockBuilder, SB secondDataBlockBuilder);
+    T bt(SB dataBlockBuilder, SB secondDataBlockBuilder);
 
     /**
      * Like
@@ -72,7 +72,7 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T like(SB dataBlockBuilder);
+    T lk(SB dataBlockBuilder);
 
     /**
      * In
@@ -88,5 +88,5 @@ public interface ToDataBlockBuilderComparisonOperator<T extends Helper, SB exten
      * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T notIn(SB... dataBlockBuilders);
+    T nin(SB... dataBlockBuilders);
 }

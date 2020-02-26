@@ -63,7 +63,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T equalTo(Object value, ComparisonRule comparisonRule) {
+    default T eq(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -80,7 +80,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T notEqualTo(Object value, ComparisonRule comparisonRule) {
+    default T neq(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -97,7 +97,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T greaterThan(Object value, ComparisonRule comparisonRule) {
+    default T gt(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -114,7 +114,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T greaterThanAndEqualTo(Object value, ComparisonRule comparisonRule) {
+    default T gte(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -131,7 +131,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T lessThan(Object value, ComparisonRule comparisonRule) {
+    default T lt(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -148,7 +148,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T lessThanAndEqualTo(Object value, ComparisonRule comparisonRule) {
+    default T lte(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -165,7 +165,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T between(Object value, Object secondValue, ComparisonRule comparisonRule) {
+    default T bt(Object value, Object secondValue, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -193,7 +193,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T like(Object value, ComparisonRule comparisonRule) {
+    default T lk(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -244,7 +244,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T notIn(Object[] values, ComparisonRule comparisonRule) {
+    default T nin(Object[] values, ComparisonRule comparisonRule) {
         if (values == null || values.length == 0) {
             switch (comparisonRule) {
                 case NULL_SKIP:
@@ -261,7 +261,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
     }
 
     @Override
-    default T notIn(Collection<Object> values, ComparisonRule comparisonRule) {
+    default T nin(Collection<Object> values, ComparisonRule comparisonRule) {
         if (values == null || values.size() == 0) {
             switch (comparisonRule) {
                 case NULL_SKIP:

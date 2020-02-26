@@ -46,7 +46,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T equalTo(Object value, ComparisonRule comparisonRule);
+    T eq(Object value, ComparisonRule comparisonRule);
 
     /**
      * Equal to
@@ -54,8 +54,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T equalTo(Object value) {
-        return equalTo(value, getComparisonRule());
+    default T eq(Object value) {
+        return eq(value, getComparisonRule());
     }
 
     /**
@@ -65,7 +65,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T notEqualTo(Object value, ComparisonRule comparisonRule);
+    T neq(Object value, ComparisonRule comparisonRule);
 
     /**
      * Not equal to
@@ -73,8 +73,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T notEqualTo(Object value) {
-        return notEqualTo(value, getComparisonRule());
+    default T neq(Object value) {
+        return neq(value, getComparisonRule());
     }
 
     /**
@@ -84,7 +84,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T greaterThan(Object value, ComparisonRule comparisonRule);
+    T gt(Object value, ComparisonRule comparisonRule);
 
     /**
      * Greater than
@@ -92,8 +92,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T greaterThan(Object value) {
-        return greaterThan(value, getComparisonRule());
+    default T gt(Object value) {
+        return gt(value, getComparisonRule());
     }
 
     /**
@@ -103,7 +103,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T greaterThanAndEqualTo(Object value, ComparisonRule comparisonRule);
+    T gte(Object value, ComparisonRule comparisonRule);
 
     /**
      * Greater than or equal to
@@ -111,8 +111,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T greaterThanAndEqualTo(Object value) {
-        return greaterThanAndEqualTo(value, getComparisonRule());
+    default T gte(Object value) {
+        return gte(value, getComparisonRule());
     }
 
     /**
@@ -122,7 +122,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T lessThan(Object value, ComparisonRule comparisonRule);
+    T lt(Object value, ComparisonRule comparisonRule);
 
     /**
      * Less than
@@ -130,8 +130,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T lessThan(Object value) {
-        return lessThan(value, getComparisonRule());
+    default T lt(Object value) {
+        return lt(value, getComparisonRule());
     }
 
     /**
@@ -141,7 +141,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T lessThanAndEqualTo(Object value, ComparisonRule comparisonRule);
+    T lte(Object value, ComparisonRule comparisonRule);
 
     /**
      * Less than or equal to
@@ -149,8 +149,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T lessThanAndEqualTo(Object value) {
-        return lessThanAndEqualTo(value, getComparisonRule());
+    default T lte(Object value) {
+        return lte(value, getComparisonRule());
     }
 
     /**
@@ -161,7 +161,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T between(Object value, Object secondValue, ComparisonRule comparisonRule);
+    T bt(Object value, Object secondValue, ComparisonRule comparisonRule);
 
     /**
      * Between ... and ...
@@ -170,8 +170,8 @@ public interface BaseComparisonOperator<T> {
      * @param secondValue comparison end value
      * @return extends {@link Helper} object
      */
-    default T between(Object value, Object secondValue) {
-        return between(value, secondValue, getComparisonRule());
+    default T bt(Object value, Object secondValue) {
+        return bt(value, secondValue, getComparisonRule());
     }
 
     /**
@@ -181,7 +181,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T like(Object value, ComparisonRule comparisonRule);
+    T lk(Object value, ComparisonRule comparisonRule);
 
     /**
      * Like
@@ -189,8 +189,8 @@ public interface BaseComparisonOperator<T> {
      * @param value comparison value
      * @return extends {@link Helper} object
      */
-    default T like(Object value) {
-        return like(value, getComparisonRule());
+    default T lk(Object value) {
+        return lk(value, getComparisonRule());
     }
 
     /**
@@ -249,7 +249,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T notIn(Object[] values, ComparisonRule comparisonRule);
+    T nin(Object[] values, ComparisonRule comparisonRule);
 
     /**
      * Not in
@@ -258,8 +258,8 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    default T notIn(ComparisonRule comparisonRule, Object... values) {
-        return notIn(values, comparisonRule);
+    default T nin(ComparisonRule comparisonRule, Object... values) {
+        return nin(values, comparisonRule);
     }
 
     /**
@@ -268,8 +268,8 @@ public interface BaseComparisonOperator<T> {
      * @param values comparison values
      * @return extends {@link Helper} object
      */
-    default T notIn(Object... values) {
-        return notIn(getComparisonRule(), values);
+    default T nin(Object... values) {
+        return nin(getComparisonRule(), values);
     }
 
     /**
@@ -279,7 +279,7 @@ public interface BaseComparisonOperator<T> {
      * @param comparisonRule {@link ComparisonRule}
      * @return extends {@link Helper} object
      */
-    T notIn(Collection<Object> values, ComparisonRule comparisonRule);
+    T nin(Collection<Object> values, ComparisonRule comparisonRule);
 
     /**
      * Not in
@@ -287,7 +287,7 @@ public interface BaseComparisonOperator<T> {
      * @param values comparison values
      * @return extends {@link Helper} object
      */
-    default T notIn(Collection<Object> values) {
-        return notIn(values, getComparisonRule());
+    default T nin(Collection<Object> values) {
+        return nin(values, getComparisonRule());
     }
 }

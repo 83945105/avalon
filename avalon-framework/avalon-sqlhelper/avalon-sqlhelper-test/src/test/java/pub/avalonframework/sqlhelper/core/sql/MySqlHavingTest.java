@@ -16,7 +16,7 @@ public class MySqlHavingTest {
     void Test_having_00() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(SysUserHelper.Column::id)
-                .having((having, mainTable) -> having.and(mainTable.id().max().equalTo("1")))
+                .having((having, mainTable) -> having.and(mainTable.id().max().eq("1")))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id` from `sys_user` SysUser having max(SysUser.`id`) = ?", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{"1"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -26,7 +26,7 @@ public class MySqlHavingTest {
     void Test_having_01() {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(SysUserHelper.Column::id)
-                .having((having, mainTable) -> having.and(mainTable.id().max().avg().equalTo("1")))
+                .having((having, mainTable) -> having.and(mainTable.id().max().avg().eq("1")))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id` from `sys_user` SysUser having avg(SysUser.`id`) = ?", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{"1"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -37,7 +37,7 @@ public class MySqlHavingTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(SysUserHelper.Column::id)
                 .groupBy(SysUserHelper.Group::loginName)
-                .having((having, mainTable) -> having.and(mainTable.id().max().equalTo("1").loginName().sum().greaterThan("2")))
+                .having((having, mainTable) -> having.and(mainTable.id().max().eq("1").loginName().sum().gt("2")))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id` from `sys_user` SysUser group by SysUser.`login_name` having max(SysUser.`id`) = ? and sum(SysUser.`login_name`) > ?", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{"1", "2"}, sqlBuilderResult.getPreparedStatementArgs().toArray());

@@ -103,7 +103,7 @@ public class MySqlColumnTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(column1, column2, column3)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`login_name` `loginName`,SysUser.`id` `idAlias`,SysUser.`login_name` `loginNameAlias`,UserRole.`role_id` `roleId`,UserRole.`id` `userRoleId` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -120,7 +120,7 @@ public class MySqlColumnTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class, "A")
                 .select(column1, column2, column3)
                 .innerJoin(UserRoleHelper.class, "B", (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select A.`id` `id`,A.`login_name` `loginName`,A.`id` `idAlias`,A.`login_name` `loginNameAlias`,B.`role_id` `roleId`,B.`id` `userRoleId` from `sys_user` A inner join `user_role` B on B.`user_id` = A.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -135,7 +135,7 @@ public class MySqlColumnTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(column)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select UserRole.`id` `id`,UserRole.`user_id` `userId`,UserRole.`role_id` `roleId`,UserRole.`role_name` `roleName`,UserRole.`sort_index` `sortIndex` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -212,7 +212,7 @@ public class MySqlColumnTest {
                 .select(table -> table.id().loginName())
                 .select(UserRoleHelper.class, table -> table.id("userRoleId").roleId())
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`login_name` `loginName`,UserRole.`id` `userRoleId`,UserRole.`role_id` `roleId` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -226,7 +226,7 @@ public class MySqlColumnTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .select(UserRoleHelper.class, table -> table)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.userId().equalTo(mainTable.id())))
+                        .and(joinTable.userId().eq(mainTable.id())))
                 .query();
         Assertions.assertEquals("select UserRole.`id` `id`,UserRole.`user_id` `userId`,UserRole.`role_id` `roleId`,UserRole.`role_name` `roleName`,UserRole.`sort_index` `sortIndex` from `sys_user` SysUser inner join `user_role` UserRole on UserRole.`user_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
@@ -277,7 +277,7 @@ public class MySqlColumnTest {
                         new SqlHelperEngine<>(DatabaseType.MYSQL, UserRoleHelper.class)
                                 .select(table -> table.id("userRoleId"))
                                 .where((condition, mainTable) -> condition
-                                        .and(mainTable.userId().equalTo(parentTable.id())))
+                                        .and(mainTable.userId().eq(parentTable.id())))
                                 .query()
                 )
                 .query();
@@ -295,7 +295,7 @@ public class MySqlColumnTest {
                         new SqlHelperEngine<>(DatabaseType.MYSQL, "user_role_custom", UserRoleHelper.class)
                                 .select(table -> table.id("userRoleId"))
                                 .where((condition, mainTable) -> condition
-                                        .and(mainTable.id().equalTo("1")))
+                                        .and(mainTable.id().eq("1")))
                                 .query()
                 )
                 .query();
@@ -313,7 +313,7 @@ public class MySqlColumnTest {
                         new SqlHelperEngine<>(DatabaseType.MYSQL, UserRoleHelper.class, "B")
                                 .select(table -> table.id("userRoleId"))
                                 .where((condition, mainTable) -> condition
-                                        .and(mainTable.userId().equalTo(parentTable.id())))
+                                        .and(mainTable.userId().eq(parentTable.id())))
                                 .query()
                 )
                 .query();

@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.jdbc.core;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-import pub.avalonframework.sqlhelper.core.helper.TableHelper;
+import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.SelectSqlBuilder;
 import pub.avalonframework.sqlhelper.jdbc.core.engine.JdbcInsertEngine;
@@ -18,30 +18,34 @@ import java.util.function.Function;
 /**
  * @author baichao
  */
-public abstract class BaseJdbcHelper<T, H extends TableHelper<H, ?, ?, ?, ?, ?, ?>> {
+public abstract class BaseJdbcHelper<T, H extends TableHelper<H, HC, HO, HW, HG, HH, HS>,
+        HC extends ColumnHelper<HC>,
+        HO extends OnHelper<HO>,
+        HW extends WhereHelper<HW>,
+        HG extends GroupHelper<HG>,
+        HH extends HavingHelper<HH>,
+        HS extends SortHelper<HS>> {
 
     protected JdbcHelper jdbcHelper;
 
     protected JdbcFactory jdbcFactory;
 
-    private Class<? extends TableHelper> tableHelperClass;
-//
-//    private T tableHelperClass;
+    private Class<H> tableHelperClass;
 
     public void copyTable(String targetTableName, boolean copyData) {
         jdbcHelper.copyTable(targetTableName, copyData, new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
     }
 
     public void deleteTable() {
-        jdbcHelper.deleteTable(new JdbcTableEngine(jdbcHelper, tableHelperClass));
+        jdbcHelper.deleteTable(new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
     }
 
     public void renameTable(String targetTableName) {
-        jdbcHelper.renameTable(targetTableName, new JdbcTableEngine(jdbcHelper, tableHelperClass));
+        jdbcHelper.renameTable(targetTableName, new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
     }
 
     public boolean isTableExist() {
-        return jdbcHelper.isTableExist(new JdbcTableEngine(jdbcHelper, tableHelperClass));
+        return jdbcHelper.isTableExist(new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
     }
 
     public int insertJavaBean(T javaBean) {
@@ -77,8 +81,8 @@ public abstract class BaseJdbcHelper<T, H extends TableHelper<H, ?, ?, ?, ?, ?, 
     }
 
 
-    public Map<String, Object> queryOne(Function<JdbcSelectEngine, SelectSqlBuilder> function) {
-        return jdbcHelper.queryOne(function.apply(new JdbcSelectEngine(jdbcHelper, tableHelperClass)));
+    public Map<String, Object> queryOne(Function<JdbcSelectEngine<H, HC, HO, HW, HG, HH, HS>, SelectSqlBuilder> function) {
+        return jdbcHelper.queryOne(function.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
     public <R> R queryOne(SelectSqlBuilder selectSqlBuilder, Class<R> returnType) {

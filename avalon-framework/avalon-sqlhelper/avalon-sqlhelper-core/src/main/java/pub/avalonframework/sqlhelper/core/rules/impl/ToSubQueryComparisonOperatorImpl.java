@@ -34,55 +34,55 @@ public interface ToSubQueryComparisonOperatorImpl<T, S extends AbstractCompariso
     void addComparisonDataBlock(AbstractComparisonDataBlock<S> comparisonDataBlock);
 
     @Override
-    default T equalToSubQuery(SubQueryCallback subQueryCallback) {
+    default T eqSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.EQUAL, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T notEqualToSubQuery(SubQueryCallback subQueryCallback) {
+    default T neqSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.NOT_EQUAL, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T greaterThanSubQuery(SubQueryCallback subQueryCallback) {
+    default T gtSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.GREATER, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T greaterThanAndEqualToSubQuery(SubQueryCallback subQueryCallback) {
+    default T gteSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.GREATER_EQUAL, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T lessThanSubQuery(SubQueryCallback subQueryCallback) {
+    default T ltSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.LESS, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T lessThanAndEqualToSubQuery(SubQueryCallback subQueryCallback) {
+    default T lteSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.LESS_EQUAL, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T likeSubQuery(SubQueryCallback subQueryCallback) {
+    default T lkSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.LIKE, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T inSubQuery(SubQueryCallback subQueryCallback) {
+    default T inSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.IN, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }
 
     @Override
-    default T notInSubQuery(SubQueryCallback subQueryCallback) {
+    default T ninSq(SubQueryCallback subQueryCallback) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSubQuery(ComparisonType.NOT_IN, CallbackExecutor.execute(subQueryCallback)));
         return this.getHelper();
     }

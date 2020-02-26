@@ -14,7 +14,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T equalTo(ColumnHelper<?> columnHelper);
+    T eq(ColumnHelper<?> columnHelper);
 
     /**
      * Not equal to
@@ -22,7 +22,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T notEqualTo(ColumnHelper<?> columnHelper);
+    T neq(ColumnHelper<?> columnHelper);
 
     /**
      * Greater than
@@ -30,7 +30,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T greaterThan(ColumnHelper<?> columnHelper);
+    T gt(ColumnHelper<?> columnHelper);
 
     /**
      * Greater than or equal to
@@ -38,7 +38,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T greaterThanAndEqualTo(ColumnHelper<?> columnHelper);
+    T gte(ColumnHelper<?> columnHelper);
 
     /**
      * Less than
@@ -46,7 +46,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T lessThan(ColumnHelper<?> columnHelper);
+    T lt(ColumnHelper<?> columnHelper);
 
     /**
      * Less than or equal to
@@ -54,7 +54,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T lessThanAndEqualTo(ColumnHelper<?> columnHelper);
+    T lte(ColumnHelper<?> columnHelper);
 
     /**
      * Between ... and ...
@@ -63,7 +63,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param secondColumnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T between(ColumnHelper<?> columnHelper, ColumnHelper<?> secondColumnHelper);
+    T bt(ColumnHelper<?> columnHelper, ColumnHelper<?> secondColumnHelper);
 
     /**
      * Like
@@ -71,7 +71,7 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelper extends {@link ColumnHelper} object
      * @return extends {@link Helper} object
      */
-    T like(ColumnHelper<?> columnHelper);
+    T lk(ColumnHelper<?> columnHelper);
 
     /**
      * In
@@ -87,5 +87,5 @@ public interface ToColumnComparisonOperator<T> {
      * @param columnHelpers extends {@link ColumnHelper} objects
      * @return extends {@link Helper} object
      */
-    T notIn(ColumnHelper<?>... columnHelpers);
+    T nin(ColumnHelper<?>... columnHelpers);
 }

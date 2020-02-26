@@ -142,9 +142,9 @@ public class MySqlUpdateTest extends AbstractTest {
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .update(table -> table.userName().userName())
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .where(UserRoleHelper.class, (condition, table, mainTable) -> condition
-                        .and(table.roleName().equalTo(arg())))
+                        .and(table.roleName().eq(arg())))
                 .updateJavaBean(javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` set SysUser.`user_name` = ?,SysUser.`user_name` = ? where UserRole.`role_name` = ?");
     }
@@ -156,9 +156,9 @@ public class MySqlUpdateTest extends AbstractTest {
 
         SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
                 .innerJoin(UserRoleHelper.class, (on, joinTable, mainTable) -> on
-                        .and(joinTable.roleId().equalTo(mainTable.id())))
+                        .and(joinTable.roleId().eq(mainTable.id())))
                 .where(UserRoleHelper.class, (condition, table, mainTable) -> condition
-                        .and(table.roleName().equalTo(arg())))
+                        .and(table.roleName().eq(arg())))
                 .updateJavaBeanSelective(javaBean);
         setSqlBuilder(sqlBuilderResult, "update `sys_user` SysUser inner join `user_role` UserRole on UserRole.`role_id` = SysUser.`id` set SysUser.`user_name` = ? where UserRole.`role_name` = ?");
     }

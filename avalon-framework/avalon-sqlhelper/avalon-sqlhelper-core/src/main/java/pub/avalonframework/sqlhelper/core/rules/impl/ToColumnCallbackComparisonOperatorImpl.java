@@ -18,11 +18,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T equalTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T eq(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return equalTo(sc);
+        return eq(sc);
     }
 
     @Override
@@ -32,11 +32,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T notEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T neq(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return notEqualTo(sc);
+        return neq(sc);
     }
 
     @Override
@@ -46,11 +46,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T greaterThan(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T gt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return greaterThan(sc);
+        return gt(sc);
     }
 
     @Override
@@ -60,11 +60,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T greaterThanAndEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T gte(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return greaterThanAndEqualTo(sc);
+        return gte(sc);
     }
 
     @Override
@@ -74,11 +74,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lessThan(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T lt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return lessThan(sc);
+        return lt(sc);
     }
 
     @Override
@@ -88,11 +88,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lessThanAndEqualTo(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T lte(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return lessThanAndEqualTo(sc);
+        return lte(sc);
     }
 
     @Override
@@ -102,13 +102,13 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T between(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback) {
+            SS extends SortHelper<SS>> T bt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
         SC secondSc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         secondSc = secondColumnCallback.apply(secondSc);
-        return between(sc, secondSc);
+        return bt(sc, secondSc);
     }
 
     @Override
@@ -118,11 +118,11 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T like(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T lk(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return like(sc);
+        return lk(sc);
     }
 
     @Override
@@ -146,10 +146,10 @@ public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallb
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T notIn(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T nin(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         sc = columnCallback.apply(sc);
-        return notIn(sc);
+        return nin(sc);
     }
 }

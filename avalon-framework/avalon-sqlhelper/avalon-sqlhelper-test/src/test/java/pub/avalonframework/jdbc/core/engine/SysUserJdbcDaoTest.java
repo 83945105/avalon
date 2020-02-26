@@ -13,6 +13,6 @@ public class SysUserJdbcDaoTest {
 
     void test() {
         SysUser sysUser = sysUserJdbcDao.queryByPrimaryKey("");
-        sysUserJdbcDao.queryOne(jdbcSelectEngine -> jdbcSelectEngine.where((condition, mainTable) -> condition));
+        sysUserJdbcDao.queryOne(jdbcSelectEngine -> jdbcSelectEngine.where((condition, mainTable) -> condition.and(mainTable.id().eq(""))));
     }
 }

@@ -14,7 +14,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T equalToSubQuery(SubQueryCallback subQueryCallback);
+    T eqSq(SubQueryCallback subQueryCallback);
 
     /**
      * Not equal to sub query.
@@ -22,7 +22,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T notEqualToSubQuery(SubQueryCallback subQueryCallback);
+    T neqSq(SubQueryCallback subQueryCallback);
 
     /**
      * Greater than sub query.
@@ -30,7 +30,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T greaterThanSubQuery(SubQueryCallback subQueryCallback);
+    T gtSq(SubQueryCallback subQueryCallback);
 
     /**
      * Greater than and equal to sub query.
@@ -38,7 +38,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T greaterThanAndEqualToSubQuery(SubQueryCallback subQueryCallback);
+    T gteSq(SubQueryCallback subQueryCallback);
 
     /**
      * Less than sub query.
@@ -46,7 +46,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T lessThanSubQuery(SubQueryCallback subQueryCallback);
+    T ltSq(SubQueryCallback subQueryCallback);
 
     /**
      * Less than and equal to sub query.
@@ -54,7 +54,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T lessThanAndEqualToSubQuery(SubQueryCallback subQueryCallback);
+    T lteSq(SubQueryCallback subQueryCallback);
 
     /**
      * Like sub query.
@@ -62,7 +62,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T likeSubQuery(SubQueryCallback subQueryCallback);
+    T lkSq(SubQueryCallback subQueryCallback);
 
     /**
      * In sub query.
@@ -70,7 +70,7 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T inSubQuery(SubQueryCallback subQueryCallback);
+    T inSq(SubQueryCallback subQueryCallback);
 
     /**
      * Not in sub query.
@@ -78,5 +78,5 @@ public interface ToSubQueryComparisonOperator<T> {
      * @param subQueryCallback {@link SubQueryCallback}
      * @return extends {@link Helper} object
      */
-    T notInSubQuery(SubQueryCallback subQueryCallback);
+    T ninSq(SubQueryCallback subQueryCallback);
 }

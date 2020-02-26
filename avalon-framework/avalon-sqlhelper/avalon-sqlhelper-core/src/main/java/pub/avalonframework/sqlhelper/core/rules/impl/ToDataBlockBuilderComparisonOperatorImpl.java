@@ -36,49 +36,49 @@ public interface ToDataBlockBuilderComparisonOperatorImpl<T extends Helper, S ex
     void addComparisonDataBlock(AbstractComparisonDataBlock<S> comparisonDataBlock);
 
     @Override
-    default T equalTo(SB dataBlockBuilder) {
+    default T eq(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T notEqualTo(SB dataBlockBuilder) {
+    default T neq(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.NOT_EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T greaterThan(SB dataBlockBuilder) {
+    default T gt(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.GREATER, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T greaterThanAndEqualTo(SB dataBlockBuilder) {
+    default T gte(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.GREATER_EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T lessThan(SB dataBlockBuilder) {
+    default T lt(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.LESS, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T lessThanAndEqualTo(SB dataBlockBuilder) {
+    default T lte(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.LESS_EQUAL, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T between(SB dataBlockBuilder, SB secondDataBlockBuilder) {
+    default T bt(SB dataBlockBuilder, SB secondDataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetPairDataBlock(ComparisonType.BETWEEN, dataBlockBuilder.getComparisonDataBlock(), secondDataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
 
     @Override
-    default T like(SB dataBlockBuilder) {
+    default T lk(SB dataBlockBuilder) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetSingleDataBlock(ComparisonType.LIKE, dataBlockBuilder.getComparisonDataBlock()));
         return this.getHelper();
     }
@@ -90,7 +90,7 @@ public interface ToDataBlockBuilderComparisonOperatorImpl<T extends Helper, S ex
     }
 
     @Override
-    default T notIn(SB... dataBlockBuilders) {
+    default T nin(SB... dataBlockBuilders) {
         this.addComparisonDataBlock(this.getComparisonDataBlock().setTargetMultiDataBlock(ComparisonType.NOT_IN, Arrays.stream(dataBlockBuilders).map(AbstractComparisonDataBlockBuilder::getComparisonDataBlock).collect(Collectors.toList())));
         return this.getHelper();
     }
