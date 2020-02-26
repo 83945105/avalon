@@ -1,16 +1,16 @@
-package pub.avalonframework.sqlhelper.core.rules.impl;
+package pub.avalonframework.sqlhelper.core.expression.impl;
 
 import pub.avalonframework.sqlhelper.core.callback.SubQueryCallback;
 import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.SubQueryComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.ToSubQueryComparisonOperator;
 
 /**
  * @author baichao
  */
-public interface ToSubQueryComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends ToSubQueryComparisonOperator<T> {
+public interface SubQueryComparisonExpressionImpl<T, S extends AbstractComparisonDataBlock<S>> extends SubQueryComparisonExpression<T> {
 
     /**
      * Get helper.

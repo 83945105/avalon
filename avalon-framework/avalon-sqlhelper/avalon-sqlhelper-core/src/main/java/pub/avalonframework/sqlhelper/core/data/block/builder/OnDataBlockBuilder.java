@@ -5,12 +5,12 @@ import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.OnComparisonOperator;
+import pub.avalonframework.sqlhelper.core.expression.OnComparisonExpression;
 
 /**
  * @author baichao
  */
-public final class OnDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, OnDataBlock> implements OnComparisonOperator<T> {
+public final class OnDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, OnDataBlock> implements OnComparisonExpression<T> {
 
     private OnDataBlock onDataBlock;
 

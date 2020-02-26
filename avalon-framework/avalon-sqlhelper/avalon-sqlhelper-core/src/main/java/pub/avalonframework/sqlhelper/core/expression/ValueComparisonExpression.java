@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.rules;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public interface BaseComparisonOperator<T> {
+public interface ValueComparisonExpression<T> {
 
     /**
      * Get comparison rule

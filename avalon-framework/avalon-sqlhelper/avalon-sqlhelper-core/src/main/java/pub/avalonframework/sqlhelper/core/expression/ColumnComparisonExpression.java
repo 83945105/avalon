@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.rules;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public interface ToColumnComparisonOperator<T> {
+public interface ColumnComparisonExpression<T> {
 
     /**
      * Equal to

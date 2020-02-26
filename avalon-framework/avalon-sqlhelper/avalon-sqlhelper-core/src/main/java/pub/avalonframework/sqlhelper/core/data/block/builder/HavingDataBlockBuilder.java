@@ -6,13 +6,13 @@ import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.GroupByOperator;
-import pub.avalonframework.sqlhelper.core.rules.HavingComparisonOperator;
+import pub.avalonframework.sqlhelper.core.expression.GroupByExpression;
+import pub.avalonframework.sqlhelper.core.expression.HavingComparisonExpression;
 
 /**
  * @author baichao
  */
-public final class HavingDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, HavingDataBlock> implements HavingComparisonOperator<T>, GroupByOperator<HavingDataBlockBuilder<T>> {
+public final class HavingDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, HavingDataBlock> implements HavingComparisonExpression<T>, GroupByExpression<HavingDataBlockBuilder<T>> {
 
     private HavingDataBlock havingDataBlock;
 

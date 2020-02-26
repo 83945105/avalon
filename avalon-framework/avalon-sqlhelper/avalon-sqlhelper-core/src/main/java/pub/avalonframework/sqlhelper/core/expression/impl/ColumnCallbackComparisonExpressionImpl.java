@@ -1,15 +1,15 @@
-package pub.avalonframework.sqlhelper.core.rules.impl;
+package pub.avalonframework.sqlhelper.core.expression.impl;
 
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
+import pub.avalonframework.sqlhelper.core.expression.ColumnCallbackComparisonExpression;
+import pub.avalonframework.sqlhelper.core.expression.ColumnComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.rules.ToColumnCallbackComparisonOperator;
-import pub.avalonframework.sqlhelper.core.rules.ToColumnComparisonOperator;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
 /**
  * @author baichao
  */
-public interface ToColumnCallbackComparisonOperatorImpl<T> extends ToColumnCallbackComparisonOperator<T>, ToColumnComparisonOperator<T> {
+public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbackComparisonExpression<T>, ColumnComparisonExpression<T> {
 
     @Override
     default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,

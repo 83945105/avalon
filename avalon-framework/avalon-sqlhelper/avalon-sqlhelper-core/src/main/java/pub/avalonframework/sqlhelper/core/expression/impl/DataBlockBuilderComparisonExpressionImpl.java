@@ -1,10 +1,10 @@
-package pub.avalonframework.sqlhelper.core.rules.impl;
+package pub.avalonframework.sqlhelper.core.expression.impl;
 
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.AbstractComparisonDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.expression.DataBlockBuilderComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.ToDataBlockBuilderComparisonOperator;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @author baichao
  */
-public interface ToDataBlockBuilderComparisonOperatorImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder> extends ToDataBlockBuilderComparisonOperator<T, SB> {
+public interface DataBlockBuilderComparisonExpressionImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder> extends DataBlockBuilderComparisonExpression<T, SB> {
 
     /**
      * Get helper.

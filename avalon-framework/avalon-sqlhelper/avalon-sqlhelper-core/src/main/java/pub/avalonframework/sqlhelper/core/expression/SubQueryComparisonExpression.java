@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.rules;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.callback.SubQueryCallback;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public interface ToSubQueryComparisonOperator<T> {
+public interface SubQueryComparisonExpression<T> {
 
     /**
      * Equal to sub query.

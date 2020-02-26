@@ -5,12 +5,12 @@ import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.WhereComparisonOperator;
+import pub.avalonframework.sqlhelper.core.expression.WhereComparisonExpression;
 
 /**
  * @author baichao
  */
-public final class WhereDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, WhereDataBlock> implements WhereComparisonOperator<T> {
+public final class WhereDataBlockBuilder<T extends Helper> extends AbstractComparisonDataBlockBuilder<T, WhereDataBlock> implements WhereComparisonExpression<T> {
 
     private WhereDataBlock whereDataBlock;
 

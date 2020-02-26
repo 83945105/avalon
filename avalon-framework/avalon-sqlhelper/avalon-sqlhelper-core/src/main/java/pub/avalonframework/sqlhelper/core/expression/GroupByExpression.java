@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.rules;
+package pub.avalonframework.sqlhelper.core.expression;
 
 /**
  * @author baichao
  */
-public interface GroupByOperator<T> {
+public interface GroupByExpression<T> {
 
     T min();
 

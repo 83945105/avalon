@@ -1,12 +1,12 @@
-package pub.avalonframework.sqlhelper.core.rules.impl;
+package pub.avalonframework.sqlhelper.core.expression.impl;
 
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.ColumnComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.ToColumnComparisonOperator;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public interface ToColumnComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends ToColumnComparisonOperator<T> {
+public interface ColumnComparisonExpressionImpl<T, S extends AbstractComparisonDataBlock<S>> extends ColumnComparisonExpression<T> {
 
     /**
      * Get helper.

@@ -1,11 +1,10 @@
-package pub.avalonframework.sqlhelper.core.rules.impl;
+package pub.avalonframework.sqlhelper.core.expression.impl;
 
-import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.ValueComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.rules.BaseComparisonOperator;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.Collection;
@@ -13,7 +12,7 @@ import java.util.Collection;
 /**
  * @author baichao
  */
-public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataBlock<S>> extends BaseComparisonOperator<T> {
+public interface ValueComparisonExpressionImpl<T, S extends AbstractComparisonDataBlock<S>> extends ValueComparisonExpression<T> {
 
     /**
      * Get helper.
@@ -28,13 +27,6 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
      * @return extends {@link AbstractComparisonDataBlock}
      */
     AbstractComparisonDataBlock<S> getComparisonDataBlock();
-
-    /**
-     * Get sql builder configuration.
-     *
-     * @return {@link SqlBuilderConfiguration}
-     */
-    SqlBuilderConfiguration getSqlBuilderConfiguration();
 
     /**
      * Add comparison data block.
@@ -69,7 +61,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "equalTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "equalTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -86,7 +78,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "notEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -103,7 +95,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "greaterThan", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "greaterThan", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -120,7 +112,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "greaterThanAndEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "greaterThanAndEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -137,7 +129,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "lessThan", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "lessThan", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -154,7 +146,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "lessThanAndEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "lessThanAndEqualTo", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -171,7 +163,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "between", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "between", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -182,7 +174,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "secondValue", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "secondValue", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -199,7 +191,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "like", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "like", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -216,7 +208,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "in", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "in", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -233,7 +225,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "in", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "in", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -250,7 +242,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notIn", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "notIn", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
@@ -267,7 +259,7 @@ public interface BaseComparisonOperatorImpl<T, S extends AbstractComparisonDataB
                 case NULL_SKIP:
                     return this.getHelper();
                 case NULL_THROW_EXCEPTION:
-                    ExceptionUtils.comparisonRuleNullException(BaseComparisonOperatorImpl.class, "notIn", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
+                    ExceptionUtils.comparisonRuleNullException(ValueComparisonExpressionImpl.class, "notIn", this.getComparisonDataBlock().getTableName(), this.getComparisonDataBlock().getTableAlias(), this.getComparisonDataBlock().getColumnName(), this.getComparisonDataBlock().getColumnAlias());
                     break;
                 default:
                     ExceptionUtils.comparisonRuleNotSupportException();
