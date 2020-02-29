@@ -5,15 +5,12 @@ import org.springframework.jdbc.core.RowMapper;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.SelectSqlBuilder;
-import pub.avalonframework.sqlhelper.jdbc.core.engine.JdbcInsertEngine;
-import pub.avalonframework.sqlhelper.jdbc.core.engine.JdbcSelectEngine;
-import pub.avalonframework.sqlhelper.jdbc.core.engine.JdbcTableEngine;
-import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.UpdateSqlBuilder;
+import pub.avalonframework.sqlhelper.jdbc.core.engine.*;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * @author baichao
@@ -26,11 +23,11 @@ public abstract class BaseJdbcHelper<T, H extends TableHelper<H, HC, HO, HW, HG,
         HH extends HavingHelper<HH>,
         HS extends SortHelper<HS>> {
 
-    protected JdbcHelper jdbcHelper;
-
-    protected JdbcFactory jdbcFactory;
+    private Class<T> beanType;
 
     private Class<H> tableHelperClass;
+
+    protected JdbcHelper jdbcHelper;
 
     public void copyTable(String targetTableName, boolean copyData) {
         jdbcHelper.copyTable(targetTableName, copyData, new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
@@ -53,189 +50,184 @@ public abstract class BaseJdbcHelper<T, H extends TableHelper<H, HC, HO, HW, HG,
     }
 
     public int insertJavaBeanSelective(T javaBean) {
-        return 0;
+        return jdbcHelper.insertJavaBeanSelective(javaBean, new JdbcInsertEngine<>(jdbcHelper, tableHelperClass));
     }
 
     public int batchInsertJavaBeans(Collection<T> javaBeans) {
-        return 0;
+        return jdbcHelper.batchInsertJavaBeans(javaBeans, new JdbcInsertEngine<>(jdbcHelper, tableHelperClass));
     }
-
 
     public <R> R queryByPrimaryKey(Object keyValue, RowMapper<R> rowMapper) {
-        return null;
+        return jdbcHelper.queryByPrimaryKey(keyValue, new JdbcSelectEngine<>(jdbcHelper, tableHelperClass), rowMapper);
     }
-
 
     public T queryByPrimaryKey(Object keyValue) {
-        return null;
+        return jdbcHelper.queryByPrimaryKey(keyValue, new JdbcSelectEngine<>(jdbcHelper, tableHelperClass), beanType);
     }
-
 
     public <R> R queryByPrimaryKey(Object keyValue, Class<R> returnType) {
-        return null;
+        return jdbcHelper.queryByPrimaryKey(keyValue, new JdbcSelectEngine<>(jdbcHelper, tableHelperClass), returnType);
     }
 
-
-    public <R> R queryOne(SelectSqlBuilder selectSqlBuilder, RowMapper<R> rowMapper) {
-        return null;
+    public interface Select<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
+            TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
+            TW extends WhereHelper<TW>,
+            TG extends GroupHelper<TG>,
+            TH extends HavingHelper<TH>,
+            TS extends SortHelper<TS>> {
+        SelectSqlBuilder apply(JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> engine);
     }
 
-
-    public Map<String, Object> queryOne(Function<JdbcSelectEngine<H, HC, HO, HW, HG, HH, HS>, SelectSqlBuilder> function) {
-        return jdbcHelper.queryOne(function.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
+    public <R> R queryOne(Select<H, HC, HO, HW, HG, HH, HS> select, RowMapper<R> rowMapper) {
+        return jdbcHelper.queryOne(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), rowMapper);
     }
 
-    public <R> R queryOne(SelectSqlBuilder selectSqlBuilder, Class<R> returnType) {
-        return null;
+    public T queryOne(Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryOne(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), beanType);
     }
 
-
-    public <R> List<R> query(SelectSqlBuilder selectSqlBuilder, ResultSetExtractor<List<R>> resultSetExtractor) {
-        return null;
+    public <R> R queryOne(Select<H, HC, HO, HW, HG, HH, HS> select, Class<R> returnType) {
+        return jdbcHelper.queryOne(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), returnType);
     }
 
-
-    public <R> List<R> query(SelectSqlBuilder selectSqlBuilder, RowMapper<R> rowMapper) {
-        return null;
+    public <R> List<R> query(Select<H, HC, HO, HW, HG, HH, HS> select, ResultSetExtractor<List<R>> resultSetExtractor) {
+        return jdbcHelper.query(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), resultSetExtractor);
     }
 
-
-    public List<Map<String, Object>> query(SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <R> List<R> query(Select<H, HC, HO, HW, HG, HH, HS> select, RowMapper<R> rowMapper) {
+        return jdbcHelper.query(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), rowMapper);
     }
 
-
-    public <R> List<R> query(SelectSqlBuilder selectSqlBuilder, Class<R> returnType) {
-        return null;
+    public List<T> query(Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.query(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), beanType);
     }
 
-
-    public long queryCount(SelectSqlBuilder selectSqlBuilder) {
-        return 0;
+    public <R> List<R> query(Select<H, HC, HO, HW, HG, HH, HS> select, Class<R> returnType) {
+        return jdbcHelper.query(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), returnType);
     }
 
-
-    public <K, V> Map<K, V> queryColumnOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public long queryCount(Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryCount(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, V> Map<K, V> queryColumnOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, V> Map<K, V> queryColumnOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumnOneGroupByColumn(groupColumnIndex, groupColumnType, valueColumnIndex, valueColumnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, V> Map<K, V> queryColumnOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, String valueColumnName, Class<V> valueColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumnOneGroupByColumn(groupColumnName, groupColumnType, valueColumnName, valueColumnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(String keyColumnName, Class<K> keyColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumnGroupByColumn(groupColumnIndex, groupColumnType, valueColumnIndex, valueColumnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K> Map<K, Map<String, Object>> queryOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(String groupColumnName, Class<K> groupColumnType, String valueColumnName, Class<V> valueColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumnGroupByColumn(groupColumnName, groupColumnType, valueColumnName, valueColumnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K> Map<K, Map<String, Object>> queryOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K> Map<K, T> queryOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryOneGroupByColumn(groupColumnIndex, groupColumnType, beanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, R> Map<K, R> queryOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K> Map<K, T> queryOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryOneGroupByColumn(groupColumnName, groupColumnType, beanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, R> Map<K, R> queryOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, R> Map<K, R> queryOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Class<R> valueBeanType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryOneGroupByColumn(groupColumnIndex, groupColumnType, valueBeanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, R> Map<K, R> queryOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, Class<R> valueBeanType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryOneGroupByColumn(groupColumnName, groupColumnType, valueBeanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(String keyColumnName, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K> Map<K, List<T>> queryGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryGroupByColumn(groupColumnIndex, groupColumnType, beanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, R> Map<K, List<R>> queryGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K> Map<K, List<T>> queryGroupByColumn(String groupColumnName, Class<K> groupColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryGroupByColumn(groupColumnName, groupColumnType, beanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <K, R> Map<K, List<R>> queryGroupByColumn(String keyColumnName, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, R> Map<K, List<R>> queryGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Class<R> valueBeanType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryGroupByColumn(groupColumnIndex, groupColumnType, valueBeanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <R> R queryColumnOne(int columnIndex, Class<R> columnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <K, R> Map<K, List<R>> queryGroupByColumn(String groupColumnName, Class<K> groupColumnType, Class<R> valueBeanType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryGroupByColumn(groupColumnName, groupColumnType, valueBeanType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <R> R queryColumnOne(String columnName, Class<R> columnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <R> R queryColumnOne(int columnIndex, Class<R> columnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumnOne(columnIndex, columnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <R> List<R> queryColumn(int columnIndex, Class<R> columnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <R> R queryColumnOne(String columnName, Class<R> columnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumnOne(columnName, columnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
-
-    public <R> List<R> queryColumn(String columnName, Class<R> columnType, SelectSqlBuilder selectSqlBuilder) {
-        return null;
+    public <R> List<R> queryColumn(int columnIndex, Class<R> columnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumn(columnIndex, columnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
     }
 
+    public <R> List<R> queryColumn(String columnName, Class<R> columnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryColumn(columnName, columnType, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
+    }
 
     public int updateJavaBeanByPrimaryKey(Object keyValue, T javaBean) {
-        return 0;
+        return jdbcHelper.updateJavaBeanByPrimaryKey(keyValue, javaBean, new JdbcUpdateEngine<>(jdbcHelper, tableHelperClass));
     }
-
 
     public int updateJavaBeanByPrimaryKeySelective(Object keyValue, T javaBean) {
-        return 0;
+        return jdbcHelper.updateJavaBeanByPrimaryKeySelective(keyValue, javaBean, new JdbcUpdateEngine<>(jdbcHelper, tableHelperClass));
     }
 
-
-    public int updateJavaBean(T javaBean) {
-        return 0;
+    public interface Update<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
+            TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
+            TW extends WhereHelper<TW>,
+            TG extends GroupHelper<TG>,
+            TH extends HavingHelper<TH>,
+            TS extends SortHelper<TS>> {
+        UpdateSqlBuilder apply(JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> engine);
     }
 
-
-    public int updateJavaBeanSelective(T javaBean) {
-        return 0;
+    public int updateJavaBean(T javaBean, Update<H, HC, HO, HW, HG, HH, HS> update) {
+        return jdbcHelper.updateJavaBean(javaBean, update.apply(new JdbcUpdateEngine<>(jdbcHelper, tableHelperClass)));
     }
 
+    public int updateJavaBeanSelective(T javaBean, Update<H, HC, HO, HW, HG, HH, HS> update) {
+        return jdbcHelper.updateJavaBeanSelective(javaBean, update.apply(new JdbcUpdateEngine<>(jdbcHelper, tableHelperClass)));
+    }
 
     public int batchUpdateJavaBeansByPrimaryKeys(Collection<T> javaBeans) {
-        return 0;
+        return jdbcHelper.batchUpdateJavaBeansByPrimaryKeys(javaBeans, new JdbcUpdateEngine<>(jdbcHelper, tableHelperClass));
     }
-
 
     public int updateOrInsertJavaBeans(Collection<T> javaBeans) {
-        return 0;
+        return jdbcHelper.updateOrInsertJavaBeans(javaBeans, new JdbcUpdateEngine<>(jdbcHelper, tableHelperClass));
     }
-
 
     public int deleteByPrimaryKey(Object keyValue) {
-        return 0;
+        return jdbcHelper.deleteByPrimaryKey(keyValue, new JdbcDeleteEngine<>(jdbcHelper, tableHelperClass));
     }
-
 
     public int batchDeleteByPrimaryKeys(Collection<?> keyValues) {
-        return 0;
+        return jdbcHelper.batchDeleteByPrimaryKeys(keyValues, new JdbcDeleteEngine<>(jdbcHelper, tableHelperClass));
     }
 
+    public interface Delete<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
+            TC extends ColumnHelper<TC>,
+            TO extends OnHelper<TO>,
+            TW extends WhereHelper<TW>,
+            TG extends GroupHelper<TG>,
+            TH extends HavingHelper<TH>,
+            TS extends SortHelper<TS>> {
+        DeleteSqlBuilder apply(JdbcDeleteEngine<T, TC, TO, TW, TG, TH, TS> engine);
+    }
 
-    public int delete(DeleteSqlBuilder deleteSqlBuilder) {
-        return 0;
+    public int delete(Delete<H, HC, HO, HW, HG, HH, HS> delete) {
+        return jdbcHelper.delete(delete.apply(new JdbcDeleteEngine<>(jdbcHelper, tableHelperClass)));
     }
 }

@@ -52,29 +52,29 @@ public interface JdbcHelper {
 
     long queryCount(SelectSqlBuilder selectSqlBuilder);
 
-    <K, V> Map<K, V> queryColumnOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K, V> Map<K, V> queryColumnOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, V> Map<K, V> queryColumnOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K, V> Map<K, V> queryColumnOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, V> Map<K, List<V>> queryColumnGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K, V> Map<K, List<V>> queryColumnGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, V> Map<K, List<V>> queryColumnGroupByColumn(String keyColumnName, Class<K> keyColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K, V> Map<K, List<V>> queryColumnGroupByColumn(String groupColumnName, Class<K> groupColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K> Map<K, Map<String, Object>> queryOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K> Map<K, Map<String, Object>> queryOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K> Map<K, Map<String, Object>> queryOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K> Map<K, Map<String, Object>> queryOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, R> Map<K, R> queryOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
+    <K, R> Map<K, R> queryOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, R> Map<K, R> queryOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
+    <K, R> Map<K, R> queryOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
 
-    <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(String keyColumnName, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder);
+    <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(String groupColumnName, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, R> Map<K, List<R>> queryGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
+    <K, R> Map<K, List<R>> queryGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
 
-    <K, R> Map<K, List<R>> queryGroupByColumn(String keyColumnName, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
+    <K, R> Map<K, List<R>> queryGroupByColumn(String groupColumnName, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder);
 
     <R> R queryColumnOne(int columnIndex, Class<R> columnType, SelectSqlBuilder selectSqlBuilder);
 

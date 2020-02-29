@@ -237,99 +237,99 @@ public class SpringJdbcHelper implements JdbcHelper, MethodInterceptor {
     }
 
     @Override
-    public <K, V> Map<K, V> queryColumnOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, V> Map<K, V> queryColumnOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnIndex, keyColumnType, new ColumnOneGroupValueMapper<>(valueColumnIndex, valueColumnType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnIndex, groupColumnType, new ColumnOneGroupValueMapper<>(valueColumnIndex, valueColumnType)));
     }
 
     @Override
-    public <K, V> Map<K, V> queryColumnOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, V> Map<K, V> queryColumnOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnName, keyColumnType, new ColumnOneGroupValueMapper<>(valueColumnName, valueColumnType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnName, groupColumnType, new ColumnOneGroupValueMapper<>(valueColumnName, valueColumnType)));
     }
 
     @Override
-    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnIndex, keyColumnType, new ColumnGroupValueMapper<>(valueColumnIndex, valueColumnType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnIndex, groupColumnType, new ColumnGroupValueMapper<>(valueColumnIndex, valueColumnType)));
     }
 
     @Override
-    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(String keyColumnName, Class<K> keyColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, V> Map<K, List<V>> queryColumnGroupByColumn(String groupColumnName, Class<K> groupColumnType, String valueColumnName, Class<V> valueColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnName, keyColumnType, new ColumnGroupValueMapper<>(valueColumnName, valueColumnType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnName, groupColumnType, new ColumnGroupValueMapper<>(valueColumnName, valueColumnType)));
     }
 
     @Override
-    public <K> Map<K, Map<String, Object>> queryOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K> Map<K, Map<String, Object>> queryOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnIndex, keyColumnType, new RowOneGroupValueMapper()));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnIndex, groupColumnType, new RowOneGroupValueMapper()));
     }
 
     @Override
-    public <K> Map<K, Map<String, Object>> queryOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K> Map<K, Map<String, Object>> queryOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnName, keyColumnType, new RowOneGroupValueMapper()));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnName, groupColumnType, new RowOneGroupValueMapper()));
     }
 
     @Override
-    public <K, R> Map<K, R> queryOneGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, R> Map<K, R> queryOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnIndex, keyColumnType, new BeanOneGroupValueMapper<>(valueBeanType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnIndex, groupColumnType, new BeanOneGroupValueMapper<>(valueBeanType)));
     }
 
     @Override
-    public <K, R> Map<K, R> queryOneGroupByColumn(String keyColumnName, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, R> Map<K, R> queryOneGroupByColumn(String groupColumnName, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnName, keyColumnType, new BeanOneGroupValueMapper<>(valueBeanType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnName, groupColumnType, new BeanOneGroupValueMapper<>(valueBeanType)));
     }
 
     @Override
-    public <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnIndex, keyColumnType, new RowGroupValueMapper()));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnIndex, groupColumnType, new RowGroupValueMapper()));
     }
 
     @Override
-    public <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(String keyColumnName, Class<K> keyColumnType, SelectSqlBuilder selectSqlBuilder) {
+    public <K> Map<K, List<Map<String, Object>>> queryGroupByColumn(String groupColumnName, Class<K> groupColumnType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnName, keyColumnType, new RowGroupValueMapper()));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnName, groupColumnType, new RowGroupValueMapper()));
     }
 
     @Override
-    public <K, R> Map<K, List<R>> queryGroupByColumn(int keyColumnIndex, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, R> Map<K, List<R>> queryGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnIndex, keyColumnType, new BeanGroupValueMapper<>(valueBeanType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnIndex, groupColumnType, new BeanGroupValueMapper<>(valueBeanType)));
     }
 
     @Override
-    public <K, R> Map<K, List<R>> queryGroupByColumn(String keyColumnName, Class<K> keyColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
+    public <K, R> Map<K, List<R>> queryGroupByColumn(String groupColumnName, Class<K> groupColumnType, Class<R> valueBeanType, SelectSqlBuilder selectSqlBuilder) {
         SelectSqlBuilderResult selectSqlBuilderResult = selectSqlBuilder.query();
         return this.jdbcTemplate.query(selectSqlBuilderResult.getPreparedStatementSql(),
                 new ArgumentListPreparedStatementSetter(selectSqlBuilderResult.getPreparedStatementArgs()),
-                new GroupByColumnMapperResultSetExtractor<>(keyColumnName, keyColumnType, new BeanGroupValueMapper<>(valueBeanType)));
+                new GroupByColumnMapperResultSetExtractor<>(groupColumnName, groupColumnType, new BeanGroupValueMapper<>(valueBeanType)));
     }
 
     @Override
