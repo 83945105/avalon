@@ -1,7 +1,5 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
-import pub.avalonframework.sqlhelper.core.beans.SortType;
-
 /**
  * @author baichao
  */

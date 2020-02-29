@@ -1,10 +1,9 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinLinkerCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
-import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -14,7 +13,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker<TW> {
+public final class WhereAndOrExpression<TW extends WhereHelper<TW>> implements WhereAndExpression<TW> {
 
     private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = new ArrayList<>();
 
@@ -26,7 +25,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
     }
 
     @Override
-    public WhereAndOr<TW> and(WhereHelper<?> whereHelper) {
+    public WhereAndOrExpression<TW> and(WhereHelper<?> whereHelper) {
         if (whereHelper == null) {
             return this;
         }
@@ -41,12 +40,12 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
     }
 
     @Override
-    public WhereAndOr<TW> and(WhereLinkerCallback<TW> whereLinkerCallback) {
+    public WhereAndOrExpression<TW> and(WhereLinkerCallback<TW> whereLinkerCallback) {
         if (whereLinkerCallback == null) {
             return this;
         }
-        WhereLinker<TW> whereLinker = whereLinkerCallback.apply(new WhereAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereLinker.takeoutComparisonDataBlockLinkers();
+        WhereAndExpression<TW> whereAndExpression = whereLinkerCallback.apply(new WhereAndOrExpression<>());
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
@@ -63,14 +62,14 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> WhereAndOr<TW> and(Class<S> tableHelperClass, String tableAlias, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
+            SS extends SortHelper<SS>> WhereAndOrExpression<TW> and(Class<S> tableHelperClass, String tableAlias, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
         if (whereJoinLinkerCallback == null) {
             return this;
         }
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SW sw = s.newWhereHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        WhereLinker<TW> whereLinker = whereJoinLinkerCallback.apply(new WhereAndOr<>(), sw);
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereLinker.takeoutComparisonDataBlockLinkers();
+        WhereAndExpression<TW> whereAndExpression = whereJoinLinkerCallback.apply(new WhereAndOrExpression<>(), sw);
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
@@ -84,9 +83,9 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
      * Or
      *
      * @param whereHelper {@link WhereHelper}
-     * @return {@link WhereAndOr}
+     * @return {@link WhereAndOrExpression}
      */
-    public WhereAndOr<TW> or(WhereHelper<?> whereHelper) {
+    public WhereAndOrExpression<TW> or(WhereHelper<?> whereHelper) {
         if (whereHelper == null) {
             return this;
         }
@@ -104,14 +103,14 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
      * Or
      *
      * @param whereLinkerCallback {@link WhereLinkerCallback}
-     * @return {@link WhereAndOr}
+     * @return {@link WhereAndOrExpression}
      */
-    public WhereAndOr<TW> or(WhereLinkerCallback<TW> whereLinkerCallback) {
+    public WhereAndOrExpression<TW> or(WhereLinkerCallback<TW> whereLinkerCallback) {
         if (whereLinkerCallback == null) {
             return this;
         }
-        WhereLinker<TW> whereLinker = whereLinkerCallback.apply(new WhereAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereLinker.takeoutComparisonDataBlockLinkers();
+        WhereAndExpression<TW> whereAndExpression = whereLinkerCallback.apply(new WhereAndOrExpression<>());
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
@@ -127,7 +126,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
      * @param tableHelperClass        target {@link TableHelper} class
      * @param tableAlias              target {@link TableHelper} alias
      * @param whereJoinLinkerCallback {@link WhereJoinLinkerCallback}
-     * @return {@link WhereAndOr}
+     * @return {@link WhereAndOrExpression}
      */
     public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
@@ -135,14 +134,14 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> WhereAndOr<TW> or(Class<S> tableHelperClass, String tableAlias, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
+            SS extends SortHelper<SS>> WhereAndOrExpression<TW> or(Class<S> tableHelperClass, String tableAlias, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
         if (whereJoinLinkerCallback == null) {
             return this;
         }
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SW sw = s.newWhereHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        WhereLinker<TW> whereLinker = whereJoinLinkerCallback.apply(new WhereAndOr<>(), sw);
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereLinker.takeoutComparisonDataBlockLinkers();
+        WhereAndExpression<TW> whereAndExpression = whereJoinLinkerCallback.apply(new WhereAndOrExpression<>(), sw);
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
@@ -157,7 +156,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
      *
      * @param tableHelperClass        target {@link TableHelper} class
      * @param whereJoinLinkerCallback {@link WhereJoinLinkerCallback}
-     * @return {@link WhereAndOr}
+     * @return {@link WhereAndOrExpression}
      */
     public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
             SC extends ColumnHelper<SC>,
@@ -165,7 +164,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> WhereAndOr<TW> or(Class<S> tableHelperClass, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
+            SS extends SortHelper<SS>> WhereAndOrExpression<TW> or(Class<S> tableHelperClass, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
         return or(tableHelperClass, null, whereJoinLinkerCallback);
     }
 }

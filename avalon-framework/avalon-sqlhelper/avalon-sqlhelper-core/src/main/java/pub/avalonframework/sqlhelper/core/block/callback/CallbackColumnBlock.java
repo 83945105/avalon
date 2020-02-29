@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.block.callback;
 
-import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.SubQueryColumnCallback;
+import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**

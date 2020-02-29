@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 /**
  * @author baichao
@@ -40,7 +40,7 @@ public enum GroupType implements ColumnHandler {
     }
 
     @Override
-    public String execute(String columnSql) {
+    public String apply(String columnSql) {
         return this.methodName + "(" + columnSql + ")";
     }
 }

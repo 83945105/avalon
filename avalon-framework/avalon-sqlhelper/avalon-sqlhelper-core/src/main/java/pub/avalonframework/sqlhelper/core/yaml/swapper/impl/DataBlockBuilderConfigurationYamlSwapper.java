@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
 import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
+import pub.avalonframework.sqlhelper.core.expression.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DataBlockBuilderTemplate;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.template.DefaultMySqlDataBlockBuilderTemplate;
 import pub.avalonframework.sqlhelper.core.yaml.config.YamlDataBlockBuilderConfiguration;

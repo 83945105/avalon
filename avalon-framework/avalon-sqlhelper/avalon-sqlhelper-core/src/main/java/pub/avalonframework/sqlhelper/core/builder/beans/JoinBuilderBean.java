@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.block.callback.executor.CallbackBlockExecutor;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
+import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 import pub.avalonframework.sqlhelper.core.helper.*;
 

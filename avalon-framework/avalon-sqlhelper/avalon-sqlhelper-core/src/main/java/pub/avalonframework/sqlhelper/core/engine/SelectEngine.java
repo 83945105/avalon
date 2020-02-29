@@ -1,8 +1,6 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.GroupType;
-import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.block.LimitBlock;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackSelectBlock;
 import pub.avalonframework.sqlhelper.core.block.callback.executor.CallbackBlockExecutor;

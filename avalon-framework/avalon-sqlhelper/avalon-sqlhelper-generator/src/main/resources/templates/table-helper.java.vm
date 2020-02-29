@@ -1,8 +1,11 @@
 package $!{setting.packagePath};
 
-import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.beans.TableColumn;
-import pub.avalonframework.sqlhelper.core.data.block.builder.*;
+import pub.avalonframework.sqlhelper.core.TableColumn;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnHandler;
+import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.SortDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.LinkedHashSet;

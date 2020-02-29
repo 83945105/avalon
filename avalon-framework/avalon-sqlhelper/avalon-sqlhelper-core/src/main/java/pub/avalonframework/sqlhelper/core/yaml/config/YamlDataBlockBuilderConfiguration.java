@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.yaml.config;
 
 import pub.avalonframework.core.yaml.config.YamlConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
+import pub.avalonframework.sqlhelper.core.expression.ComparisonRule;
 
 /**
  * @author baichao

@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.jdbc.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
 import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
 import pub.avalonframework.sqlhelper.core.builder.WhereBuilder;
@@ -9,6 +8,7 @@ import pub.avalonframework.sqlhelper.core.callback.OnCallback;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
+import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;

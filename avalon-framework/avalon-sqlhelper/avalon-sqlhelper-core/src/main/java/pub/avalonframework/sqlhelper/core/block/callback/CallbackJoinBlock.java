@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.block.callback;
 
-import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
+import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**

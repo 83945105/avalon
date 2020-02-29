@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core;
 
 import java.util.Objects;
 import java.util.Set;

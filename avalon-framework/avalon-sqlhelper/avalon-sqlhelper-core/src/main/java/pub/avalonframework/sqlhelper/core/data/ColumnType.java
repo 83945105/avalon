@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data;
 
-import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnHandler;
 
 /**
  * @author baichao

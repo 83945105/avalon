@@ -1,9 +1,8 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
-import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
+public final class OnAndOrExpression<TO extends OnHelper<TO>> implements OnAndExpression<TO> {
 
     private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = new ArrayList<>();
 
@@ -24,7 +23,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
     }
 
     @Override
-    public OnAndOr<TO> and(OnHelper<?> onHelper) {
+    public OnAndOrExpression<TO> and(OnHelper<?> onHelper) {
         if (onHelper == null) {
             return this;
         }
@@ -39,12 +38,12 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
     }
 
     @Override
-    public OnAndOr<TO> and(OnLinkerCallback<TO> onLinkerCallback) {
+    public OnAndOrExpression<TO> and(OnLinkerCallback<TO> onLinkerCallback) {
         if (onLinkerCallback == null) {
             return this;
         }
-        OnLinker<TO> onLinker = onLinkerCallback.apply(new OnAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onLinker.takeoutComparisonDataBlockLinkers();
+        OnAndExpression<TO> onAndExpression = onLinkerCallback.apply(new OnAndOrExpression<>());
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
@@ -58,9 +57,9 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
      * Or
      *
      * @param onHelper {@link OnHelper}
-     * @return {@link OnAndOr}
+     * @return {@link OnAndOrExpression}
      */
-    public OnAndOr<TO> or(OnHelper<?> onHelper) {
+    public OnAndOrExpression<TO> or(OnHelper<?> onHelper) {
         if (onHelper == null) {
             return this;
         }
@@ -78,14 +77,14 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
      * Or
      *
      * @param onLinkerCallback {@link OnLinkerCallback}
-     * @return {@link OnAndOr}
+     * @return {@link OnAndOrExpression}
      */
-    public OnAndOr<TO> or(OnLinkerCallback<TO> onLinkerCallback) {
+    public OnAndOrExpression<TO> or(OnLinkerCallback<TO> onLinkerCallback) {
         if (onLinkerCallback == null) {
             return this;
         }
-        OnLinker<TO> onLinker = onLinkerCallback.apply(new OnAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onLinker.takeoutComparisonDataBlockLinkers();
+        OnAndExpression<TO> onAndExpression = onLinkerCallback.apply(new OnAndOrExpression<>());
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }

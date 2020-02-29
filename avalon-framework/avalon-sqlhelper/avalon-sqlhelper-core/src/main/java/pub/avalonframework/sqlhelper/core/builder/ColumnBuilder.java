@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.GroupType;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackColumnBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperColumnBlock;
 import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.callback.SubQueryColumnCallback;
+import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.inject.ColumnDataInjector;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;

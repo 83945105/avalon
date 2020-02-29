@@ -3,7 +3,7 @@ package pub.avalonframework.sqlhelper.core.sql;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pub.avalonframework.database.DatabaseType;
-import pub.avalonframework.sqlhelper.core.beans.JoinType;
+import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;

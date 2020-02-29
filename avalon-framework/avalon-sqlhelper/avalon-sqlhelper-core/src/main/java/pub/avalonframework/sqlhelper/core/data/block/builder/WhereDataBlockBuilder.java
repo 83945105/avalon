@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
-import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.expression.WhereComparisonExpression;
+import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
  * @author baichao

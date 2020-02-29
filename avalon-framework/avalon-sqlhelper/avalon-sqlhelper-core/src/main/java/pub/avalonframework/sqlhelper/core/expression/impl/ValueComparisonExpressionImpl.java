@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.expression.impl;
 
-import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.expression.ValueComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;

@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.utils;
 
-import pub.avalonframework.sqlhelper.core.beans.TableColumn;
+import pub.avalonframework.sqlhelper.core.TableColumn;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.cache.ClassCacheManager;
 import pub.avalonframework.sqlhelper.core.cache.core.CacheConfigurationBuilder;

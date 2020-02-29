@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.callback;
 
-import pub.avalonframework.sqlhelper.core.beans.WhereLinker;
+import pub.avalonframework.sqlhelper.core.expression.WhereAndExpression;
 import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 
 /**
@@ -9,5 +9,5 @@ import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 @FunctionalInterface
 public interface WhereJoinCallback<TW extends WhereHelper<TW>, SW extends WhereHelper<SW>> {
 
-    WhereLinker<TW> apply(WhereLinker<TW> condition, SW joinTable, TW mainTable);
+    WhereAndExpression<TW> apply(WhereAndExpression<TW> expression, SW joinTable, TW mainTable);
 }

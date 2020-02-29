@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.expression.impl.*;
 import pub.avalonframework.sqlhelper.core.helper.Helper;

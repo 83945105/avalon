@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
-import pub.avalonframework.sqlhelper.core.beans.GroupType;
-import pub.avalonframework.sqlhelper.core.beans.JoinType;
 import pub.avalonframework.sqlhelper.core.block.LimitBlock;
 import pub.avalonframework.sqlhelper.core.block.callback.CallbackCrudBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
 import pub.avalonframework.sqlhelper.core.callback.*;
+import pub.avalonframework.sqlhelper.core.data.block.GroupType;
+import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**

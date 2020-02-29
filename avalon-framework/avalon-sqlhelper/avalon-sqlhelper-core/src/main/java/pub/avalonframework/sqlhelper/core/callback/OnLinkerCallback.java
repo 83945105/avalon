@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.callback;
 
-import pub.avalonframework.sqlhelper.core.beans.OnLinker;
+import pub.avalonframework.sqlhelper.core.expression.OnAndExpression;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 /**
@@ -9,5 +9,5 @@ import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 @FunctionalInterface
 public interface OnLinkerCallback<TO extends OnHelper<TO>> {
 
-    OnLinker<TO> apply(OnLinker<TO> on);
+    OnAndExpression<TO> apply(OnAndExpression<TO> expression);
 }

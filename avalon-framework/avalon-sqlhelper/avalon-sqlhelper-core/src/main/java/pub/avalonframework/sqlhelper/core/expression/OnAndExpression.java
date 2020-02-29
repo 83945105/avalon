@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public interface OnLinker<TO extends OnHelper<TO>> {
+public interface OnAndExpression<TO extends OnHelper<TO>> {
 
     /**
      * Clean up after each takeout.
@@ -22,15 +22,15 @@ public interface OnLinker<TO extends OnHelper<TO>> {
      * And
      *
      * @param onHelper {@link OnHelper}
-     * @return {@link OnAndOr}
+     * @return {@link OnAndOrExpression}
      */
-    OnAndOr<TO> and(OnHelper<?> onHelper);
+    OnAndOrExpression<TO> and(OnHelper<?> onHelper);
 
     /**
      * And
      *
      * @param onLinkerCallback {@link OnLinkerCallback}
-     * @return {@link OnAndOr}
+     * @return {@link OnAndOrExpression}
      */
-    OnAndOr<TO> and(OnLinkerCallback<TO> onLinkerCallback);
+    OnAndOrExpression<TO> and(OnLinkerCallback<TO> onLinkerCallback);
 }

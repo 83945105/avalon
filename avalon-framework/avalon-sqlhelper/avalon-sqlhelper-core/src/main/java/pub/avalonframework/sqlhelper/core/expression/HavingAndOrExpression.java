@@ -1,9 +1,8 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
-import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLinker<TH> {
+public final class HavingAndOrExpression<TH extends HavingHelper<TH>> implements HavingAndExpression<TH> {
 
     private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = new ArrayList<>();
 
@@ -24,7 +23,7 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
     }
 
     @Override
-    public HavingAndOr<TH> and(HavingHelper<?> havingHelper) {
+    public HavingAndOrExpression<TH> and(HavingHelper<?> havingHelper) {
         if (havingHelper == null) {
             return this;
         }
@@ -37,12 +36,12 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
     }
 
     @Override
-    public HavingAndOr<TH> and(HavingLinkerCallback<TH> havingLinkerCallback) {
+    public HavingAndOrExpression<TH> and(HavingLinkerCallback<TH> havingLinkerCallback) {
         if (havingLinkerCallback == null) {
             return this;
         }
-        HavingLinker<TH> havingLinker = havingLinkerCallback.apply(new HavingAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingLinker.takeoutComparisonDataBlockLinker();
+        HavingAndExpression<TH> havingAndExpression = havingLinkerCallback.apply(new HavingAndOrExpression<>());
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingAndExpression.takeoutComparisonDataBlockLinker();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
@@ -54,9 +53,9 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
      * Or
      *
      * @param havingHelper {@link HavingHelper}
-     * @return {@link HavingAndOr}
+     * @return {@link HavingAndOrExpression}
      */
-    public HavingAndOr<TH> or(HavingHelper<?> havingHelper) {
+    public HavingAndOrExpression<TH> or(HavingHelper<?> havingHelper) {
         if (havingHelper == null) {
             return this;
         }
@@ -72,14 +71,14 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
      * Or
      *
      * @param havingLinkerCallback {@link HavingLinkerCallback}
-     * @return {@link HavingAndOr}
+     * @return {@link HavingAndOrExpression}
      */
-    public HavingAndOr<TH> or(HavingLinkerCallback<TH> havingLinkerCallback) {
+    public HavingAndOrExpression<TH> or(HavingLinkerCallback<TH> havingLinkerCallback) {
         if (havingLinkerCallback == null) {
             return this;
         }
-        HavingLinker<TH> havingLinker = havingLinkerCallback.apply(new HavingAndOr<>());
-        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingLinker.takeoutComparisonDataBlockLinker();
+        HavingAndExpression<TH> havingAndExpression = havingLinkerCallback.apply(new HavingAndOrExpression<>());
+        List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingAndExpression.takeoutComparisonDataBlockLinker();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }

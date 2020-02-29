@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
-import pub.avalonframework.sqlhelper.core.beans.TableColumn;
+import pub.avalonframework.sqlhelper.core.TableColumn;
 
 import java.util.Set;
 

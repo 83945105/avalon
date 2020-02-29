@@ -2,7 +2,6 @@ package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
 import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
@@ -248,7 +247,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                     String columnSql = columnDataBlock.getTableAlias() + ".`" + columnDataBlock.getColumnName() + "`";
                     if (columnHandlers != null && columnHandlers.length > 0) {
                         for (ColumnHandler columnHandler : columnHandlers) {
-                            columnSql = columnHandler.execute(columnSql);
+                            columnSql = columnHandler.apply(columnSql);
                         }
                     }
                     sql.append(columnSql)
@@ -314,7 +313,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                         String columnSql = columnDataBlock.getTableAlias() + ".`" + columnDataBlock.getColumnName() + "`";
                         if (columnHandlers != null && columnHandlers.length > 0) {
                             for (ColumnHandler columnHandler : columnHandlers) {
-                                columnSql = columnHandler.execute(columnSql);
+                                columnSql = columnHandler.apply(columnSql);
                             }
                         }
                         sql.append(columnSql)
@@ -355,7 +354,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                         .append("`");
                 return;
             case HANDLER:
-                sql.append(comparisonDataBlock.getColumnHandler().execute(comparisonDataBlock.getTableAlias() + ".`" + comparisonDataBlock.getColumnName() + "`"));
+                sql.append(comparisonDataBlock.getColumnHandler().apply(comparisonDataBlock.getTableAlias() + ".`" + comparisonDataBlock.getColumnName() + "`"));
                 return;
             default:
                 ExceptionUtils.unsupportedColumnTypeException(columnType);

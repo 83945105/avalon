@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
