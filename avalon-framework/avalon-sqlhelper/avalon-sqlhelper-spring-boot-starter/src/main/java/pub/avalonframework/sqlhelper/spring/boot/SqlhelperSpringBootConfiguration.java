@@ -1,6 +1,5 @@
 package pub.avalonframework.sqlhelper.spring.boot;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
@@ -29,8 +28,7 @@ import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
 })
 public class SqlhelperSpringBootConfiguration implements EnvironmentAware {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     private final SpringBootPrintConfigurationProperties printConfigurationProperties;
 
@@ -42,7 +40,8 @@ public class SqlhelperSpringBootConfiguration implements EnvironmentAware {
 
     private final SpringBootSqlhelperConfigurationProperties sqlhelperConfigurationProperties;
 
-    public SqlhelperSpringBootConfiguration(SpringBootPrintConfigurationProperties printConfigurationProperties, SpringBootDataBlockBuilderConfigurationProperties dataBlockBuilderConfigurationProperties, SpringBootSqlBuilderConfigurationProperties sqlBuilderConfigurationProperties, SpringBootJdbcConfigurationProperties jdbcConfigurationProperties, SpringBootSqlhelperConfigurationProperties sqlhelperConfigurationProperties) {
+    public SqlhelperSpringBootConfiguration(JdbcTemplate jdbcTemplate, SpringBootPrintConfigurationProperties printConfigurationProperties, SpringBootDataBlockBuilderConfigurationProperties dataBlockBuilderConfigurationProperties, SpringBootSqlBuilderConfigurationProperties sqlBuilderConfigurationProperties, SpringBootJdbcConfigurationProperties jdbcConfigurationProperties, SpringBootSqlhelperConfigurationProperties sqlhelperConfigurationProperties) {
+        this.jdbcTemplate = jdbcTemplate;
         this.printConfigurationProperties = printConfigurationProperties;
         this.dataBlockBuilderConfigurationProperties = dataBlockBuilderConfigurationProperties;
         this.sqlBuilderConfigurationProperties = sqlBuilderConfigurationProperties;

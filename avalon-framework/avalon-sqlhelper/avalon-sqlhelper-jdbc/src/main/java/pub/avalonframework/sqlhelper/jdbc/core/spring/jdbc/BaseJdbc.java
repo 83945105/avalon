@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.jdbc.core;
+package pub.avalonframework.sqlhelper.jdbc.core.spring.jdbc;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -6,6 +6,7 @@ import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.SelectSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.UpdateSqlBuilder;
+import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 import pub.avalonframework.sqlhelper.jdbc.core.engine.*;
 
 import java.util.Collection;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * @author baichao
  */
-public abstract class BaseJdbcHelper<T, H extends TableHelper<H, HC, HO, HW, HG, HH, HS>,
+public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, HS>,
         HC extends ColumnHelper<HC>,
         HO extends OnHelper<HO>,
         HW extends WhereHelper<HW>,
@@ -28,6 +29,15 @@ public abstract class BaseJdbcHelper<T, H extends TableHelper<H, HC, HO, HW, HG,
     private Class<H> tableHelperClass;
 
     protected JdbcHelper jdbcHelper;
+
+    public BaseJdbc() {
+    }
+
+    public BaseJdbc(Class<T> beanType, Class<H> tableHelperClass, JdbcHelper jdbcHelper) {
+        this.beanType = beanType;
+        this.tableHelperClass = tableHelperClass;
+        this.jdbcHelper = jdbcHelper;
+    }
 
     public void copyTable(String targetTableName, boolean copyData) {
         jdbcHelper.copyTable(targetTableName, copyData, new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
