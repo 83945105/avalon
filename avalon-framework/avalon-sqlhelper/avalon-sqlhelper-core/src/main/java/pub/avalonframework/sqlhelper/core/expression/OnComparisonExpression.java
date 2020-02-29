@@ -19,8 +19,8 @@ public interface OnComparisonExpression<T extends Helper> extends
         ColumnCallbackComparisonExpressionImpl<T>,
         SubQueryComparisonExpression<T>,
         SubQueryComparisonExpressionImpl<T, OnDataBlock>,
-        DataBlockBuilderComparisonExpression<T, OnDataBlockBuilder>,
-        DataBlockBuilderComparisonExpressionImpl<T, OnDataBlock, OnDataBlockBuilder> {
+        DataBlockBuilderComparisonExpression<T, OnDataBlock, OnDataBlockBuilder<T>>,
+        DataBlockBuilderComparisonExpressionImpl<T, OnDataBlock, OnDataBlockBuilder<T>> {
 
     /**
      * Get sql builder configuration.

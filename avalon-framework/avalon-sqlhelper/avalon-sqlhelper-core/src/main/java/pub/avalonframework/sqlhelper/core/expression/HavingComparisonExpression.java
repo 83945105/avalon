@@ -19,8 +19,8 @@ public interface HavingComparisonExpression<T extends Helper> extends
         ColumnCallbackComparisonExpressionImpl<T>,
         SubQueryComparisonExpression<T>,
         SubQueryComparisonExpressionImpl<T, HavingDataBlock>,
-        DataBlockBuilderComparisonExpression<T, HavingDataBlockBuilder>,
-        DataBlockBuilderComparisonExpressionImpl<T, HavingDataBlock, HavingDataBlockBuilder> {
+        DataBlockBuilderComparisonExpression<T, HavingDataBlock, HavingDataBlockBuilder<T>>,
+        DataBlockBuilderComparisonExpressionImpl<T, HavingDataBlock, HavingDataBlockBuilder<T>> {
 
     /**
      * Get sql builder configuration.

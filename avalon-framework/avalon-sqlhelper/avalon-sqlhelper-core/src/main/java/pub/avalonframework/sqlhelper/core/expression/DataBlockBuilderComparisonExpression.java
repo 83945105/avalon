@@ -1,5 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
+import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.AbstractComparisonDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.builder.DataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -7,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public interface DataBlockBuilderComparisonExpression<T extends Helper, SB extends AbstractComparisonDataBlockBuilder> {
+public interface DataBlockBuilderComparisonExpression<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends DataBlockBuilder<T, S>> {
 
     /**
      * Equal to

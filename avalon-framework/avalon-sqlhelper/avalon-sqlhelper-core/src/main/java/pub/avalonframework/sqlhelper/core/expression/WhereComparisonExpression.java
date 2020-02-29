@@ -19,8 +19,8 @@ public interface WhereComparisonExpression<T extends Helper> extends
         ColumnCallbackComparisonExpressionImpl<T>,
         SubQueryComparisonExpression<T>,
         SubQueryComparisonExpressionImpl<T, WhereDataBlock>,
-        DataBlockBuilderComparisonExpression<T, WhereDataBlockBuilder>,
-        DataBlockBuilderComparisonExpressionImpl<T, WhereDataBlock, WhereDataBlockBuilder> {
+        DataBlockBuilderComparisonExpression<T, WhereDataBlock, WhereDataBlockBuilder<T>>,
+        DataBlockBuilderComparisonExpressionImpl<T, WhereDataBlock, WhereDataBlockBuilder<T>> {
 
     /**
      * Get sql builder configuration.

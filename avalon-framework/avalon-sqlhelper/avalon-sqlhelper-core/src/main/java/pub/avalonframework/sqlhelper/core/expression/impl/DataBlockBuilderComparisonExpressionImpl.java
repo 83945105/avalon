@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @author baichao
  */
-public interface DataBlockBuilderComparisonExpressionImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder> extends DataBlockBuilderComparisonExpression<T, SB> {
+public interface DataBlockBuilderComparisonExpressionImpl<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends AbstractComparisonDataBlockBuilder<T, S>> extends DataBlockBuilderComparisonExpression<T, S, SB> {
 
     /**
      * Get helper.
