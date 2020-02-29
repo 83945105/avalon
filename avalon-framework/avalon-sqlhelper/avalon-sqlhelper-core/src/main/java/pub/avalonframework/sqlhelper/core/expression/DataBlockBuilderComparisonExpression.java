@@ -1,6 +1,5 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.AbstractComparisonDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.builder.DataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
@@ -8,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.helper.Helper;
 /**
  * @author baichao
  */
-public interface DataBlockBuilderComparisonExpression<T extends Helper, S extends AbstractComparisonDataBlock<S>, SB extends DataBlockBuilder<T, S>> {
+public interface DataBlockBuilderComparisonExpression<T extends Helper> {
 
     /**
      * Equal to
@@ -16,7 +15,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T eq(SB dataBlockBuilder);
+    T eq(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * Not equal to
@@ -24,7 +23,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T neq(SB dataBlockBuilder);
+    T neq(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * Greater than
@@ -32,7 +31,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T gt(SB dataBlockBuilder);
+    T gt(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * Greater than or equal to
@@ -40,7 +39,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T gte(SB dataBlockBuilder);
+    T gte(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * Less than
@@ -48,7 +47,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lt(SB dataBlockBuilder);
+    T lt(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * Less than or equal to
@@ -56,7 +55,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lte(SB dataBlockBuilder);
+    T lte(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * Between ... and ...
@@ -65,7 +64,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param secondDataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T bt(SB dataBlockBuilder, SB secondDataBlockBuilder);
+    T bt(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder, AbstractComparisonDataBlockBuilder<?, ?> secondDataBlockBuilder);
 
     /**
      * Like
@@ -73,7 +72,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilder {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T lk(SB dataBlockBuilder);
+    T lk(AbstractComparisonDataBlockBuilder<?, ?> dataBlockBuilder);
 
     /**
      * In
@@ -81,7 +80,7 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T in(SB... dataBlockBuilders);
+    T in(AbstractComparisonDataBlockBuilder<?, ?>... dataBlockBuilders);
 
     /**
      * Not in
@@ -89,5 +88,5 @@ public interface DataBlockBuilderComparisonExpression<T extends Helper, S extend
      * @param dataBlockBuilders {@link DataBlockBuilder}
      * @return extends {@link Helper} object
      */
-    T nin(SB... dataBlockBuilders);
+    T nin(AbstractComparisonDataBlockBuilder<?, ?>... dataBlockBuilders);
 }

@@ -3,7 +3,6 @@ package pub.avalonframework.sqlhelper.core.expression;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ComparisonRule;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.expression.impl.*;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
@@ -19,8 +18,8 @@ public interface OnComparisonExpression<T extends Helper> extends
         ColumnCallbackComparisonExpressionImpl<T>,
         SubQueryComparisonExpression<T>,
         SubQueryComparisonExpressionImpl<T, OnDataBlock>,
-        DataBlockBuilderComparisonExpression<T, OnDataBlock, OnDataBlockBuilder<T>>,
-        DataBlockBuilderComparisonExpressionImpl<T, OnDataBlock, OnDataBlockBuilder<T>> {
+        DataBlockBuilderComparisonExpression<T>,
+        DataBlockBuilderComparisonExpressionImpl<T, OnDataBlock> {
 
     /**
      * Get sql builder configuration.
