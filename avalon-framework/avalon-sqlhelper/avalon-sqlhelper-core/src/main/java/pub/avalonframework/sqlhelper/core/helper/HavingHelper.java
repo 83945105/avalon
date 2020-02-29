@@ -2,11 +2,11 @@ package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableHavingDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.HavingDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,7 +64,7 @@ public abstract class HavingHelper<T extends HavingHelper<T>> extends Helper {
             return null;
         }
         return new TableHavingDataBlock(havingHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonDataBlocks(havingDataBlocks)));
+                Collections.singletonList(new ComparisonDataBlockLinker(AndOr.AND).setComparisonDataBlocks(havingDataBlocks)));
     }
 
     public static List<TableHavingDataBlock> execute(HavingHelper<?>... havingHelpers) {

@@ -73,19 +73,19 @@ public final class HavingDataBlock extends AbstractComparisonDataBlock<HavingDat
     }
 
     @Override
-    public HavingDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+    public HavingDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock) {
         super.setTargetSingleDataBlock(comparisonType, targetDataBlock);
         return this;
     }
 
     @Override
-    public HavingDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+    public HavingDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock, AbstractDataBlock<?> targetSecondDataBlock) {
         super.setTargetPairDataBlock(comparisonType, targetDataBlock, targetSecondDataBlock);
         return this;
     }
 
     @Override
-    public HavingDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+    public HavingDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock<?>> targetMultiDataBlock) {
         super.setTargetMultiDataBlock(comparisonType, targetMultiDataBlock);
         return this;
     }

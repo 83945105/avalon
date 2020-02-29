@@ -73,19 +73,19 @@ public final class OnDataBlock extends AbstractComparisonDataBlock<OnDataBlock> 
     }
 
     @Override
-    public OnDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+    public OnDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock) {
         super.setTargetSingleDataBlock(comparisonType, targetDataBlock);
         return this;
     }
 
     @Override
-    public OnDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+    public OnDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock, AbstractDataBlock<?> targetSecondDataBlock) {
         super.setTargetPairDataBlock(comparisonType, targetDataBlock, targetSecondDataBlock);
         return this;
     }
 
     @Override
-    public OnDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+    public OnDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock<?>> targetMultiDataBlock) {
         super.setTargetMultiDataBlock(comparisonType, targetMultiDataBlock);
         return this;
     }

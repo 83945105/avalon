@@ -141,7 +141,7 @@ public interface ColumnComparisonExpressionImpl<T, S extends AbstractComparisonD
 
     @Override
     default T in(ColumnHelper<?>... columnHelpers) {
-        List<AbstractDataBlock> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
+        List<AbstractDataBlock<?>> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
         for (ColumnHelper<?> columnHelper : columnHelpers) {
             List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
             if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
@@ -155,7 +155,7 @@ public interface ColumnComparisonExpressionImpl<T, S extends AbstractComparisonD
 
     @Override
     default T nin(ColumnHelper<?>... columnHelpers) {
-        List<AbstractDataBlock> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
+        List<AbstractDataBlock<?>> dataBlocks = new ArrayList<>(columnHelpers.length * 2);
         for (ColumnHelper<?> columnHelper : columnHelpers) {
             List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
             if (columnDataBlocks == null || columnDataBlocks.size() == 0) {

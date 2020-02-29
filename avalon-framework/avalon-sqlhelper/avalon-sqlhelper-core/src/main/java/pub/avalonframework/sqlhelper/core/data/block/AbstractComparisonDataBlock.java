@@ -35,11 +35,11 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
 
     protected String targetSqlPart;
 
-    protected AbstractDataBlock targetDataBlock;
+    protected AbstractDataBlock<?> targetDataBlock;
 
-    protected AbstractDataBlock targetSecondDataBlock;
+    protected AbstractDataBlock<?> targetSecondDataBlock;
 
-    protected List<AbstractDataBlock> targetMultiDataBlock;
+    protected List<AbstractDataBlock<?>> targetMultiDataBlock;
 
     public AbstractComparisonDataBlock(String templateTableName, String templateTableAlias, String templateColumnName, String templateColumnAlias) {
         super(templateTableName, templateTableAlias, templateColumnName, templateColumnAlias);
@@ -132,7 +132,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return this;
     }
 
-    public AbstractComparisonDataBlock<T> setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+    public AbstractComparisonDataBlock<T> setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock) {
         if (comparisonType == null || targetDataBlock == null) {
             return this;
         }
@@ -142,7 +142,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return this;
     }
 
-    public AbstractComparisonDataBlock<T> setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+    public AbstractComparisonDataBlock<T> setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock, AbstractDataBlock<?> targetSecondDataBlock) {
         if (comparisonType == null || targetDataBlock == null || targetSecondDataBlock == null) {
             return this;
         }
@@ -153,7 +153,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return this;
     }
 
-    public AbstractComparisonDataBlock<T> setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+    public AbstractComparisonDataBlock<T> setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock<?>> targetMultiDataBlock) {
         if (comparisonType == null || targetMultiDataBlock == null) {
             return this;
         }
@@ -171,7 +171,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return sqlPart;
     }
 
-    public AbstractDataBlock getTargetDataBlock() {
+    public AbstractDataBlock<?> getTargetDataBlock() {
         return targetDataBlock;
     }
 
@@ -207,11 +207,11 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return targetSqlPart;
     }
 
-    public AbstractDataBlock getTargetSecondDataBlock() {
+    public AbstractDataBlock<?> getTargetSecondDataBlock() {
         return targetSecondDataBlock;
     }
 
-    public List<AbstractDataBlock> getTargetMultiDataBlock() {
+    public List<AbstractDataBlock<?>> getTargetMultiDataBlock() {
         return targetMultiDataBlock;
     }
 }

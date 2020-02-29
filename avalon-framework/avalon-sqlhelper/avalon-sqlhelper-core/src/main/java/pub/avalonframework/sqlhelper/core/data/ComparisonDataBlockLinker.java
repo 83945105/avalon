@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.data;
 
-import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 
 import java.util.List;
 
@@ -10,25 +10,25 @@ import java.util.List;
  */
 public final class ComparisonDataBlockLinker {
 
-    private LinkType linkType;
+    private AndOr andOr;
 
-    public ComparisonDataBlockLinker(LinkType linkType) {
-        this.linkType = linkType;
+    public ComparisonDataBlockLinker(AndOr andOr) {
+        this.andOr = andOr;
     }
 
-    private List<? extends AbstractComparisonDataBlock> comparisonDataBlocks;
+    private List<? extends AbstractComparisonDataBlock<?>> comparisonDataBlocks;
 
     private List<ComparisonDataBlockLinker> comparisonDataBlockLinkers;
 
-    public LinkType getLinkType() {
-        return linkType;
+    public AndOr getAndOr() {
+        return andOr;
     }
 
-    public List<? extends AbstractComparisonDataBlock> getComparisonDataBlocks() {
+    public List<? extends AbstractComparisonDataBlock<?>> getComparisonDataBlocks() {
         return comparisonDataBlocks;
     }
 
-    public ComparisonDataBlockLinker setComparisonDataBlocks(List<? extends AbstractComparisonDataBlock> comparisonDataBlocks) {
+    public ComparisonDataBlockLinker setComparisonDataBlocks(List<? extends AbstractComparisonDataBlock<?>> comparisonDataBlocks) {
         this.comparisonDataBlocks = comparisonDataBlocks;
         return this;
     }

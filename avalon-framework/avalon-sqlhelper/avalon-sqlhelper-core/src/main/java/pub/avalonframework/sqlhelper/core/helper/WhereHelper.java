@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,7 +58,7 @@ public abstract class WhereHelper<T extends WhereHelper<T>> extends Helper {
             return null;
         }
         return new TableWhereDataBlock(whereHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonDataBlocks(whereDataBlocks)));
+                Collections.singletonList(new ComparisonDataBlockLinker(AndOr.AND).setComparisonDataBlocks(whereDataBlocks)));
     }
 
     public static List<TableWhereDataBlock> execute(WhereHelper<?>... whereHelpers) {

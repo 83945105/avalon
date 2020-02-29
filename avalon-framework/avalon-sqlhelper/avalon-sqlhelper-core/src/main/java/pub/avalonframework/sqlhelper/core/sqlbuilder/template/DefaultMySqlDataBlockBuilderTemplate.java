@@ -3,11 +3,11 @@ package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.beans.ColumnHandler;
-import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
@@ -82,7 +82,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
             List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = tableJoinDataBlock.getTableOnDataBlock().getComparisonDataBlockLinkers();
             if (comparisonDataBlockLinkers != null && comparisonDataBlockLinkers.size() > 0) {
                 sql.append(" on ");
-                this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, comparisonDataBlockLinkers, LinkType.AND, false);
+                this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, comparisonDataBlockLinkers, AndOr.AND, false);
             }
         }
         return FinalSqlBuilderResult.newInstance(sql.toString(), args);
@@ -102,7 +102,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
             if (i++ > 0) {
                 sql.append(" and ");
             }
-            this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, tableWhereDataBlock.getComparisonDataBlockLinkers(), LinkType.AND, tableWhereDataBlocks.size() > 1);
+            this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, tableWhereDataBlock.getComparisonDataBlockLinkers(), AndOr.AND, tableWhereDataBlocks.size() > 1);
         }
         return FinalSqlBuilderResult.newInstance(sql.toString(), args);
     }
@@ -149,7 +149,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
             if (i++ > 0) {
                 sql.append(" and ");
             }
-            this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, tableHavingDataBlock.getComparisonDataBlockLinkers(), LinkType.AND, tableHavingDataBlocks.size() > 1);
+            this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, tableHavingDataBlock.getComparisonDataBlockLinkers(), AndOr.AND, tableHavingDataBlocks.size() > 1);
         }
         return FinalSqlBuilderResult.newInstance(sql.toString(), args);
     }
@@ -227,11 +227,11 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                     if (columnValue == null) {
                         sql.append("null");
                     } else if (columnValue instanceof Integer) {
-                        sql.append(String.valueOf(columnValue));
+                        sql.append(columnValue);
                     } else if (columnValue instanceof Long) {
-                        sql.append(String.valueOf(columnValue));
+                        sql.append(columnValue);
                     } else if (columnValue instanceof Double) {
-                        sql.append(String.valueOf(columnValue));
+                        sql.append(columnValue);
                     } else {
                         sql.append("'").append(columnValue).append("'");
                     }
@@ -293,11 +293,11 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                         if (columnValue == null) {
                             sql.append("null");
                         } else if (columnValue instanceof Integer) {
-                            sql.append(String.valueOf(columnValue));
+                            sql.append(columnValue);
                         } else if (columnValue instanceof Long) {
-                            sql.append(String.valueOf(columnValue));
+                            sql.append(columnValue);
                         } else if (columnValue instanceof Double) {
-                            sql.append(String.valueOf(columnValue));
+                            sql.append(columnValue);
                         } else {
                             sql.append("'").append(columnValue).append("'");
                         }
@@ -332,7 +332,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
         }
     }
 
-    private void appendSqlWithComparisonDataBlockType(StringBuilder sql, AbstractComparisonDataBlock comparisonDataBlock) {
+    private void appendSqlWithComparisonDataBlockType(StringBuilder sql, AbstractComparisonDataBlock<?> comparisonDataBlock) {
         Type type = comparisonDataBlock.getType();
         switch (type) {
             case DEFAULT:
@@ -345,7 +345,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
         }
     }
 
-    private void appendSqlWithComparisonDataBlockColumnType(StringBuilder sql, AbstractComparisonDataBlock comparisonDataBlock) {
+    private void appendSqlWithComparisonDataBlockColumnType(StringBuilder sql, AbstractComparisonDataBlock<?> comparisonDataBlock) {
         ColumnType columnType = comparisonDataBlock.getColumnType();
         switch (columnType) {
             case DEFAULT:
@@ -362,7 +362,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
         }
     }
 
-    private void appendSqlWithComparisonDataBlockComparisonType(StringBuilder sql, AbstractComparisonDataBlock comparisonDataBlock) {
+    private void appendSqlWithComparisonDataBlockComparisonType(StringBuilder sql, AbstractComparisonDataBlock<?> comparisonDataBlock) {
         ComparisonType comparisonType = comparisonDataBlock.getComparisonType();
         switch (comparisonType) {
             case NONE:
@@ -409,7 +409,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
     }
 
     @SuppressWarnings("unchecked")
-    private void appendSqlWithComparisonDataBlockValueType(StringBuilder sql, List<Object> args, AbstractComparisonDataBlock comparisonDataBlock) {
+    private void appendSqlWithComparisonDataBlockValueType(StringBuilder sql, List<Object> args, AbstractComparisonDataBlock<?> comparisonDataBlock) {
         ValueType valueType = comparisonDataBlock.getValueType();
         switch (valueType) {
             case NONE_VALUE:
@@ -428,7 +428,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 sql.append("(");
                 int i = 0;
                 if (value instanceof Collection) {
-                    for (Object val : (Collection) value) {
+                    for (Object val : (Collection<?>) value) {
                         if (i++ > 0) {
                             sql.append(",");
                         }
@@ -457,7 +457,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 sql.append(comparisonDataBlock.getTargetSqlPart());
                 return;
             case SINGLE_DATA_BLOCK:
-                AbstractDataBlock targetDataBlock = comparisonDataBlock.getTargetDataBlock();
+                AbstractDataBlock<?> targetDataBlock = comparisonDataBlock.getTargetDataBlock();
                 sql.append(targetDataBlock.getTableAlias())
                         .append(".`")
                         .append(targetDataBlock.getColumnName())
@@ -465,7 +465,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 return;
             case PAIR_DATA_BLOCK:
                 targetDataBlock = comparisonDataBlock.getTargetDataBlock();
-                AbstractDataBlock targetSecondDataBlock = comparisonDataBlock.getTargetSecondDataBlock();
+                AbstractDataBlock<?> targetSecondDataBlock = comparisonDataBlock.getTargetSecondDataBlock();
                 sql.append(targetDataBlock.getTableAlias())
                         .append(".`")
                         .append(targetDataBlock.getColumnName())
@@ -476,10 +476,10 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                         .append("`");
                 return;
             case MULTI_DATA_BLOCK:
-                List<AbstractDataBlock> multiDataBlocks = comparisonDataBlock.getTargetMultiDataBlock();
+                List<AbstractDataBlock<?>> multiDataBlocks = comparisonDataBlock.getTargetMultiDataBlock();
                 sql.append("(");
                 int j = 0;
-                for (AbstractDataBlock multiDataBlock : multiDataBlocks) {
+                for (AbstractDataBlock<?> multiDataBlock : multiDataBlocks) {
                     if (j++ > 0) {
                         sql.append(",");
                     }
@@ -495,15 +495,15 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
         }
     }
 
-    private void appendSqlArgsWithComparisonDataBlocks(StringBuilder sql, List<Object> args, List<? extends AbstractComparisonDataBlock> comparisonDataBlocks, LinkType linkType) {
+    private void appendSqlArgsWithComparisonDataBlocks(StringBuilder sql, List<Object> args, List<? extends AbstractComparisonDataBlock<?>> comparisonDataBlocks, AndOr andOr) {
         if (comparisonDataBlocks == null || comparisonDataBlocks.size() == 0) {
             return;
         }
-        if (linkType == LinkType.OR && comparisonDataBlocks.size() > 1) {
+        if (andOr == AndOr.OR && comparisonDataBlocks.size() > 1) {
             sql.append("(");
         }
         int i = 0;
-        for (AbstractComparisonDataBlock comparisonDataBlock : comparisonDataBlocks) {
+        for (AbstractComparisonDataBlock<?> comparisonDataBlock : comparisonDataBlocks) {
             if (i++ > 0) {
                 sql.append(" and ");
             }
@@ -512,55 +512,55 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
             appendSqlWithComparisonDataBlockComparisonType(sql, comparisonDataBlock);
             appendSqlWithComparisonDataBlockValueType(sql, args, comparisonDataBlock);
         }
-        if (linkType == LinkType.OR && comparisonDataBlocks.size() > 1) {
+        if (andOr == AndOr.OR && comparisonDataBlocks.size() > 1) {
             sql.append(")");
         }
     }
 
-    private void appendSqlArgsWithComparisonDataBlockLinkers(StringBuilder sql, List<Object> args, List<ComparisonDataBlockLinker> comparisonDataBlockLinkers, LinkType linkType, boolean checkBrackets) {
+    private void appendSqlArgsWithComparisonDataBlockLinkers(StringBuilder sql, List<Object> args, List<ComparisonDataBlockLinker> comparisonDataBlockLinkers, AndOr andOr, boolean checkBrackets) {
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return;
         }
         int length = sql.length();
-        List<? extends AbstractComparisonDataBlock> comparisonDataBlocks;
+        List<? extends AbstractComparisonDataBlock<?>> comparisonDataBlocks;
         int i = 0;
         boolean brackets = false;
         for (ComparisonDataBlockLinker comparisonDataBlockLinker : comparisonDataBlockLinkers) {
             comparisonDataBlocks = comparisonDataBlockLinker.getComparisonDataBlocks();
             List<ComparisonDataBlockLinker> childComparisonDataBlockLinkers = comparisonDataBlockLinker.getComparisonDataBlockLinkers();
             if (comparisonDataBlocks != null && comparisonDataBlocks.size() > 0) {
-                switch (comparisonDataBlockLinker.getLinkType()) {
+                switch (comparisonDataBlockLinker.getAndOr()) {
                     case AND:
                         if (i++ > 0) {
                             sql.append(" and ");
                         }
-                        this.appendSqlArgsWithComparisonDataBlocks(sql, args, comparisonDataBlocks, LinkType.AND);
+                        this.appendSqlArgsWithComparisonDataBlocks(sql, args, comparisonDataBlocks, AndOr.AND);
                         continue;
                     case OR:
                         if (i++ > 0) {
                             sql.append(" or ");
                             brackets = checkBrackets;
                         }
-                        this.appendSqlArgsWithComparisonDataBlocks(sql, args, comparisonDataBlocks, LinkType.OR);
+                        this.appendSqlArgsWithComparisonDataBlocks(sql, args, comparisonDataBlocks, AndOr.OR);
                         continue;
                     default:
                         //TODO
                         throw new SqlException("the LinkType is wrong.");
                 }
             } else if (childComparisonDataBlockLinkers != null && childComparisonDataBlockLinkers.size() > 0) {
-                switch (comparisonDataBlockLinker.getLinkType()) {
+                switch (comparisonDataBlockLinker.getAndOr()) {
                     case AND:
                         if (i++ > 0) {
                             sql.append(" and ");
                         }
-                        this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, childComparisonDataBlockLinkers, LinkType.AND, true);
+                        this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, childComparisonDataBlockLinkers, AndOr.AND, true);
                         continue;
                     case OR:
                         if (i++ > 0) {
                             sql.append(" or ");
                             brackets = checkBrackets;
                         }
-                        this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, childComparisonDataBlockLinkers, LinkType.OR, true);
+                        this.appendSqlArgsWithComparisonDataBlockLinkers(sql, args, childComparisonDataBlockLinkers, AndOr.OR, true);
                         continue;
                     default:
                         //TODO
@@ -571,7 +571,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
         if (!checkBrackets) {
             return;
         }
-        brackets = brackets || linkType == LinkType.OR && i > 1;
+        brackets = brackets || andOr == AndOr.OR && i > 1;
         if (!brackets) {
             return;
         }

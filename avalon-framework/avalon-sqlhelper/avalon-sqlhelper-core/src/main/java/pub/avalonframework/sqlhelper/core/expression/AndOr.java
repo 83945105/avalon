@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.beans;
+package pub.avalonframework.sqlhelper.core.expression;
 
 /**
  * @author baichao
  */
-public enum LinkType {
+public enum AndOr {
     /**
      * And
      */

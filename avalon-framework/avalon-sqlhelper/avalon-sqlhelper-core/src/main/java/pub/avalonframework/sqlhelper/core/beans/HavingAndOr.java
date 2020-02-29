@@ -3,6 +3,7 @@ package pub.avalonframework.sqlhelper.core.beans;
 import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.ArrayList;
@@ -27,13 +28,11 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
         if (havingHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
         List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutHavingDataBlocks();
         if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return this;
         }
-        comparisonDataBlockLinker.setComparisonDataBlocks(havingDataBlocks);
-        this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
+        this.comparisonDataBlockLinkers.add(new ComparisonDataBlockLinker(AndOr.AND).setComparisonDataBlocks(havingDataBlocks));
         return this;
     }
 
@@ -47,9 +46,7 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker havingDataLinker = new ComparisonDataBlockLinker(LinkType.AND);
-        havingDataLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
-        this.comparisonDataBlockLinkers.add(havingDataLinker);
+        this.comparisonDataBlockLinkers.add(new ComparisonDataBlockLinker(AndOr.AND).setComparisonDataBlockLinkers(comparisonDataBlockLinkers));
         return this;
     }
 
@@ -63,13 +60,11 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
         if (havingHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
         List<HavingDataBlock> havingDataBlocks = havingHelper.takeoutHavingDataBlocks();
         if (havingDataBlocks == null || havingDataBlocks.size() == 0) {
             return this;
         }
-        comparisonDataBlockLinker.setComparisonDataBlocks(havingDataBlocks);
-        this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
+        this.comparisonDataBlockLinkers.add(new ComparisonDataBlockLinker(AndOr.OR).setComparisonDataBlocks(havingDataBlocks));
         return this;
     }
 
@@ -88,9 +83,7 @@ public final class HavingAndOr<TH extends HavingHelper<TH>> implements HavingLin
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker havingDataLinker = new ComparisonDataBlockLinker(LinkType.OR);
-        havingDataLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
-        this.comparisonDataBlockLinkers.add(havingDataLinker);
+        this.comparisonDataBlockLinkers.add(new ComparisonDataBlockLinker(AndOr.OR).setComparisonDataBlockLinkers(comparisonDataBlockLinkers));
         return this;
     }
 }

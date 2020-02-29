@@ -3,6 +3,7 @@ package pub.avalonframework.sqlhelper.core.beans;
 import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (onHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.AND);
         List<OnDataBlock> onDataBlocks = onHelper.takeoutOnDataBlocks();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
@@ -47,7 +48,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.AND);
         comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
         this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
@@ -63,7 +64,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (onHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.OR);
         List<OnDataBlock> onDataBlocks = onHelper.takeoutOnDataBlocks();
         if (onDataBlocks == null || onDataBlocks.size() == 0) {
             return this;
@@ -88,7 +89,7 @@ public final class OnAndOr<TO extends OnHelper<TO>> implements OnLinker<TO> {
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.OR);
         comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
         this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;

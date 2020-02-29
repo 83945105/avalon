@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.beans.LinkType;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.OnDataBlockBuilder;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,7 +58,7 @@ public abstract class OnHelper<T extends OnHelper<T>> extends Helper {
             return null;
         }
         return new TableOnDataBlock(onHelper.getTableAlias(),
-                Collections.singletonList(new ComparisonDataBlockLinker(LinkType.AND).setComparisonDataBlocks(onDataBlocks)));
+                Collections.singletonList(new ComparisonDataBlockLinker(AndOr.AND).setComparisonDataBlocks(onDataBlocks)));
     }
 
     public static List<TableOnDataBlock> execute(OnHelper<?>... onHelpers) {

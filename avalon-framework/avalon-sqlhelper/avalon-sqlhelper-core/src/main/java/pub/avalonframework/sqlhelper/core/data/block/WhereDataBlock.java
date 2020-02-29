@@ -73,19 +73,19 @@ public final class WhereDataBlock extends AbstractComparisonDataBlock<WhereDataB
     }
 
     @Override
-    public WhereDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock) {
+    public WhereDataBlock setTargetSingleDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock) {
         super.setTargetSingleDataBlock(comparisonType, targetDataBlock);
         return this;
     }
 
     @Override
-    public WhereDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock targetDataBlock, AbstractDataBlock targetSecondDataBlock) {
+    public WhereDataBlock setTargetPairDataBlock(ComparisonType comparisonType, AbstractDataBlock<?> targetDataBlock, AbstractDataBlock<?> targetSecondDataBlock) {
         super.setTargetPairDataBlock(comparisonType, targetDataBlock, targetSecondDataBlock);
         return this;
     }
 
     @Override
-    public WhereDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock> targetMultiDataBlock) {
+    public WhereDataBlock setTargetMultiDataBlock(ComparisonType comparisonType, List<AbstractDataBlock<?>> targetMultiDataBlock) {
         super.setTargetMultiDataBlock(comparisonType, targetMultiDataBlock);
         return this;
     }

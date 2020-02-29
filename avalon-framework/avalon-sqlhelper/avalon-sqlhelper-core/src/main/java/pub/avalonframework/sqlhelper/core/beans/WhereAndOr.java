@@ -4,6 +4,7 @@ import pub.avalonframework.sqlhelper.core.callback.WhereJoinLinkerCallback;
 import pub.avalonframework.sqlhelper.core.callback.WhereLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -29,7 +30,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
         if (whereHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.AND);
         List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutWhereDataBlocks();
         if (whereDataBlocks == null || whereDataBlocks.size() == 0) {
             return this;
@@ -49,7 +50,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.AND);
         comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
         this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
@@ -73,7 +74,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.AND);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.AND);
         comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
         this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
@@ -89,7 +90,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
         if (whereHelper == null) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.OR);
         List<WhereDataBlock> whereDataBlocks = whereHelper.takeoutWhereDataBlocks();
         if (whereDataBlocks == null || whereDataBlocks.size() == 0) {
             return this;
@@ -114,7 +115,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.OR);
         comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
         this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
@@ -145,7 +146,7 @@ public final class WhereAndOr<TW extends WhereHelper<TW>> implements WhereLinker
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
         }
-        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(LinkType.OR);
+        ComparisonDataBlockLinker comparisonDataBlockLinker = new ComparisonDataBlockLinker(AndOr.OR);
         comparisonDataBlockLinker.setComparisonDataBlockLinkers(comparisonDataBlockLinkers);
         this.comparisonDataBlockLinkers.add(comparisonDataBlockLinker);
         return this;
