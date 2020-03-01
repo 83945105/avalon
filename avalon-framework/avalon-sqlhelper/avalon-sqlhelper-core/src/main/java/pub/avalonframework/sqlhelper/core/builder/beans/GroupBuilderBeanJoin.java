@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.Collections;
@@ -22,16 +22,16 @@ public final class GroupBuilderBeanJoin<T extends TableHelper<T, TC, TO, TW, TG,
 
     private Class<T> tableHelperClass;
 
-    private GroupCallback<TG> groupCallback;
+    private GroupLambdaCallable<TG> groupLambdaCallable;
 
-    public GroupBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, GroupCallback<TG> groupCallback) {
+    public GroupBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, GroupLambdaCallable<TG> groupLambdaCallable) {
         super(tableAlias);
         this.tableHelperClass = tableHelperClass;
-        this.groupCallback = groupCallback;
+        this.groupLambdaCallable = groupLambdaCallable;
     }
 
     @Override
     public List<TableGroupDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        return Collections.singletonList(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, this.groupCallback, sqlBuilderConfiguration));
+        return Collections.singletonList(LambdaCallableExecutor.execute(this.tableHelperClass, this.tableAlias, this.groupLambdaCallable, sqlBuilderConfiguration));
     }
 }

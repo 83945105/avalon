@@ -1,14 +1,12 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackUpdateBlock;
-import pub.avalonframework.sqlhelper.core.block.callback.executor.CallbackBlockExecutor;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperUpdateBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
-import pub.avalonframework.sqlhelper.core.callback.*;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.*;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -24,7 +22,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         Engine<T, TC, TO, TW, TG, TH, TS>,
         UpdateInjector<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         HelperUpdateBlock<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
-        CallbackUpdateBlock<TC, TO, TW, UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
+        UpdateLambdaExpression<TC, TO, TW, UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         UpdateBuilder<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
@@ -71,8 +69,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default UpdateEngine<T, TC, TO, TW, TG, TH, TS> update(ColumnCallback<TC> columnCallback) {
-        return this.addUpdateTableColumnDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getConfiguration().getSqlBuilder()));
+    default UpdateEngine<T, TC, TO, TW, TG, TH, TS> update(ColumnLambdaCallable<TC> columnLambdaCallable) {
+        return this.addUpdateTableColumnDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), columnLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -82,8 +80,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addTableJoinDataBlock(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getConfiguration().getSqlBuilder()));
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        this.addTableJoinDataBlock(LambdaCallableExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinLambdaCallable, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -95,7 +93,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.join(joinType, tableName, tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.join(joinType, tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -105,8 +103,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.join(joinType, tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.join(joinType, tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -117,7 +115,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.join(joinType, tableName, tableHelperClass);
+        return UpdateLambdaExpression.super.join(joinType, tableName, tableHelperClass);
     }
 
     @Override
@@ -127,8 +125,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.join(joinType, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.join(joinType, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -139,7 +137,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.join(joinType, tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.join(joinType, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -149,8 +147,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.join(joinType, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.join(joinType, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -161,7 +159,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.join(joinType, tableHelperClass);
+        return UpdateLambdaExpression.super.join(joinType, tableHelperClass);
     }
 
     @Override
@@ -171,8 +169,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.innerJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.innerJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -183,7 +181,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.innerJoin(tableName, tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.innerJoin(tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -193,8 +191,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.innerJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.innerJoin(tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -205,7 +203,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.innerJoin(tableName, tableHelperClass);
+        return UpdateLambdaExpression.super.innerJoin(tableName, tableHelperClass);
     }
 
     @Override
@@ -215,8 +213,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.innerJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.innerJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -227,7 +225,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.innerJoin(tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.innerJoin(tableHelperClass, tableAlias);
     }
 
     @Override
@@ -237,8 +235,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.innerJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.innerJoin(tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -249,7 +247,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.innerJoin(tableHelperClass);
+        return UpdateLambdaExpression.super.innerJoin(tableHelperClass);
     }
 
     @Override
@@ -259,8 +257,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.leftJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.leftJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -271,7 +269,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.leftJoin(tableName, tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.leftJoin(tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -281,8 +279,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.leftJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.leftJoin(tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -293,7 +291,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.leftJoin(tableName, tableHelperClass);
+        return UpdateLambdaExpression.super.leftJoin(tableName, tableHelperClass);
     }
 
     @Override
@@ -303,8 +301,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.leftJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.leftJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -315,7 +313,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.leftJoin(tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.leftJoin(tableHelperClass, tableAlias);
     }
 
     @Override
@@ -325,8 +323,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.leftJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.leftJoin(tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -337,7 +335,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.leftJoin(tableHelperClass);
+        return UpdateLambdaExpression.super.leftJoin(tableHelperClass);
     }
 
     @Override
@@ -347,8 +345,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.rightJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.rightJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -359,7 +357,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.rightJoin(tableName, tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.rightJoin(tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -369,8 +367,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.rightJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.rightJoin(tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -381,7 +379,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.rightJoin(tableName, tableHelperClass);
+        return UpdateLambdaExpression.super.rightJoin(tableName, tableHelperClass);
     }
 
     @Override
@@ -391,8 +389,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.rightJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.rightJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -403,7 +401,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias) {
-        return CallbackUpdateBlock.super.rightJoin(tableHelperClass, tableAlias);
+        return UpdateLambdaExpression.super.rightJoin(tableHelperClass, tableAlias);
     }
 
     @Override
@@ -413,8 +411,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.rightJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.rightJoin(tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -425,23 +423,12 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass) {
-        return CallbackUpdateBlock.super.rightJoin(tableHelperClass);
+        return UpdateLambdaExpression.super.rightJoin(tableHelperClass);
     }
 
     @Override
-    default UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
-        return this.addTableOnDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getConfiguration().getSqlBuilder()));
-    }
-
-    @Override
-    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
-            SC extends ColumnHelper<SC>,
-            SO extends OnHelper<SO>,
-            SW extends WhereHelper<SW>,
-            SG extends GroupHelper<SG>,
-            SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return this.addTableOnDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getConfiguration().getSqlBuilder()));
+    default UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(OnLambdaCallable<TO> onLambdaCallable) {
+        return this.addTableOnDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), onLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -451,13 +438,8 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackUpdateBlock.super.on(tableHelperClass, onJoinCallback);
-    }
-
-    @Override
-    default UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> whereCallback) {
-        return this.addTableWhereDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getConfiguration().getSqlBuilder()));
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return this.addTableOnDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -467,8 +449,13 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        return this.addTableWhereDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getConfiguration().getSqlBuilder()));
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.on(tableHelperClass, onJoinLambdaCallable);
+    }
+
+    @Override
+    default UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(WhereLambdaCallable<TW> whereLambdaCallable) {
+        return this.addTableWhereDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), whereLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -478,8 +465,19 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        return CallbackUpdateBlock.super.where(tableHelperClass, whereJoinCallback);
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        return this.addTableWhereDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinLambdaCallable, getConfiguration().getSqlBuilder()));
+    }
+
+    @Override
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        return UpdateLambdaExpression.super.where(tableHelperClass, whereJoinLambdaCallable);
     }
 
     @Override

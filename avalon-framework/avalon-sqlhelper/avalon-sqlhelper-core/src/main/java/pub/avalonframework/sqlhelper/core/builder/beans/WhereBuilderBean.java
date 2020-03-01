@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public final class WhereBuilderBean<TW extends WhereHelper<TW>> extends Abstract
 
     private WhereHelper<?>[] whereHelpers;
 
-    private WhereCallback<TW> whereCallback;
+    private WhereLambdaCallable<TW> whereLambdaCallable;
 
     public WhereBuilderBean(TW whereHelper, String tableAlias) {
         super(tableAlias);
@@ -30,8 +30,8 @@ public final class WhereBuilderBean<TW extends WhereHelper<TW>> extends Abstract
         return this;
     }
 
-    public WhereBuilderBean<TW> setWhereCallback(WhereCallback<TW> whereCallback) {
-        this.whereCallback = whereCallback;
+    public WhereBuilderBean<TW> setWhereLambdaCallable(WhereLambdaCallable<TW> whereLambdaCallable) {
+        this.whereLambdaCallable = whereLambdaCallable;
         return this;
     }
 
@@ -43,8 +43,8 @@ public final class WhereBuilderBean<TW extends WhereHelper<TW>> extends Abstract
                 tableWhereDataBlocks.add(whereHelper.execute());
             }
         }
-        if (this.whereCallback != null) {
-            tableWhereDataBlocks.add(CallbackExecutor.execute(this.whereHelper, this.whereCallback, sqlBuilderConfiguration));
+        if (this.whereLambdaCallable != null) {
+            tableWhereDataBlocks.add(LambdaCallableExecutor.execute(this.whereHelper, this.whereLambdaCallable, sqlBuilderConfiguration));
         }
         return tableWhereDataBlocks;
     }

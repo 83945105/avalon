@@ -1,13 +1,13 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackGroupBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperGroupBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBeanJoin;
-import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
 import pub.avalonframework.sqlhelper.core.data.inject.GroupDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements HelperGroupBlock<GroupBuilder<TG>>, CallbackGroupBlock<TG, GroupBuilder<TG>> {
+public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements HelperGroupBlock<GroupBuilder<TG>>, GroupLambdaExpression<TG, GroupBuilder<TG>> {
 
     private TG groupHelper;
     private String tableAlias;
@@ -45,8 +45,8 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
     }
 
     @Override
-    public GroupBuilder<TG> groupBy(GroupCallback<TG> groupCallback) {
-        this.groupBuilderBeans.add(new GroupBuilderBean<>(this.groupHelper, this.tableAlias).setGroupCallback(groupCallback));
+    public GroupBuilder<TG> groupBy(GroupLambdaCallable<TG> groupLambdaCallable) {
+        this.groupBuilderBeans.add(new GroupBuilderBean<>(this.groupHelper, this.tableAlias).setGroupLambdaCallable(groupLambdaCallable));
         return this;
     }
 
@@ -57,8 +57,8 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements Helper
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> GroupBuilder<TG> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
-        this.groupBuilderBeans.add(new GroupBuilderBeanJoin<>(tableHelperClass, tableAlias, groupCallback));
+            SS extends SortHelper<SS>> GroupBuilder<TG> groupBy(Class<S> tableHelperClass, String tableAlias, GroupLambdaCallable<SG> groupLambdaCallable) {
+        this.groupBuilderBeans.add(new GroupBuilderBeanJoin<>(tableHelperClass, tableAlias, groupLambdaCallable));
         return this;
     }
 

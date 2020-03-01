@@ -1,14 +1,14 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackWhereBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperWhereBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractWhereBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBeanJoin;
-import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
-import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.inject.WhereDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements HelperWhereBlock<WhereBuilder<TW>>, CallbackWhereBlock<TW, WhereBuilder<TW>> {
+public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements HelperWhereBlock<WhereBuilder<TW>>, WhereLambdaExpression<TW, WhereBuilder<TW>> {
 
     private TW whereHelper;
     private String tableAlias;
@@ -46,8 +46,8 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
     }
 
     @Override
-    public WhereBuilder<TW> where(WhereCallback<TW> whereCallback) {
-        this.whereBuilderBeans.add(new WhereBuilderBean<>(this.whereHelper, this.tableAlias).setWhereCallback(whereCallback));
+    public WhereBuilder<TW> where(WhereLambdaCallable<TW> whereLambdaCallable) {
+        this.whereBuilderBeans.add(new WhereBuilderBean<>(this.whereHelper, this.tableAlias).setWhereLambdaCallable(whereLambdaCallable));
         return this;
     }
 
@@ -58,8 +58,8 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements Helper
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> WhereBuilder<TW> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        this.whereBuilderBeans.add(new WhereBuilderBeanJoin<>(this.whereHelper, tableHelperClass, tableAlias, whereJoinCallback));
+            SS extends SortHelper<SS>> WhereBuilder<TW> where(Class<S> tableHelperClass, String tableAlias, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        this.whereBuilderBeans.add(new WhereBuilderBeanJoin<>(this.whereHelper, tableHelperClass, tableAlias, whereJoinLambdaCallable));
         return this;
     }
 

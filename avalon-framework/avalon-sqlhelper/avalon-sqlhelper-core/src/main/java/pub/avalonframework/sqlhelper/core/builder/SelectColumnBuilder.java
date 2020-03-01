@@ -4,8 +4,8 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBeanJoin;
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.inject.SelectInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -42,8 +42,8 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
         return this;
     }
 
-    public SelectColumnBuilder<TC> select(ColumnCallback<TC> columnCallback) {
-        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnCallback(columnCallback);
+    public SelectColumnBuilder<TC> select(ColumnLambdaCallable<TC> columnLambdaCallable) {
+        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnLambdaCallable(columnLambdaCallable);
         this.selectColumnBuilderBeans.add(columnBuilderBean);
         return this;
     }
@@ -54,9 +54,9 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         tableAlias = tableAlias == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias;
-        ColumnBuilderBeanJoin columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, tableAlias, columnCallback);
+        ColumnBuilderBeanJoin<S, SC, SO, SW, SG, SH, SS> columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, tableAlias, columnLambdaCallable);
         this.selectColumnBuilderBeans.add(columnBuilderBeanJoin);
         return this;
     }
@@ -67,8 +67,8 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        ColumnBuilderBeanJoin columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, null, columnCallback);
+            SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, ColumnLambdaCallable<SC> columnLambdaCallable) {
+        ColumnBuilderBeanJoin<S, SC, SO, SW, SG, SH, SS> columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, null, columnLambdaCallable);
         this.selectColumnBuilderBeans.add(columnBuilderBeanJoin);
         return this;
     }

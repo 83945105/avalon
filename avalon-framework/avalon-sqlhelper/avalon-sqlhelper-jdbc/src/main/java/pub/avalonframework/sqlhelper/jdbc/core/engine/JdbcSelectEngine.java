@@ -5,9 +5,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.*;
-import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.engine.AbstractSelectEngine;
+import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
@@ -162,8 +162,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> select(ColumnCallback<TC> columnCallback) {
-        super.select(columnCallback);
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> select(ColumnLambdaCallable<TC> columnLambdaCallable) {
+        super.select(columnLambdaCallable);
         return this;
     }
 
@@ -174,8 +174,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
-        super.select(tableHelperClass, tableAlias, columnCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
+        super.select(tableHelperClass, tableAlias, columnLambdaCallable);
         return this;
     }
 
@@ -186,26 +186,14 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, ColumnCallback<SC> columnCallback) {
-        super.select(tableHelperClass, columnCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, ColumnLambdaCallable<SC> columnLambdaCallable) {
+        super.select(tableHelperClass, columnLambdaCallable);
         return this;
     }
 
     @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
-        super.groupColumn(groupType, columnCallback);
-        return this;
-    }
-
-    @Override
-    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
-            SC extends ColumnHelper<SC>,
-            SO extends OnHelper<SO>,
-            SW extends WhereHelper<SW>,
-            SG extends GroupHelper<SG>,
-            SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
-        super.groupColumn(tableHelperClass, tableAlias, groupType, columnCallback);
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnLambdaCallable<TC> columnLambdaCallable) {
+        super.groupColumn(groupType, columnLambdaCallable);
         return this;
     }
 
@@ -216,20 +204,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, GroupType groupType, ColumnCallback<SC> columnCallback) {
-        super.groupColumn(tableHelperClass, groupType, columnCallback);
-        return this;
-    }
-
-    @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
-        super.subQueryColumn(columnAlias, subQueryColumnCallback);
-        return this;
-    }
-
-    @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(GroupCallback<TG> groupCallback) {
-        super.groupBy(groupCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnLambdaCallable<SC> columnLambdaCallable) {
+        super.groupColumn(tableHelperClass, tableAlias, groupType, columnLambdaCallable);
         return this;
     }
 
@@ -240,8 +216,20 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
-        super.groupBy(tableHelperClass, tableAlias, groupCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, GroupType groupType, ColumnLambdaCallable<SC> columnLambdaCallable) {
+        super.groupColumn(tableHelperClass, groupType, columnLambdaCallable);
+        return this;
+    }
+
+    @Override
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnLambdaCallable<TC> subQueryColumnLambdaCallable) {
+        super.subQueryColumn(columnAlias, subQueryColumnLambdaCallable);
+        return this;
+    }
+
+    @Override
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(GroupLambdaCallable<TG> groupLambdaCallable) {
+        super.groupBy(groupLambdaCallable);
         return this;
     }
 
@@ -252,14 +240,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, GroupCallback<SG> groupCallback) {
-        super.groupBy(tableHelperClass, groupCallback);
-        return this;
-    }
-
-    @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> having(HavingCallback<TH> havingCallback) {
-        super.having(havingCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupLambdaCallable<SG> groupLambdaCallable) {
+        super.groupBy(tableHelperClass, tableAlias, groupLambdaCallable);
         return this;
     }
 
@@ -270,8 +252,14 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
-        super.having(tableHelperClass, tableAlias, havingJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, GroupLambdaCallable<SG> groupLambdaCallable) {
+        super.groupBy(tableHelperClass, groupLambdaCallable);
+        return this;
+    }
+
+    @Override
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> having(HavingLambdaCallable<TH> havingLambdaCallable) {
+        super.having(havingLambdaCallable);
         return this;
     }
 
@@ -282,8 +270,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, HavingJoinCallback<TH, SH> havingJoinCallback) {
-        super.having(tableHelperClass, havingJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinLambdaCallable<TH, SH> havingJoinLambdaCallable) {
+        super.having(tableHelperClass, tableAlias, havingJoinLambdaCallable);
         return this;
     }
 
@@ -294,8 +282,20 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.join(joinType, tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, HavingJoinLambdaCallable<TH, SH> havingJoinLambdaCallable) {
+        super.having(tableHelperClass, havingJoinLambdaCallable);
+        return this;
+    }
+
+    @Override
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.join(joinType, tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -318,8 +318,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.join(joinType, tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.join(joinType, tableName, tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -342,8 +342,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.join(joinType, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.join(joinType, tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -366,8 +366,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.join(joinType, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.join(joinType, tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -390,8 +390,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.innerJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.innerJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -414,8 +414,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.innerJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.innerJoin(tableName, tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -438,8 +438,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.innerJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.innerJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -462,8 +462,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.innerJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.innerJoin(tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -486,8 +486,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.leftJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.leftJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -510,8 +510,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.leftJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.leftJoin(tableName, tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -534,8 +534,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.leftJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.leftJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -558,8 +558,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.leftJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.leftJoin(tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -582,8 +582,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.rightJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.rightJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -606,8 +606,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.rightJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.rightJoin(tableName, tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -630,8 +630,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.rightJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.rightJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -654,8 +654,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.rightJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.rightJoin(tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
@@ -672,8 +672,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
-        super.on(onCallback);
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> on(OnLambdaCallable<TO> onLambdaCallable) {
+        super.on(onLambdaCallable);
         return this;
     }
 
@@ -684,8 +684,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.on(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.on(tableHelperClass, tableAlias, onJoinLambdaCallable);
         return this;
     }
 
@@ -696,26 +696,14 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        super.on(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        super.on(tableHelperClass, onJoinLambdaCallable);
         return this;
     }
 
     @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(SortCallback<TS> sortCallback) {
-        super.orderBy(sortCallback);
-        return this;
-    }
-
-    @Override
-    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
-            SC extends ColumnHelper<SC>,
-            SO extends OnHelper<SO>,
-            SW extends WhereHelper<SW>,
-            SG extends GroupHelper<SG>,
-            SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
-        super.orderBy(tableHelperClass, tableAlias, sortCallback);
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(SortLambdaCallable<TS> sortLambdaCallable) {
+        super.orderBy(sortLambdaCallable);
         return this;
     }
 
@@ -726,14 +714,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, SortCallback<SS> sortCallback) {
-        super.orderBy(tableHelperClass, sortCallback);
-        return this;
-    }
-
-    @Override
-    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> whereCallback) {
-        super.where(whereCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortLambdaCallable<SS> sortLambdaCallable) {
+        super.orderBy(tableHelperClass, tableAlias, sortLambdaCallable);
         return this;
     }
 
@@ -744,8 +726,14 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        super.where(tableHelperClass, tableAlias, whereJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, SortLambdaCallable<SS> sortLambdaCallable) {
+        super.orderBy(tableHelperClass, sortLambdaCallable);
+        return this;
+    }
+
+    @Override
+    public JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> where(WhereLambdaCallable<TW> whereLambdaCallable) {
+        super.where(whereLambdaCallable);
         return this;
     }
 
@@ -756,8 +744,20 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        super.where(tableHelperClass, whereJoinCallback);
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        super.where(tableHelperClass, tableAlias, whereJoinLambdaCallable);
+        return this;
+    }
+
+    @Override
+    public <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        super.where(tableHelperClass, whereJoinLambdaCallable);
         return this;
     }
 

@@ -152,6 +152,7 @@ public class Test {
                 .groupBy(SysUserHelper.class, table -> joinGroup)
                 .groupBy(group, joinGroup)
                 .having((having, mainTable) -> having.and(mainTable.id().max().eq("")))
+                .having(SysUserHelper.class, (expression, joinTable, mainTable) -> expression.and(joinTable.id().eq(mainTable.id())))
                 .orderBy(table -> table.id().asc().id().desc())
                 .orderBy(SysUserHelper.class, table -> table.userName().asc().userName().desc())
                 .orderBy(table -> sort)

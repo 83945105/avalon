@@ -19,6 +19,6 @@ public class SysUserController implements SysUserApi {
 
     @Override
     public SysUser getSysUserById(String id) throws Exception {
-        return sysUserService.getSysUserByPrimary(id);
+        return sysUserService.getSysUserByPrimaryKey(id);
     }
 }

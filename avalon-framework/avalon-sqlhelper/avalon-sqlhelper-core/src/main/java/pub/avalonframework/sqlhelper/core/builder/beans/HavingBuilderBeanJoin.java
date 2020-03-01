@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableHavingDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingJoinLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.Collections;
@@ -25,17 +25,17 @@ public final class HavingBuilderBeanJoin<TH extends HavingHelper<TH>,
 
     private Class<S> tableHelperClass;
 
-    private HavingJoinCallback<TH, SH> havingJoinCallback;
+    private HavingJoinLambdaCallable<TH, SH> havingJoinLambdaCallable;
 
-    public HavingBuilderBeanJoin(TH havingHelper, Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
+    public HavingBuilderBeanJoin(TH havingHelper, Class<S> tableHelperClass, String tableAlias, HavingJoinLambdaCallable<TH, SH> havingJoinLambdaCallable) {
         super(tableAlias);
         this.havingHelper = havingHelper;
         this.tableHelperClass = tableHelperClass;
-        this.havingJoinCallback = havingJoinCallback;
+        this.havingJoinLambdaCallable = havingJoinLambdaCallable;
     }
 
     @Override
     public List<TableHavingDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        return Collections.singletonList(CallbackExecutor.execute(this.havingHelper, this.tableHelperClass, this.tableAlias, this.havingJoinCallback, sqlBuilderConfiguration));
+        return Collections.singletonList(LambdaCallableExecutor.execute(this.havingHelper, this.tableHelperClass, this.tableAlias, this.havingJoinLambdaCallable, sqlBuilderConfiguration));
     }
 }

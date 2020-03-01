@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.List;
@@ -29,8 +29,8 @@ public interface OnAndExpression<TO extends OnHelper<TO>> {
     /**
      * And
      *
-     * @param onLinkerCallback {@link OnLinkerCallback}
+     * @param onAndLambdaCallable {@link OnAndLambdaCallable}
      * @return {@link OnAndOrExpression}
      */
-    OnAndOrExpression<TO> and(OnLinkerCallback<TO> onLinkerCallback);
+    OnAndOrExpression<TO> and(OnAndLambdaCallable<TO> onAndLambdaCallable);
 }

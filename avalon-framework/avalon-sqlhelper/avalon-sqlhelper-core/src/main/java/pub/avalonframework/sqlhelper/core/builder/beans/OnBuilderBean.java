@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.OnCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public final class OnBuilderBean<TO extends OnHelper<TO>> extends AbstractOnBuil
 
     private OnHelper<?>[] onHelpers;
 
-    private OnCallback<TO> onCallback;
+    private OnLambdaCallable<TO> onLambdaCallable;
 
     public OnBuilderBean(TO onHelper, String tableAlias) {
         super(tableAlias);
@@ -30,8 +30,8 @@ public final class OnBuilderBean<TO extends OnHelper<TO>> extends AbstractOnBuil
         return this;
     }
 
-    public OnBuilderBean<TO> setOnCallback(OnCallback<TO> onCallback) {
-        this.onCallback = onCallback;
+    public OnBuilderBean<TO> setOnLambdaCallable(OnLambdaCallable<TO> onLambdaCallable) {
+        this.onLambdaCallable = onLambdaCallable;
         return this;
     }
 
@@ -43,8 +43,8 @@ public final class OnBuilderBean<TO extends OnHelper<TO>> extends AbstractOnBuil
                 tableOnDataBlocks.add(onHelper.execute());
             }
         }
-        if (this.onCallback != null) {
-            tableOnDataBlocks.add(CallbackExecutor.execute(this.onHelper, this.onCallback, sqlBuilderConfiguration));
+        if (this.onLambdaCallable != null) {
+            tableOnDataBlocks.add(LambdaCallableExecutor.execute(this.onHelper, this.onLambdaCallable, sqlBuilderConfiguration));
         }
         return tableOnDataBlocks;
     }

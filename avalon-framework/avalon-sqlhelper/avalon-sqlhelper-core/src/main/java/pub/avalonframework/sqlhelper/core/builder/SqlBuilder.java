@@ -1,11 +1,10 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.block.LimitBlock;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackCrudBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
-import pub.avalonframework.sqlhelper.core.callback.*;
 import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
+import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -22,7 +21,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
 
         HelperCrudBlock<SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
 
-        CallbackCrudBlock<TC, TO, TW, TG, TH, TS, SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
+        CrudLambdaExpression<TC, TO, TW, TG, TH, TS, SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
 
         LimitBlock<SqlBuilder<T, TC, TO, TW, TG, TH, TS>> {
 
@@ -58,17 +57,17 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(ColumnLambdaCallable<TC> columnLambdaCallable) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> insert(ColumnLambdaCallable<TC> columnLambdaCallable) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> update(ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> update(ColumnLambdaCallable<TC> columnLambdaCallable) {
         return this;
     }
 
@@ -79,7 +78,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> select(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         return this;
     }
 
@@ -89,7 +88,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupColumn(GroupType groupType, ColumnLambdaCallable<TC> columnLambdaCallable) {
         return this;
     }
 
@@ -100,12 +99,12 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnLambdaCallable<SC> columnLambdaCallable) {
         return this;
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> subQueryColumn(String columnAlias, SubQueryColumnLambdaCallable<TC> subQueryColumnLambdaCallable) {
         return null;
     }
 
@@ -115,7 +114,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(GroupCallback<TG> groupCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(GroupLambdaCallable<TG> groupLambdaCallable) {
         return this;
     }
 
@@ -126,7 +125,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupCallback<SG> groupCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> groupBy(Class<S> tableHelperClass, String tableAlias, GroupLambdaCallable<SG> groupLambdaCallable) {
         return this;
     }
 
@@ -146,7 +145,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(SortCallback<TS> sortCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(SortLambdaCallable<TS> sortLambdaCallable) {
         return this;
     }
 
@@ -157,7 +156,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortCallback<SS> sortCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> orderBy(Class<S> tableHelperClass, String tableAlias, SortLambdaCallable<SS> sortLambdaCallable) {
         return this;
     }
 
@@ -167,7 +166,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> callback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(WhereLambdaCallable<TW> callback) {
         return this;
     }
 
@@ -178,7 +177,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> callback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinLambdaCallable<TW, SW> callback) {
         return this;
     }
 
@@ -193,12 +192,12 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
         return null;
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(OnLambdaCallable<TO> onLambdaCallable) {
         return null;
     }
 
@@ -209,7 +208,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
         return null;
     }
 
@@ -219,7 +218,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
     }
 
     @Override
-    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(HavingCallback<TH> havingCallback) {
+    public SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(HavingLambdaCallable<TH> havingLambdaCallable) {
         return null;
     }
 
@@ -230,7 +229,7 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
+            SS extends SortHelper<SS>> SqlBuilder<T, TC, TO, TW, TG, TH, TS> having(Class<S> tableHelperClass, String tableAlias, HavingJoinLambdaCallable<TH, SH> havingJoinLambdaCallable) {
         return null;
     }
 

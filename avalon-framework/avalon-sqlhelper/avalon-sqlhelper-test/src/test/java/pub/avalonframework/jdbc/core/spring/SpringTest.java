@@ -54,6 +54,6 @@ public class SpringTest {
 
     @Test
     void test() throws Exception {
-        SysUser sysUser = testSysUserController.getSysUserById("1");
+//        SysUser sysUser = testSysUserController.getSysUserById("1");
     }
 }

@@ -1,0 +1,13 @@
+package pub.avalonframework.sqlhelper.core.expression.lambda;
+
+import pub.avalonframework.sqlhelper.core.expression.HavingAndExpression;
+import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
+
+/**
+ * @author baichao
+ */
+@FunctionalInterface
+public interface HavingLambdaCallable<TH extends HavingHelper<TH>> {
+
+    HavingAndExpression<TH> apply(HavingAndExpression<TH> expression, TH mainTable);
+}

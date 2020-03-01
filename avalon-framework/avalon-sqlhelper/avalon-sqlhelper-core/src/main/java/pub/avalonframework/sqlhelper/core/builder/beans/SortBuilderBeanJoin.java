@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.SortCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableSortDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.Collections;
@@ -22,16 +22,16 @@ public final class SortBuilderBeanJoin<T extends TableHelper<T, TC, TO, TW, TG, 
 
     private Class<T> tableHelperClass;
 
-    private SortCallback<TS> sortCallback;
+    private SortLambdaCallable<TS> sortLambdaCallable;
 
-    public SortBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, SortCallback<TS> sortCallback) {
+    public SortBuilderBeanJoin(Class<T> tableHelperClass, String tableAlias, SortLambdaCallable<TS> sortLambdaCallable) {
         super(tableAlias);
         this.tableHelperClass = tableHelperClass;
-        this.sortCallback = sortCallback;
+        this.sortLambdaCallable = sortLambdaCallable;
     }
 
     @Override
     public List<TableSortDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        return Collections.singletonList(CallbackExecutor.execute(this.tableHelperClass, this.tableAlias, this.sortCallback, sqlBuilderConfiguration));
+        return Collections.singletonList(LambdaCallableExecutor.execute(this.tableHelperClass, this.tableAlias, this.sortLambdaCallable, sqlBuilderConfiguration));
     }
 }

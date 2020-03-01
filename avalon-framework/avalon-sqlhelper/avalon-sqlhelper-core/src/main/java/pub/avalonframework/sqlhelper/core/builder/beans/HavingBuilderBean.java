@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableHavingDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends Abstra
 
     private HavingHelper<?>[] havingHelpers;
 
-    private HavingCallback<TH> havingCallback;
+    private HavingLambdaCallable<TH> havingLambdaCallable;
 
     public HavingBuilderBean(TH havingHelper, String tableAlias) {
         super(tableAlias);
@@ -30,8 +30,8 @@ public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends Abstra
         return this;
     }
 
-    public HavingBuilderBean<TH> setHavingCallback(HavingCallback<TH> havingCallback) {
-        this.havingCallback = havingCallback;
+    public HavingBuilderBean<TH> setHavingLambdaCallable(HavingLambdaCallable<TH> havingLambdaCallable) {
+        this.havingLambdaCallable = havingLambdaCallable;
         return this;
     }
 
@@ -43,8 +43,8 @@ public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends Abstra
                 tableHavingDataBlocks.add(havingHelper.execute());
             }
         }
-        if (this.havingCallback != null) {
-            tableHavingDataBlocks.add(CallbackExecutor.execute(this.havingHelper, this.havingCallback, sqlBuilderConfiguration));
+        if (this.havingLambdaCallable != null) {
+            tableHavingDataBlocks.add(LambdaCallableExecutor.execute(this.havingHelper, this.havingLambdaCallable, sqlBuilderConfiguration));
         }
         return tableHavingDataBlocks;
     }

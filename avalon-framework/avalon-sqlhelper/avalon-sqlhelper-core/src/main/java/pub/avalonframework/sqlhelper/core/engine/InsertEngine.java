@@ -1,14 +1,14 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackInsertBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperInsertBlock;
 import pub.avalonframework.sqlhelper.core.builder.InsertBuilder;
 import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.InsertInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.InsertLambdaExpression;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -24,7 +24,7 @@ public interface InsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         Engine<T, TC, TO, TW, TG, TH, TS>,
         InsertInjector<InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
         HelperInsertBlock<InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
-        CallbackInsertBlock<TC, InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
+        InsertLambdaExpression<TC, InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
         InsertBuilder<InsertEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
@@ -44,8 +44,8 @@ public interface InsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default InsertEngine<T, TC, TO, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
-        return this.addInsertTableColumnDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), columnCallback, getConfiguration().getSqlBuilder()));
+    default InsertEngine<T, TC, TO, TW, TG, TH, TS> insert(ColumnLambdaCallable<TC> columnLambdaCallable) {
+        return this.addInsertTableColumnDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), columnLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override

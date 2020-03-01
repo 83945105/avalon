@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackColumnBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperColumnBlock;
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
-import pub.avalonframework.sqlhelper.core.callback.SubQueryColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.inject.ColumnDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaExpression;
+import pub.avalonframework.sqlhelper.core.expression.lambda.SubQueryColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements HelperColumnBlock<ColumnBuilder<TC>>, CallbackColumnBlock<TC, ColumnBuilder<TC>> {
+public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements HelperColumnBlock<ColumnBuilder<TC>>, ColumnLambdaExpression<TC, ColumnBuilder<TC>> {
 
     private TC columnHelper;
     private String tableAlias;
@@ -39,7 +39,7 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Help
     }
 
     @Override
-    public ColumnBuilder<TC> groupColumn(GroupType groupType, ColumnCallback<TC> columnCallback) {
+    public ColumnBuilder<TC> groupColumn(GroupType groupType, ColumnLambdaCallable<TC> columnLambdaCallable) {
         return null;
     }
 
@@ -50,12 +50,12 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Help
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> ColumnBuilder<TC> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> ColumnBuilder<TC> groupColumn(Class<S> tableHelperClass, String tableAlias, GroupType groupType, ColumnLambdaCallable<SC> columnLambdaCallable) {
         return null;
     }
 
     @Override
-    public ColumnBuilder<TC> subQueryColumn(String columnAlias, SubQueryColumnCallback<TC> subQueryColumnCallback) {
+    public ColumnBuilder<TC> subQueryColumn(String columnAlias, SubQueryColumnLambdaCallable<TC> subQueryColumnLambdaCallable) {
         return null;
     }
 

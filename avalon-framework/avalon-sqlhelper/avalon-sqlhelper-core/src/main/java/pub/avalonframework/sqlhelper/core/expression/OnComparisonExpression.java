@@ -2,7 +2,12 @@ package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
-import pub.avalonframework.sqlhelper.core.expression.impl.*;
+import pub.avalonframework.sqlhelper.core.expression.impl.ColumnCallbackComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.impl.ColumnComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.impl.DataBlockBuilderComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.impl.ValueComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.lambda.SubQueryComparisonLambdaExpression;
+import pub.avalonframework.sqlhelper.core.expression.lambda.impl.SubQueryComparisonLambdaExpressionImpl;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
@@ -15,8 +20,8 @@ public interface OnComparisonExpression<T extends Helper> extends
         ColumnComparisonExpressionImpl<T, OnDataBlock>,
         ColumnCallbackComparisonExpression<T>,
         ColumnCallbackComparisonExpressionImpl<T>,
-        SubQueryComparisonExpression<T>,
-        SubQueryComparisonExpressionImpl<T, OnDataBlock>,
+        SubQueryComparisonLambdaExpression<T>,
+        SubQueryComparisonLambdaExpressionImpl<T, OnDataBlock>,
         DataBlockBuilderComparisonExpression<T>,
         DataBlockBuilderComparisonExpressionImpl<T, OnDataBlock> {
 

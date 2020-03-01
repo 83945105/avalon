@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.List;
@@ -29,8 +29,8 @@ public interface HavingAndExpression<TH extends HavingHelper<TH>> {
     /**
      * And
      *
-     * @param havingLinkerCallback {@link HavingLinkerCallback}
+     * @param havingAndLambdaCallable {@link HavingAndLambdaCallable}
      * @return {@link HavingAndOrExpression}
      */
-    HavingAndOrExpression<TH> and(HavingLinkerCallback<TH> havingLinkerCallback);
+    HavingAndOrExpression<TH> and(HavingAndLambdaCallable<TH> havingAndLambdaCallable);
 }

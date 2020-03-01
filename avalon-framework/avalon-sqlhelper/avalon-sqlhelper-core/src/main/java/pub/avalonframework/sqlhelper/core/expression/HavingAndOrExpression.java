@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.callback.HavingLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.HavingDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 import java.util.ArrayList;
@@ -36,11 +36,11 @@ public final class HavingAndOrExpression<TH extends HavingHelper<TH>> implements
     }
 
     @Override
-    public HavingAndOrExpression<TH> and(HavingLinkerCallback<TH> havingLinkerCallback) {
-        if (havingLinkerCallback == null) {
+    public HavingAndOrExpression<TH> and(HavingAndLambdaCallable<TH> havingAndLambdaCallable) {
+        if (havingAndLambdaCallable == null) {
             return this;
         }
-        HavingAndExpression<TH> havingAndExpression = havingLinkerCallback.apply(new HavingAndOrExpression<>());
+        HavingAndExpression<TH> havingAndExpression = havingAndLambdaCallable.apply(new HavingAndOrExpression<>());
         List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingAndExpression.takeoutComparisonDataBlockLinker();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
@@ -70,14 +70,14 @@ public final class HavingAndOrExpression<TH extends HavingHelper<TH>> implements
     /**
      * Or
      *
-     * @param havingLinkerCallback {@link HavingLinkerCallback}
+     * @param havingAndLambdaCallable {@link HavingAndLambdaCallable}
      * @return {@link HavingAndOrExpression}
      */
-    public HavingAndOrExpression<TH> or(HavingLinkerCallback<TH> havingLinkerCallback) {
-        if (havingLinkerCallback == null) {
+    public HavingAndOrExpression<TH> or(HavingAndLambdaCallable<TH> havingAndLambdaCallable) {
+        if (havingAndLambdaCallable == null) {
             return this;
         }
-        HavingAndExpression<TH> havingAndExpression = havingLinkerCallback.apply(new HavingAndOrExpression<>());
+        HavingAndExpression<TH> havingAndExpression = havingAndLambdaCallable.apply(new HavingAndOrExpression<>());
         List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = havingAndExpression.takeoutComparisonDataBlockLinker();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;

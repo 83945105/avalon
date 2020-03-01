@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.Collections;
@@ -25,17 +25,17 @@ public final class WhereBuilderBeanJoin<TW extends WhereHelper<TW>,
 
     private Class<S> tableHelperClass;
 
-    private WhereJoinCallback<TW, SW> whereJoinCallback;
+    private WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable;
 
-    public WhereBuilderBeanJoin(TW whereHelper, Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
+    public WhereBuilderBeanJoin(TW whereHelper, Class<S> tableHelperClass, String tableAlias, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
         super(tableAlias);
         this.whereHelper = whereHelper;
         this.tableHelperClass = tableHelperClass;
-        this.whereJoinCallback = whereJoinCallback;
+        this.whereJoinLambdaCallable = whereJoinLambdaCallable;
     }
 
     @Override
     public List<TableWhereDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        return Collections.singletonList(CallbackExecutor.execute(this.whereHelper, this.tableHelperClass, this.tableAlias, this.whereJoinCallback, sqlBuilderConfiguration));
+        return Collections.singletonList(LambdaCallableExecutor.execute(this.whereHelper, this.tableHelperClass, this.tableAlias, this.whereJoinLambdaCallable, sqlBuilderConfiguration));
     }
 }

@@ -1,14 +1,14 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackOnBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperOnBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractOnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBeanJoin;
-import pub.avalonframework.sqlhelper.core.callback.OnCallback;
-import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.inject.OnDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBlock<OnBuilder<TO>>, CallbackOnBlock<TO, OnBuilder<TO>> {
+public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBlock<OnBuilder<TO>>, OnLambdaExpression<TO, OnBuilder<TO>> {
 
     private TO onHelper;
     private String tableAlias;
@@ -46,8 +46,8 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
     }
 
     @Override
-    public OnBuilder<TO> on(OnCallback<TO> onCallback) {
-        this.onBuilderBeans.add(new OnBuilderBean<>(this.onHelper, this.tableAlias).setOnCallback(onCallback));
+    public OnBuilder<TO> on(OnLambdaCallable<TO> onLambdaCallable) {
+        this.onBuilderBeans.add(new OnBuilderBean<>(this.onHelper, this.tableAlias).setOnLambdaCallable(onLambdaCallable));
         return this;
     }
 
@@ -58,8 +58,8 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBloc
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> OnBuilder<TO> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.onBuilderBeans.add(new OnBuilderBeanJoin<>(this.onHelper, tableHelperClass, tableAlias, onJoinCallback));
+            SS extends SortHelper<SS>> OnBuilder<TO> on(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        this.onBuilderBeans.add(new OnBuilderBeanJoin<>(this.onHelper, tableHelperClass, tableAlias, onJoinLambdaCallable));
         return this;
     }
 

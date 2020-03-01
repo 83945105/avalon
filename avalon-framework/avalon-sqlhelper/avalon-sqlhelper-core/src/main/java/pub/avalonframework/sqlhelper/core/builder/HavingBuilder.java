@@ -1,14 +1,14 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackHavingBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperHavingBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractHavingBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBeanJoin;
-import pub.avalonframework.sqlhelper.core.callback.HavingCallback;
-import pub.avalonframework.sqlhelper.core.callback.HavingJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.inject.HavingDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingJoinLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements HelperHavingBlock<HavingBuilder<TH>>, CallbackHavingBlock<TH, HavingBuilder<TH>> {
+public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements HelperHavingBlock<HavingBuilder<TH>>, HavingLambdaExpression<TH, HavingBuilder<TH>> {
 
     private TH havingHelper;
     private String tableAlias;
@@ -46,8 +46,8 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
     }
 
     @Override
-    public HavingBuilder<TH> having(HavingCallback<TH> havingCallback) {
-        this.havingBuilderBeans.add(new HavingBuilderBean<>(this.havingHelper, this.tableAlias).setHavingCallback(havingCallback));
+    public HavingBuilder<TH> having(HavingLambdaCallable<TH> havingLambdaCallable) {
+        this.havingBuilderBeans.add(new HavingBuilderBean<>(this.havingHelper, this.tableAlias).setHavingLambdaCallable(havingLambdaCallable));
         return this;
     }
 
@@ -58,8 +58,8 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Help
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> HavingBuilder<TH> having(Class<S> tableHelperClass, String tableAlias, HavingJoinCallback<TH, SH> havingJoinCallback) {
-        this.havingBuilderBeans.add(new HavingBuilderBeanJoin<>(this.havingHelper, tableHelperClass, tableAlias, havingJoinCallback));
+            SS extends SortHelper<SS>> HavingBuilder<TH> having(Class<S> tableHelperClass, String tableAlias, HavingJoinLambdaCallable<TH, SH> havingJoinLambdaCallable) {
+        this.havingBuilderBeans.add(new HavingBuilderBeanJoin<>(this.havingHelper, tableHelperClass, tableAlias, havingJoinLambdaCallable));
         return this;
     }
 

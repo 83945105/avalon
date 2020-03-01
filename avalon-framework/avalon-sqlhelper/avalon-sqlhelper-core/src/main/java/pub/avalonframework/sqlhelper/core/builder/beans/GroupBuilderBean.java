@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.GroupCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableGroupDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.GroupHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public final class GroupBuilderBean<TG extends GroupHelper<TG>> extends Abstract
 
     private GroupHelper<?>[] groupHelpers;
 
-    private GroupCallback<TG> groupCallback;
+    private GroupLambdaCallable<TG> groupLambdaCallable;
 
     public GroupBuilderBean(TG groupHelper, String tableAlias) {
         super(tableAlias);
@@ -30,8 +30,8 @@ public final class GroupBuilderBean<TG extends GroupHelper<TG>> extends Abstract
         return this;
     }
 
-    public GroupBuilderBean<TG> setGroupCallback(GroupCallback<TG> groupCallback) {
-        this.groupCallback = groupCallback;
+    public GroupBuilderBean<TG> setGroupLambdaCallable(GroupLambdaCallable<TG> groupLambdaCallable) {
+        this.groupLambdaCallable = groupLambdaCallable;
         return this;
     }
 
@@ -43,8 +43,8 @@ public final class GroupBuilderBean<TG extends GroupHelper<TG>> extends Abstract
                 tableGroupDataBlocks.add(groupHelper.execute());
             }
         }
-        if (this.groupCallback != null) {
-            tableGroupDataBlocks.add(CallbackExecutor.execute(this.groupHelper, this.groupCallback, sqlBuilderConfiguration));
+        if (this.groupLambdaCallable != null) {
+            tableGroupDataBlocks.add(LambdaCallableExecutor.execute(this.groupHelper, this.groupLambdaCallable, sqlBuilderConfiguration));
         }
         return tableGroupDataBlocks;
     }

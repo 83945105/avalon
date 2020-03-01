@@ -1,23 +1,18 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackDeleteBlock;
-import pub.avalonframework.sqlhelper.core.block.callback.executor.CallbackBlockExecutor;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperDeleteBlock;
 import pub.avalonframework.sqlhelper.core.builder.DeleteBuilder;
 import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
 import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
 import pub.avalonframework.sqlhelper.core.builder.WhereBuilder;
-import pub.avalonframework.sqlhelper.core.callback.OnCallback;
-import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
-import pub.avalonframework.sqlhelper.core.callback.WhereCallback;
-import pub.avalonframework.sqlhelper.core.callback.WhereJoinCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.DeleteInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.*;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -33,7 +28,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         Engine<T, TC, TO, TW, TG, TH, TS>,
         DeleteInjector<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         HelperDeleteBlock<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
-        CallbackDeleteBlock<TO, TW, DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
+        DeleteLambdaExpression<TO, TW, DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         DeleteBuilder<DeleteEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
@@ -75,8 +70,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.addTableJoinDataBlock(CallbackBlockExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinCallback, getConfiguration().getSqlBuilder()));
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        this.addTableJoinDataBlock(LambdaCallableExecutor.execute(joinType, getTableHelperClass(), getTableAlias(), tableName, tableHelperClass, tableAlias, onJoinLambdaCallable, getConfiguration().getSqlBuilder()));
         return this;
     }
 
@@ -88,7 +83,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.join(joinType, tableName, tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.join(joinType, tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -98,8 +93,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.join(joinType, tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.join(joinType, tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -110,7 +105,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, String tableName, Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.join(joinType, tableName, tableHelperClass);
+        return DeleteLambdaExpression.super.join(joinType, tableName, tableHelperClass);
     }
 
     @Override
@@ -120,8 +115,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.join(joinType, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.join(joinType, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -132,7 +127,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.join(joinType, tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.join(joinType, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -142,8 +137,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.join(joinType, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.join(joinType, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -154,7 +149,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> join(JoinType joinType, Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.join(joinType, tableHelperClass);
+        return DeleteLambdaExpression.super.join(joinType, tableHelperClass);
     }
 
     @Override
@@ -164,8 +159,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.innerJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.innerJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -176,7 +171,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.innerJoin(tableName, tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.innerJoin(tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -186,8 +181,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.innerJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.innerJoin(tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -198,7 +193,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(String tableName, Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.innerJoin(tableName, tableHelperClass);
+        return DeleteLambdaExpression.super.innerJoin(tableName, tableHelperClass);
     }
 
     @Override
@@ -208,8 +203,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.innerJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.innerJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -220,7 +215,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.innerJoin(tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.innerJoin(tableHelperClass, tableAlias);
     }
 
     @Override
@@ -230,8 +225,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.innerJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.innerJoin(tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -242,7 +237,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> innerJoin(Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.innerJoin(tableHelperClass);
+        return DeleteLambdaExpression.super.innerJoin(tableHelperClass);
     }
 
     @Override
@@ -252,8 +247,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.leftJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.leftJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -264,7 +259,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.leftJoin(tableName, tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.leftJoin(tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -274,8 +269,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.leftJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.leftJoin(tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -286,7 +281,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(String tableName, Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.leftJoin(tableName, tableHelperClass);
+        return DeleteLambdaExpression.super.leftJoin(tableName, tableHelperClass);
     }
 
     @Override
@@ -296,8 +291,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.leftJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.leftJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -308,7 +303,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.leftJoin(tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.leftJoin(tableHelperClass, tableAlias);
     }
 
     @Override
@@ -318,8 +313,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.leftJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.leftJoin(tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -330,7 +325,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> leftJoin(Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.leftJoin(tableHelperClass);
+        return DeleteLambdaExpression.super.leftJoin(tableHelperClass);
     }
 
     @Override
@@ -340,8 +335,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.rightJoin(tableName, tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.rightJoin(tableName, tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -352,7 +347,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.rightJoin(tableName, tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.rightJoin(tableName, tableHelperClass, tableAlias);
     }
 
     @Override
@@ -362,8 +357,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.rightJoin(tableName, tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.rightJoin(tableName, tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -374,7 +369,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(String tableName, Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.rightJoin(tableName, tableHelperClass);
+        return DeleteLambdaExpression.super.rightJoin(tableName, tableHelperClass);
     }
 
     @Override
@@ -384,8 +379,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.rightJoin(tableHelperClass, tableAlias, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.rightJoin(tableHelperClass, tableAlias, onJoinLambdaCallable);
     }
 
     @Override
@@ -396,7 +391,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, String tableAlias) {
-        return CallbackDeleteBlock.super.rightJoin(tableHelperClass, tableAlias);
+        return DeleteLambdaExpression.super.rightJoin(tableHelperClass, tableAlias);
     }
 
     @Override
@@ -406,8 +401,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.rightJoin(tableHelperClass, onJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.rightJoin(tableHelperClass, onJoinLambdaCallable);
     }
 
     @Override
@@ -418,23 +413,12 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> rightJoin(Class<S> tableHelperClass) {
-        return CallbackDeleteBlock.super.rightJoin(tableHelperClass);
+        return DeleteLambdaExpression.super.rightJoin(tableHelperClass);
     }
 
     @Override
-    default DeleteEngine<T, TC, TO, TW, TG, TH, TS> on(OnCallback<TO> onCallback) {
-        return this.addTableOnDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), onCallback, getConfiguration().getSqlBuilder()));
-    }
-
-    @Override
-    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
-            SC extends ColumnHelper<SC>,
-            SO extends OnHelper<SO>,
-            SW extends WhereHelper<SW>,
-            SG extends GroupHelper<SG>,
-            SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        return this.addTableOnDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinCallback, getConfiguration().getSqlBuilder()));
+    default DeleteEngine<T, TC, TO, TW, TG, TH, TS> on(OnLambdaCallable<TO> onLambdaCallable) {
+        return this.addTableOnDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), onLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -444,13 +428,8 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, OnJoinCallback<TO, SO> onJoinCallback) {
-        return CallbackDeleteBlock.super.on(tableHelperClass, onJoinCallback);
-    }
-
-    @Override
-    default DeleteEngine<T, TC, TO, TW, TG, TH, TS> where(WhereCallback<TW> whereCallback) {
-        return this.addTableWhereDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), whereCallback, getConfiguration().getSqlBuilder()));
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, String tableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return this.addTableOnDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, onJoinLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -460,8 +439,13 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        return this.addTableWhereDataBlock(CallbackExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinCallback, getConfiguration().getSqlBuilder()));
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> on(Class<S> tableHelperClass, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.on(tableHelperClass, onJoinLambdaCallable);
+    }
+
+    @Override
+    default DeleteEngine<T, TC, TO, TW, TG, TH, TS> where(WhereLambdaCallable<TW> whereLambdaCallable) {
+        return this.addTableWhereDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), whereLambdaCallable, getConfiguration().getSqlBuilder()));
     }
 
     @Override
@@ -471,8 +455,19 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, WhereJoinCallback<TW, SW> whereJoinCallback) {
-        return CallbackDeleteBlock.super.where(tableHelperClass, whereJoinCallback);
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, String tableAlias, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        return this.addTableWhereDataBlock(LambdaCallableExecutor.execute(getTableHelperClass(), getTableAlias(), tableHelperClass, tableAlias, whereJoinLambdaCallable, getConfiguration().getSqlBuilder()));
+    }
+
+    @Override
+    default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
+            SC extends ColumnHelper<SC>,
+            SO extends OnHelper<SO>,
+            SW extends WhereHelper<SW>,
+            SG extends GroupHelper<SG>,
+            SH extends HavingHelper<SH>,
+            SS extends SortHelper<SS>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> where(Class<S> tableHelperClass, WhereJoinLambdaCallable<TW, SW> whereJoinLambdaCallable) {
+        return DeleteLambdaExpression.super.where(tableHelperClass, whereJoinLambdaCallable);
     }
 
     @Override

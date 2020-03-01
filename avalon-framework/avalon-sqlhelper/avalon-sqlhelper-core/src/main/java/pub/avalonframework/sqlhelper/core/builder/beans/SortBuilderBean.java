@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.callback.SortCallback;
-import pub.avalonframework.sqlhelper.core.callback.executor.CallbackExecutor;
 import pub.avalonframework.sqlhelper.core.data.block.TableSortDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.SortHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSo
 
     private SortHelper<?>[] sortHelpers;
 
-    private SortCallback<TG> sortCallback;
+    private SortLambdaCallable<TG> sortLambdaCallable;
 
     public SortBuilderBean(TG sortHelper, String tableAlias) {
         super(tableAlias);
@@ -30,8 +30,8 @@ public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSo
         return this;
     }
 
-    public SortBuilderBean<TG> setSortCallback(SortCallback<TG> sortCallback) {
-        this.sortCallback = sortCallback;
+    public SortBuilderBean<TG> setSortLambdaCallable(SortLambdaCallable<TG> sortLambdaCallable) {
+        this.sortLambdaCallable = sortLambdaCallable;
         return this;
     }
 
@@ -43,8 +43,8 @@ public final class SortBuilderBean<TG extends SortHelper<TG>> extends AbstractSo
                 tableSortDataBlocks.add(sortHelper.execute());
             }
         }
-        if (this.sortCallback != null) {
-            tableSortDataBlocks.add(CallbackExecutor.execute(this.sortHelper, this.sortCallback, sqlBuilderConfiguration));
+        if (this.sortLambdaCallable != null) {
+            tableSortDataBlocks.add(LambdaCallableExecutor.execute(this.sortHelper, this.sortLambdaCallable, sqlBuilderConfiguration));
         }
         return tableSortDataBlocks;
     }

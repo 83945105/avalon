@@ -6,7 +6,7 @@ import pub.avalonframework.jdbc.core.spring.api.entity.SysUser;
 import pub.avalonframework.jdbc.core.spring.api.entity.SysUserHelper;
 import pub.avalonframework.jdbc.core.spring.dao.SysUserJdbcDao;
 import pub.avalonframework.jdbc.core.spring.service.SysUserService;
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.web.utils.ValidationUtils;
 
 /**
@@ -25,7 +25,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public SysUser getSysUserByPrimaryKey(String keyValue, ColumnCallback<SysUserHelper.Column> columnCallback) throws Exception {
+    public SysUser getSysUserByPrimaryKey(String keyValue, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable) throws Exception {
         ValidationUtils.nonNullCheck("keyValue", keyValue);
         return null;
     }

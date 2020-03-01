@@ -1,13 +1,13 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.CallbackJoinBlock;
 import pub.avalonframework.sqlhelper.core.block.helper.HelperJoinBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractJoinBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.JoinBuilderBean;
-import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.JoinLambdaExpression;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author baichao
  */
-public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoinBlock<JoinBuilder<TO>>, CallbackJoinBlock<TO, JoinBuilder<TO>> {
+public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoinBlock<JoinBuilder<TO>>, JoinLambdaExpression<TO, JoinBuilder<TO>> {
 
     private TO onHelper;
     private String tableAlias;
@@ -45,8 +45,8 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoin
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> JoinBuilder<TO> join(JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
-        this.joinBuilderBeans.add(new JoinBuilderBean<>(this.onHelper, joinType, joinTableName, joinTableHelperClass, joinTableAlias, onJoinCallback));
+            SS extends SortHelper<SS>> JoinBuilder<TO> join(JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
+        this.joinBuilderBeans.add(new JoinBuilderBean<>(this.onHelper, joinType, joinTableName, joinTableHelperClass, joinTableAlias, onJoinLambdaCallable));
         return this;
     }
 

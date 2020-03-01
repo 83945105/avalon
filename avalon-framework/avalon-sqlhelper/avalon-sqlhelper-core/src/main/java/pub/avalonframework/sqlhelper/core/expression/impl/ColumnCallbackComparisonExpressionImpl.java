@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.expression.impl;
 
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.expression.ColumnCallbackComparisonExpression;
 import pub.avalonframework.sqlhelper.core.expression.ColumnComparisonExpression;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -18,10 +18,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T eq(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T eq(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return eq(sc);
     }
 
@@ -32,10 +32,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T neq(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T neq(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return neq(sc);
     }
 
@@ -46,10 +46,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T gt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T gt(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return gt(sc);
     }
 
@@ -60,10 +60,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T gte(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T gte(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return gte(sc);
     }
 
@@ -74,10 +74,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T lt(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return lt(sc);
     }
 
@@ -88,10 +88,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lte(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T lte(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return lte(sc);
     }
 
@@ -102,10 +102,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T bt(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback, ColumnCallback<SC> secondColumnCallback) {
+            SS extends SortHelper<SS>> T bt(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable, ColumnLambdaCallable<SC> secondColumnCallback) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         SC secondSc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         secondSc = secondColumnCallback.apply(secondSc);
         return bt(sc, secondSc);
@@ -118,10 +118,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T lk(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T lk(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return lk(sc);
     }
 
@@ -132,10 +132,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T in(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T in(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return in(sc);
     }
 
@@ -146,10 +146,10 @@ public interface ColumnCallbackComparisonExpressionImpl<T> extends ColumnCallbac
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> T nin(Class<S> tableHelperClass, String tableAlias, ColumnCallback<SC> columnCallback) {
+            SS extends SortHelper<SS>> T nin(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
         S s = HelperManager.defaultTableHelper(tableHelperClass);
         SC sc = s.newColumnHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
-        sc = columnCallback.apply(sc);
+        sc = columnLambdaCallable.apply(sc);
         return nin(sc);
     }
 }

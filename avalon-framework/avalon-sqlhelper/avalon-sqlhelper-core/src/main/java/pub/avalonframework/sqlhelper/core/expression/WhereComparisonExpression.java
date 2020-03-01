@@ -2,7 +2,12 @@ package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
-import pub.avalonframework.sqlhelper.core.expression.impl.*;
+import pub.avalonframework.sqlhelper.core.expression.impl.ColumnCallbackComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.impl.ColumnComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.impl.DataBlockBuilderComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.impl.ValueComparisonExpressionImpl;
+import pub.avalonframework.sqlhelper.core.expression.lambda.SubQueryComparisonLambdaExpression;
+import pub.avalonframework.sqlhelper.core.expression.lambda.impl.SubQueryComparisonLambdaExpressionImpl;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
 
 /**
@@ -15,8 +20,8 @@ public interface WhereComparisonExpression<T extends Helper> extends
         ColumnComparisonExpressionImpl<T, WhereDataBlock>,
         ColumnCallbackComparisonExpression<T>,
         ColumnCallbackComparisonExpressionImpl<T>,
-        SubQueryComparisonExpression<T>,
-        SubQueryComparisonExpressionImpl<T, WhereDataBlock>,
+        SubQueryComparisonLambdaExpression<T>,
+        SubQueryComparisonLambdaExpressionImpl<T, WhereDataBlock>,
         DataBlockBuilderComparisonExpressionImpl<T, WhereDataBlock> {
 
     /**

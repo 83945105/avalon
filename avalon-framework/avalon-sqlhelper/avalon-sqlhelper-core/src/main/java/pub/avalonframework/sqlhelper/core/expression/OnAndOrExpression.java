@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.callback.OnLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ public final class OnAndOrExpression<TO extends OnHelper<TO>> implements OnAndEx
     }
 
     @Override
-    public OnAndOrExpression<TO> and(OnLinkerCallback<TO> onLinkerCallback) {
-        if (onLinkerCallback == null) {
+    public OnAndOrExpression<TO> and(OnAndLambdaCallable<TO> onAndLambdaCallable) {
+        if (onAndLambdaCallable == null) {
             return this;
         }
-        OnAndExpression<TO> onAndExpression = onLinkerCallback.apply(new OnAndOrExpression<>());
+        OnAndExpression<TO> onAndExpression = onAndLambdaCallable.apply(new OnAndOrExpression<>());
         List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;
@@ -76,14 +76,14 @@ public final class OnAndOrExpression<TO extends OnHelper<TO>> implements OnAndEx
     /**
      * Or
      *
-     * @param onLinkerCallback {@link OnLinkerCallback}
+     * @param onAndLambdaCallable {@link OnAndLambdaCallable}
      * @return {@link OnAndOrExpression}
      */
-    public OnAndOrExpression<TO> or(OnLinkerCallback<TO> onLinkerCallback) {
-        if (onLinkerCallback == null) {
+    public OnAndOrExpression<TO> or(OnAndLambdaCallable<TO> onAndLambdaCallable) {
+        if (onAndLambdaCallable == null) {
             return this;
         }
-        OnAndExpression<TO> onAndExpression = onLinkerCallback.apply(new OnAndOrExpression<>());
+        OnAndExpression<TO> onAndExpression = onAndLambdaCallable.apply(new OnAndOrExpression<>());
         List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = onAndExpression.takeoutComparisonDataBlockLinkers();
         if (comparisonDataBlockLinkers == null || comparisonDataBlockLinkers.size() == 0) {
             return this;

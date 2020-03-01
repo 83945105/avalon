@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.builder.beans;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.callback.executor.CallbackBlockExecutor;
-import pub.avalonframework.sqlhelper.core.callback.OnJoinCallback;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 /**
@@ -27,19 +27,19 @@ public final class JoinBuilderBean<TO extends OnHelper<TO>,
 
     private Class<S> joinTableHelperClass;
 
-    private OnJoinCallback<TO, SO> onJoinCallback;
+    private OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable;
 
-    public JoinBuilderBean(TO mainOnHelper, JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinCallback<TO, SO> onJoinCallback) {
+    public JoinBuilderBean(TO mainOnHelper, JoinType joinType, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable) {
         super(joinTableAlias);
         this.mainOnHelper = mainOnHelper;
         this.joinType = joinType;
         this.joinTableName = joinTableName;
         this.joinTableHelperClass = joinTableHelperClass;
-        this.onJoinCallback = onJoinCallback;
+        this.onJoinLambdaCallable = onJoinLambdaCallable;
     }
 
     @Override
     public TableJoinDataBlock execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
-        return CallbackBlockExecutor.execute(this.joinType, this.mainOnHelper, this.joinTableName, this.joinTableHelperClass, this.tableAlias, this.onJoinCallback, sqlBuilderConfiguration);
+        return LambdaCallableExecutor.execute(this.joinType, this.mainOnHelper, this.joinTableName, this.joinTableHelperClass, this.tableAlias, this.onJoinLambdaCallable, sqlBuilderConfiguration);
     }
 }

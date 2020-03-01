@@ -1,8 +1,8 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.callback.WhereJoinLinkerCallback;
-import pub.avalonframework.sqlhelper.core.callback.WhereLinkerCallback;
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereAndLambdaCallable;
+import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.util.List;
@@ -30,17 +30,17 @@ public interface WhereAndExpression<TW extends WhereHelper<TW>> {
     /**
      * And
      *
-     * @param whereLinkerCallback {@link WhereLinkerCallback}
+     * @param whereAndLambdaCallable {@link WhereAndLambdaCallable}
      * @return {@link WhereAndOrExpression}
      */
-    WhereAndOrExpression<TW> and(WhereLinkerCallback<TW> whereLinkerCallback);
+    WhereAndOrExpression<TW> and(WhereAndLambdaCallable<TW> whereAndLambdaCallable);
 
     /**
      * And
      *
      * @param tableHelperClass        target {@link TableHelper} class
      * @param tableAlias              target {@link TableHelper} alias
-     * @param whereJoinLinkerCallback {@link WhereJoinLinkerCallback}
+     * @param whereJoinAndLambdaCallable {@link WhereJoinAndLambdaCallable}
      * @return {@link WhereAndOrExpression}
      */
     <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
@@ -49,13 +49,13 @@ public interface WhereAndExpression<TW extends WhereHelper<TW>> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> WhereAndOrExpression<TW> and(Class<S> tableHelperClass, String tableAlias, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback);
+            SS extends SortHelper<SS>> WhereAndOrExpression<TW> and(Class<S> tableHelperClass, String tableAlias, WhereJoinAndLambdaCallable<TW, SW> whereJoinAndLambdaCallable);
 
     /**
      * And
      *
      * @param tableHelperClass        target {@link TableHelper} class
-     * @param whereJoinLinkerCallback {@link WhereJoinLinkerCallback}
+     * @param whereJoinAndLambdaCallable {@link WhereJoinAndLambdaCallable}
      * @return {@link WhereAndOrExpression}
      */
     default <S extends TableHelper<S, SC, SO, SW, SG, SH, SS>,
@@ -64,7 +64,7 @@ public interface WhereAndExpression<TW extends WhereHelper<TW>> {
             SW extends WhereHelper<SW>,
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
-            SS extends SortHelper<SS>> WhereAndOrExpression<TW> and(Class<S> tableHelperClass, WhereJoinLinkerCallback<TW, SW> whereJoinLinkerCallback) {
-        return and(tableHelperClass, null, whereJoinLinkerCallback);
+            SS extends SortHelper<SS>> WhereAndOrExpression<TW> and(Class<S> tableHelperClass, WhereJoinAndLambdaCallable<TW, SW> whereJoinAndLambdaCallable) {
+        return and(tableHelperClass, null, whereJoinAndLambdaCallable);
     }
 }

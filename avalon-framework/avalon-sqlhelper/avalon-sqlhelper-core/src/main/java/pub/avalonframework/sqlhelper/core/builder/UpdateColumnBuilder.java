@@ -3,8 +3,8 @@ package pub.avalonframework.sqlhelper.core.builder;
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.ColumnBuilderBean;
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.utils.HelperManager;
 
@@ -41,8 +41,8 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         return this;
     }
 
-    public UpdateColumnBuilder<TC> update(ColumnCallback<TC> columnCallback) {
-        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnCallback(columnCallback);
+    public UpdateColumnBuilder<TC> update(ColumnLambdaCallable<TC> columnLambdaCallable) {
+        ColumnBuilderBean<TC> columnBuilderBean = new ColumnBuilderBean<>(this.columnHelper, this.tableAlias).setColumnLambdaCallable(columnLambdaCallable);
         this.updateColumnBuilderBeans.add(columnBuilderBean);
         return this;
     }

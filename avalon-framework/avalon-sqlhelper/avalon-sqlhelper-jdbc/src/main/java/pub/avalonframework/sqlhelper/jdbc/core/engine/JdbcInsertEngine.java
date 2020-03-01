@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.jdbc.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
-import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.engine.AbstractInsertEngine;
+import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
@@ -74,8 +74,8 @@ public final class JdbcInsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public JdbcInsertEngine<T, TC, TO, TW, TG, TH, TS> insert(ColumnCallback<TC> columnCallback) {
-        super.insert(columnCallback);
+    public JdbcInsertEngine<T, TC, TO, TW, TG, TH, TS> insert(ColumnLambdaCallable<TC> columnLambdaCallable) {
+        super.insert(columnLambdaCallable);
         return this;
     }
 
