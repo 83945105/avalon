@@ -2,6 +2,7 @@ package pub.avalonframework.sqlhelper.jdbc.core.spring.jdbc;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import pub.avalonframework.sqlhelper.core.callback.ColumnCallback;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.SelectSqlBuilder;
@@ -51,6 +52,10 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
 
     public int insertJavaBean(T javaBean) {
         return jdbcHelper.insertJavaBean(javaBean, new JdbcInsertEngine<>(jdbcHelper, tableHelperClass));
+    }
+
+    public int insertJavaBean(T javaBean, ColumnCallback<HC> columnCallback) {
+        return jdbcHelper.insertJavaBean(javaBean, new JdbcInsertEngine<>(jdbcHelper, tableHelperClass).insert(columnCallback));
     }
 
     public int insertJavaBeanSelective(T javaBean) {

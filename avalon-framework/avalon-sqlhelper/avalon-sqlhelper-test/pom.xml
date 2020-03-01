@@ -39,6 +39,12 @@
         </dependency>
 
         <dependency>
+            <groupId>pub.avalonframework</groupId>
+            <artifactId>avalon-web-spring</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
             <scope>test</scope>

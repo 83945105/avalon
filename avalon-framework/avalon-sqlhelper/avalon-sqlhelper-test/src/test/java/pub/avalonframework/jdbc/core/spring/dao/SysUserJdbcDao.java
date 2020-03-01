@@ -1,8 +1,8 @@
 package pub.avalonframework.jdbc.core.spring.dao;
 
+import pub.avalonframework.jdbc.core.spring.api.entity.SysUser;
+import pub.avalonframework.jdbc.core.spring.api.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.jdbc.core.spring.jdbc.BaseJdbc;
-import pub.avalonframework.sqlhelper.readme.entity.SysUser;
-import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 
 /**
  * @author baichao
