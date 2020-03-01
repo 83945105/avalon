@@ -20,9 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.StringUtils;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
@@ -49,8 +47,6 @@ public class JdbcScannerConfigurer implements BeanDefinitionRegistryPostProcesso
 
     private String lazyInitialization;
 
-    private JdbcTemplate jdbcTemplate;
-
     @Override
     public void setBeanName(String name) {
         this.beanName = name;
@@ -76,10 +72,6 @@ public class JdbcScannerConfigurer implements BeanDefinitionRegistryPostProcesso
         this.lazyInitialization = lazyInitialization;
     }
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
     @Override
     public void afterPropertiesSet() throws Exception {
         notNull(this.basePackage, "Property 'basePackage' is required");
@@ -98,7 +90,6 @@ public class JdbcScannerConfigurer implements BeanDefinitionRegistryPostProcesso
         if (StringUtils.hasText(lazyInitialization)) {
             scanner.setLazyInitialization(Boolean.parseBoolean(lazyInitialization));
         }
-//        scanner.setJdbcHelper((JdbcHelper) this.applicationContext.getBean("jdbcHelper"));
         scanner.registerFilters();
         scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
     }

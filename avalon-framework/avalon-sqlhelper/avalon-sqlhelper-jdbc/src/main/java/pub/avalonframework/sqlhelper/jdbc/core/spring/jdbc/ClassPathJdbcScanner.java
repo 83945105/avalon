@@ -13,8 +13,6 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.AssignableTypeFilter;
-import org.springframework.jdbc.core.JdbcTemplate;
-import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -29,11 +27,11 @@ public class ClassPathJdbcScanner extends ClassPathBeanDefinitionScanner {
 
     private boolean lazyInitialization;
 
-    private JdbcHelper jdbcHelper;
-
     private Class<? extends Annotation> annotationClass;
 
     private Class<?> markerInterface;
+
+    private Class<? extends JdbcFactoryBean> jdbcFactoryBeanClass = JdbcFactoryBean.class;
 
     public ClassPathJdbcScanner(BeanDefinitionRegistry registry) {
         super(registry, false);
@@ -41,10 +39,6 @@ public class ClassPathJdbcScanner extends ClassPathBeanDefinitionScanner {
 
     public void setLazyInitialization(boolean lazyInitialization) {
         this.lazyInitialization = lazyInitialization;
-    }
-
-    public void setJdbcHelper(JdbcHelper jdbcHelper) {
-        this.jdbcHelper = jdbcHelper;
     }
 
     public void setAnnotationClass(Class<? extends Annotation> annotationClass) {
@@ -106,17 +100,16 @@ public class ClassPathJdbcScanner extends ClassPathBeanDefinitionScanner {
         for (BeanDefinitionHolder holder : beanDefinitions) {
             definition = (GenericBeanDefinition) holder.getBeanDefinition();
             String beanClassName = definition.getBeanClassName();
-            LOGGER.debug("Creating MapperFactoryBean with name '" + holder.getBeanName() + "' and '" + beanClassName
+            LOGGER.debug("Creating JdbcFactoryBean with name '" + holder.getBeanName() + "' and '" + beanClassName
                     + "' mapperInterface");
 
-//            definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName);
-
-//            definition.getPropertyValues().add("addToConfig", this.addToConfig);
+            definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName);
+            definition.setBeanClass(this.jdbcFactoryBeanClass);
 
             boolean explicitFactoryUsed = false;
 
             if (!explicitFactoryUsed) {
-                LOGGER.debug("Enabling autowire by type for MapperFactoryBean with name '" + holder.getBeanName() + "'.");
+                LOGGER.debug("Enabling autowire by type for JdbcFactoryBean with name '" + holder.getBeanName() + "'.");
                 definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
             }
             definition.setLazyInit(lazyInitialization);

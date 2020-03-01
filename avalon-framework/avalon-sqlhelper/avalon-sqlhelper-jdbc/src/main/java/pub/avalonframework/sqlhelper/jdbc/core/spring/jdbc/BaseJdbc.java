@@ -33,12 +33,6 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
     public BaseJdbc() {
     }
 
-    public BaseJdbc(Class<T> beanType, Class<H> tableHelperClass, JdbcHelper jdbcHelper) {
-        this.beanType = beanType;
-        this.tableHelperClass = tableHelperClass;
-        this.jdbcHelper = jdbcHelper;
-    }
-
     public void copyTable(String targetTableName, boolean copyData) {
         jdbcHelper.copyTable(targetTableName, copyData, new JdbcTableEngine<>(jdbcHelper, tableHelperClass));
     }
@@ -239,5 +233,17 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
 
     public int delete(Delete<H, HC, HO, HW, HG, HH, HS> delete) {
         return jdbcHelper.delete(delete.apply(new JdbcDeleteEngine<>(jdbcHelper, tableHelperClass)));
+    }
+
+    public void setBeanType(Class<T> beanType) {
+        this.beanType = beanType;
+    }
+
+    public void setTableHelperClass(Class<H> tableHelperClass) {
+        this.tableHelperClass = tableHelperClass;
+    }
+
+    public void setJdbcHelper(JdbcHelper jdbcHelper) {
+        this.jdbcHelper = jdbcHelper;
     }
 }

@@ -1,6 +1,9 @@
 package pub.avalonframework.sqlhelper.spring.boot;
 
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +22,7 @@ import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
  * @author baichao
  */
 @Configuration
+@ConditionalOnClass({JdbcTemplate.class})
 @EnableConfigurationProperties({
         SpringBootPrintConfigurationProperties.class,
         SpringBootDataBlockBuilderConfigurationProperties.class,
@@ -26,6 +30,7 @@ import pub.avalonframework.sqlhelper.jdbc.core.factory.JdbcFactory;
         SpringBootJdbcConfigurationProperties.class,
         SpringBootSqlhelperConfigurationProperties.class
 })
+@AutoConfigureAfter({DataSourceAutoConfiguration.class})
 public class SqlhelperSpringBootConfiguration implements EnvironmentAware {
 
     private final JdbcTemplate jdbcTemplate;
