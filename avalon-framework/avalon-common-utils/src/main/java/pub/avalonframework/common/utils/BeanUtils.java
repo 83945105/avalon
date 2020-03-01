@@ -19,7 +19,7 @@ import java.util.function.Function;
  *
  * @author baichao
  */
-public class BeanUtils {
+public final class BeanUtils {
 
     private BeanUtils() {
     }

@@ -1,16 +1,13 @@
 package pub.avalonframework.web.utils;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import pub.avalonframework.web.spring.http.response.exception.impl.ErrorMessageException;
 import pub.avalonframework.web.spring.http.response.exception.impl.FailMessageException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author baichao
@@ -47,46 +44,84 @@ public class ValidationUtilsTest {
         Object value1 = null;
         Assertions.assertThrows(ErrorMessageException.class, () ->
                 ValidationUtils.nonNullCheck(value1));
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value1)));
+
         String value2 = "";
         Assertions.assertThrows(ErrorMessageException.class, () ->
                 ValidationUtils.nonNullCheck(value2));
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value2)));
+
         String value3 = " ";
         Assertions.assertThrows(ErrorMessageException.class, () ->
                 ValidationUtils.nonNullCheck(value3));
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value3)));
+
         List<?> value4 = new ArrayList<>(0);
         Assertions.assertThrows(ErrorMessageException.class, () ->
                 ValidationUtils.nonNullCheck(value4));
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value4)));
+
         Map<?, ?> value5 = new HashMap<>(0);
         Assertions.assertThrows(ErrorMessageException.class, () ->
                 ValidationUtils.nonNullCheck(value5));
-        Object[] value6 = new Object[0];
-        // 注意, 由于不定参特性, 只有一个数组参数时要这么传
         Assertions.assertThrows(ErrorMessageException.class, () ->
-                ValidationUtils.nonNullCheck(new Object[]{value6}));
+                ValidationUtils.nonNullChecks(Collections.singletonList(value5)));
 
-        Object value7 = new User();
+        Object[] value6 = new Object[0];
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullCheck(value6));
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value6)));
+
+        Assertions.assertThrows(ErrorMessageException.class, () ->
+                ValidationUtils.nonNullChecks(Collections.singletonMap("id", null)));
+
+        Object value11 = new User();
         Assertions.assertDoesNotThrow(() ->
-                ValidationUtils.nonNullCheck(value7));
-        String value8 = "1";
+                ValidationUtils.nonNullCheck(value11));
         Assertions.assertDoesNotThrow(() ->
-                ValidationUtils.nonNullCheck(value8));
-        String value9 = " 1";
+                ValidationUtils.nonNullChecks(Collections.singletonList(value11)));
+
+        String value12 = "1";
         Assertions.assertDoesNotThrow(() ->
-                ValidationUtils.nonNullCheck(value9));
-        List<String> value10 = new ArrayList<String>() {{
+                ValidationUtils.nonNullCheck(value12));
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value12)));
+
+        String value13 = " 1";
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullCheck(value13));
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value13)));
+
+        List<String> value14 = new ArrayList<String>() {{
             add("1");
         }};
         Assertions.assertDoesNotThrow(() ->
-                ValidationUtils.nonNullCheck(value10));
-        Map<String, String> value11 = new HashMap<String, String>() {{
+                ValidationUtils.nonNullCheck(value14));
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value14)));
+
+        Map<String, String> value15 = new HashMap<String, String>() {{
             put("key", "value");
         }};
         Assertions.assertDoesNotThrow(() ->
-                ValidationUtils.nonNullCheck(value11));
-        Object[] value12 = new Object[]{"1"};
-        // 注意, 由于不定参特性, 只有一个数组参数时要这么传
+                ValidationUtils.nonNullCheck(value15));
         Assertions.assertDoesNotThrow(() ->
-                ValidationUtils.nonNullCheck(new Object[]{value12}));
+                ValidationUtils.nonNullChecks(Collections.singletonList(value15)));
+
+        Object[] value16 = new Object[]{"1"};
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullCheck(value16));
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullChecks(Collections.singletonList(value16)));
+
+        Assertions.assertDoesNotThrow(() ->
+                ValidationUtils.nonNullChecks(Collections.singletonMap("id", 1)));
     }
 
     @Test

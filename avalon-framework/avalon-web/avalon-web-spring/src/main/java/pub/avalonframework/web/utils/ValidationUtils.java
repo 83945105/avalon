@@ -7,6 +7,7 @@ import org.hibernate.validator.HibernateValidator;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -53,35 +54,23 @@ public final class ValidationUtils {
         boolean apply(String name, Object value);
     }
 
-    /**
-     * 非空校验
-     *
-     * @param checkRule         校验规则
-     * @param errorValueHandler 错误处理
-     * @param values            校验对象
-     */
-    public static void nonNullCheck(CheckRule checkRule, ErrorValueHandler errorValueHandler, Object... values) {
-        for (Object value : values) {
-            if (!checkRule.apply(null, value)) {
-                errorValueHandler.accept(null, value);
-            }
-        }
+    @FunctionalInterface
+    public interface ErrorValueHandler {
+
+        /**
+         * 接收验证失败值
+         *
+         * @param name  错误名称
+         * @param value 错误值
+         */
+        void accept(String name, Object value);
     }
 
-    /**
-     * 非空校验
-     *
-     * @param values            校验对象
-     * @param checkRule         校验规则
-     * @param errorValueHandler 错误处理
-     */
-    public static void nonNullCheck(Map<String, Object> values, CheckRule checkRule, ErrorValueHandler errorValueHandler) {
-        for (Map.Entry<String, Object> entry : values.entrySet()) {
-            if (!checkRule.apply(entry.getKey(), entry.getValue())) {
-                errorValueHandler.accept(entry.getKey(), entry.getValue());
-            }
-        }
-    }
+    private final static CheckRule DEFAULT_CHECK_RULE = (name, value) -> defaultCheck(value);
+
+    private final static ErrorValueHandler DEFAULT_ERROR_VALUE_HANDLER = (name, value) -> {
+        throw new ErrorMessageException("The" + (name == null ? "" : " " + name) + " value is empty.");
+    };
 
     private static boolean defaultCheck(Object value) {
         if (value == null) {
@@ -112,7 +101,34 @@ public final class ValidationUtils {
     }
 
     /**
-     * 非空校验 <p/>
+     * 非空校验
+     *
+     * @param value             校验对象
+     * @param checkRule         校验规则
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullCheck(Object value, CheckRule checkRule, ErrorValueHandler errorValueHandler) {
+        if (!checkRule.apply(null, value)) {
+            errorValueHandler.accept(null, value);
+        }
+    }
+
+    /**
+     * 非空校验
+     *
+     * @param name              校验对象名
+     * @param value             校验对象
+     * @param checkRule         校验规则
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullCheck(String name, Object value, CheckRule checkRule, ErrorValueHandler errorValueHandler) {
+        if (!checkRule.apply(name, value)) {
+            errorValueHandler.accept(name, value);
+        }
+    }
+
+    /**
+     * 非空校验
      * null => null <p/>
      * "" => null <p/>
      * " " => null <p/>
@@ -120,11 +136,100 @@ public final class ValidationUtils {
      * Map(0) => null <p/>
      * Array(0) => null <p/>
      *
+     * @param value             校验对象
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullCheck(Object value, ErrorValueHandler errorValueHandler) {
+        nonNullCheck(value, DEFAULT_CHECK_RULE, errorValueHandler);
+    }
+
+    /**
+     * 非空校验
+     * null => null <p/>
+     * "" => null <p/>
+     * " " => null <p/>
+     * Collection(0) => null <p/>
+     * Map(0) => null <p/>
+     * Array(0) => null <p/>
+     *
+     * @param name              校验对象名
+     * @param value             校验对象
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullCheck(String name, Object value, ErrorValueHandler errorValueHandler) {
+        nonNullCheck(name, value, DEFAULT_CHECK_RULE, errorValueHandler);
+    }
+
+    /**
+     * 非空校验
+     * null => null <p/>
+     * "" => null <p/>
+     * " " => null <p/>
+     * Collection(0) => null <p/>
+     * Map(0) => null <p/>
+     * Array(0) => null <p/>
+     * 校验失败默认抛出 {@link ErrorMessageException}
+     *
+     * @param value 校验对象
+     */
+    public static void nonNullCheck(Object value) {
+        nonNullCheck(value, DEFAULT_ERROR_VALUE_HANDLER);
+    }
+
+    /**
+     * 非空校验
+     * null => null <p/>
+     * "" => null <p/>
+     * " " => null <p/>
+     * Collection(0) => null <p/>
+     * Map(0) => null <p/>
+     * Array(0) => null <p/>
+     * 校验失败默认抛出 {@link ErrorMessageException}
+     *
+     * @param name  校验对象名
+     * @param value 校验对象
+     */
+    public static void nonNullCheck(String name, Object value) {
+        nonNullCheck(name, value, DEFAULT_ERROR_VALUE_HANDLER);
+    }
+
+    /**
+     * 非空校验
+     *
+     * @param values            校验对象
+     * @param checkRule         校验规则
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullChecks(Collection<Object> values, CheckRule checkRule, ErrorValueHandler errorValueHandler) {
+        for (Object value : values) {
+            nonNullCheck(value, checkRule, errorValueHandler);
+        }
+    }
+
+    /**
+     * 非空校验
+     *
+     * @param checkRule         校验规则
      * @param errorValueHandler 错误处理
      * @param values            校验对象
      */
-    public static void nonNullCheck(ErrorValueHandler errorValueHandler, Object... values) {
-        nonNullCheck((name, value) -> defaultCheck(value), errorValueHandler, values);
+    public static void nonNullChecks(CheckRule checkRule, ErrorValueHandler errorValueHandler, Object... values) {
+        nonNullChecks(Arrays.asList(values), checkRule, errorValueHandler);
+    }
+
+    /**
+     * 非空校验
+     *
+     * @param values            校验对象
+     * @param checkRule         校验规则
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullChecks(Map<String, Object> values, CheckRule checkRule, ErrorValueHandler errorValueHandler) {
+        for (Map.Entry<String, Object> entry : values.entrySet()) {
+            if (!checkRule.apply(entry.getKey(), entry.getValue())) {
+                errorValueHandler.accept(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     /**
@@ -139,8 +244,40 @@ public final class ValidationUtils {
      * @param values            校验对象
      * @param errorValueHandler 错误处理
      */
-    public static void nonNullCheck(Map<String, Object> values, ErrorValueHandler errorValueHandler) {
-        nonNullCheck(values, (name, value) -> defaultCheck(values), errorValueHandler);
+    public static void nonNullChecks(Collection<Object> values, ErrorValueHandler errorValueHandler) {
+        nonNullChecks(values, DEFAULT_CHECK_RULE, errorValueHandler);
+    }
+
+    /**
+     * 非空校验 <p/>
+     * null => null <p/>
+     * "" => null <p/>
+     * " " => null <p/>
+     * Collection(0) => null <p/>
+     * Map(0) => null <p/>
+     * Array(0) => null <p/>
+     *
+     * @param errorValueHandler 错误处理
+     * @param values            校验对象
+     */
+    public static void nonNullChecks(ErrorValueHandler errorValueHandler, Object... values) {
+        nonNullChecks(DEFAULT_CHECK_RULE, errorValueHandler, values);
+    }
+
+    /**
+     * 非空校验 <p/>
+     * null => null <p/>
+     * "" => null <p/>
+     * " " => null <p/>
+     * Collection(0) => null <p/>
+     * Map(0) => null <p/>
+     * Array(0) => null <p/>
+     *
+     * @param values            校验对象
+     * @param errorValueHandler 错误处理
+     */
+    public static void nonNullChecks(Map<String, Object> values, ErrorValueHandler errorValueHandler) {
+        nonNullChecks(values, DEFAULT_CHECK_RULE, errorValueHandler);
     }
 
     /**
@@ -155,10 +292,8 @@ public final class ValidationUtils {
      *
      * @param values 校验对象
      */
-    public static void nonNullCheck(Object... values) {
-        nonNullCheck((name, value) -> {
-            throw new ErrorMessageException("The" + (name == null ? "" : " " + name) + " value is empty.");
-        }, values);
+    public static void nonNullChecks(Collection<Object> values) {
+        nonNullChecks(values, DEFAULT_ERROR_VALUE_HANDLER);
     }
 
     /**
@@ -173,10 +308,8 @@ public final class ValidationUtils {
      *
      * @param values 校验对象
      */
-    public static void nonNullCheck(Map<String, Object> values) {
-        nonNullCheck(values, (name, value) -> {
-            throw new ErrorMessageException("The" + (name == null ? "" : " " + name) + " value is empty.");
-        });
+    public static void nonNullChecks(Map<String, Object> values) {
+        nonNullChecks(values, DEFAULT_ERROR_VALUE_HANDLER);
     }
 
     /**
@@ -275,18 +408,6 @@ public final class ValidationUtils {
                 throw new FailMessageException(errorField.getMessage());
             }));
         }
-    }
-
-    @FunctionalInterface
-    public interface ErrorValueHandler {
-
-        /**
-         * 接收验证失败值
-         *
-         * @param name  错误名称
-         * @param value 错误值
-         */
-        void accept(String name, Object value);
     }
 
     @FunctionalInterface
