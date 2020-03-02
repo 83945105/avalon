@@ -36,7 +36,7 @@ public final class HavingBuilderBean<TH extends HavingHelper<TH>> extends Abstra
     }
 
     @Override
-    public List<TableHavingDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableHavingDataBlock> getTableHavingDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         List<TableHavingDataBlock> tableHavingDataBlocks = new ArrayList<>(1);
         if (this.havingHelpers != null) {
             for (HavingHelper<?> havingHelper : this.havingHelpers) {

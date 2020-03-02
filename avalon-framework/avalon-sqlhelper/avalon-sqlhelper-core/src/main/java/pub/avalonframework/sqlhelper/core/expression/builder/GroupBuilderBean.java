@@ -36,7 +36,7 @@ public final class GroupBuilderBean<TG extends GroupHelper<TG>> extends Abstract
     }
 
     @Override
-    public List<TableGroupDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableGroupDataBlock> getTableGroupDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         List<TableGroupDataBlock> tableGroupDataBlocks = new ArrayList<>(1);
         if (this.groupHelpers != null) {
             for (GroupHelper<?> groupHelper : this.groupHelpers) {

@@ -14,5 +14,5 @@ public abstract class AbstractHavingBuilderBean extends BuilderBean {
         super(tableAlias);
     }
 
-    public abstract List<TableHavingDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration);
+    public abstract List<TableHavingDataBlock> getTableHavingDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

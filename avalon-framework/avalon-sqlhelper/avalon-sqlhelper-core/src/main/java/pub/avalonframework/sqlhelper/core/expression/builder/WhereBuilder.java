@@ -80,6 +80,6 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements WhereE
         if (whereDataInjector == null) {
             return;
         }
-        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.execute(sqlBuilderConfiguration).forEach(whereDataInjector::addTableWhereDataBlock));
+        whereBuilder.getWhereBuilderBeans().forEach(sqlWhereBean -> sqlWhereBean.getTableWhereDataBlocks(sqlBuilderConfiguration).forEach(whereDataInjector::addTableWhereDataBlock));
     }
 }

@@ -79,6 +79,6 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements GroupE
         if (groupDataInjector == null) {
             return;
         }
-        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.execute(sqlBuilderConfiguration).forEach(groupDataInjector::addTableGroupDataBlock));
+        groupBuilder.getGroupBuilderBeans().forEach(sqlGroupBean -> sqlGroupBean.getTableGroupDataBlocks(sqlBuilderConfiguration).forEach(groupDataInjector::addTableGroupDataBlock));
     }
 }

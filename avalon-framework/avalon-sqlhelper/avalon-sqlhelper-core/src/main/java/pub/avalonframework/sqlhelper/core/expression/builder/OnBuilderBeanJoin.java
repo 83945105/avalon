@@ -35,7 +35,7 @@ public final class OnBuilderBeanJoin<TO extends OnHelper<TO>,
     }
 
     @Override
-    public List<TableOnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableOnDataBlock> getTableOnDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(LambdaCallableExecutor.execute(this.onHelper, this.tableHelperClass, this.tableAlias, this.onJoinLambdaCallable, sqlBuilderConfiguration));
     }
 }

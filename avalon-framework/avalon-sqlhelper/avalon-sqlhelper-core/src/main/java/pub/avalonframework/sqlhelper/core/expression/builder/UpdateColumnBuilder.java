@@ -65,6 +65,6 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         if (updateInjector == null) {
             return;
         }
-        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(updateInjector::addUpdateTableColumnDataBlock));
+        updateColumnBuilder.getUpdateColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.getTableColumnDataBlocks(sqlBuilderConfiguration).forEach(updateInjector::addUpdateTableColumnDataBlock));
     }
 }

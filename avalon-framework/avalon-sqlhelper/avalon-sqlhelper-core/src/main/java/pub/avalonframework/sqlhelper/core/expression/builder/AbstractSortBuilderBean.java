@@ -14,5 +14,5 @@ public abstract class AbstractSortBuilderBean extends BuilderBean {
         super(tableAlias);
     }
 
-    public abstract List<TableSortDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration);
+    public abstract List<TableSortDataBlock> getTableSortDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

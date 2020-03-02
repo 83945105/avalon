@@ -35,7 +35,7 @@ public final class HavingBuilderBeanJoin<TH extends HavingHelper<TH>,
     }
 
     @Override
-    public List<TableHavingDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableHavingDataBlock> getTableHavingDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(LambdaCallableExecutor.execute(this.havingHelper, this.tableHelperClass, this.tableAlias, this.havingJoinLambdaCallable, sqlBuilderConfiguration));
     }
 }

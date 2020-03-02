@@ -61,6 +61,6 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements JoinExpres
     }
 
     public static <FO extends OnHelper<FO>> List<TableJoinDataBlock> execute(JoinBuilder<FO> joinBuilder, SqlBuilderConfiguration sqlBuilderConfiguration) {
-        return joinBuilder.getJoinBuilderBeans().stream().map(sqlJoinBean -> sqlJoinBean.execute(sqlBuilderConfiguration)).collect(Collectors.toList());
+        return joinBuilder.getJoinBuilderBeans().stream().map(sqlJoinBean -> sqlJoinBean.getTableJoinDataBlocks(sqlBuilderConfiguration)).collect(Collectors.toList());
     }
 }

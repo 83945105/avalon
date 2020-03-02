@@ -14,5 +14,5 @@ public abstract class AbstractWhereBuilderBean extends BuilderBean {
         super(tableAlias);
     }
 
-    public abstract List<TableWhereDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration);
+    public abstract List<TableWhereDataBlock> getTableWhereDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

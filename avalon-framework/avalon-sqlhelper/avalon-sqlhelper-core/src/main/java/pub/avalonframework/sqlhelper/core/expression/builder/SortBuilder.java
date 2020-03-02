@@ -79,6 +79,6 @@ public class SortBuilder<TS extends SortHelper<TS>> implements SortExpression<So
         if (sortDataInjector == null) {
             return;
         }
-        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.execute(sqlBuilderConfiguration).forEach(sortDataInjector::addTableSortDataBlock));
+        sortBuilder.getSortBuilderBeans().forEach(sqlSortBean -> sqlSortBean.getTableSortDataBlocks(sqlBuilderConfiguration).forEach(sortDataInjector::addTableSortDataBlock));
     }
 }

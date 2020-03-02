@@ -31,7 +31,7 @@ public final class ColumnBuilderBeanJoin<T extends TableHelper<T, TC, TO, TW, TG
     }
 
     @Override
-    public List<TableColumnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableColumnDataBlock> getTableColumnDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(LambdaCallableExecutor.execute(this.tableHelperClass, this.tableAlias, this.columnLambdaCallable, sqlBuilderConfiguration));
     }
 }

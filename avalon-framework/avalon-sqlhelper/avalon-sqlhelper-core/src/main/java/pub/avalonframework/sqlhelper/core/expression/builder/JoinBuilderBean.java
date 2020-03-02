@@ -39,7 +39,7 @@ public final class JoinBuilderBean<TO extends OnHelper<TO>,
     }
 
     @Override
-    public TableJoinDataBlock execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public TableJoinDataBlock getTableJoinDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return LambdaCallableExecutor.execute(this.joinType, this.mainOnHelper, this.joinTableName, this.joinTableHelperClass, this.tableAlias, this.onJoinLambdaCallable, sqlBuilderConfiguration);
     }
 }

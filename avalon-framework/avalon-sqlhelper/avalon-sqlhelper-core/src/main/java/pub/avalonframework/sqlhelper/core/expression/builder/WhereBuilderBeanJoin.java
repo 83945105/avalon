@@ -35,7 +35,7 @@ public final class WhereBuilderBeanJoin<TW extends WhereHelper<TW>,
     }
 
     @Override
-    public List<TableWhereDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableWhereDataBlock> getTableWhereDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(LambdaCallableExecutor.execute(this.whereHelper, this.tableHelperClass, this.tableAlias, this.whereJoinLambdaCallable, sqlBuilderConfiguration));
     }
 }

@@ -31,7 +31,7 @@ public final class SortBuilderBeanJoin<T extends TableHelper<T, TC, TO, TW, TG, 
     }
 
     @Override
-    public List<TableSortDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableSortDataBlock> getTableSortDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(LambdaCallableExecutor.execute(this.tableHelperClass, this.tableAlias, this.sortLambdaCallable, sqlBuilderConfiguration));
     }
 }

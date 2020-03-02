@@ -36,7 +36,7 @@ public final class OnBuilderBean<TO extends OnHelper<TO>> extends AbstractOnBuil
     }
 
     @Override
-    public List<TableOnDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableOnDataBlock> getTableOnDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         List<TableOnDataBlock> tableOnDataBlocks = new ArrayList<>(1);
         if (this.onHelpers != null) {
             for (OnHelper<?> onHelper : this.onHelpers) {

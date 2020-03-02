@@ -65,6 +65,6 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         if (insertInjector == null) {
             return;
         }
-        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(insertInjector::addInsertTableColumnDataBlock));
+        insertColumnBuilder.getInsertColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.getTableColumnDataBlocks(sqlBuilderConfiguration).forEach(insertInjector::addInsertTableColumnDataBlock));
     }
 }

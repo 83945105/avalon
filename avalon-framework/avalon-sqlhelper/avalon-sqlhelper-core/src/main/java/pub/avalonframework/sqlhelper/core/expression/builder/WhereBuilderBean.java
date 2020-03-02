@@ -36,7 +36,7 @@ public final class WhereBuilderBean<TW extends WhereHelper<TW>> extends Abstract
     }
 
     @Override
-    public List<TableWhereDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableWhereDataBlock> getTableWhereDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         List<TableWhereDataBlock> tableWhereDataBlocks = new ArrayList<>(1);
         if (this.whereHelpers != null) {
             for (WhereHelper<?> whereHelper : this.whereHelpers) {

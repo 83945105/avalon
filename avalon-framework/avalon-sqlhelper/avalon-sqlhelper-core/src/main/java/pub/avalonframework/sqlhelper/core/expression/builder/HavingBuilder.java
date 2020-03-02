@@ -80,6 +80,6 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Havi
         if (havingDataInjector == null) {
             return;
         }
-        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.execute(sqlBuilderConfiguration).forEach(havingDataInjector::addTableHavingDataBlock));
+        havingBuilder.getHavingBuilderBeans().forEach(sqlHavingBean -> sqlHavingBean.getTableHavingDataBlocks(sqlBuilderConfiguration).forEach(havingDataInjector::addTableHavingDataBlock));
     }
 }

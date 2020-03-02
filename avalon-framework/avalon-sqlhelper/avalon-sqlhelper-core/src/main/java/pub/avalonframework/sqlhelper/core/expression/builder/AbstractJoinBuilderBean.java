@@ -12,5 +12,5 @@ public abstract class AbstractJoinBuilderBean extends BuilderBean {
         super(tableAlias);
     }
 
-    public abstract TableJoinDataBlock execute(SqlBuilderConfiguration sqlBuilderConfiguration);
+    public abstract TableJoinDataBlock getTableJoinDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration);
 }

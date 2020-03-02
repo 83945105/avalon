@@ -90,6 +90,6 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
         if (selectInjector == null) {
             return;
         }
-        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.execute(sqlBuilderConfiguration).forEach(selectInjector::addSelectTableColumnDataBlock));
+        selectColumnBuilder.getSelectColumnBuilderBeans().forEach(sqlColumnBean -> sqlColumnBean.getTableColumnDataBlocks(sqlBuilderConfiguration).forEach(selectInjector::addSelectTableColumnDataBlock));
     }
 }

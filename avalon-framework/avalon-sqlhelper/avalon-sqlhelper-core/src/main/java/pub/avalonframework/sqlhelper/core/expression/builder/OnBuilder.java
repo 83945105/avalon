@@ -80,6 +80,6 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements OnExpression
         if (onDataInjector == null) {
             return;
         }
-        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.execute(sqlBuilderConfiguration).forEach(onDataInjector::addTableOnDataBlock));
+        onBuilder.getOnBuilderBeans().forEach(sqlOnBean -> sqlOnBean.getTableOnDataBlocks(sqlBuilderConfiguration).forEach(onDataInjector::addTableOnDataBlock));
     }
 }

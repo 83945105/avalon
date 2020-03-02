@@ -31,7 +31,7 @@ public final class GroupBuilderBeanJoin<T extends TableHelper<T, TC, TO, TW, TG,
     }
 
     @Override
-    public List<TableGroupDataBlock> execute(SqlBuilderConfiguration sqlBuilderConfiguration) {
+    public List<TableGroupDataBlock> getTableGroupDataBlocks(SqlBuilderConfiguration sqlBuilderConfiguration) {
         return Collections.singletonList(LambdaCallableExecutor.execute(this.tableHelperClass, this.tableAlias, this.groupLambdaCallable, sqlBuilderConfiguration));
     }
 }
