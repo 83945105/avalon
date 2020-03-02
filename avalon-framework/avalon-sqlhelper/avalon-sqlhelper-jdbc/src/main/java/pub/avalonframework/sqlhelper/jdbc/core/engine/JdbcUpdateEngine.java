@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.jdbc.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
-import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
-import pub.avalonframework.sqlhelper.core.builder.UpdateColumnBuilder;
-import pub.avalonframework.sqlhelper.core.builder.WhereBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.engine.AbstractUpdateEngine;
+import pub.avalonframework.sqlhelper.core.expression.builder.JoinBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.OnBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.UpdateColumnBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.WhereBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;

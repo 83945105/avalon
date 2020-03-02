@@ -1,12 +1,12 @@
 package pub.avalonframework.sqlhelper.readme.model;
 
 import pub.avalonframework.database.DatabaseType;
-import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
-import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
-import pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
+import pub.avalonframework.sqlhelper.core.expression.builder.JoinBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.OnBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.SelectColumnBuilder;
 import pub.avalonframework.sqlhelper.readme.entity.RoleResourceHelper;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
 import pub.avalonframework.sqlhelper.readme.entity.UserRoleHelper;

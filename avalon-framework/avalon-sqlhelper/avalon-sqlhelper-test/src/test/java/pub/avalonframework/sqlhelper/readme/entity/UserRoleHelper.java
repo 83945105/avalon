@@ -547,7 +547,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class InsertColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder<Column> {
+    public static class InsertColumnBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.InsertColumnBuilder<Column> {
         public InsertColumnBuilder() {
             super(TABLE_ALIAS);
         }
@@ -556,7 +556,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class SelectColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder<Column> {
+    public static class SelectColumnBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.SelectColumnBuilder<Column> {
         public SelectColumnBuilder() {
             super(TABLE_ALIAS);
         }
@@ -565,7 +565,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class UpdateColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.UpdateColumnBuilder<Column> {
+    public static class UpdateColumnBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.UpdateColumnBuilder<Column> {
         public UpdateColumnBuilder() {
             super(TABLE_ALIAS);
         }
@@ -574,7 +574,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class ColumnBuilder extends pub.avalonframework.sqlhelper.core.builder.ColumnBuilder<Column> {
+    public static class ColumnBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.ColumnBuilder<Column> {
         public ColumnBuilder() {
             super(TABLE_ALIAS);
         }
@@ -583,7 +583,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.builder.JoinBuilder<On> {
+    public static class JoinBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.JoinBuilder<On> {
         public JoinBuilder() {
             super(TABLE_ALIAS);
         }
@@ -592,7 +592,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class WhereBuilder extends pub.avalonframework.sqlhelper.core.builder.WhereBuilder<Where> {
+    public static class WhereBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.WhereBuilder<Where> {
         public WhereBuilder() {
             super(TABLE_ALIAS);
         }
@@ -601,7 +601,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class GroupBuilder extends pub.avalonframework.sqlhelper.core.builder.GroupBuilder<Group> {
+    public static class GroupBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.GroupBuilder<Group> {
         public GroupBuilder() {
             super(TABLE_ALIAS);
         }
@@ -610,7 +610,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class HavingBuilder extends pub.avalonframework.sqlhelper.core.builder.HavingBuilder<Having> {
+    public static class HavingBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.HavingBuilder<Having> {
         public HavingBuilder() {
             super(TABLE_ALIAS);
         }
@@ -619,7 +619,7 @@ public class UserRoleHelper implements TableHelper<UserRoleHelper, UserRoleHelpe
         }
     }
 
-    public static class SortBuilder extends pub.avalonframework.sqlhelper.core.builder.SortBuilder<Sort> {
+    public static class SortBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.SortBuilder<Sort> {
         public SortBuilder() {
             super(TABLE_ALIAS);
         }

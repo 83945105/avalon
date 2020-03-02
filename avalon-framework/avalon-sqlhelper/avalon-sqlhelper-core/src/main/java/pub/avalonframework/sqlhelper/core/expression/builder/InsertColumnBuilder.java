@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
@@ -55,15 +55,15 @@ public abstract class InsertColumnBuilder<TC extends ColumnHelper<TC>> {
         return insertColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<InsertInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<InsertInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<InsertInjector> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(InsertColumnBuilder<FC> insertColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<InsertInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        InsertInjector insertInjector = supplier.get();
+        InsertInjector<?> insertInjector = supplier.get();
         if (insertInjector == null) {
             return;
         }

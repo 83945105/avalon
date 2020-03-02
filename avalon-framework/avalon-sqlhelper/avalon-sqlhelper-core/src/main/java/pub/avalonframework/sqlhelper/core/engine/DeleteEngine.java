@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
-import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
-import pub.avalonframework.sqlhelper.core.builder.WhereBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
@@ -11,6 +8,9 @@ import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.DeleteInjector;
 import pub.avalonframework.sqlhelper.core.expression.DeleteExpression;
 import pub.avalonframework.sqlhelper.core.expression.builder.DeleteExpressionBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.JoinBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.OnBuilder;
+import pub.avalonframework.sqlhelper.core.expression.builder.WhereBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;

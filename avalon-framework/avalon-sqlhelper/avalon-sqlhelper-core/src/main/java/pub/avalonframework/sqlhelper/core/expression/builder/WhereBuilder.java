@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractWhereBuilderBean;
@@ -71,15 +71,15 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements WhereE
         return whereBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<WhereDataInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<WhereDataInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<WhereDataInjector> supplier) {
+    public static <FW extends WhereHelper<FW>> void execute(WhereBuilder<FW> whereBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<WhereDataInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        WhereDataInjector whereDataInjector = supplier.get();
+        WhereDataInjector<?> whereDataInjector = supplier.get();
         if (whereDataInjector == null) {
             return;
         }

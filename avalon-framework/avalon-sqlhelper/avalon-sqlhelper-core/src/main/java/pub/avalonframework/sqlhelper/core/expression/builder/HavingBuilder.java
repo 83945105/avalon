@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractHavingBuilderBean;
@@ -71,15 +71,15 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Havi
         return havingBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<HavingDataInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<HavingDataInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<HavingDataInjector> supplier) {
+    public static <FW extends HavingHelper<FW>> void execute(HavingBuilder<FW> havingBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<HavingDataInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        HavingDataInjector havingDataInjector = supplier.get();
+        HavingDataInjector<?> havingDataInjector = supplier.get();
         if (havingDataInjector == null) {
             return;
         }

@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.InsertInjector;
 import pub.avalonframework.sqlhelper.core.expression.InsertExpression;
+import pub.avalonframework.sqlhelper.core.expression.builder.InsertColumnBuilder;
 import pub.avalonframework.sqlhelper.core.expression.builder.InsertExpressionBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.InsertLambdaExpression;

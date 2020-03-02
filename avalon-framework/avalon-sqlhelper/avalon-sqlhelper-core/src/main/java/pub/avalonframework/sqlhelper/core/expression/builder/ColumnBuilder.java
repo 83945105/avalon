@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.block.GroupType;
@@ -63,15 +63,15 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Colu
         return tableAlias;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<ColumnDataInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<ColumnDataInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(ColumnBuilder<FC> columnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<ColumnDataInjector> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(ColumnBuilder<FC> columnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<ColumnDataInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        ColumnDataInjector columnDataInjector = supplier.get();
+        ColumnDataInjector<?> columnDataInjector = supplier.get();
         if (columnDataInjector == null) {
             return;
         }

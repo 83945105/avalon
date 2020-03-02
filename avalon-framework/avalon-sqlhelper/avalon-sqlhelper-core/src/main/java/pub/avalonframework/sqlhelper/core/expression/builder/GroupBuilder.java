@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean;
@@ -70,15 +70,15 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements GroupE
         return groupBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<GroupDataInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<GroupDataInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<GroupDataInjector> supplier) {
+    public static <FG extends GroupHelper<FG>> void execute(GroupBuilder<FG> groupBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<GroupDataInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        GroupDataInjector groupDataInjector = supplier.get();
+        GroupDataInjector<?> groupDataInjector = supplier.get();
         if (groupDataInjector == null) {
             return;
         }

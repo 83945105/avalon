@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractColumnBuilderBean;
@@ -55,15 +55,15 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
         return updateColumnBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<UpdateInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<UpdateInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<UpdateInjector> supplier) {
+    public static <FC extends ColumnHelper<FC>> void execute(UpdateColumnBuilder<FC> updateColumnBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<UpdateInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        UpdateInjector updateInjector = supplier.get();
+        UpdateInjector<?> updateInjector = supplier.get();
         if (updateInjector == null) {
             return;
         }

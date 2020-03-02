@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSortBuilderBean;
@@ -70,15 +70,15 @@ public class SortBuilder<TS extends SortHelper<TS>> implements SortExpression<So
         return sortBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SortDataInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SortDataInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SortDataInjector> supplier) {
+    public static <FS extends SortHelper<FS>> void execute(SortBuilder<FS> sortBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<SortDataInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        SortDataInjector sortDataInjector = supplier.get();
+        SortDataInjector<?> sortDataInjector = supplier.get();
         if (sortDataInjector == null) {
             return;
         }

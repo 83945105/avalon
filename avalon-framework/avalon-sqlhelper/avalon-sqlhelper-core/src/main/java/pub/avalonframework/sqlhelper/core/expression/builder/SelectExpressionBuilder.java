@@ -1,6 +1,5 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
-import pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 
 /**

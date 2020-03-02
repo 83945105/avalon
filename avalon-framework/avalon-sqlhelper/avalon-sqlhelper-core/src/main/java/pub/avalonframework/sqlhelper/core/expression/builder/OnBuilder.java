@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractOnBuilderBean;
@@ -71,15 +71,15 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements OnExpression
         return onBuilderBeans;
     }
 
-    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<OnDataInjector> supplier) {
+    public void execute(SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<OnDataInjector<?>> supplier) {
         execute(this, sqlBuilderConfiguration, supplier);
     }
 
-    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<OnDataInjector> supplier) {
+    public static <FO extends OnHelper<FO>> void execute(OnBuilder<FO> onBuilder, SqlBuilderConfiguration sqlBuilderConfiguration, Supplier<OnDataInjector<?>> supplier) {
         if (supplier == null) {
             return;
         }
-        OnDataInjector onDataInjector = supplier.get();
+        OnDataInjector<?> onDataInjector = supplier.get();
         if (onDataInjector == null) {
             return;
         }
