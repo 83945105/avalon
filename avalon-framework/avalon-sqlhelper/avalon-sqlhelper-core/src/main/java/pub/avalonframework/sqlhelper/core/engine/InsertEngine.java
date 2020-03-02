@@ -49,7 +49,7 @@ public interface InsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FC extends ColumnHelper<FC>> InsertEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
+    default <FC extends ColumnHelper<FC>> InsertEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumnExpression(InsertColumnBuilder<FC> insertColumnBuilder) {
         InsertColumnBuilder.execute(insertColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }

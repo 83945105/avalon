@@ -716,7 +716,7 @@ public interface CrudEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FC extends ColumnHelper<FC>> CrudEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
+    default <FC extends ColumnHelper<FC>> CrudEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumnExpression(InsertColumnBuilder<FC> insertColumnBuilder) {
         InsertColumnBuilder.execute(insertColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
@@ -728,7 +728,7 @@ public interface CrudEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FC extends ColumnHelper<FC>> CrudEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder) {
+    default <FC extends ColumnHelper<FC>> CrudEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumnExpression(SelectColumnBuilder<FC> selectColumnBuilder) {
         SelectColumnBuilder.execute(selectColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
@@ -770,7 +770,7 @@ public interface CrudEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FC extends ColumnHelper<FC>> CrudEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
+    default <FC extends ColumnHelper<FC>> CrudEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumnExpression(UpdateColumnBuilder<FC> updateColumnBuilder) {
         UpdateColumnBuilder.execute(updateColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }

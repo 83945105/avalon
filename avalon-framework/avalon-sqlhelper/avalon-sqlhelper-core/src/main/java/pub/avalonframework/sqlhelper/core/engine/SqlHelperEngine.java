@@ -797,8 +797,8 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
-        super.buildInsertColumn(insertColumnBuilder);
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumnExpression(InsertColumnBuilder<FC> insertColumnBuilder) {
+        super.buildInsertColumnExpression(insertColumnBuilder);
         return this;
     }
 
@@ -809,8 +809,8 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder) {
-        super.buildSelectColumn(selectColumnBuilder);
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumnExpression(SelectColumnBuilder<FC> selectColumnBuilder) {
+        super.buildSelectColumnExpression(selectColumnBuilder);
         return this;
     }
 
@@ -851,8 +851,8 @@ public final class SqlHelperEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, 
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
-        super.buildUpdateColumn(updateColumnBuilder);
+    public <FC extends ColumnHelper<FC>> SqlHelperEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumnExpression(UpdateColumnBuilder<FC> updateColumnBuilder) {
+        super.buildUpdateColumnExpression(updateColumnBuilder);
         return this;
     }
 }

@@ -780,8 +780,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder) {
-        super.buildSelectColumn(selectColumnBuilder);
+    public <FC extends ColumnHelper<FC>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildSelectColumnExpression(SelectColumnBuilder<FC> selectColumnBuilder) {
+        super.buildSelectColumnExpression(selectColumnBuilder);
         return this;
     }
 

@@ -80,8 +80,8 @@ public final class JdbcInsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> JdbcInsertEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder) {
-        super.buildInsertColumn(insertColumnBuilder);
+    public <FC extends ColumnHelper<FC>> JdbcInsertEngine<T, TC, TO, TW, TG, TH, TS> buildInsertColumnExpression(InsertColumnBuilder<FC> insertColumnBuilder) {
+        super.buildInsertColumnExpression(insertColumnBuilder);
         return this;
     }
 

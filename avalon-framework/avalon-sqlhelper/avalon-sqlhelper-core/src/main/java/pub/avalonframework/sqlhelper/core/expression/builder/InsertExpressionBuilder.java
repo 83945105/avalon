@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
-import pub.avalonframework.sqlhelper.core.engine.AbstractEngine;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 
 /**
@@ -10,11 +9,10 @@ import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 public interface InsertExpressionBuilder<R> {
 
     /**
-     * Build insert column sql data.
+     * Build insert column expression.
      *
      * @param insertColumnBuilder extends {@link InsertColumnBuilder} object
-     * @param <FC>                extends {@link ColumnHelper} object
-     * @return extends {@link AbstractEngine} object
+     * @return R
      */
-    <FC extends ColumnHelper<FC>> R buildInsertColumn(InsertColumnBuilder<FC> insertColumnBuilder);
+    <FC extends ColumnHelper<FC>> R buildInsertColumnExpression(InsertColumnBuilder<FC> insertColumnBuilder);
 }

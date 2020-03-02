@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.builder.UpdateColumnBuilder;
-import pub.avalonframework.sqlhelper.core.engine.AbstractEngine;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 
 /**
@@ -13,11 +12,10 @@ public interface UpdateExpressionBuilder<R> extends
         WhereExpressionBuilder<R> {
 
     /**
-     * Build update column sql data.
+     * Build update column expression.
      *
      * @param updateColumnBuilder extends {@link UpdateColumnBuilder} object
-     * @param <FC>                extends {@link ColumnHelper} object
-     * @return extends {@link AbstractEngine} object
+     * @return R
      */
-    <FC extends ColumnHelper<FC>> R buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder);
+    <FC extends ColumnHelper<FC>> R buildUpdateColumnExpression(UpdateColumnBuilder<FC> updateColumnBuilder);
 }

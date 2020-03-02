@@ -503,7 +503,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FC extends ColumnHelper<FC>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
+    default <FC extends ColumnHelper<FC>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumnExpression(UpdateColumnBuilder<FC> updateColumnBuilder) {
         UpdateColumnBuilder.execute(updateColumnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }

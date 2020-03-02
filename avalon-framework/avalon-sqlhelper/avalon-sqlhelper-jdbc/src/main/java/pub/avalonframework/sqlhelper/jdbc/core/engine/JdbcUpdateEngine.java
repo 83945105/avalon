@@ -575,8 +575,8 @@ public final class JdbcUpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumn(UpdateColumnBuilder<FC> updateColumnBuilder) {
-        super.buildUpdateColumn(updateColumnBuilder);
+    public <FC extends ColumnHelper<FC>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildUpdateColumnExpression(UpdateColumnBuilder<FC> updateColumnBuilder) {
+        super.buildUpdateColumnExpression(updateColumnBuilder);
         return this;
     }
 

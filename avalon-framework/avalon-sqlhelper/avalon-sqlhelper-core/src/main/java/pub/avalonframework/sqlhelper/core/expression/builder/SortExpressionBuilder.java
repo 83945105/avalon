@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.builder.SortBuilder;
-import pub.avalonframework.sqlhelper.core.engine.AbstractEngine;
 import pub.avalonframework.sqlhelper.core.helper.SortHelper;
 
 /**
@@ -13,8 +12,7 @@ public interface SortExpressionBuilder<R> {
      * Build sort expression.
      *
      * @param sortBuilder extends {@link SortBuilder} object
-     * @param <FS>        extends {@link SortHelper} object
-     * @return extends {@link AbstractEngine} object
+     * @return R
      */
     <FS extends SortHelper<FS>> R buildSortExpression(SortBuilder<FS> sortBuilder);
 }

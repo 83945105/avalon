@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.builder.SelectColumnBuilder;
-import pub.avalonframework.sqlhelper.core.engine.AbstractEngine;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 
 /**
@@ -17,11 +16,10 @@ public interface SelectExpressionBuilder<R> extends
         SortExpressionBuilder<R> {
 
     /**
-     * Build select column sql data.
+     * Build select column expression.
      *
      * @param selectColumnBuilder extends {@link SelectColumnBuilder} object
-     * @param <FC>                extends {@link ColumnHelper} object
-     * @return extends {@link AbstractEngine} object
+     * @return R
      */
-    <FC extends ColumnHelper<FC>> R buildSelectColumn(SelectColumnBuilder<FC> selectColumnBuilder);
+    <FC extends ColumnHelper<FC>> R buildSelectColumnExpression(SelectColumnBuilder<FC> selectColumnBuilder);
 }

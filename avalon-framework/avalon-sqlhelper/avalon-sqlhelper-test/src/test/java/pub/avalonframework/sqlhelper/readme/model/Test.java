@@ -29,13 +29,13 @@ public class Test {
 
         SqlHelperEngine sqlEngine = new SqlHelperEngine<>(DatabaseType.MYSQL, "", RoleResourceHelper.class)
 
-                .buildSelectColumn(new SysUserHelper.SelectColumnBuilder())
+                .buildSelectColumnExpression(new SysUserHelper.SelectColumnBuilder())
 
-                .buildSelectColumn(new SelectColumnBuilder<RoleResourceHelper.Column>() {
+                .buildSelectColumnExpression(new SelectColumnBuilder<RoleResourceHelper.Column>() {
 
                 }.select(table -> table.id().primaryKey()))
 
-                .buildSelectColumn(new SelectColumnBuilder<RoleResourceHelper.Column>() {{
+                .buildSelectColumnExpression(new SelectColumnBuilder<RoleResourceHelper.Column>() {{
 
                     if (true) {
                         select(table -> table.id().resourceName());
@@ -43,10 +43,10 @@ public class Test {
 
                 }})
 
-                .buildSelectColumn(new RoleResourceHelper.SelectColumnBuilder().select(table -> table.id().resourceId()))
-                .buildSelectColumn(new SelectColumnBuilder<SysUserHelper.Column>() {
+                .buildSelectColumnExpression(new RoleResourceHelper.SelectColumnBuilder().select(table -> table.id().resourceId()))
+                .buildSelectColumnExpression(new SelectColumnBuilder<SysUserHelper.Column>() {
                 }.select(table -> table.id().loginName()))
-                .buildSelectColumn(new RoleResourceHelper.SelectColumnBuilder() {{
+                .buildSelectColumnExpression(new RoleResourceHelper.SelectColumnBuilder() {{
 
                     select(SysUserHelper.class, table -> table.userName().userName(""));
 
