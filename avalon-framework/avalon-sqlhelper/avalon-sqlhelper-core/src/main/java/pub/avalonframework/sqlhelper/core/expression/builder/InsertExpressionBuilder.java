@@ -1,12 +1,13 @@
-package pub.avalonframework.sqlhelper.core.builder;
+package pub.avalonframework.sqlhelper.core.expression.builder;
 
+import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
 import pub.avalonframework.sqlhelper.core.engine.AbstractEngine;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 
 /**
  * @author baichao
  */
-public interface InsertBuilder<R> {
+public interface InsertExpressionBuilder<R> {
 
     /**
      * Build insert column sql data.

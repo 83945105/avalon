@@ -774,8 +774,8 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public <FC extends ColumnHelper<FC>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildColumn(ColumnBuilder<FC> columnBuilder) {
-        super.buildColumn(columnBuilder);
+    public <FC extends ColumnHelper<FC>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildColumnExpression(ColumnBuilder<FC> columnBuilder) {
+        super.buildColumnExpression(columnBuilder);
         return this;
     }
 
@@ -786,38 +786,38 @@ public final class JdbcSelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public <FO extends OnHelper<FO>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
-        super.buildJoin(joinBuilder);
+    public <FO extends OnHelper<FO>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildJoinExpression(JoinBuilder<FO> joinBuilder) {
+        super.buildJoinExpression(joinBuilder);
         return this;
     }
 
     @Override
-    public <FO extends OnHelper<FO>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
-        super.buildOn(onBuilder);
+    public <FO extends OnHelper<FO>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildOnExpression(OnBuilder<FO> onBuilder) {
+        super.buildOnExpression(onBuilder);
         return this;
     }
 
     @Override
-    public <FW extends WhereHelper<FW>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
-        super.buildWhere(whereBuilder);
+    public <FW extends WhereHelper<FW>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildWhereExpression(WhereBuilder<FW> whereBuilder) {
+        super.buildWhereExpression(whereBuilder);
         return this;
     }
 
     @Override
-    public <FG extends GroupHelper<FG>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildGroup(GroupBuilder<FG> groupBuilder) {
-        super.buildGroup(groupBuilder);
+    public <FG extends GroupHelper<FG>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildGroupExpression(GroupBuilder<FG> groupBuilder) {
+        super.buildGroupExpression(groupBuilder);
         return this;
     }
 
     @Override
-    public <FH extends HavingHelper<FH>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildHaving(HavingBuilder<FH> havingBuilder) {
-        super.buildHaving(havingBuilder);
+    public <FH extends HavingHelper<FH>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildHavingExpression(HavingBuilder<FH> havingBuilder) {
+        super.buildHavingExpression(havingBuilder);
         return this;
     }
 
     @Override
-    public <FS extends SortHelper<FS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildSort(SortBuilder<FS> sortBuilder) {
-        super.buildSort(sortBuilder);
+    public <FS extends SortHelper<FS>> JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> buildSortExpression(SortBuilder<FS> sortBuilder) {
+        super.buildSortExpression(sortBuilder);
         return this;
     }
 

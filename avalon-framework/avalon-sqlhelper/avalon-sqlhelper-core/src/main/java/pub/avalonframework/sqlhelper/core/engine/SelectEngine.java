@@ -6,6 +6,7 @@ import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.SelectInjector;
 import pub.avalonframework.sqlhelper.core.expression.LimitExpression;
 import pub.avalonframework.sqlhelper.core.expression.SelectExpression;
+import pub.avalonframework.sqlhelper.core.expression.builder.SelectExpressionBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -25,7 +26,7 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         SelectExpression<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
         SelectLambdaExpression<TC, TO, TW, TG, TH, TS, SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
         LimitExpression<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
-        SelectBuilder<SelectEngine<T, TC, TO, TW, TG, TH, TS>> {
+        SelectExpressionBuilder<SelectEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
     default SelectEngine<T, TC, TO, TW, TG, TH, TS> addSelectTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
@@ -683,7 +684,7 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FC extends ColumnHelper<FC>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildColumn(ColumnBuilder<FC> columnBuilder) {
+    default <FC extends ColumnHelper<FC>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildColumnExpression(ColumnBuilder<FC> columnBuilder) {
         ColumnBuilder.execute(columnBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
@@ -695,37 +696,37 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FO extends OnHelper<FO>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
+    default <FO extends OnHelper<FO>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildJoinExpression(JoinBuilder<FO> joinBuilder) {
         JoinBuilder.execute(joinBuilder, getConfiguration().getSqlBuilder()).forEach(this::addTableJoinDataBlock);
         return this;
     }
 
     @Override
-    default <FO extends OnHelper<FO>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
+    default <FO extends OnHelper<FO>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildOnExpression(OnBuilder<FO> onBuilder) {
         OnBuilder.execute(onBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
-    default <FW extends WhereHelper<FW>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
+    default <FW extends WhereHelper<FW>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildWhereExpression(WhereBuilder<FW> whereBuilder) {
         WhereBuilder.execute(whereBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
-    default <FG extends GroupHelper<FG>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildGroup(GroupBuilder<FG> groupBuilder) {
+    default <FG extends GroupHelper<FG>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildGroupExpression(GroupBuilder<FG> groupBuilder) {
         GroupBuilder.execute(groupBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
-    default <FH extends HavingHelper<FH>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildHaving(HavingBuilder<FH> havingBuilder) {
+    default <FH extends HavingHelper<FH>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildHavingExpression(HavingBuilder<FH> havingBuilder) {
         HavingBuilder.execute(havingBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
-    default <FS extends SortHelper<FS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildSort(SortBuilder<FS> sortBuilder) {
+    default <FS extends SortHelper<FS>> SelectEngine<T, TC, TO, TW, TG, TH, TS> buildSortExpression(SortBuilder<FS> sortBuilder) {
         SortBuilder.execute(sortBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }

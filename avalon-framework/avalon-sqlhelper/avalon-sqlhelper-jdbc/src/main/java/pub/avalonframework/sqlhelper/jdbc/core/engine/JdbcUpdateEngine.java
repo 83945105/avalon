@@ -557,20 +557,20 @@ public final class JdbcUpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH,
     }
 
     @Override
-    public <FO extends OnHelper<FO>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
-        super.buildJoin(joinBuilder);
+    public <FO extends OnHelper<FO>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildJoinExpression(JoinBuilder<FO> joinBuilder) {
+        super.buildJoinExpression(joinBuilder);
         return this;
     }
 
     @Override
-    public <FO extends OnHelper<FO>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
-        super.buildOn(onBuilder);
+    public <FO extends OnHelper<FO>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildOnExpression(OnBuilder<FO> onBuilder) {
+        super.buildOnExpression(onBuilder);
         return this;
     }
 
     @Override
-    public <FW extends WhereHelper<FW>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
-        super.buildWhere(whereBuilder);
+    public <FW extends WhereHelper<FW>> JdbcUpdateEngine<T, TC, TO, TW, TG, TH, TS> buildWhereExpression(WhereBuilder<FW> whereBuilder) {
+        super.buildWhereExpression(whereBuilder);
         return this;
     }
 

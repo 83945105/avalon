@@ -1,10 +1,14 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.*;
+import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
+import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
+import pub.avalonframework.sqlhelper.core.builder.UpdateColumnBuilder;
+import pub.avalonframework.sqlhelper.core.builder.WhereBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
 import pub.avalonframework.sqlhelper.core.expression.UpdateExpression;
+import pub.avalonframework.sqlhelper.core.expression.builder.UpdateExpressionBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -23,7 +27,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         UpdateInjector<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         UpdateExpression<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         UpdateLambdaExpression<TC, TO, TW, UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
-        UpdateBuilder<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> {
+        UpdateExpressionBuilder<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
     default UpdateEngine<T, TC, TO, TW, TG, TH, TS> setConfiguration(SqlhelperConfiguration configuration) {
@@ -481,19 +485,19 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FO extends OnHelper<FO>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
+    default <FO extends OnHelper<FO>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildJoinExpression(JoinBuilder<FO> joinBuilder) {
         JoinBuilder.execute(joinBuilder, getConfiguration().getSqlBuilder()).forEach(this::addTableJoinDataBlock);
         return this;
     }
 
     @Override
-    default <FO extends OnHelper<FO>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
+    default <FO extends OnHelper<FO>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildOnExpression(OnBuilder<FO> onBuilder) {
         OnBuilder.execute(onBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
-    default <FW extends WhereHelper<FW>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
+    default <FW extends WhereHelper<FW>> UpdateEngine<T, TC, TO, TW, TG, TH, TS> buildWhereExpression(WhereBuilder<FW> whereBuilder) {
         WhereBuilder.execute(whereBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }

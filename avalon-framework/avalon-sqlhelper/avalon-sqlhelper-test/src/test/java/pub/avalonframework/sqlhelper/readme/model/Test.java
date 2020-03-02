@@ -52,11 +52,11 @@ public class Test {
 
                 }})
 
-                .buildJoin(new JoinBuilder<SysUserHelper.On>() {{
+                .buildJoinExpression(new JoinBuilder<SysUserHelper.On>() {{
 
                 }})
 
-                .buildOn(new OnBuilder<SysUserHelper.On>() {{
+                .buildOnExpression(new OnBuilder<SysUserHelper.On>() {{
 
 
                 }})

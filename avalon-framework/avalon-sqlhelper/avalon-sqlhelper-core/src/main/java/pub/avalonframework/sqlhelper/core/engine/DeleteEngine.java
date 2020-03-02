@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.DeleteBuilder;
 import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
 import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
 import pub.avalonframework.sqlhelper.core.builder.WhereBuilder;
@@ -11,6 +10,7 @@ import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.DeleteInjector;
 import pub.avalonframework.sqlhelper.core.expression.DeleteExpression;
+import pub.avalonframework.sqlhelper.core.expression.builder.DeleteExpressionBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -29,7 +29,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         DeleteInjector<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         DeleteExpression<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         DeleteLambdaExpression<TO, TW, DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
-        DeleteBuilder<DeleteEngine<T, TC, TO, TW, TG, TH, TS>> {
+        DeleteExpressionBuilder<DeleteEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
     default DeleteEngine<T, TC, TO, TW, TG, TH, TS> setConfiguration(SqlhelperConfiguration configuration) {
@@ -471,19 +471,19 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
     }
 
     @Override
-    default <FO extends OnHelper<FO>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> buildJoin(JoinBuilder<FO> joinBuilder) {
+    default <FO extends OnHelper<FO>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> buildJoinExpression(JoinBuilder<FO> joinBuilder) {
         JoinBuilder.execute(joinBuilder, getConfiguration().getSqlBuilder()).forEach(this::addTableJoinDataBlock);
         return this;
     }
 
     @Override
-    default <FO extends OnHelper<FO>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> buildOn(OnBuilder<FO> onBuilder) {
+    default <FO extends OnHelper<FO>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> buildOnExpression(OnBuilder<FO> onBuilder) {
         OnBuilder.execute(onBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }
 
     @Override
-    default <FW extends WhereHelper<FW>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> buildWhere(WhereBuilder<FW> whereBuilder) {
+    default <FW extends WhereHelper<FW>> DeleteEngine<T, TC, TO, TW, TG, TH, TS> buildWhereExpression(WhereBuilder<FW> whereBuilder) {
         WhereBuilder.execute(whereBuilder, getConfiguration().getSqlBuilder(), () -> this);
         return this;
     }

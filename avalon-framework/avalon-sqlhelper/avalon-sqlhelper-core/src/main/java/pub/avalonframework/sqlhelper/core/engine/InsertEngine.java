@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.InsertBuilder;
 import pub.avalonframework.sqlhelper.core.builder.InsertColumnBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.InsertInjector;
 import pub.avalonframework.sqlhelper.core.expression.InsertExpression;
+import pub.avalonframework.sqlhelper.core.expression.builder.InsertExpressionBuilder;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.InsertLambdaExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
@@ -25,7 +25,7 @@ public interface InsertEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         InsertInjector<InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
         InsertExpression<InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
         InsertLambdaExpression<TC, InsertEngine<T, TC, TO, TW, TG, TH, TS>>,
-        InsertBuilder<InsertEngine<T, TC, TO, TW, TG, TH, TS>> {
+        InsertExpressionBuilder<InsertEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override
     default InsertEngine<T, TC, TO, TW, TG, TH, TS> addInsertTableColumnDataBlock(TableColumnDataBlock tableColumnDataBlock) {
