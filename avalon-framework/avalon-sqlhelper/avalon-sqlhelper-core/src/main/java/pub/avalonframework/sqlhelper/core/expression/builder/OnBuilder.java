@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractOnBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.OnDataInjector;
 import pub.avalonframework.sqlhelper.core.expression.OnExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;

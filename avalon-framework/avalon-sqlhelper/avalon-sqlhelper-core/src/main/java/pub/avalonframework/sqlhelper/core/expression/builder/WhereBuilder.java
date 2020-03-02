@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractWhereBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.WhereDataInjector;
 import pub.avalonframework.sqlhelper.core.expression.WhereExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinLambdaCallable;

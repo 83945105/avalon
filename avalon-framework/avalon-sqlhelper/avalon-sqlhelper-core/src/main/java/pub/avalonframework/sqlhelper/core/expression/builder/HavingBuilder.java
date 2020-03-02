@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractHavingBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.HavingDataInjector;
 import pub.avalonframework.sqlhelper.core.expression.HavingExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.HavingJoinLambdaCallable;

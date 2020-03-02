@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSortBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.SortDataInjector;
 import pub.avalonframework.sqlhelper.core.expression.SortExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaCallable;

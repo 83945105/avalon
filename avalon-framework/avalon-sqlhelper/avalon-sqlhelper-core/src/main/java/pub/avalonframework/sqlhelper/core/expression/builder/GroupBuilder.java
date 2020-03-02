@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBean;
-import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.GroupDataInjector;
 import pub.avalonframework.sqlhelper.core.expression.GroupExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaCallable;
