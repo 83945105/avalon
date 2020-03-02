@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.LimitBlock;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperSelectBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.SelectInjector;
+import pub.avalonframework.sqlhelper.core.expression.LimitExpression;
+import pub.avalonframework.sqlhelper.core.expression.SelectExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -22,9 +22,9 @@ public interface SelectEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
         SelectInjector<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
-        HelperSelectBlock<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
+        SelectExpression<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
         SelectLambdaExpression<TC, TO, TW, TG, TH, TS, SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
-        LimitBlock<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
+        LimitExpression<SelectEngine<T, TC, TO, TW, TG, TH, TS>>,
         SelectBuilder<SelectEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override

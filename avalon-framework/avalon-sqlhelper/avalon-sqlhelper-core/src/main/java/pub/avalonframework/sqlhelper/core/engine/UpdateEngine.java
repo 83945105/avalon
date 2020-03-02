@@ -1,10 +1,10 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperUpdateBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
+import pub.avalonframework.sqlhelper.core.expression.UpdateExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -21,7 +21,7 @@ public interface UpdateEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
         UpdateInjector<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
-        HelperUpdateBlock<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
+        UpdateExpression<UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         UpdateLambdaExpression<TC, TO, TW, UpdateEngine<T, TC, TO, TW, TG, TH, TS>>,
         UpdateBuilder<UpdateEngine<T, TC, TO, TW, TG, TH, TS>> {
 

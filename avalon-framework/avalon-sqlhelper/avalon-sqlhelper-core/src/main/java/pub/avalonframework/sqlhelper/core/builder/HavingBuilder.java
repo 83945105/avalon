@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperHavingBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractHavingBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.HavingBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.HavingDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.HavingExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.HavingJoinLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaExpression;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements HelperHavingBlock<HavingBuilder<TH>>, HavingLambdaExpression<TH, HavingBuilder<TH>> {
+public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements HavingExpression<HavingBuilder<TH>>, HavingLambdaExpression<TH, HavingBuilder<TH>> {
 
     private TH havingHelper;
     private String tableAlias;

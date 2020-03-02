@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.block.helper;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.helper.SortHelper;
 
 /**
  * @author baichao
  */
-public interface HelperSortBlock<R> extends HelperBlock {
+public interface SortExpression<R> {
 
     /**
      * Add sort data block.

@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.block.helper;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.helper.GroupHelper;
 
 /**
  * @author baichao
  */
-public interface HelperGroupBlock<R> extends HelperBlock {
+public interface GroupExpression<R> {
 
     /**
      * Add group data block.

@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperColumnBlock;
 import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.inject.ColumnDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.ColumnExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SubQueryColumnLambdaCallable;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements HelperColumnBlock<ColumnBuilder<TC>>, ColumnLambdaExpression<TC, ColumnBuilder<TC>> {
+public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements ColumnExpression<ColumnBuilder<TC>>, ColumnLambdaExpression<TC, ColumnBuilder<TC>> {
 
     private TC columnHelper;
     private String tableAlias;

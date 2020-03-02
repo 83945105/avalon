@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.block.helper;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;
 
 /**
  * @author baichao
  */
-public interface HelperOnBlock<R> extends HelperBlock {
+public interface OnExpression<R> {
 
     /**
      * Add on data block.

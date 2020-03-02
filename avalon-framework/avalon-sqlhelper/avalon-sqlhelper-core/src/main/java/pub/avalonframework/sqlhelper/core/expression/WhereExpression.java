@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.block.helper;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.helper.WhereHelper;
 
 /**
  * @author baichao
  */
-public interface HelperWhereBlock<R> extends HelperBlock {
+public interface WhereExpression<R> {
 
     /**
      * Add where data block.

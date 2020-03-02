@@ -1,9 +1,9 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
-import pub.avalonframework.sqlhelper.core.block.LimitBlock;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
 import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
+import pub.avalonframework.sqlhelper.core.expression.CrudExpression;
+import pub.avalonframework.sqlhelper.core.expression.LimitExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
@@ -19,11 +19,11 @@ public abstract class SqlBuilder<T extends TableHelper<T, TC, TO, TW, TG, TH, TS
         TH extends HavingHelper<TH>,
         TS extends SortHelper<TS>> implements
 
-        HelperCrudBlock<SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
+        CrudExpression<SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
 
         CrudLambdaExpression<TC, TO, TW, TG, TH, TS, SqlBuilder<T, TC, TO, TW, TG, TH, TS>>,
 
-        LimitBlock<SqlBuilder<T, TC, TO, TW, TG, TH, TS>> {
+        LimitExpression<SqlBuilder<T, TC, TO, TW, TG, TH, TS>> {
 
     private TO onHelper;
     private TC columnHelper;

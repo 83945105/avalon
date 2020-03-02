@@ -1,11 +1,11 @@
-package pub.avalonframework.sqlhelper.core.block.helper;
+package pub.avalonframework.sqlhelper.core.expression;
 
 import pub.avalonframework.sqlhelper.core.helper.HavingHelper;
 
 /**
  * @author baichao
  */
-public interface HelperHavingBlock<R> extends HelperBlock {
+public interface HavingExpression<R> {
 
     /**
      * Add having data block.

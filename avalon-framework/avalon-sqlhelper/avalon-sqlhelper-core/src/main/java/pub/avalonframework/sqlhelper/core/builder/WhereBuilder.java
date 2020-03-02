@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperWhereBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractWhereBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.WhereBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.WhereDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.WhereExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaExpression;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements HelperWhereBlock<WhereBuilder<TW>>, WhereLambdaExpression<TW, WhereBuilder<TW>> {
+public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements WhereExpression<WhereBuilder<TW>>, WhereLambdaExpression<TW, WhereBuilder<TW>> {
 
     private TW whereHelper;
     private String tableAlias;

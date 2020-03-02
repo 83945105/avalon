@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.LimitBlock;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperCrudBlock;
 import pub.avalonframework.sqlhelper.core.builder.*;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.inject.CrudInjector;
+import pub.avalonframework.sqlhelper.core.expression.CrudExpression;
+import pub.avalonframework.sqlhelper.core.expression.LimitExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -22,9 +22,9 @@ public interface CrudEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
         CrudInjector<CrudEngine<T, TC, TO, TW, TG, TH, TS>>,
-        HelperCrudBlock<CrudEngine<T, TC, TO, TW, TG, TH, TS>>,
+        CrudExpression<CrudEngine<T, TC, TO, TW, TG, TH, TS>>,
         CrudLambdaExpression<TC, TO, TW, TG, TH, TS, CrudEngine<T, TC, TO, TW, TG, TH, TS>>,
-        LimitBlock<CrudEngine<T, TC, TO, TW, TG, TH, TS>>,
+        LimitExpression<CrudEngine<T, TC, TO, TW, TG, TH, TS>>,
         CrudBuilder<CrudEngine<T, TC, TO, TW, TG, TH, TS>> {
 
     @Override

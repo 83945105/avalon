@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperGroupBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractGroupBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.GroupBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.GroupDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.GroupExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements HelperGroupBlock<GroupBuilder<TG>>, GroupLambdaExpression<TG, GroupBuilder<TG>> {
+public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements GroupExpression<GroupBuilder<TG>>, GroupLambdaExpression<TG, GroupBuilder<TG>> {
 
     private TG groupHelper;
     private String tableAlias;

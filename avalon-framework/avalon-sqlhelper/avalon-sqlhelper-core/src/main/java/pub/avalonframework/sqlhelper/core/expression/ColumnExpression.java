@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.block.helper;
+package pub.avalonframework.sqlhelper.core.expression;
 
 /**
  * @author baichao
  */
-public interface HelperColumnBlock<R> extends HelperBlock {
+public interface ColumnExpression<R> {
 
     /**
      * Add virtual column data block.

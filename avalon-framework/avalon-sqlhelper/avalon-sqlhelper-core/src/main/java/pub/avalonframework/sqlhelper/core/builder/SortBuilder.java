@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperSortBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractSortBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.SortBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.SortDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.SortExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public class SortBuilder<TS extends SortHelper<TS>> implements HelperSortBlock<SortBuilder<TS>>, SortLambdaExpression<TS, SortBuilder<TS>> {
+public class SortBuilder<TS extends SortHelper<TS>> implements SortExpression<SortBuilder<TS>>, SortLambdaExpression<TS, SortBuilder<TS>> {
 
     private TS sortHelper;
     private String tableAlias;

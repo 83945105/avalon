@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperOnBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractOnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.OnBuilderBeanJoin;
 import pub.avalonframework.sqlhelper.core.data.inject.OnDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.OnExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaExpression;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * @author baichao
  */
-public abstract class OnBuilder<TO extends OnHelper<TO>> implements HelperOnBlock<OnBuilder<TO>>, OnLambdaExpression<TO, OnBuilder<TO>> {
+public abstract class OnBuilder<TO extends OnHelper<TO>> implements OnExpression<OnBuilder<TO>>, OnLambdaExpression<TO, OnBuilder<TO>> {
 
     private TO onHelper;
     private String tableAlias;

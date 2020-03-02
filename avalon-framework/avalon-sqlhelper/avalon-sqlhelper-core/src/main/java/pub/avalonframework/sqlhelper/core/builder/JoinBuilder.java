@@ -1,11 +1,11 @@
 package pub.avalonframework.sqlhelper.core.builder;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperJoinBlock;
 import pub.avalonframework.sqlhelper.core.builder.beans.AbstractJoinBuilderBean;
 import pub.avalonframework.sqlhelper.core.builder.beans.JoinBuilderBean;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
+import pub.avalonframework.sqlhelper.core.expression.JoinExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.JoinLambdaExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author baichao
  */
-public abstract class JoinBuilder<TO extends OnHelper<TO>> implements HelperJoinBlock<JoinBuilder<TO>>, JoinLambdaExpression<TO, JoinBuilder<TO>> {
+public abstract class JoinBuilder<TO extends OnHelper<TO>> implements JoinExpression<JoinBuilder<TO>>, JoinLambdaExpression<TO, JoinBuilder<TO>> {
 
     private TO onHelper;
     private String tableAlias;

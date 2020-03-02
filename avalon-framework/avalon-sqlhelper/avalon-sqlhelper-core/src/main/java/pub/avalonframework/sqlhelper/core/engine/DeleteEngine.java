@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.block.helper.HelperDeleteBlock;
 import pub.avalonframework.sqlhelper.core.builder.DeleteBuilder;
 import pub.avalonframework.sqlhelper.core.builder.JoinBuilder;
 import pub.avalonframework.sqlhelper.core.builder.OnBuilder;
@@ -11,6 +10,7 @@ import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.inject.DeleteInjector;
+import pub.avalonframework.sqlhelper.core.expression.DeleteExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.*;
 import pub.avalonframework.sqlhelper.core.expression.lambda.execute.LambdaCallableExecutor;
 import pub.avalonframework.sqlhelper.core.helper.*;
@@ -27,7 +27,7 @@ public interface DeleteEngine<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
         TS extends SortHelper<TS>> extends
         Engine<T, TC, TO, TW, TG, TH, TS>,
         DeleteInjector<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
-        HelperDeleteBlock<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
+        DeleteExpression<DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         DeleteLambdaExpression<TO, TW, DeleteEngine<T, TC, TO, TW, TG, TH, TS>>,
         DeleteBuilder<DeleteEngine<T, TC, TO, TW, TG, TH, TS>> {
 
