@@ -452,11 +452,11 @@ public class SysUserHelper implements TableHelper<SysUserHelper, SysUserHelper.C
         }
             }
 
-    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<SysUserHelper, Column, On, Where, Group, Having, Sort> {
-        public SqlBuilder() {
+    public static class SqlExpressionBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.SqlExpressionBuilder<SysUserHelper, Column, On, Where, Group, Having, Sort> {
+        public SqlExpressionBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlBuilder(String tableAlias) {
+        public SqlExpressionBuilder(String tableAlias) {
             super(tableAlias);
         }
     }

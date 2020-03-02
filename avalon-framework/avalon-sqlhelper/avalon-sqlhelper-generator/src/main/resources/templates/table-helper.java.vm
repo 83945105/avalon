@@ -398,11 +398,11 @@ public class $!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.cla
         #end
     }
 
-    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, Column, On, Where, Group, Having, Sort> {
-        public SqlBuilder() {
+    public static class SqlExpressionBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.SqlExpressionBuilder<$!{table.tableAlias}$!{table.generateOptions.tableHelperOptions.classNameSuffix}, Column, On, Where, Group, Having, Sort> {
+        public SqlExpressionBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlBuilder(String tableAlias) {
+        public SqlExpressionBuilder(String tableAlias) {
             super(tableAlias);
         }
     }

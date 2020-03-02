@@ -581,11 +581,11 @@ public class RoleResourceHelper implements TableHelper<RoleResourceHelper, RoleR
         }
             }
 
-    public static class SqlBuilder extends pub.avalonframework.sqlhelper.core.builder.SqlBuilder<RoleResourceHelper, Column, On, Where, Group, Having, Sort> {
-        public SqlBuilder() {
+    public static class SqlExpressionBuilder extends pub.avalonframework.sqlhelper.core.expression.builder.SqlExpressionBuilder<RoleResourceHelper, Column, On, Where, Group, Having, Sort> {
+        public SqlExpressionBuilder() {
             super(TABLE_ALIAS);
         }
-        public SqlBuilder(String tableAlias) {
+        public SqlExpressionBuilder(String tableAlias) {
             super(tableAlias);
         }
     }
