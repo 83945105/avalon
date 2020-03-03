@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.exception.SqlException;
 import pub.avalonframework.sqlhelper.core.helper.TableHelper;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.*;
 
@@ -71,14 +71,14 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         List<ColumnDataBlock> columnDataBlocks;
         List<TableColumnDataBlock> tableColumnDataBlocks = consumer.getInsertTableColumnDataBlocks();
         if (tableColumnDataBlocks == null || tableColumnDataBlocks.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
+            return HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         if (tableColumnDataBlocks.size() > 1) {
             ExceptionUtils.multiTableColumnException();
         }
         columnDataBlocks = tableColumnDataBlocks.iterator().next().getColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
+            return HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         return columnDataBlocks;
     }
@@ -87,14 +87,14 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         List<ColumnDataBlock> columnDataBlocks;
         List<TableColumnDataBlock> tableColumnDataBlocks = consumer.getUpdateTableColumnDataBlocks();
         if (tableColumnDataBlocks == null || tableColumnDataBlocks.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
+            return HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         if (tableColumnDataBlocks.size() > 1) {
             ExceptionUtils.multiTableColumnException();
         }
         columnDataBlocks = tableColumnDataBlocks.iterator().next().getColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
-            return HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
+            return HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         return columnDataBlocks;
     }
@@ -248,7 +248,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         preparedStatementSql.append("delete from `")
                 .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` where `")
-                .append(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
+                .append(HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                 .append("` = ?");
         return FinalSqlBuilderResult.newInstance(preparedStatementSql.toString(), preparedStatementArgs);
     }
@@ -260,7 +260,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         preparedStatementSql.append("delete from `")
                 .append(consumer.getTableMainDataBlock().getTableName())
                 .append("` where `")
-                .append(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
+                .append(HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                 .append("` in (");
         int size = primaryKeyValues.length;
         for (int i = 0; i < size; i++) {
@@ -330,7 +330,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.appendSqlPart("update `")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` set ");
-        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
+        String primaryKeyName = HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
         for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
@@ -356,7 +356,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.appendSqlPart("update `")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` set ");
-        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
+        String primaryKeyName = HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
         int i = 0;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
         for (ColumnDataBlock columnDataBlock : columnDataBlocks) {
@@ -382,7 +382,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.appendSqlPart("update `")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableName())
                 .appendSqlPart("` set ");
-        String primaryKeyName = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
+        String primaryKeyName = HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName();
         int i = 0;
         Object value;
         List<ColumnDataBlock> columnDataBlocks = getOnlyUpdateTableDefaultColumnData(consumer);
@@ -418,7 +418,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         sqlBuilderResult.append(this.dataBlockBuilderTemplate.buildJoin(consumer));
         sqlBuilderResult.appendSqlPart(" set ");
         int i = 0;
-        TableHelper tableHelper = HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass());
+        TableHelper<?, ?, ?, ?, ?, ?, ?> tableHelper = HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass());
         String primaryKeyName = tableHelper.getPrimaryKeyName();
         String primaryKeyAlias = tableHelper.getPrimaryKeyAlias();
         Object keyValue;
@@ -430,7 +430,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
         // 计算出when条件sql
         for (Object javaBean : javaBeans) {
             if (javaBean instanceof Map) {
-                keyValue = ((Map) javaBean).get(primaryKeyAlias);
+                keyValue = ((Map<?, ?>) javaBean).get(primaryKeyAlias);
                 if (i++ > 0) {
                     inSql.append(",");
                 }
@@ -473,7 +473,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             // 非主键计算参数
             for (Object javaBean : javaBeans) {
                 if (javaBean instanceof Map) {
-                    sqlBuilderResult.appendArg(((Map) javaBean).get(columnDataBlock.getColumnAlias()));
+                    sqlBuilderResult.appendArg(((Map<?, ?>) javaBean).get(columnDataBlock.getColumnAlias()));
                 } else {
                     sqlBuilderResult.appendArg(BeanUtils.getPropertyValue(javaBean, columnDataBlock.getColumnAlias()));
                 }
@@ -560,7 +560,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             sqlBuilderResult.appendSqlPart("select count(1) from (select ")
                     .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias())
                     .appendSqlPart(".`")
-                    .appendSqlPart(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
+                    .appendSqlPart(HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                     .appendSqlPart("` from `");
         } else {
             sqlBuilderResult.appendSqlPart("select count(1) from `");
@@ -594,7 +594,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
                 .appendSqlPart(" where ")
                 .appendSqlPart(consumer.getTableMainDataBlock().getTableAlias())
                 .appendSqlPart(".`")
-                .appendSqlPart(HelperManager.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
+                .appendSqlPart(HelperUtils.defaultTableHelper(consumer.getTableMainDataBlock().getTableHelperClass()).getPrimaryKeyName())
                 .appendSqlPart("` = ?");
         return sqlBuilderResult;
     }

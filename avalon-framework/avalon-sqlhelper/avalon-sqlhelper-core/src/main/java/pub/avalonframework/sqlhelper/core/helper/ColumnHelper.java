@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnHandler;
 import pub.avalonframework.sqlhelper.core.data.block.TableColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.ColumnDataBlockBuilder;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,7 +60,7 @@ public abstract class ColumnHelper<T extends ColumnHelper<T>> extends Helper {
     public static TableColumnDataBlock execute(ColumnHelper<?> columnHelper) {
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
-            columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
+            columnDataBlocks = HelperUtils.defaultColumnData(columnHelper);
         }
         return new TableColumnDataBlock(columnHelper.getTableAlias(), columnDataBlocks);
     }

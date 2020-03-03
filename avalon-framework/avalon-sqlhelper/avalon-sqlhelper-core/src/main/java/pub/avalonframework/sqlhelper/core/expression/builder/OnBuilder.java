@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class OnBuilder<TO extends OnHelper<TO>> implements OnExpression
     private String tableAlias;
 
     {
-        this.onHelper = HelperManager.findOnHelperClassFromAncestorsGenericType(this);
+        this.onHelper = HelperUtils.findOnHelperClassFromAncestorsGenericType(this);
     }
 
     public OnBuilder() {

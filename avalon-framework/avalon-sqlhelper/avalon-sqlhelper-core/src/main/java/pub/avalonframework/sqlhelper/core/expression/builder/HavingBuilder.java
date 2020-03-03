@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.expression.lambda.HavingJoinLambdaCall
 import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.HavingLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class HavingBuilder<TH extends HavingHelper<TH>> implements Havi
     private String tableAlias;
 
     {
-        this.havingHelper = HelperManager.findHavingHelperClassFromAncestorsGenericType(this);
+        this.havingHelper = HelperUtils.findHavingHelperClassFromAncestorsGenericType(this);
     }
 
     public HavingBuilder() {

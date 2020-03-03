@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.CrudSqlBuilderProxyBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.DeleteSqlBuilderResult;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 /**
  * @author baichao
@@ -52,8 +52,8 @@ public abstract class AbstractDeleteEngine<T extends TableHelper<T, TC, TO, TW, 
     }
 
     public AbstractDeleteEngine(DatabaseType databaseType, String tableName, Class<T> tableHelperClass, String tableAlias, SqlhelperConfiguration configuration) {
-        super(tableHelperClass, tableAlias == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias);
-        this.dataStore = new SqlDataStore<>(this, tableName == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableName() : tableName,
+        super(tableHelperClass, tableAlias == null ? HelperUtils.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias);
+        this.dataStore = new SqlDataStore<>(this, tableName == null ? HelperUtils.defaultTableHelper(tableHelperClass).getTableName() : tableName,
                 tableHelperClass, this.tableAlias, configuration.setDatabaseType(databaseType));
         this.crudSqlBuilder = new CrudSqlBuilderProxyBuilder(this.dataStore).createProxy();
     }

@@ -14,18 +14,6 @@ public final class ExceptionUtils {
     private ExceptionUtils() {
     }
 
-    public static void aliasAlreadyExistException(String alias) {
-        throw new RuntimeException("Alias " + alias + "already exist.");
-    }
-
-    public static void aliasCacheDoesNotExistException(String alias) {
-        throw new RuntimeException("Alias " + alias + "cache does not exist.");
-    }
-
-    public static void classNullPointerException() {
-        throw new NullPointerException("Class can not be null.");
-    }
-
     public static void tableHelperClassNullException() {
         throw new RuntimeException("tableHelperClass is null.");
     }

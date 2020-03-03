@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.expression.GroupExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.GroupLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public abstract class GroupBuilder<TG extends GroupHelper<TG>> implements GroupE
     private String tableAlias;
 
     {
-        this.groupHelper = HelperManager.findGroupHelperClassFromAncestorsGenericType(this);
+        this.groupHelper = HelperUtils.findGroupHelperClassFromAncestorsGenericType(this);
     }
 
     public GroupBuilder() {

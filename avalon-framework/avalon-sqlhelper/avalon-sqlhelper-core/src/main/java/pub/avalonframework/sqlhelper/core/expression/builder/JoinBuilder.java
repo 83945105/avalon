@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.expression.JoinExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.JoinLambdaExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnJoinLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class JoinBuilder<TO extends OnHelper<TO>> implements JoinExpres
     private String tableAlias;
 
     {
-        this.onHelper = HelperManager.findOnHelperClassFromAncestorsGenericType(this);
+        this.onHelper = HelperUtils.findOnHelperClassFromAncestorsGenericType(this);
     }
 
     public JoinBuilder() {

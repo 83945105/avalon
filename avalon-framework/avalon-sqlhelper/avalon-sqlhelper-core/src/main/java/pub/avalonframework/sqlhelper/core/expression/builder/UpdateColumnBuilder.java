@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.inject.UpdateInjector;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class UpdateColumnBuilder<TC extends ColumnHelper<TC>> {
     private String tableAlias;
 
     {
-        this.columnHelper = HelperManager.findColumnHelperClassFromAncestorsGenericType(this);
+        this.columnHelper = HelperUtils.findColumnHelperClassFromAncestorsGenericType(this);
     }
 
     public UpdateColumnBuilder() {

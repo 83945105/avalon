@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.*;
 
@@ -34,13 +34,13 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 ExceptionUtils.selectColumnNullException();
             }
             if (selectAllColumnForMainTable) {
-                this.appendSqlArgsWithColumnDataBlocks(sql, args, HelperManager.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias()));
+                this.appendSqlArgsWithColumnDataBlocks(sql, args, HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias()));
             }
             if (selectAllColumnForJoinTable) {
                 LinkedHashMap<String, TableJoinDataBlock> aliasTableJoinDataBlockMap = consumer.getAliasTableJoinDataBlockMap();
                 if (aliasTableJoinDataBlockMap != null && aliasTableJoinDataBlockMap.size() > 0) {
                     for (Map.Entry<String, TableJoinDataBlock> entry : aliasTableJoinDataBlockMap.entrySet()) {
-                        this.appendSqlArgsWithColumnDataBlocks(sql, args, HelperManager.defaultColumnData(entry.getValue().getTableHelperClass(), entry.getKey()));
+                        this.appendSqlArgsWithColumnDataBlocks(sql, args, HelperUtils.defaultColumnData(entry.getValue().getTableHelperClass(), entry.getKey()));
                     }
                 }
             }

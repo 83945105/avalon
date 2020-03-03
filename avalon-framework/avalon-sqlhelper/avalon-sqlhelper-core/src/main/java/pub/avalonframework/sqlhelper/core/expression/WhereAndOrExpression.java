@@ -5,7 +5,7 @@ import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public final class WhereAndOrExpression<TW extends WhereHelper<TW>> implements W
         if (whereJoinAndLambdaCallable == null) {
             return this;
         }
-        S s = HelperManager.defaultTableHelper(tableHelperClass);
+        S s = HelperUtils.defaultTableHelper(tableHelperClass);
         SW sw = s.newWhereHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         WhereAndExpression<TW> whereAndExpression = whereJoinAndLambdaCallable.apply(new WhereAndOrExpression<>(), sw);
         List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereAndExpression.takeoutComparisonDataBlockLinkers();
@@ -138,7 +138,7 @@ public final class WhereAndOrExpression<TW extends WhereHelper<TW>> implements W
         if (whereJoinAndLambdaCallable == null) {
             return this;
         }
-        S s = HelperManager.defaultTableHelper(tableHelperClass);
+        S s = HelperUtils.defaultTableHelper(tableHelperClass);
         SW sw = s.newWhereHelper(tableAlias == null ? s.getTableAlias() : tableAlias);
         WhereAndExpression<TW> whereAndExpression = whereJoinAndLambdaCallable.apply(new WhereAndOrExpression<>(), sw);
         List<ComparisonDataBlockLinker> comparisonDataBlockLinkers = whereAndExpression.takeoutComparisonDataBlockLinkers();

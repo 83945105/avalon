@@ -6,7 +6,7 @@ import pub.avalonframework.sqlhelper.core.expression.SortExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SortLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class SortBuilder<TS extends SortHelper<TS>> implements SortExpression<So
     private String tableAlias;
 
     {
-        this.sortHelper = HelperManager.findSortHelperClassFromAncestorsGenericType(this);
+        this.sortHelper = HelperUtils.findSortHelperClassFromAncestorsGenericType(this);
     }
 
     public SortBuilder() {

@@ -1,4 +1,4 @@
-package pub.avalonframework.sqlhelper.core.spi.cache;
+package pub.avalonframework.cache.core;
 
 import java.util.Map;
 import java.util.Set;

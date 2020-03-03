@@ -7,7 +7,7 @@ import pub.avalonframework.sqlhelper.core.expression.lambda.WhereJoinLambdaCalla
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaCallable;
 import pub.avalonframework.sqlhelper.core.expression.lambda.WhereLambdaExpression;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class WhereBuilder<TW extends WhereHelper<TW>> implements WhereE
     private String tableAlias;
 
     {
-        this.whereHelper = HelperManager.findWhereHelperClassFromAncestorsGenericType(this);
+        this.whereHelper = HelperUtils.findWhereHelperClassFromAncestorsGenericType(this);
     }
 
     public WhereBuilder() {

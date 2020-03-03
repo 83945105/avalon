@@ -4,7 +4,7 @@ import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.data.inject.SelectInjector;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
     private String tableAlias;
 
     {
-        this.columnHelper = HelperManager.findColumnHelperClassFromAncestorsGenericType(this);
+        this.columnHelper = HelperUtils.findColumnHelperClassFromAncestorsGenericType(this);
     }
 
     public SelectColumnBuilder() {
@@ -52,7 +52,7 @@ public abstract class SelectColumnBuilder<TC extends ColumnHelper<TC>> {
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> SelectColumnBuilder<TC> select(Class<S> tableHelperClass, String tableAlias, ColumnLambdaCallable<SC> columnLambdaCallable) {
-        tableAlias = tableAlias == null ? HelperManager.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias;
+        tableAlias = tableAlias == null ? HelperUtils.defaultTableHelper(tableHelperClass).getTableAlias() : tableAlias;
         ColumnBuilderBeanJoin<S, SC, SO, SW, SG, SH, SS> columnBuilderBeanJoin = new ColumnBuilderBeanJoin<>(tableHelperClass, tableAlias, columnLambdaCallable);
         this.selectColumnBuilderBeans.add(columnBuilderBeanJoin);
         return this;

@@ -10,7 +10,7 @@ import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SelectSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +34,7 @@ public final class LambdaCallableExecutor {
         columnHelper = columnLambdaCallable.apply(columnHelper);
         List<ColumnDataBlock> columnDataBlocks = columnHelper.takeoutColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
-            columnDataBlocks = HelperManager.defaultColumnData(columnHelper);
+            columnDataBlocks = HelperUtils.defaultColumnData(columnHelper);
         }
         return new TableColumnDataBlock(columnHelper.getTableAlias(), columnDataBlocks);
     }
@@ -102,7 +102,7 @@ public final class LambdaCallableExecutor {
             return null;
         }
         mainOnHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
-        S s = HelperManager.defaultTableHelper(joinTableHelperClass);
+        S s = HelperUtils.defaultTableHelper(joinTableHelperClass);
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         SO so = s.newOnHelper(joinTableAlias);
         so.setSqlBuilderConfiguration(sqlBuilderConfiguration);
@@ -145,7 +145,7 @@ public final class LambdaCallableExecutor {
             return null;
         }
         mainWhereHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
-        S s = HelperManager.defaultTableHelper(joinTableHelperClass);
+        S s = HelperUtils.defaultTableHelper(joinTableHelperClass);
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         SW sw = s.newWhereHelper(joinTableAlias);
         sw.setSqlBuilderConfiguration(sqlBuilderConfiguration);
@@ -188,7 +188,7 @@ public final class LambdaCallableExecutor {
             return null;
         }
         mainHavingHelper.setSqlBuilderConfiguration(sqlBuilderConfiguration);
-        S s = HelperManager.defaultTableHelper(joinTableHelperClass);
+        S s = HelperUtils.defaultTableHelper(joinTableHelperClass);
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         SH sh = s.newHavingHelper(joinTableAlias);
         sh.setSqlBuilderConfiguration(sqlBuilderConfiguration);
@@ -210,7 +210,7 @@ public final class LambdaCallableExecutor {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TC tc = t.newColumnHelper(tableAlias == null ? t.getTableAlias() : tableAlias);
         return execute(tc, columnLambdaCallable, sqlBuilderConfiguration);
     }
@@ -225,7 +225,7 @@ public final class LambdaCallableExecutor {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TG tg = t.newGroupHelper(tableAlias == null ? t.getTableAlias() : tableAlias);
         return execute(tg, groupLambdaCallable, sqlBuilderConfiguration);
     }
@@ -240,7 +240,7 @@ public final class LambdaCallableExecutor {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TS ts = t.newSortHelper(tableAlias == null ? t.getTableAlias() : tableAlias);
         return execute(ts, sortLambdaCallable, sqlBuilderConfiguration);
     }
@@ -255,7 +255,7 @@ public final class LambdaCallableExecutor {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TO to = t.newOnHelper(tableAlias == null ? t.getTableAlias() : tableAlias);
         return execute(to, onLambdaCallable, sqlBuilderConfiguration);
     }
@@ -277,7 +277,7 @@ public final class LambdaCallableExecutor {
         if (mainTableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.newTableHelper(mainTableHelperClass);
+        T t = HelperUtils.defaultTableHelper(mainTableHelperClass);
         TO to = t.newOnHelper(mainTableAlias == null ? t.getTableAlias() : mainTableAlias);
         return execute(to, joinTableHelperClass, joinTableAlias, onJoinLambdaCallable, sqlBuilderConfiguration);
     }
@@ -292,7 +292,7 @@ public final class LambdaCallableExecutor {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TW tw = t.newWhereHelper(tableAlias == null ? t.getTableAlias() : tableAlias);
         return execute(tw, whereLambdaCallable, sqlBuilderConfiguration);
     }
@@ -314,7 +314,7 @@ public final class LambdaCallableExecutor {
         if (mainTableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(mainTableHelperClass);
+        T t = HelperUtils.defaultTableHelper(mainTableHelperClass);
         TW tw = t.newWhereHelper(mainTableAlias == null ? t.getTableAlias() : mainTableAlias);
         return execute(tw, joinTableHelperClass, joinTableAlias, whereJoinLambdaCallable, sqlBuilderConfiguration);
     }
@@ -329,7 +329,7 @@ public final class LambdaCallableExecutor {
         if (tableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TH th = t.newHavingHelper(tableAlias == null ? t.getTableAlias() : tableAlias);
         return execute(th, havingLambdaCallable, sqlBuilderConfiguration);
     }
@@ -351,7 +351,7 @@ public final class LambdaCallableExecutor {
         if (mainTableHelperClass == null) {
             ExceptionUtils.tableHelperClassNullException();
         }
-        T t = HelperManager.defaultTableHelper(mainTableHelperClass);
+        T t = HelperUtils.defaultTableHelper(mainTableHelperClass);
         TH th = t.newHavingHelper(mainTableAlias == null ? t.getTableAlias() : mainTableAlias);
         return execute(th, joinTableHelperClass, joinTableAlias, havingJoinLambdaCallable, sqlBuilderConfiguration);
     }
@@ -374,7 +374,7 @@ public final class LambdaCallableExecutor {
         if (columnLambdaCallable == null) {
             return null;
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TC tc = t.newColumnHelper(tableAlias);
         tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         tc = columnLambdaCallable.apply(tc);
@@ -400,7 +400,7 @@ public final class LambdaCallableExecutor {
         if (columnAlias == null) {
             return null;
         }
-        T t = HelperManager.defaultTableHelper(tableHelperClass);
+        T t = HelperUtils.defaultTableHelper(tableHelperClass);
         TC tc = t.newColumnHelper(tableAlias);
         tc.setSqlBuilderConfiguration(sqlBuilderConfiguration);
         SqlBuilderResult sqlBuilderResult = subQueryColumnLambdaCallable.apply(tc);
@@ -415,7 +415,7 @@ public final class LambdaCallableExecutor {
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> TableJoinDataBlock execute(JoinType joinType, TO mainOnHelper, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable, SqlBuilderConfiguration sqlBuilderConfiguration) {
-        S s = HelperManager.defaultTableHelper(joinTableHelperClass);
+        S s = HelperUtils.defaultTableHelper(joinTableHelperClass);
         joinTableName = joinTableName == null ? s.getTableName() : joinTableName;
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         TableJoinDataBlock tableJoinDataBlock = new TableJoinDataBlock(joinType, joinTableHelperClass, joinTableName, joinTableAlias);
@@ -438,7 +438,7 @@ public final class LambdaCallableExecutor {
             SG extends GroupHelper<SG>,
             SH extends HavingHelper<SH>,
             SS extends SortHelper<SS>> TableJoinDataBlock execute(JoinType joinType, Class<T> mainTableHelperClass, String mainTableAlias, String joinTableName, Class<S> joinTableHelperClass, String joinTableAlias, OnJoinLambdaCallable<TO, SO> onJoinLambdaCallable, SqlBuilderConfiguration sqlBuilderConfiguration) {
-        S s = HelperManager.defaultTableHelper(joinTableHelperClass);
+        S s = HelperUtils.defaultTableHelper(joinTableHelperClass);
         joinTableName = joinTableName == null ? s.getTableName() : joinTableName;
         joinTableAlias = joinTableAlias == null ? s.getTableAlias() : joinTableAlias;
         TableJoinDataBlock tableJoinDataBlock = new TableJoinDataBlock(joinType, joinTableHelperClass, joinTableName, joinTableAlias);

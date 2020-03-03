@@ -8,7 +8,7 @@ import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.SubQueryColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.HelperManager;
+import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.function.Supplier;
 
@@ -21,7 +21,7 @@ public abstract class ColumnBuilder<TC extends ColumnHelper<TC>> implements Colu
     private String tableAlias;
 
     {
-        this.columnHelper = HelperManager.findColumnHelperClassFromAncestorsGenericType(this);
+        this.columnHelper = HelperUtils.findColumnHelperClassFromAncestorsGenericType(this);
     }
 
     public ColumnBuilder() {
