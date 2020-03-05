@@ -143,6 +143,8 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
         } else if (selectSqlBuilder instanceof LimitDataInjector<?>) {
             ((LimitDataInjector<?>) selectSqlBuilder).setLimit(pagination.getLimit());
             ((LimitDataInjector<?>) selectSqlBuilder).setOffset(pagination.getOffset());
+        } else {
+            throw new UnsupportedLimitSelectSqlBuilderException();
         }
         return new PageQuery(selectSqlBuilder, pagination);
     }
