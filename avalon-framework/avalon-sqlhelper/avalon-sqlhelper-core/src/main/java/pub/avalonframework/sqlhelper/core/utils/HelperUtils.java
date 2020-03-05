@@ -1,23 +1,18 @@
 package pub.avalonframework.sqlhelper.core.utils;
 
 import com.esotericsoftware.reflectasm.ConstructorAccess;
-import org.ehcache.CacheManager;
-import org.springframework.beans.BeanUtils;
-import pub.avalonframework.cache.core.Cache;
-import pub.avalonframework.cache.core.mgt.EhCacheManager;
-import pub.avalonframework.core.yaml.config.YamlEhCacheConfiguration;
-import pub.avalonframework.core.yaml.swapper.impl.EhCacheConfigurationYamlSwapper;
 import pub.avalonframework.sqlhelper.core.TableColumn;
-import pub.avalonframework.sqlhelper.core.cache.ClassCacheManager;
-import pub.avalonframework.sqlhelper.core.cache.core.CacheConfigurationBuilder;
-import pub.avalonframework.sqlhelper.core.cache.core.CacheManagerBuilder;
 import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
 import pub.avalonframework.sqlhelper.core.expression.builder.*;
 import pub.avalonframework.sqlhelper.core.helper.*;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author baichao
@@ -27,37 +22,17 @@ public final class HelperUtils {
     private HelperUtils() {
     }
 
-    private final static String DEFAULT_CLASS_CONSTRUCTOR_ACCESS_CACHE = "SQLHELPER_CLASS_CONSTRUCTOR_ACCESS_CACHE";
+    private final static ConcurrentHashMap<Class, ConstructorAccess> CLASS_CONSTRUCTOR_ACCESS_CACHE = new ConcurrentHashMap<>();
 
-    private final static Cache<Class, ConstructorAccess> CLASS_CONSTRUCTOR_ACCESS_CACHE;
+    private final static ConcurrentHashMap<Class, TableHelper> DEFAULT_TABLE_HELPER_CACHE = new ConcurrentHashMap<>();
 
-    private final static String DEFAULT_TABLE_HELPER_CACHE_NAME = "SQLHELPER_DEFAULT_TABLE_HELPER_CACHE";
-
-    private final static Cache<Class, TableHelper> DEFAULT_TABLE_HELPER_CACHE;
-
-    private final static String DEFAULT_COLUMN_DATA_CACHE_NAME = "SQLHELPER_DEFAULT_COLUMN_DATA_CACHE";
-
-    private final static Cache<Class, ColumnDataCache> DEFAULT_COLUMN_DATA_CACHE;
-
-
-    static {
-        EhCacheManager cacheManager = new EhCacheManager();
-        CLASS_CONSTRUCTOR_ACCESS_CACHE = cacheManager.createCache(Class.class, ConstructorAccess.class, new EhCacheConfigurationYamlSwapper().swap(new YamlEhCacheConfiguration() {{
-            setAlias(DEFAULT_CLASS_CONSTRUCTOR_ACCESS_CACHE);
-        }}));
-        DEFAULT_TABLE_HELPER_CACHE = cacheManager.createCache(Class.class, TableHelper.class, new EhCacheConfigurationYamlSwapper().swap(new YamlEhCacheConfiguration() {{
-            setAlias(DEFAULT_TABLE_HELPER_CACHE_NAME);
-        }}));
-        DEFAULT_COLUMN_DATA_CACHE = cacheManager.createCache(Class.class, ColumnDataCache.class, new EhCacheConfigurationYamlSwapper().swap(new YamlEhCacheConfiguration() {{
-            setAlias(DEFAULT_COLUMN_DATA_CACHE_NAME);
-        }}));
-    }
+    private final static ConcurrentHashMap<Class, ColumnDataBlockCache> DEFAULT_COLUMN_DATA_CACHE = new ConcurrentHashMap<>();
 
     @SuppressWarnings("unchecked")
     public static <T extends TableHelper<T, ?, ?, ?, ?, ?, ?>> T defaultTableHelper(Class<?> clazz) {
         TableHelper<T, ?, ?, ?, ?, ?, ?> singleTableHelper = DEFAULT_TABLE_HELPER_CACHE.get(clazz);
         if (singleTableHelper == null) {
-            singleTableHelper = instantiateClass(clazz).getDefaultInstance();
+            singleTableHelper = instantiateClass((Class<T>) clazz).getDefaultInstance();
             DEFAULT_TABLE_HELPER_CACHE.put(clazz, singleTableHelper);
         }
         return (T) singleTableHelper;
@@ -74,26 +49,29 @@ public final class HelperUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends TableHelper<T, ?, ?, ?, ?, ?, ?>> List<ColumnDataBlock> defaultColumnData(Class<?> clazz, String tableAlias) {
-        ColumnDataCache columnDataCache = DEFAULT_COLUMN_DATA_CACHE.get(clazz);
-        if (columnDataCache == null) {
-            columnDataCache = new ColumnDataCache();
+    public static List<ColumnDataBlock> defaultColumnData(Class<?> clazz, String tableAlias) {
+        ColumnDataBlockCache columnDataBlockCache = DEFAULT_COLUMN_DATA_CACHE.get(clazz);
+        if (columnDataBlockCache == null) {
+            columnDataBlockCache = new ColumnDataBlockCache();
+            DEFAULT_COLUMN_DATA_CACHE.put(clazz, columnDataBlockCache);
         }
-        ColumnDataBlockList columnDataBlockList = columnDataCache.get(tableAlias);
-        if (columnDataBlockList == null) {
+        List<ColumnDataBlock> columnDataBlocks = columnDataBlockCache.get(tableAlias);
+        if (columnDataBlocks == null) {
             Set<TableColumn> tableColumns = defaultTableHelper(clazz).getTableColumns();
             if (tableColumns == null) {
-                return Collections.emptyList();
+                columnDataBlocks = Collections.emptyList();
+                columnDataBlockCache.put(tableAlias, columnDataBlocks);
+                return columnDataBlocks;
             }
-            columnDataBlockList = new ColumnDataBlockList(tableColumns.size());
+            columnDataBlocks = new ArrayList<>(tableColumns.size());
             for (TableColumn tableColumn : tableColumns) {
                 ColumnDataBlock columnDataBlock = new ColumnDataBlock(tableColumn.getTableName(), tableColumn.getTableAlias(), tableColumn.getName(), tableColumn.getAlias(), tableColumn.getAlias());
                 columnDataBlock.setTableAlias(tableAlias);
-                columnDataBlockList.add(columnDataBlock);
+                columnDataBlocks.add(columnDataBlock);
             }
-            columnDataCache.put(tableAlias, columnDataBlockList);
+            columnDataBlockCache.put(tableAlias, columnDataBlocks);
         }
-        return columnDataBlockList;
+        return columnDataBlocks;
     }
 
     public static List<ColumnDataBlock> defaultColumnData(ColumnHelper<?> columnHelper) {
@@ -170,81 +148,7 @@ public final class HelperUtils {
         return recursiveFindSortHelperClassFromAncestorsGenericType(clazz.getSuperclass(), expectClass);
     }
 
-    private final static class ColumnDataBlockList extends ArrayList<ColumnDataBlock> {
-        private ColumnDataBlockList(int initialCapacity) {
-            super(initialCapacity);
-        }
-    }
+    private final static class ColumnDataBlockCache extends ConcurrentHashMap<String, List<ColumnDataBlock>> {
 
-    private final static class ColumnDataCache implements Cache<String, ColumnDataBlockList> {
-
-        private final static String COLUMN_DATA_CACHE_NAME = "COLUMN_DATA_CACHE";
-
-        private final Cache<String, ColumnDataBlockList> columnDataCache;
-
-        public ColumnDataCache(CacheManager cacheManager) {
-            columnDataCache = CacheManagerBuilder.newCacheManagerBuilder().build()
-                    .createCache(COLUMN_DATA_CACHE_NAME, CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, ColumnDataBlockList.class));
-        }
-
-        @Override
-        public ColumnDataBlockList get(String key) {
-            return columnDataCache.get(key);
-        }
-
-        @Override
-        public void put(String key, ColumnDataBlockList value) {
-            columnDataCache.put(key, value);
-        }
-
-        @Override
-        public boolean containsKey(String key) {
-            return columnDataCache.containsKey(key);
-        }
-
-        @Override
-        public void remove(String key) {
-            columnDataCache.remove(key);
-        }
-
-        @Override
-        public Map<String, ColumnDataBlockList> getAll(Set<? extends String> keys) {
-            return columnDataCache.getAll(keys);
-        }
-
-        @Override
-        public void putAll(Map<? extends String, ? extends ColumnDataBlockList> entries) {
-            columnDataCache.putAll(entries);
-        }
-
-        @Override
-        public void removeAll(Set<? extends String> keys) {
-            columnDataCache.removeAll(keys);
-        }
-
-        @Override
-        public void clear() {
-            columnDataCache.clear();
-        }
-
-        @Override
-        public ColumnDataBlockList putIfAbsent(String key, ColumnDataBlockList value) {
-            return columnDataCache.putIfAbsent(key, value);
-        }
-
-        @Override
-        public boolean remove(String key, ColumnDataBlockList value) {
-            return columnDataCache.remove(key, value);
-        }
-
-        @Override
-        public ColumnDataBlockList replace(String key, ColumnDataBlockList value) {
-            return columnDataCache.replace(key, value);
-        }
-
-        @Override
-        public boolean replace(String key, ColumnDataBlockList oldValue, ColumnDataBlockList newValue) {
-            return columnDataCache.replace(key, oldValue, newValue);
-        }
     }
 }

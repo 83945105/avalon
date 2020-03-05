@@ -1,20 +1,3 @@
-server:
-  servlet:
-    #访问根路径
-    context-path: /gar
-web:
-  #文件上传路径
-  upload-path: D:/files/
-  #跨域
-  cors:
-    #是否允许
-    allow: true
-  #事务配置
-  transaction:
-    #控制切面
-    pointcut: execution (* pub.avalon.gar.service..*.*(..))
-    #超时回滚时间(秒)
-    timeout: 60
 spring:
   servlet:
     multipart:
@@ -37,7 +20,7 @@ spring:
     #使用 druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     tomcat:
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
     #下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
     #initialize: 50

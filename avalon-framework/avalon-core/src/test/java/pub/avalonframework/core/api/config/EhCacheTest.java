@@ -22,6 +22,8 @@ import java.time.temporal.ChronoUnit;
  */
 public class EhCacheTest {
 
+    private final static String ROOT_PATH = "H:/ehcacheData";
+
     /**
      * 测试只设置最大生存时间
      * 测试方式：设置最大生存时间1000毫秒
@@ -42,7 +44,7 @@ public class EhCacheTest {
                 Duration.of(1000, ChronoUnit.MILLIS))
         ).build();
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 .withCache("cache", cacheConfiguration)
                 .build(true);
         Cache<String, String> cache = cacheManager.getCache("cache", String.class, String.class);
@@ -76,7 +78,7 @@ public class EhCacheTest {
                 Duration.of(1000, ChronoUnit.MILLIS))
         ).build();
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 .withCache("cache", cacheConfiguration)
                 .build(true);
         Cache<String, String> cache = cacheManager.getCache("cache", String.class, String.class);
@@ -123,7 +125,7 @@ public class EhCacheTest {
                 Duration.of(1000, ChronoUnit.MILLIS))
         ).build();
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 .withCache("cache", cacheConfiguration)
                 .build(true);
         Cache<String, String> cache = cacheManager.getCache("cache", String.class, String.class);
@@ -171,7 +173,7 @@ public class EhCacheTest {
                 Duration.of(2000, ChronoUnit.MILLIS))
         ).build();
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 .withCache("cache", cacheConfiguration)
                 .build(true);
         Cache<String, String> cache = cacheManager.getCache("cache", String.class, String.class);
@@ -185,7 +187,7 @@ public class EhCacheTest {
         cacheManager.close();
     }
 
-    @Test
+//    @Test
     void Test() {
         CacheConfiguration<String, String> cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(
                 String.class, String.class,
@@ -200,7 +202,7 @@ public class EhCacheTest {
                 Duration.of(2000, ChronoUnit.MILLIS))
         ).build();
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 .withCache("cache", cacheConfiguration)
                 .build(true);
         Cache<String, String> cache = cacheManager.getCache("cache", String.class, String.class);
@@ -217,7 +219,7 @@ public class EhCacheTest {
                 Duration.of(2000, ChronoUnit.MILLIS))
         ).build();
         CacheManager cacheManager1 = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 .withCache("cache", cacheConfiguration1)
                 .build(true);
         Cache<String, String> cache1 = cacheManager1.getCache("cache", String.class, String.class);
@@ -248,7 +250,7 @@ public class EhCacheTest {
         ).build();
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
                 // 硬盘持久化地址
-                .with(CacheManagerBuilder.persistence("D:/ehcacheData"))
+                .with(CacheManagerBuilder.persistence(ROOT_PATH))
                 // 设置一个默认缓存配置
                 .withCache("cache", cacheConfiguration)
                 //创建之后立即初始化

@@ -18,7 +18,7 @@ public class SpringJdbcTemplateTest {
     @BeforeAll
     static void beforeAll() {
         DataSource dataSource = DataSourceBuilder.create()
-                .driverClassName("com.mysql.jdbc.Driver")
+                .driverClassName("com.mysql.cj.jdbc.Driver")
                 .url("jdbc:mysql://localhost:3306/gar-2.1.x?useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .username("root")
                 .password("root")
