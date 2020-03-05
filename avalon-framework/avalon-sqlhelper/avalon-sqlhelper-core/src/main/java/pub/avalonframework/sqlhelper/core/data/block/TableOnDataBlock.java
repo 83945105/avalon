@@ -1,7 +1,8 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
+import pub.avalonframework.sqlhelper.core.helper.TableAliasInconsistentException;
+import pub.avalonframework.sqlhelper.core.helper.TableAliasNullException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public final class TableOnDataBlock {
 
     public TableOnDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonDataBlockLinkers) {
         if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
+            throw new TableAliasNullException();
         }
         this.tableAlias = tableAlias;
         this.comparisonDataBlockLinkers = comparisonDataBlockLinkers;
@@ -36,7 +37,7 @@ public final class TableOnDataBlock {
             return;
         }
         if (!this.getTableAlias().equals(tableOnDataBlock.getTableAlias())) {
-            ExceptionUtils.inconsistentAliasException();
+            throw new TableAliasInconsistentException();
         }
         this.addAllComparisonDataBlockLinkers(tableOnDataBlock.getComparisonDataBlockLinkers());
     }

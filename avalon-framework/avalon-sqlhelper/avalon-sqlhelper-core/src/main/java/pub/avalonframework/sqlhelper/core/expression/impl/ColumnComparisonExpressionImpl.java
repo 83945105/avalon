@@ -1,13 +1,9 @@
 package pub.avalonframework.sqlhelper.core.expression.impl;
 
-import pub.avalonframework.sqlhelper.core.data.ComparisonType;
-import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.AbstractDataBlock;
-import pub.avalonframework.sqlhelper.core.data.block.ColumnDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.expression.ColumnComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.ColumnHelper;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +114,7 @@ public interface ColumnComparisonExpressionImpl<T, S extends AbstractComparisonD
             return this.getHelper();
         }
         if (columnDataBlocks.size() != secondColumnDataBlocks.size()) {
-            ExceptionUtils.columnDataBlocksSizeNotEqualException();
+            throw new ColumnDataBlockInconsistentLengthException();
         }
         int size = columnDataBlocks.size();
         for (int i = 0; i < size; i++) {

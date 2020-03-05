@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
 import org.springframework.beans.BeanUtils;
-import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
+import pub.avalonframework.sqlhelper.core.helper.TableAliasNullException;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public final class TableGroupDataBlock {
 
     public TableGroupDataBlock(String tableAlias, List<GroupDataBlock> groupDataBlocks) {
         if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
+            throw new TableAliasNullException();
         }
         this.tableAlias = tableAlias;
         this.groupDataBlocks = groupDataBlocks;

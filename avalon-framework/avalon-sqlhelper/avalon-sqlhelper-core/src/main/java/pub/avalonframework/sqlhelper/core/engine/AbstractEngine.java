@@ -1,7 +1,6 @@
 package pub.avalonframework.sqlhelper.core.engine;
 
 import pub.avalonframework.sqlhelper.core.helper.*;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 /**
  * @author baichao
@@ -20,10 +19,10 @@ public abstract class AbstractEngine<T extends TableHelper<T, TC, TO, TW, TG, TH
 
     public AbstractEngine(Class<T> tableHelperClass, String tableAlias) {
         if (tableHelperClass == null) {
-            ExceptionUtils.tableHelperClassNullException();
+            throw new TableHelperClassNullException();
         }
         if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
+            throw new TableAliasNullException();
         }
         this.tableHelperClass = tableHelperClass;
         this.tableAlias = tableAlias;

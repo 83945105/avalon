@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.expression.impl;
 
-import pub.avalonframework.sqlhelper.core.data.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.AbstractComparisonDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.ComparisonType;
 import pub.avalonframework.sqlhelper.core.data.block.builder.AbstractComparisonDataBlockBuilder;
 import pub.avalonframework.sqlhelper.core.expression.DataBlockBuilderComparisonExpression;
 import pub.avalonframework.sqlhelper.core.helper.Helper;

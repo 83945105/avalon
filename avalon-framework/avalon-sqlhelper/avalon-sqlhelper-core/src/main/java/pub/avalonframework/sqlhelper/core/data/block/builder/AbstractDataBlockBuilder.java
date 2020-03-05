@@ -2,7 +2,7 @@ package pub.avalonframework.sqlhelper.core.data.block.builder;
 
 import pub.avalonframework.sqlhelper.core.data.block.DataBlock;
 import pub.avalonframework.sqlhelper.core.helper.Helper;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
+import pub.avalonframework.sqlhelper.core.helper.TableAliasNullException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public abstract class AbstractDataBlockBuilder<T extends Helper, S extends DataB
 
     public AbstractDataBlockBuilder(String tableAlias, T helper) {
         if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
+            throw new TableAliasNullException();
         }
         this.tableAlias = tableAlias;
         this.helper = helper;

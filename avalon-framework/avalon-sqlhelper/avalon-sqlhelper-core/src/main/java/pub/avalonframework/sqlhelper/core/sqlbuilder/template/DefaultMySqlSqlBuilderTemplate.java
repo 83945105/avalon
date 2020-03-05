@@ -7,7 +7,6 @@ import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
 import pub.avalonframework.sqlhelper.core.helper.TableHelper;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.*;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.*;
@@ -74,7 +73,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             return HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         if (tableColumnDataBlocks.size() > 1) {
-            ExceptionUtils.multiTableColumnException();
+            throw new MultiTableColumnException();
         }
         columnDataBlocks = tableColumnDataBlocks.iterator().next().getColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {
@@ -90,7 +89,7 @@ public final class DefaultMySqlSqlBuilderTemplate implements MySqlSqlBuilderTemp
             return HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias());
         }
         if (tableColumnDataBlocks.size() > 1) {
-            ExceptionUtils.multiTableColumnException();
+            throw new MultiTableColumnException();
         }
         columnDataBlocks = tableColumnDataBlocks.iterator().next().getColumnDataBlocks();
         if (columnDataBlocks == null || columnDataBlocks.size() == 0) {

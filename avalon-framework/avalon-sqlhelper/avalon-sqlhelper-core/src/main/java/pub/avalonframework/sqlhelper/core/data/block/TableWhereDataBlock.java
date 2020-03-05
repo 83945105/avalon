@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
+import pub.avalonframework.sqlhelper.core.helper.TableAliasNullException;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public final class TableWhereDataBlock {
 
     public TableWhereDataBlock(String tableAlias, List<ComparisonDataBlockLinker> comparisonDataBlockLinkers) {
         if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
+            throw new TableAliasNullException();
         }
         this.tableAlias = tableAlias;
         this.comparisonDataBlockLinkers = comparisonDataBlockLinkers;

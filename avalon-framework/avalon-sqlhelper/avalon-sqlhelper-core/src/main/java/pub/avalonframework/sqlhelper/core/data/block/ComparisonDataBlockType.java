@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 /**
  * @author baichao
  */
-public enum Type {
+public enum ComparisonDataBlockType {
 
     /**
      * Default type

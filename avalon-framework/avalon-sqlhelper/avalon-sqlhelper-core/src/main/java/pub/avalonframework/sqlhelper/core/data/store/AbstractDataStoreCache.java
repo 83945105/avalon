@@ -2,9 +2,9 @@ package pub.avalonframework.sqlhelper.core.data.store;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
 import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlock;
+import pub.avalonframework.sqlhelper.core.data.block.TableJoinDataBlockNullException;
 import pub.avalonframework.sqlhelper.core.data.block.TableMainDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.TableOnDataBlock;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 
 import java.util.LinkedHashMap;
 
@@ -80,7 +80,7 @@ public abstract class AbstractDataStoreCache<R> implements DataStore<R> {
         }
         TableJoinDataBlock tableJoinDataBlock = this.aliasTableJoinDataBlockCache.get(tableOnDataBlock.getTableAlias());
         if (tableJoinDataBlock == null) {
-            ExceptionUtils.notJoinException(tableOnDataBlock.getTableAlias());
+            throw new TableJoinDataBlockNullException();
         }
         tableJoinDataBlock.appendTableOnDataBlock(tableOnDataBlock);
         return owner;

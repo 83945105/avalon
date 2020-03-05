@@ -1,9 +1,9 @@
-package pub.avalonframework.sqlhelper.core.data;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 /**
  * @author baichao
  */
-public enum ValueType {
+public enum ComparisonValueType {
 
     /**
      * None value

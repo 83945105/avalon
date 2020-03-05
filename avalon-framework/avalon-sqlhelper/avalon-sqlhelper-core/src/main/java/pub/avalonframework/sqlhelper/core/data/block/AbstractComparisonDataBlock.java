@@ -1,9 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
 import pub.avalonframework.sqlhelper.core.data.ColumnType;
-import pub.avalonframework.sqlhelper.core.data.ComparisonType;
-import pub.avalonframework.sqlhelper.core.data.Type;
-import pub.avalonframework.sqlhelper.core.data.ValueType;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
  */
 public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDataBlock<T>> extends AbstractDataBlock<T> {
 
-    protected Type type = Type.DEFAULT;
+    protected ComparisonDataBlockType type = ComparisonDataBlockType.DEFAULT;
 
     protected String sqlPart;
 
@@ -24,7 +21,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
 
     protected ComparisonType comparisonType = ComparisonType.NONE;
 
-    protected ValueType valueType = ValueType.SINGLE_VALUE;
+    protected ComparisonValueType valueType = ComparisonValueType.SINGLE_VALUE;
 
     protected Object targetValue;
 
@@ -57,7 +54,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         if (sqlPart == null) {
             return this;
         }
-        this.type = Type.SQL_PART;
+        this.type = ComparisonDataBlockType.SQL_PART;
         this.sqlPart = sqlPart;
         return this;
     }
@@ -76,7 +73,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.NONE_VALUE;
+        this.valueType = ComparisonValueType.NONE_VALUE;
         return this;
     }
 
@@ -85,7 +82,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.SINGLE_VALUE;
+        this.valueType = ComparisonValueType.SINGLE_VALUE;
         this.targetValue = targetValue;
         return this;
     }
@@ -95,7 +92,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.PAIR_VALUE;
+        this.valueType = ComparisonValueType.PAIR_VALUE;
         this.targetValue = targetValue;
         this.targetSecondValue = targetSecondValue;
         return this;
@@ -106,7 +103,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.MULTI_VALUE;
+        this.valueType = ComparisonValueType.MULTI_VALUE;
         this.targetValue = targetValue;
         return this;
     }
@@ -116,7 +113,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.SUB_QUERY;
+        this.valueType = ComparisonValueType.SUB_QUERY;
         this.targetSubQuery = targetSubQuery;
         return this;
     }
@@ -126,7 +123,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = ComparisonType.NONE;
-        this.valueType = ValueType.SQL_PART;
+        this.valueType = ComparisonValueType.SQL_PART;
         this.targetSqlPart = targetSqlPart;
         return this;
     }
@@ -136,7 +133,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.SINGLE_DATA_BLOCK;
+        this.valueType = ComparisonValueType.SINGLE_DATA_BLOCK;
         this.targetDataBlock = targetDataBlock;
         return this;
     }
@@ -146,7 +143,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.PAIR_DATA_BLOCK;
+        this.valueType = ComparisonValueType.PAIR_DATA_BLOCK;
         this.targetDataBlock = targetDataBlock;
         this.targetSecondDataBlock = targetSecondDataBlock;
         return this;
@@ -157,12 +154,12 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
             return this;
         }
         this.comparisonType = comparisonType;
-        this.valueType = ValueType.MULTI_DATA_BLOCK;
+        this.valueType = ComparisonValueType.MULTI_DATA_BLOCK;
         this.targetMultiDataBlock = targetMultiDataBlock;
         return this;
     }
 
-    public Type getType() {
+    public ComparisonDataBlockType getType() {
         return type;
     }
 
@@ -186,7 +183,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return comparisonType;
     }
 
-    public ValueType getValueType() {
+    public ComparisonValueType getValueType() {
         return valueType;
     }
 

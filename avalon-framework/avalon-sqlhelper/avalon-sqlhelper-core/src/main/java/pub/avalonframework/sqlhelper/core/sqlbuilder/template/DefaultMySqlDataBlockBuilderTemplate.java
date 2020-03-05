@@ -2,14 +2,15 @@ package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
 import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.*;
+import pub.avalonframework.sqlhelper.core.data.ColumnType;
+import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.data.UnsupportedColumnTypeException;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
 import pub.avalonframework.sqlhelper.core.expression.AndOr;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.FinalSqlBuilderResult;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
 import pub.avalonframework.sqlhelper.core.utils.HelperUtils;
 
 import java.util.*;
@@ -31,7 +32,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
             boolean selectAllColumnForMainTable = dataBlockBuilder.getSelectAllColumnForMainTable();
             boolean selectAllColumnForJoinTable = dataBlockBuilder.getSelectAllColumnForJoinTable();
             if (!selectAllColumnForMainTable && !selectAllColumnForJoinTable) {
-                ExceptionUtils.selectColumnNullException();
+                throw new SelectColumnEmptyException();
             }
             if (selectAllColumnForMainTable) {
                 this.appendSqlArgsWithColumnDataBlocks(sql, args, HelperUtils.defaultColumnData(consumer.getTableMainDataBlock().getTableHelperClass(), consumer.getTableMainDataBlock().getTableAlias()));
@@ -259,7 +260,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                     sql.append(columnDataBlock.getSqlPart());
                     continue;
                 default:
-                    ExceptionUtils.columnTypeNotSupportException();
+                    throw new UnsupportedDataBlockTypeException();
             }
         }
     }
@@ -325,14 +326,14 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                         sql.append(columnDataBlock.getSqlPart());
                         continue;
                     default:
-                        ExceptionUtils.columnTypeNotSupportException();
+                        throw new UnsupportedDataBlockTypeException();
                 }
             }
         }
     }
 
     private void appendSqlWithComparisonDataBlockType(StringBuilder sql, AbstractComparisonDataBlock<?> comparisonDataBlock) {
-        Type type = comparisonDataBlock.getType();
+        ComparisonDataBlockType type = comparisonDataBlock.getType();
         switch (type) {
             case DEFAULT:
                 return;
@@ -340,7 +341,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 sql.append(comparisonDataBlock.getSqlPart());
                 return;
             default:
-                ExceptionUtils.unsupportedTypeException(type);
+                throw new UnsupportedComparisonDataBlockTypeException();
         }
     }
 
@@ -357,7 +358,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 sql.append(comparisonDataBlock.getColumnHandler().apply(comparisonDataBlock.getTableAlias() + ".`" + comparisonDataBlock.getColumnName() + "`"));
                 return;
             default:
-                ExceptionUtils.unsupportedColumnTypeException(columnType);
+                throw new UnsupportedColumnTypeException();
         }
     }
 
@@ -403,13 +404,13 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 sql.append(" not in ");
                 return;
             default:
-                ExceptionUtils.unsupportedComparisonTypeException(comparisonType);
+                throw new UnsupportedComparisonTypeException();
         }
     }
 
     @SuppressWarnings("unchecked")
     private void appendSqlWithComparisonDataBlockValueType(StringBuilder sql, List<Object> args, AbstractComparisonDataBlock<?> comparisonDataBlock) {
-        ValueType valueType = comparisonDataBlock.getValueType();
+        ComparisonValueType valueType = comparisonDataBlock.getValueType();
         switch (valueType) {
             case NONE_VALUE:
                 return;
@@ -443,7 +444,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                         args.add(val);
                     }
                 } else {
-                    ExceptionUtils.errorValueTypeException(value);
+                    throw new UnsupportedComparisonValueException();
                 }
                 sql.append(")");
                 return;
@@ -490,7 +491,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
                 sql.append(")");
                 return;
             default:
-                ExceptionUtils.unsupportedValueTypeException(valueType);
+                throw new UnsupportedComparisonValueTypeException();
         }
     }
 

@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
-import pub.avalonframework.sqlhelper.core.utils.ExceptionUtils;
+import pub.avalonframework.sqlhelper.core.helper.TableAliasNullException;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public final class TableSortDataBlock {
 
     public TableSortDataBlock(String tableAlias, List<SortDataBlock> sortDataBlocks) {
         if (tableAlias == null) {
-            ExceptionUtils.tableAliasNullException();
+            throw new TableAliasNullException();
         }
         this.tableAlias = tableAlias;
         this.sortDataBlocks = sortDataBlocks;
