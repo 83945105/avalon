@@ -54,6 +54,7 @@ public class SpringTest {
 
     @Test
     void test() throws Exception {
+        this.sysUserJdbcDao.pageQuery(1, 10);
 //        SysUser sysUser = testSysUserController.getSysUserById("1");
     }
 }

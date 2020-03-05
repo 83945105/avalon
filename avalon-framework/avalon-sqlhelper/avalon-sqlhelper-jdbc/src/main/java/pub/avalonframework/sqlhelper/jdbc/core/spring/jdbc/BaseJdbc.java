@@ -73,18 +73,6 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
         return jdbcHelper.batchInsertJavaBeans(javaBeans, new JdbcInsertEngine<>(jdbcHelper, tableHelperClass));
     }
 
-    public <R> R queryByPrimaryKey(Object keyValue, RowMapper<R> rowMapper) {
-        return jdbcHelper.queryByPrimaryKey(keyValue, new JdbcSelectEngine<>(jdbcHelper, tableHelperClass), rowMapper);
-    }
-
-    public T queryByPrimaryKey(Object keyValue) {
-        return jdbcHelper.queryByPrimaryKey(keyValue, new JdbcSelectEngine<>(jdbcHelper, tableHelperClass), beanType);
-    }
-
-    public <R> R queryByPrimaryKey(Object keyValue, Class<R> returnType) {
-        return jdbcHelper.queryByPrimaryKey(keyValue, new JdbcSelectEngine<>(jdbcHelper, tableHelperClass), returnType);
-    }
-
     public interface Select<T extends TableHelper<T, TC, TO, TW, TG, TH, TS>,
             TC extends ColumnHelper<TC>,
             TO extends OnHelper<TO>,
@@ -93,6 +81,30 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
             TH extends HavingHelper<TH>,
             TS extends SortHelper<TS>> {
         SelectSqlBuilder apply(JdbcSelectEngine<T, TC, TO, TW, TG, TH, TS> engine);
+    }
+
+    public <R> R queryByPrimaryKey(Object keyValue, Select<H, HC, HO, HW, HG, HH, HS> select, RowMapper<R> rowMapper) {
+        return jdbcHelper.queryByPrimaryKey(keyValue, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), rowMapper);
+    }
+
+    public <R> R queryByPrimaryKey(Object keyValue, RowMapper<R> rowMapper) {
+        return queryByPrimaryKey(keyValue, engine -> engine, rowMapper);
+    }
+
+    public T queryByPrimaryKey(Object keyValue, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        return jdbcHelper.queryByPrimaryKey(keyValue, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), beanType);
+    }
+
+    public T queryByPrimaryKey(Object keyValue) {
+        return queryByPrimaryKey(keyValue, engine -> engine);
+    }
+
+    public <R> R queryByPrimaryKey(Object keyValue, Select<H, HC, HO, HW, HG, HH, HS> select, Class<R> returnType) {
+        return jdbcHelper.queryByPrimaryKey(keyValue, select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)), returnType);
+    }
+
+    public <R> R queryByPrimaryKey(Object keyValue, Class<R> returnType) {
+        return queryByPrimaryKey(keyValue, engine -> engine, returnType);
     }
 
     public <R> R queryOne(Select<H, HC, HO, HW, HG, HH, HS> select, RowMapper<R> rowMapper) {
@@ -173,6 +185,10 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
         return new PageResult<>(jdbcHelper.query(selectSqlBuilder, rowMapper), limit);
     }
 
+    public <R> PageResult<R> pageQuery(long currentPage, long pageSize, RowMapper<R> rowMapper) {
+        return pageQuery(currentPage, pageSize, engine -> engine, rowMapper);
+    }
+
     public PageResult<T> pageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select) {
         PageQuery pageQuery = this.initPageQuery(currentPage, pageSize, select);
         SelectSqlBuilder selectSqlBuilder = pageQuery.getSelectSqlBuilder();
@@ -185,6 +201,10 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
         return new PageResult<>(jdbcHelper.query(selectSqlBuilder, beanType), limit);
     }
 
+    public PageResult<T> pageQuery(long currentPage, long pageSize) {
+        return pageQuery(currentPage, pageSize, engine -> engine);
+    }
+
     public <R> PageResult<R> pageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select, Class<R> returnType) {
         PageQuery pageQuery = this.initPageQuery(currentPage, pageSize, select);
         SelectSqlBuilder selectSqlBuilder = pageQuery.getSelectSqlBuilder();
@@ -195,6 +215,10 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
             return new PageResult<>(Collections.emptyList(), limit);
         }
         return new PageResult<>(jdbcHelper.query(selectSqlBuilder, returnType), limit);
+    }
+
+    public <R> PageResult<R> pageQuery(long currentPage, long pageSize, Class<R> returnType) {
+        return pageQuery(currentPage, pageSize, engine -> engine, returnType);
     }
 
     public <K, V> Map<K, V> queryColumnOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {

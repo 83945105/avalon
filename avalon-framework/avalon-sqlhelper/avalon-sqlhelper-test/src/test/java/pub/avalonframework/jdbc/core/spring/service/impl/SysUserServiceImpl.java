@@ -27,6 +27,6 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public SysUser getSysUserByPrimaryKey(String keyValue, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable) throws Exception {
         ValidationUtils.nonNullCheck("keyValue", keyValue);
-        return null;
+        return sysUserJdbcDao.queryByPrimaryKey(keyValue, engine -> engine.select(columnLambdaCallable));
     }
 }
