@@ -2,15 +2,22 @@ package pub.avalonframework.sqlhelper.jdbc.core.spring.jdbc;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import pub.avalonframework.database.Limit;
+import pub.avalonframework.database.Pagination;
+import pub.avalonframework.sqlhelper.core.api.config.JdbcConfiguration;
+import pub.avalonframework.sqlhelper.core.data.inject.LimitDataInjector;
+import pub.avalonframework.sqlhelper.core.expression.LimitExpression;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.*;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.DeleteSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.SelectSqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.UpdateSqlBuilder;
 import pub.avalonframework.sqlhelper.jdbc.core.JdbcHelper;
+import pub.avalonframework.sqlhelper.jdbc.core.PageResult;
 import pub.avalonframework.sqlhelper.jdbc.core.engine.*;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -118,6 +125,74 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
 
     public long queryCount(Select<H, HC, HO, HW, HG, HH, HS> select) {
         return jdbcHelper.queryCount(select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass)));
+    }
+
+    protected PageQuery initPageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        SelectSqlBuilder selectSqlBuilder = select.apply(new JdbcSelectEngine<>(jdbcHelper, tableHelperClass));
+        JdbcConfiguration jdbc = selectSqlBuilder.getConfiguration().getJdbc();
+        Long maxCurrentPage = jdbc.getMaxCurrentPage();
+        Long maxPageSize = jdbc.getMaxPageSize();
+        Pagination pagination = new Pagination
+                (
+                        maxCurrentPage == null ? currentPage : currentPage < maxCurrentPage ? currentPage : maxCurrentPage,
+                        maxPageSize == null ? pageSize : pageSize < maxPageSize ? pageSize : maxPageSize
+                );
+        if (selectSqlBuilder instanceof LimitExpression<?>) {
+            ((LimitExpression<?>) selectSqlBuilder).limit(pagination.getLimit());
+            ((LimitExpression<?>) selectSqlBuilder).offset(pagination.getOffset());
+        } else if (selectSqlBuilder instanceof LimitDataInjector<?>) {
+            ((LimitDataInjector<?>) selectSqlBuilder).setLimit(pagination.getLimit());
+            ((LimitDataInjector<?>) selectSqlBuilder).setOffset(pagination.getOffset());
+        }
+        return new PageQuery(selectSqlBuilder, pagination);
+    }
+
+    public <R> PageResult<R> pageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select, ResultSetExtractor<List<R>> resultSetExtractor) {
+        PageQuery pageQuery = this.initPageQuery(currentPage, pageSize, select);
+        SelectSqlBuilder selectSqlBuilder = pageQuery.getSelectSqlBuilder();
+        Limit limit = pageQuery.getLimit();
+        long total = jdbcHelper.queryCount(selectSqlBuilder);
+        limit.setTotal(total);
+        if (total <= 0) {
+            return new PageResult<>(Collections.emptyList(), limit);
+        }
+        return new PageResult<>(jdbcHelper.query(selectSqlBuilder, resultSetExtractor), limit);
+    }
+
+    public <R> PageResult<R> pageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select, RowMapper<R> rowMapper) {
+        PageQuery pageQuery = this.initPageQuery(currentPage, pageSize, select);
+        SelectSqlBuilder selectSqlBuilder = pageQuery.getSelectSqlBuilder();
+        Limit limit = pageQuery.getLimit();
+        long total = jdbcHelper.queryCount(selectSqlBuilder);
+        limit.setTotal(total);
+        if (total <= 0) {
+            return new PageResult<>(Collections.emptyList(), limit);
+        }
+        return new PageResult<>(jdbcHelper.query(selectSqlBuilder, rowMapper), limit);
+    }
+
+    public PageResult<T> pageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select) {
+        PageQuery pageQuery = this.initPageQuery(currentPage, pageSize, select);
+        SelectSqlBuilder selectSqlBuilder = pageQuery.getSelectSqlBuilder();
+        Limit limit = pageQuery.getLimit();
+        long total = jdbcHelper.queryCount(selectSqlBuilder);
+        limit.setTotal(total);
+        if (total <= 0) {
+            return new PageResult<>(Collections.emptyList(), limit);
+        }
+        return new PageResult<>(jdbcHelper.query(selectSqlBuilder, beanType), limit);
+    }
+
+    public <R> PageResult<R> pageQuery(long currentPage, long pageSize, Select<H, HC, HO, HW, HG, HH, HS> select, Class<R> returnType) {
+        PageQuery pageQuery = this.initPageQuery(currentPage, pageSize, select);
+        SelectSqlBuilder selectSqlBuilder = pageQuery.getSelectSqlBuilder();
+        Limit limit = pageQuery.getLimit();
+        long total = jdbcHelper.queryCount(selectSqlBuilder);
+        limit.setTotal(total);
+        if (total <= 0) {
+            return new PageResult<>(Collections.emptyList(), limit);
+        }
+        return new PageResult<>(jdbcHelper.query(selectSqlBuilder, returnType), limit);
     }
 
     public <K, V> Map<K, V> queryColumnOneGroupByColumn(int groupColumnIndex, Class<K> groupColumnType, int valueColumnIndex, Class<V> valueColumnType, Select<H, HC, HO, HW, HG, HH, HS> select) {
@@ -250,5 +325,25 @@ public abstract class BaseJdbc<T, H extends TableHelper<H, HC, HO, HW, HG, HH, H
 
     public void setJdbcHelper(JdbcHelper jdbcHelper) {
         this.jdbcHelper = jdbcHelper;
+    }
+
+    private final static class PageQuery {
+
+        private SelectSqlBuilder selectSqlBuilder;
+
+        private Limit limit;
+
+        public PageQuery(SelectSqlBuilder selectSqlBuilder, Limit limit) {
+            this.selectSqlBuilder = selectSqlBuilder;
+            this.limit = limit;
+        }
+
+        public SelectSqlBuilder getSelectSqlBuilder() {
+            return selectSqlBuilder;
+        }
+
+        public Limit getLimit() {
+            return limit;
+        }
     }
 }

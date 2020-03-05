@@ -17,6 +17,10 @@ public final class JdbcConfigurationYamlSwapper implements YamlSwapper<YamlJdbcC
         YamlJdbcConfiguration configuration = new YamlJdbcConfiguration();
         Boolean allowReturnNull = data.getAllowReturnNull();
         configuration.setAllowReturnNull(allowReturnNull == null ? DEFAULT_ALLOW_RETURN_NULL : allowReturnNull);
+        Long maxCurrentPage = data.getMaxCurrentPage();
+        configuration.setMaxCurrentPage(maxCurrentPage);
+        Long maxPageSize = data.getMaxPageSize();
+        configuration.setMaxPageSize(maxPageSize);
         return configuration;
     }
 
@@ -26,6 +30,10 @@ public final class JdbcConfigurationYamlSwapper implements YamlSwapper<YamlJdbcC
         JdbcConfiguration configuration = new JdbcConfiguration();
         Boolean allowReturnNull = yamlConfiguration.getAllowReturnNull();
         configuration.setAllowReturnNull(allowReturnNull == null ? DEFAULT_ALLOW_RETURN_NULL : allowReturnNull);
+        Long maxCurrentPage = yamlConfiguration.getMaxCurrentPage();
+        configuration.setMaxCurrentPage(maxCurrentPage);
+        Long maxPageSize = yamlConfiguration.getMaxPageSize();
+        configuration.setMaxPageSize(maxPageSize);
         return configuration;
     }
 }

@@ -16,7 +16,7 @@ public final class DataBlockBuilderConfigurationYamlSwapper implements YamlSwapp
 
     private final static DataBlockBuilderTemplate DEFAULT_MYSQL_DATA_BLOCK_BUILDER_TEMPLATE = new DefaultMySqlDataBlockBuilderTemplate();
 
-    private final static Boolean DEFAULT_SELECT_ALL_COLUMN_FOR_MAIN_TABLE = Boolean.FALSE;
+    private final static Boolean DEFAULT_SELECT_ALL_COLUMN_FOR_MAIN_TABLE = Boolean.TRUE;
 
     private final static Boolean DEFAULT_SELECT_ALL_COLUMN_FOR_JOIN_TABLE = Boolean.FALSE;
 

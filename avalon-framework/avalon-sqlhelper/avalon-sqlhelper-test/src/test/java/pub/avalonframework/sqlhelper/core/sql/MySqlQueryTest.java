@@ -8,6 +8,7 @@ import pub.avalonframework.sqlhelper.core.data.block.GroupType;
 import pub.avalonframework.sqlhelper.core.data.block.JoinType;
 import pub.avalonframework.sqlhelper.core.engine.SqlHelperEngine;
 import pub.avalonframework.sqlhelper.core.expression.ComparisonRule;
+import pub.avalonframework.sqlhelper.core.sqlbuilder.SqlBuilder;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 import pub.avalonframework.sqlhelper.readme.entity.RoleResourceHelper;
 import pub.avalonframework.sqlhelper.readme.entity.SysUserHelper;
@@ -290,6 +291,14 @@ public class MySqlQueryTest extends AbstractTest {
                 .queryCount();
         Assertions.assertEquals("select count(1) from `sys_user` SysUser right join `user_role` UserRole on UserRole.`role_id` = SysUser.`id`", sqlBuilderResult.getPreparedStatementSql());
         Assertions.assertArrayEquals(new Object[]{}, sqlBuilderResult.getPreparedStatementArgs().toArray());
+    }
+
+    @Test
+    void Test_queryByPrimaryKey() {
+        SqlBuilderResult sqlBuilderResult = new SqlHelperEngine<>(DatabaseType.MYSQL, SysUserHelper.class)
+                .queryByPrimaryKey("1");
+        Assertions.assertEquals("select SysUser.`id` `id`,SysUser.`user_name` `userName`,SysUser.`login_name` `loginName` from `sys_user` SysUser where SysUser.`id` = ?", sqlBuilderResult.getPreparedStatementSql());
+        Assertions.assertArrayEquals(new Object[]{"1"}, sqlBuilderResult.getPreparedStatementArgs().toArray());
     }
 
     @Test
