@@ -1,11 +1,9 @@
-package pub.avalonframework.sqlhelper.core.data;
-
-import pub.avalonframework.sqlhelper.core.data.block.ColumnHandler;
+package pub.avalonframework.sqlhelper.core.data.block;
 
 /**
  * @author baichao
  */
-public enum ColumnType {
+public enum ComparisonColumnType {
 
     /**
      * Default type

@@ -1,6 +1,6 @@
 package pub.avalonframework.sqlhelper.core.expression;
 
-import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.data.block.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.OnDataBlock;
 import pub.avalonframework.sqlhelper.core.expression.lambda.OnAndLambdaCallable;
 import pub.avalonframework.sqlhelper.core.helper.OnHelper;

@@ -1,7 +1,7 @@
 package pub.avalonframework.sqlhelper.core.helper;
 
 import pub.avalonframework.sqlhelper.core.api.config.SqlBuilderConfiguration;
-import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
+import pub.avalonframework.sqlhelper.core.data.block.ComparisonDataBlockLinker;
 import pub.avalonframework.sqlhelper.core.data.block.TableWhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.WhereDataBlock;
 import pub.avalonframework.sqlhelper.core.data.block.builder.WhereDataBlockBuilder;

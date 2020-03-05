@@ -1,6 +1,5 @@
 package pub.avalonframework.sqlhelper.core.data.block;
 
-import pub.avalonframework.sqlhelper.core.data.ColumnType;
 import pub.avalonframework.sqlhelper.core.sqlbuilder.beans.SqlBuilderResult;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
 
     protected String sqlPart;
 
-    protected ColumnType columnType = ColumnType.DEFAULT;
+    protected ComparisonColumnType columnType = ComparisonColumnType.DEFAULT;
 
     // 已经尝试过ColumnHandler[] columnHandlers, 这么做后面解析过于麻烦, 放弃
     protected ColumnHandler columnHandler;
@@ -63,7 +62,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         if (columnHandler == null) {
             return this;
         }
-        this.columnType = ColumnType.HANDLER;
+        this.columnType = ComparisonColumnType.HANDLER;
         this.columnHandler = columnHandler;
         return this;
     }
@@ -171,7 +170,7 @@ public abstract class AbstractComparisonDataBlock<T extends AbstractComparisonDa
         return targetDataBlock;
     }
 
-    public ColumnType getColumnType() {
+    public ComparisonColumnType getColumnType() {
         return columnType;
     }
 

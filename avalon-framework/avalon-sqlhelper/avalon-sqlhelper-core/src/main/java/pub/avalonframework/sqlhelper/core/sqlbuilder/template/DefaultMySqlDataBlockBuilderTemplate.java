@@ -2,9 +2,6 @@ package pub.avalonframework.sqlhelper.core.sqlbuilder.template;
 
 import pub.avalonframework.sqlhelper.core.api.config.DataBlockBuilderConfiguration;
 import pub.avalonframework.sqlhelper.core.api.config.SqlhelperConfiguration;
-import pub.avalonframework.sqlhelper.core.data.ColumnType;
-import pub.avalonframework.sqlhelper.core.data.ComparisonDataBlockLinker;
-import pub.avalonframework.sqlhelper.core.data.UnsupportedColumnTypeException;
 import pub.avalonframework.sqlhelper.core.data.block.*;
 import pub.avalonframework.sqlhelper.core.data.consume.CrudConsumer;
 import pub.avalonframework.sqlhelper.core.exception.SqlException;
@@ -346,7 +343,7 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
     }
 
     private void appendSqlWithComparisonDataBlockColumnType(StringBuilder sql, AbstractComparisonDataBlock<?> comparisonDataBlock) {
-        ColumnType columnType = comparisonDataBlock.getColumnType();
+        ComparisonColumnType columnType = comparisonDataBlock.getColumnType();
         switch (columnType) {
             case DEFAULT:
                 sql.append(comparisonDataBlock.getTableAlias())
