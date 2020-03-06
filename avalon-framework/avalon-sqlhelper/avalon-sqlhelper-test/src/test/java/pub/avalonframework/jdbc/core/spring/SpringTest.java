@@ -13,11 +13,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import pub.avalonframework.jdbc.core.spring.api.entity.SysUser;
 import pub.avalonframework.jdbc.core.spring.controller.SysUserController;
+import pub.avalonframework.jdbc.core.spring.dao.IDataSource;
 import pub.avalonframework.jdbc.core.spring.dao.SysUserJdbcDao;
 import pub.avalonframework.jdbc.core.spring.service.impl.SysUserServiceImpl;
+import pub.avalonframework.sqlhelper.jdbc.core.PageResult;
 import pub.avalonframework.sqlhelper.jdbc.core.spring.context.annotation.JdbcScan;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 /**
  * @author baichao
@@ -41,7 +44,7 @@ public class SpringTest {
         @Primary
         @ConfigurationProperties(prefix = "spring.datasource.sqlhelper")
         public DataSource ds0MasterDataSource() {
-            return DataSourceBuilder.create().build();
+            return new IDataSource(DataSourceBuilder.create().build());
         }
     }
 
@@ -54,7 +57,8 @@ public class SpringTest {
 
     @Test
     void test() throws Exception {
-        this.sysUserJdbcDao.pageQuery(1, 10);
+        PageResult<SysUser> pageResult = this.sysUserJdbcDao.pageQuery(1, 10);
+        List<SysUser> list = pageResult.getEntity();
 //        SysUser sysUser = testSysUserController.getSysUserById("1");
     }
 }

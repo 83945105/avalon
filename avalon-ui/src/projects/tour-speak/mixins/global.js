@@ -178,8 +178,7 @@ export default {
 
     methods: {
         formatterTime(timeStr, len = 19) {
-            if (!timeStr) return;
-            return timeStr.replace("T", " ").substring(0, len);
+            return this.isEmpty(timeStr) ? '' : timeStr.replace("T", " ").substring(0, len);
         }
     }
 

@@ -9,7 +9,12 @@ import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable
  */
 public interface SysUserService {
 
-    SysUser getSysUserByPrimaryKey(String keyValue) throws Exception;
+    SysUser getSysUserById(String id) throws Exception;
 
-    SysUser getSysUserByPrimaryKey(String keyValue, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable) throws Exception;
+    <T> T getSysUserById(String id, Class<T> returnType) throws Exception;
+
+    SysUser getSysUserById(String id, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable) throws Exception;
+
+    <T> T getSysUserById(String id, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable, Class<T> returnType) throws Exception;
+
 }

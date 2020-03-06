@@ -2,21 +2,20 @@ import merge from "../../../utils/merge.js";
 import Util from "../../../utils/util.js";
 
 export const Data = {
-  dict: {
-  }
+    dict: {}
 };
 
 export default {
-  data() {
-    return merge({}, Data)
-  },
+    data() {
+        return merge({}, Data)
+    },
 
-  mixins: [Util],
+    mixins: [Util],
 
-  methods: {
-    formatterTime(timeStr, len = 19) {
-      return timeStr.replace("T", " ").substring(0, len);
+    methods: {
+        formatterTime(timeStr, len = 19) {
+            return this.isEmpty(timeStr) ? '' : timeStr.replace("T", " ").substring(0, len);
+        }
     }
-  }
 
 }

@@ -19,14 +19,26 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserJdbcDao sysUserJdbcDao;
 
     @Override
-    public SysUser getSysUserByPrimaryKey(String keyValue) throws Exception {
-        ValidationUtils.nonNullCheck("keyValue", keyValue);
-        return sysUserJdbcDao.queryByPrimaryKey(keyValue);
+    public SysUser getSysUserById(String id) throws Exception {
+        ValidationUtils.nonNullCheck("id", id);
+        return sysUserJdbcDao.queryByPrimaryKey(id);
     }
 
     @Override
-    public SysUser getSysUserByPrimaryKey(String keyValue, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable) throws Exception {
-        ValidationUtils.nonNullCheck("keyValue", keyValue);
-        return sysUserJdbcDao.queryByPrimaryKey(keyValue, engine -> engine.select(columnLambdaCallable));
+    public <T> T getSysUserById(String id, Class<T> returnType) throws Exception {
+        ValidationUtils.nonNullCheck("id", id);
+        return sysUserJdbcDao.queryByPrimaryKey(id, returnType);
+    }
+
+    @Override
+    public SysUser getSysUserById(String id, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable) throws Exception {
+        ValidationUtils.nonNullCheck("id", id);
+        return sysUserJdbcDao.queryByPrimaryKey(id, engine -> engine.select(columnLambdaCallable));
+    }
+
+    @Override
+    public <T> T getSysUserById(String id, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable, Class<T> returnType) throws Exception {
+        ValidationUtils.nonNullCheck("id", id);
+        return sysUserJdbcDao.queryByPrimaryKey(id, engine -> engine.select(columnLambdaCallable), returnType);
     }
 }
