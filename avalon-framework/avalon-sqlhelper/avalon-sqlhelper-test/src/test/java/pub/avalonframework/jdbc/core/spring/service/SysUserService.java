@@ -17,4 +17,5 @@ public interface SysUserService {
 
     <T> T getSysUserById(String id, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable, Class<T> returnType) throws Exception;
 
+    
 }

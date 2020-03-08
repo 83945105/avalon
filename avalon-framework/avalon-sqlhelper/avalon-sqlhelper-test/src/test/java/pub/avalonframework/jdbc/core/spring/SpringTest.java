@@ -1,5 +1,7 @@
 package pub.avalonframework.jdbc.core.spring;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -40,12 +42,23 @@ public class SpringTest {
 
     @TestConfiguration
     public static class Configuration {
+//        @Bean
+//        @Primary
+//        @ConfigurationProperties(prefix = "spring.datasource.sqlhelper")
+//        public DataSource ds0MasterDataSource() {
+//            return new IDataSource(DataSourceBuilder.create().build());
+//            return DataSourceBuilder.create().build();
+//        }
+
         @Bean
         @Primary
-        @ConfigurationProperties(prefix = "spring.datasource.sqlhelper")
-        public DataSource ds0MasterDataSource() {
-//            return new IDataSource(DataSourceBuilder.create().build());
-            return DataSourceBuilder.create().build();
+        public IDataSource dataSource() {
+            HikariDataSource dataSource = new HikariDataSource();
+            dataSource.setUsername("root");
+            dataSource.setPassword("19910405");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai");
+            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            return new IDataSource(dataSource);
         }
     }
 
