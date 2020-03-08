@@ -61,17 +61,17 @@ public interface TemplateEngine {
 
     void generateClassFiles(OutputOptions outputOptions);
 
-    static boolean recursionDeleteFile(File file, String fileName) {
-        if (!file.isDirectory()) {
+    static boolean recursionDeleteFile(File directory, String fileName) {
+        if (!directory.isDirectory()) {
             throw new RuntimeException("File " + fileName + " not a folder.");
         }
-        File[] files = file.listFiles();
+        File[] files = directory.listFiles();
         if (files == null) {
             return false;
         }
         for (File f : files) {
             if (f.isFile() && f.getName().equals(fileName)) {
-                return file.delete();
+                return directory.delete();
             }
             if (f.isDirectory()) {
                 return recursionDeleteFile(f, fileName);
@@ -80,15 +80,23 @@ public interface TemplateEngine {
         return false;
     }
 
-    static boolean deleteFile(String folderPath, String fileName) {
-        return recursionDeleteFile(new File(folderPath), fileName);
+    static boolean deleteFile(String directory, String fileName) {
+        return recursionDeleteFile(new File(directory), fileName);
     }
 
-    static boolean deleteAllFiles(File file) {
-        if (!file.isDirectory()) {
-            throw new RuntimeException("File " + file.getName() + " not a folder.");
+    static boolean deleteFile(String filePath) {
+        File file = new File(filePath);
+        if(!file.exists()) {
+            return false;
         }
-        File[] files = file.listFiles();
+        return file.delete();
+    }
+
+    static boolean deleteAllFiles(File directory) {
+        if (!directory.isDirectory()) {
+            throw new RuntimeException("File " + directory.getName() + " not a folder.");
+        }
+        File[] files = directory.listFiles();
         if (files == null) {
             return true;
         }

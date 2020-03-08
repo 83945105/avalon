@@ -15,7 +15,11 @@ import java.io.File;
  */
 public class EntityTemplateEngineTest {
 
-    private final static String ROOT_PATH = "C://generateFiles";
+    private final static String ROOT_PATH = System.getProperty("user.dir") + File.separator + "generator";
+
+    private final static String PACKAGE_PATH = "pub.avalonframework.sqlhelper.generator.entity";
+
+    private final static String PACKAGE_DIR_PATH = File.separator + PACKAGE_PATH.replaceAll("\\.", File.separator) + File.separator;
 
     @Test
     void Test_generateJavaFile_deleteFiles() {
@@ -23,23 +27,24 @@ public class EntityTemplateEngineTest {
                 .setDriverClassName("com.mysql.cj.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
-                .setPassword("root")
+                .setPassword("19910405")
                 .build();
         TemplateEngineBuilder.newTemplateEngineBuilder()
                 .setJdbcTemplate(jdbcTemplate)
                 .buildEntityTemplateEngine()
-                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath("pub.avalon.sqlhelper.readme.entity"))
+                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath(PACKAGE_PATH))
                 .addTable("sys_user", "SysUser")
                 .addTable("role_resource", "RoleResource")
                 .addTable("user_role", "UserRole")
                 .generateJavaFiles(new OutputOptions(ROOT_PATH));
-        File file1 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\SysUser.java");
+        File file1 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "SysUser.java");
         Assertions.assertTrue(file1.exists());
-        File file2 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\RoleResource.java");
+        File file2 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "RoleResource.java");
         Assertions.assertTrue(file2.exists());
-        File file3 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\UserRole.java");
+        File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRole.java");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
+        TemplateEngine.deleteFile(ROOT_PATH);
         Assertions.assertFalse(file1.exists());
         Assertions.assertFalse(file2.exists());
         Assertions.assertFalse(file3.exists());
@@ -51,23 +56,24 @@ public class EntityTemplateEngineTest {
                 .setDriverClassName("com.mysql.cj.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
-                .setPassword("root")
+                .setPassword("19910405")
                 .build();
         TemplateEngineBuilder.newTemplateEngineBuilder()
                 .setJdbcTemplate(jdbcTemplate)
                 .buildEntityTemplateEngine()
-                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath("pub.avalon.sqlhelper.readme.entity"))
+                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath(PACKAGE_PATH))
                 .addTable("sys_user", "SysUser")
                 .addTable("role_resource", "RoleResource")
                 .addTable("user_role", "UserRole")
                 .generateClassFiles(new OutputOptions(ROOT_PATH));
-        File file1 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\SysUser.class");
+        File file1 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "SysUser.class");
         Assertions.assertTrue(file1.exists());
-        File file2 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\RoleResource.class");
+        File file2 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "RoleResource.class");
         Assertions.assertTrue(file2.exists());
-        File file3 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\UserRole.class");
+        File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRole.class");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
+        TemplateEngine.deleteFile(ROOT_PATH);
         Assertions.assertFalse(file1.exists());
         Assertions.assertFalse(file2.exists());
         Assertions.assertFalse(file3.exists());
@@ -79,25 +85,26 @@ public class EntityTemplateEngineTest {
                 .setDriverClassName("com.mysql.cj.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
-                .setPassword("root")
+                .setPassword("19910405")
                 .build();
         TemplateEngineBuilder.newTemplateEngineBuilder()
                 .setJdbcTemplate(jdbcTemplate)
                 .buildEntityTemplateEngine()
                 .setDefaultGenerateOptions(new GenerateOptions()
-                        .setPackagePath("pub.avalon.sqlhelper.readme.entity")
+                        .setPackagePath(PACKAGE_PATH)
                         .setEntityOptions(new EntityOptions().setClassNameSuffix("Model")))
                 .addTable("sys_user", "SysUser")
                 .addTable("role_resource", "RoleResource")
                 .addTable("user_role", "UserRole")
                 .generateClassFiles(new OutputOptions(ROOT_PATH));
-        File file1 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\SysUserModel.class");
+        File file1 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "SysUserModel.class");
         Assertions.assertTrue(file1.exists());
-        File file2 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\RoleResourceModel.class");
+        File file2 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "RoleResourceModel.class");
         Assertions.assertTrue(file2.exists());
-        File file3 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\UserRoleModel.class");
+        File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleModel.class");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
+        TemplateEngine.deleteFile(ROOT_PATH);
         Assertions.assertFalse(file1.exists());
         Assertions.assertFalse(file2.exists());
         Assertions.assertFalse(file3.exists());

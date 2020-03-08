@@ -8,6 +8,7 @@ import pub.avalonframework.sqlhelper.generator.options.GenerateOptions;
 import pub.avalonframework.sqlhelper.generator.options.OutputOptions;
 import pub.avalonframework.sqlhelper.generator.options.TableHelperOptions;
 
+import javax.swing.*;
 import java.io.File;
 
 /**
@@ -15,7 +16,7 @@ import java.io.File;
  */
 public class TableHelperTemplateEngineTest {
 
-    private final static String ROOT_PATH = System.getProperty("user.dir") + "generator";
+    private final static String ROOT_PATH = System.getProperty("user.dir") + File.separator + "generator";
 
     private final static String PACKAGE_PATH = "pub.avalonframework.sqlhelper.generator.entity";
 
@@ -44,6 +45,7 @@ public class TableHelperTemplateEngineTest {
         File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleHelper.java");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
+        TemplateEngine.deleteFile(ROOT_PATH);
         Assertions.assertFalse(file1.exists());
         Assertions.assertFalse(file2.exists());
         Assertions.assertFalse(file3.exists());
@@ -72,6 +74,7 @@ public class TableHelperTemplateEngineTest {
         File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleHelper.class");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
+        TemplateEngine.deleteFile(ROOT_PATH);
         Assertions.assertFalse(file1.exists());
         Assertions.assertFalse(file2.exists());
         Assertions.assertFalse(file3.exists());
@@ -102,6 +105,7 @@ public class TableHelperTemplateEngineTest {
         File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleModel.class");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
+        TemplateEngine.deleteFile(ROOT_PATH);
         Assertions.assertFalse(file1.exists());
         Assertions.assertFalse(file2.exists());
         Assertions.assertFalse(file3.exists());
