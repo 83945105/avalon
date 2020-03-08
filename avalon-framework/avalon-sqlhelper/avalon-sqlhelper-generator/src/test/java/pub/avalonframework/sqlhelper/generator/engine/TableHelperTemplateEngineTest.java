@@ -15,7 +15,11 @@ import java.io.File;
  */
 public class TableHelperTemplateEngineTest {
 
-    private final static String ROOT_PATH = "C://generateFiles";
+    private final static String ROOT_PATH = System.getProperty("user.dir") + "generator";
+
+    private final static String PACKAGE_PATH = "pub.avalonframework.sqlhelper.generator.entity";
+
+    private final static String PACKAGE_DIR_PATH = File.separator + PACKAGE_PATH.replaceAll("\\.", File.separator) + File.separator;
 
     @Test
     void Test_generateJavaFile_deleteFiles() {
@@ -23,21 +27,21 @@ public class TableHelperTemplateEngineTest {
                 .setDriverClassName("com.mysql.cj.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
-                .setPassword("root")
+                .setPassword("19910405")
                 .build();
         TemplateEngineBuilder.newTemplateEngineBuilder()
                 .setJdbcTemplate(jdbcTemplate)
                 .buildTableHelperTemplateEngine()
-                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath("pub.avalon.sqlhelper.readme.entity"))
+                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath(PACKAGE_PATH))
                 .addTable("sys_user", "SysUser")
                 .addTable("role_resource", "RoleResource")
                 .addTable("user_role", "UserRole")
                 .generateJavaFiles(new OutputOptions(ROOT_PATH));
-        File file1 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\SysUserHelper.java");
+        File file1 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "SysUserHelper.java");
         Assertions.assertTrue(file1.exists());
-        File file2 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\RoleResourceHelper.java");
+        File file2 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "RoleResourceHelper.java");
         Assertions.assertTrue(file2.exists());
-        File file3 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\UserRoleHelper.java");
+        File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleHelper.java");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
         Assertions.assertFalse(file1.exists());
@@ -51,21 +55,21 @@ public class TableHelperTemplateEngineTest {
                 .setDriverClassName("com.mysql.cj.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
-                .setPassword("root")
+                .setPassword("19910405")
                 .build();
         TemplateEngineBuilder.newTemplateEngineBuilder()
                 .setJdbcTemplate(jdbcTemplate)
                 .buildTableHelperTemplateEngine()
-                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath("pub.avalon.sqlhelper.readme.entity"))
+                .setDefaultGenerateOptions(new GenerateOptions().setPackagePath(PACKAGE_PATH))
                 .addTable("sys_user", "SysUser")
                 .addTable("role_resource", "RoleResource")
                 .addTable("user_role", "UserRole")
                 .generateClassFiles(new OutputOptions(ROOT_PATH));
-        File file1 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\SysUserHelper.class");
+        File file1 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "SysUserHelper.class");
         Assertions.assertTrue(file1.exists());
-        File file2 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\RoleResourceHelper.class");
+        File file2 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "RoleResourceHelper.class");
         Assertions.assertTrue(file2.exists());
-        File file3 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\UserRoleHelper.class");
+        File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleHelper.class");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
         Assertions.assertFalse(file1.exists());
@@ -79,23 +83,23 @@ public class TableHelperTemplateEngineTest {
                 .setDriverClassName("com.mysql.cj.jdbc.Driver")
                 .setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false")
                 .setUsername("root")
-                .setPassword("root")
+                .setPassword("19910405")
                 .build();
         TemplateEngineBuilder.newTemplateEngineBuilder()
                 .setJdbcTemplate(jdbcTemplate)
                 .buildTableHelperTemplateEngine()
                 .setDefaultGenerateOptions(new GenerateOptions()
-                        .setPackagePath("pub.avalon.sqlhelper.readme.entity")
+                        .setPackagePath(PACKAGE_PATH)
                         .setTableHelperOptions(new TableHelperOptions().setClassNameSuffix("Model")))
                 .addTable("sys_user", "SysUser")
                 .addTable("role_resource", "RoleResource")
                 .addTable("user_role", "UserRole")
                 .generateClassFiles(new OutputOptions(ROOT_PATH));
-        File file1 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\SysUserModel.class");
+        File file1 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "SysUserModel.class");
         Assertions.assertTrue(file1.exists());
-        File file2 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\RoleResourceModel.class");
+        File file2 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "RoleResourceModel.class");
         Assertions.assertTrue(file2.exists());
-        File file3 = new File(ROOT_PATH + "\\pub\\avalon\\sqlhelper\\readme\\entity\\UserRoleModel.class");
+        File file3 = new File(ROOT_PATH + PACKAGE_DIR_PATH + "UserRoleModel.class");
         Assertions.assertTrue(file3.exists());
         TemplateEngine.deleteAllFiles(new File(ROOT_PATH));
         Assertions.assertFalse(file1.exists());

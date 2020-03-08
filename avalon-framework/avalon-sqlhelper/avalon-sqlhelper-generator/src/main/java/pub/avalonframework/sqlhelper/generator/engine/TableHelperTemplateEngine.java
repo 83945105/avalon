@@ -127,7 +127,7 @@ public final class TableHelperTemplateEngine implements TemplateEngine {
     }
 
     private String buildPathPrefix(String folderPath, String packagePath) {
-        if (folderPath == null || folderPath.trim().length() == 0) {
+        if (folderPath == null) {
             throw new RuntimeException("folderPath can not be null or empty.");
         }
         if (PROJECT_ROOT_PATH_SIGN.equals(folderPath.trim())) {

@@ -44,7 +44,8 @@ public class SpringTest {
         @Primary
         @ConfigurationProperties(prefix = "spring.datasource.sqlhelper")
         public DataSource ds0MasterDataSource() {
-            return new IDataSource(DataSourceBuilder.create().build());
+//            return new IDataSource(DataSourceBuilder.create().build());
+            return DataSourceBuilder.create().build();
         }
     }
 
