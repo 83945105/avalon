@@ -23,7 +23,7 @@ public class IConnection implements Connection {
 
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
-        return connection.prepareStatement(sql);
+        return new IPreparedStatement(connection.prepareStatement(sql));
     }
 
     @Override

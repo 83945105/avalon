@@ -9,6 +9,8 @@ import pub.avalonframework.jdbc.core.spring.service.SysUserService;
 import pub.avalonframework.sqlhelper.core.expression.lambda.ColumnLambdaCallable;
 import pub.avalonframework.web.utils.ValidationUtils;
 
+import java.util.List;
+
 /**
  * @author baichao
  */
@@ -40,5 +42,10 @@ public class SysUserServiceImpl implements SysUserService {
     public <T> T getSysUserById(String id, ColumnLambdaCallable<SysUserHelper.Column> columnLambdaCallable, Class<T> returnType) throws Exception {
         ValidationUtils.nonNullCheck("id", id);
         return sysUserJdbcDao.queryByPrimaryKey(id, engine -> engine.select(columnLambdaCallable), returnType);
+    }
+
+    @Override
+    public List<SysUser> getListSysUser() throws Exception {
+        return sysUserJdbcDao.query(engine -> engine);
     }
 }

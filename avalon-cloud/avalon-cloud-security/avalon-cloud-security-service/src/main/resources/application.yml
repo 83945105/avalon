@@ -1,0 +1,25 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  aop:
+    auto: true
+    proxy-target-class: true
+  mvc:
+    #配置访问需要经过静态的资源路径, /**表示所有
+    #这个配置影响静态资源访问路径,比如配置了 /resource/** 那么访问的时候,路径要加上resource
+    #比如: static-locations: classpath:/public/ 、 static-path-pattern: /resource/**
+    #那么表示静态资源默认指向classpath下的public目录,然后资源访问路径为 项目根路径 + resource + public文件夹下的目录(不要带上public)
+    static-path-pattern: /resource/**
+  resources:
+    #这个配置,表示映射路径,静态资源访问不要带上该路径
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  profiles:
+    include: option,spring-boot-admin,mybatis,weique-web,weique-security,xxl-job
+    active: dev
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true

@@ -40,10 +40,10 @@ public final class StringUtils {
             return true;
         }
         if (object instanceof Collection) {
-            return ((Collection) object).size() == 0;
+            return ((Collection<?>) object).size() == 0;
         }
         if (object instanceof Map) {
-            return ((Map) object).size() == 0;
+            return ((Map<?, ?>) object).size() == 0;
         }
         if (object.getClass().isArray()) {
             return ((Object[]) object).length == 0;

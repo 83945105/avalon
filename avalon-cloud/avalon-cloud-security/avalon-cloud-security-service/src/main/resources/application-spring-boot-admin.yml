@@ -1,0 +1,12 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8888"
+        #username: "admin"
+        #password: "admin"
+        #instance:
+          #metadata:
+            #user:
+              #name: "admin"
+              #password: "admin"

@@ -1,0 +1,7 @@
+spring:
+  weique:
+    web:
+      spring:
+        cors:
+          # 开启跨域
+          enabled: true

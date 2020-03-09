@@ -1,0 +1,7 @@
+#服务器
+server:
+  #端口号
+  port: 8080
+spring:
+  profiles:
+    include: multiple-data-source
