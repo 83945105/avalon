@@ -1,5 +1,5 @@
-// Generated from H:/git_repertory/avalon/avalon-cloud/avalon-cloud-security/avalon-cloud-security-service/src/test/java/pub/avalonframework/cloud/security/antlr\MySqlParser.g4 by ANTLR 4.8
-package pub.avalonframework.cloud.security.antlr;
+// Generated from /Users/baichao/develop/idea_projects/avalon/avalon-cloud/avalon-cloud-security/avalon-cloud-security-service/src/test/java/pub/avalonframework/cloud/security/antlr/mysql/MySqlParser.g4 by ANTLR 4.8
+package pub.avalonframework.cloud.security.antlr.mysql;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
