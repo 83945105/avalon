@@ -1,4 +1,4 @@
-package pub.avalonframework.office.excel.parser;
+package pub.avalonframework.office.excel.impl;
 
 import pub.avalonframework.office.excel.ExcelException;
 
@@ -36,9 +36,9 @@ public class ExcelTitleException extends ExcelException {
             return "row:" + excelTitleCellError.getRow()
                     + " col:" + excelTitleCellError.getCol()
                     + " 已被占用,title:"
-                    + excelTitleCellError.getExcelTitleCellHandler().getTitle()
-                    + " rowSpan:" + excelTitleCellError.getExcelTitleCellHandler().getRowSpan()
-                    + " colSpan:" + excelTitleCellError.getExcelTitleCellHandler().getColSpan();
+                    + excelTitleCellError.getExcelTitleCellOperations().getTitle()
+                    + " rowSpan:" + excelTitleCellError.getExcelTitleCellOperations().getRowSpan()
+                    + " colSpan:" + excelTitleCellError.getExcelTitleCellOperations().getColSpan();
         } catch (Exception e) {
             e.printStackTrace();
         }

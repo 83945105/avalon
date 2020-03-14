@@ -243,16 +243,16 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         /**
          * 格式化单元格
          *
-         * @param value       当前单元格值
-         * @param record      当前行数据
-         * @param cellHandler 操作单元格
-         * @param field       单元格所在列值
-         * @param rowCursor   当前行游标
-         * @param index       当前数据在数据集合中的下标
+         * @param value               当前单元格值
+         * @param record              当前行数据
+         * @param excelCellOperations 操作单元格
+         * @param field               单元格所在列值
+         * @param rowCursor           当前行游标
+         * @param index               当前数据在数据集合中的下标
          * @return 你要设置的单元格值
          * @throws ExportException
          */
-        Object apply(Object value, T record, ExcelCellHandler cellHandler, String field, int rowCursor, int index) throws ExportException;
+        Object apply(Object value, T record, ExcelCellOperations excelCellOperations, String field, int rowCursor, int index) throws ExportException;
     }
 
     @SuppressWarnings("unchecked")

@@ -5,7 +5,7 @@ package pub.avalonframework.office.excel;
  *
  * @author baichao
  */
-public abstract class BaseExcelCell extends BaseCell implements ExcelCellHandler {
+public abstract class BaseExcelCell extends BaseCell implements ExcelCellOperations {
 
     private ExcelWorkBookExport excelWorkBookExport;
 

@@ -1,6 +1,6 @@
 package pub.avalonframework.office.excel.impl;
 
-import pub.avalonframework.office.excel.ExcelTitleCellHandler;
+import pub.avalonframework.office.excel.ExcelTitleCellOperations;
 
 /**
  * @author baichao
@@ -16,17 +16,17 @@ public class ExcelTitleCellError {
      */
     private int col;
     /**
-     * 单元格
+     * Excel表头单元格操作
      */
-    private ExcelTitleCellHandler excelTitleCellHandler;
+    private ExcelTitleCellOperations excelTitleCellOperations;
 
     public ExcelTitleCellError() {
     }
 
-    public ExcelTitleCellError(int row, int col, ExcelTitleCellHandler excelTitleCellHandler) {
+    public ExcelTitleCellError(int row, int col, ExcelTitleCellOperations excelTitleCellOperations) {
         this.row = row;
         this.col = col;
-        this.excelTitleCellHandler = excelTitleCellHandler;
+        this.excelTitleCellOperations = excelTitleCellOperations;
     }
 
     public int getRow() {
@@ -45,11 +45,11 @@ public class ExcelTitleCellError {
         this.col = col;
     }
 
-    public ExcelTitleCellHandler getExcelTitleCellHandler() {
-        return excelTitleCellHandler;
+    public ExcelTitleCellOperations getExcelTitleCellOperations() {
+        return excelTitleCellOperations;
     }
 
-    public void setExcelTitleCellHandler(ExcelTitleCellHandler excelTitleCellHandler) {
-        this.excelTitleCellHandler = excelTitleCellHandler;
+    public void setExcelTitleCellOperations(ExcelTitleCellOperations excelTitleCellOperations) {
+        this.excelTitleCellOperations = excelTitleCellOperations;
     }
 }

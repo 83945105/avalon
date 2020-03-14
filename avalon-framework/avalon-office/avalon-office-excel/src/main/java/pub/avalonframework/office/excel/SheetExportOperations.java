@@ -14,7 +14,7 @@ import java.util.function.Function;
  * @author baichao
  */
 @SuppressWarnings("unused")
-public interface SheetExportHandler extends Sheet {
+public interface SheetExportOperations extends Sheet {
 
     /**
      * 获取所属的工作簿
@@ -31,7 +31,7 @@ public interface SheetExportHandler extends Sheet {
      * @return ExcelWorkBookExport
      */
     @Override
-    SheetExportHandler setRowCursor(Function<Integer, Integer> handler);
+    SheetExportOperations setRowCursor(Function<Integer, Integer> handler);
 
     /**
      * 设置列游标
@@ -40,7 +40,7 @@ public interface SheetExportHandler extends Sheet {
      * @return ExcelWorkBookExport
      */
     @Override
-    SheetExportHandler setColCursor(Function<Integer, Integer> handler);
+    SheetExportOperations setColCursor(Function<Integer, Integer> handler);
 
     /**
      * 解析表头json数据
@@ -235,7 +235,7 @@ public interface SheetExportHandler extends Sheet {
      * @return SheetExportHandler
      */
     @Override
-    default SheetExportHandler setRowNum(Function<Integer, Integer> handler) {
+    default SheetExportOperations setRowNum(Function<Integer, Integer> handler) {
         return this.setRowCursor(rowCursor -> handler.apply(rowCursor + 1) - 1);
     }
 
@@ -246,7 +246,7 @@ public interface SheetExportHandler extends Sheet {
      * @return SheetExportHandler
      */
     @Override
-    default SheetExportHandler setColumnNum(Function<Integer, Integer> handler) {
+    default SheetExportOperations setColumnNum(Function<Integer, Integer> handler) {
         return this.setColCursor(colCursor -> handler.apply(colCursor + 1) - 1);
     }
 }

@@ -3,7 +3,7 @@ package pub.avalonframework.office.excel;
 /**
  * @author baichao
  */
-public interface ExcelCellHandler extends CellHandler {
+public interface ExcelCellOperations extends CellOperations {
 
     /**
      * 获取值

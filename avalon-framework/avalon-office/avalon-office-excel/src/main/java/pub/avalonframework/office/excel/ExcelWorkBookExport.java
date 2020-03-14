@@ -21,7 +21,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @return 工作表对象
      * @throws ExportException
      */
-    SheetExportHandler createSheet() throws ExportException;
+    SheetExportOperations createSheet() throws ExportException;
 
     /**
      * 创建工作表
@@ -30,7 +30,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @return 工作表对象
      * @throws ExportException
      */
-    SheetExportHandler createSheet(String sheetName) throws ExportException;
+    SheetExportOperations createSheet(String sheetName) throws ExportException;
 
     /**
      * 获取工作表
@@ -39,7 +39,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @return 工作表对象
      */
     @Override
-    SheetExportHandler getSheet(int index);
+    SheetExportOperations getSheet(int index);
 
     /**
      * 获取所有表格的数据总数
@@ -73,7 +73,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
         /**
          * 处理Sheet
          *
-         * @param sheet                 待处理的Sheet
+         * @param exportOperations      待处理的Sheet
          * @param sheetIndex            当前Sheet在WorkBook中的下标
          * @param index                 当前创建的Sheet下标
          * @param totalAllSheetDataSize WorkBook中所有Sheet已经导入的数据总数
@@ -81,7 +81,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
          * @throws ExcelException
          * @throws IOException
          */
-        void accept(SheetExportHandler sheet, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize) throws ExcelException, IOException;
+        void accept(SheetExportOperations exportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize) throws ExcelException, IOException;
     }
 
     @FunctionalInterface
@@ -90,7 +90,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
         /**
          * 处理Sheet
          *
-         * @param sheet                 待处理的Sheet
+         * @param sheetExportOperations 待处理的Sheet
          * @param sheetIndex            当前Sheet在WorkBook中的下标
          * @param index                 当前创建的Sheet下标
          * @param totalAllSheetDataSize WorkBook中所有Sheet已经导入的数据总数
@@ -99,7 +99,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
          * @throws IOException
          * @throws ExcelException
          */
-        boolean accept(SheetExportHandler sheet, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize) throws IOException, ExcelException;
+        boolean accept(SheetExportOperations sheetExportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize) throws IOException, ExcelException;
     }
 
     /**
@@ -152,12 +152,12 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
         boolean goon;
         for (int i = 0; i < MAX_BATCH_CREATE_SHEETS_NUMBER; i++) {
             int sheetIndex = getSheetSize();
-            SheetExportHandler s = createSheet(formatterSheetName.apply(sheetIndex, i));
+            SheetExportOperations sheetExportOperations = createSheet(formatterSheetName.apply(sheetIndex, i));
             if (i > 0) {
                 totalAllSheetDataSize += getSheet(i - 1).getTotalDataSize();
                 totalSheetDataSize += getSheet(i - 1).getTotalDataSize();
             }
-            goon = handlerSheet.accept(s, sheetIndex, i, totalAllSheetDataSize, totalSheetDataSize);
+            goon = handlerSheet.accept(sheetExportOperations, sheetIndex, i, totalAllSheetDataSize, totalSheetDataSize);
             if (!goon) {
                 break;
             }

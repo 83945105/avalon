@@ -16,7 +16,7 @@ import java.util.function.Function;
  * @author baichao
  */
 @SuppressWarnings("unused")
-public interface ExcelSheetExport extends SheetExportHandler {
+public interface ExcelSheetExport extends SheetExportOperations {
 
     /**
      * 设置行游标

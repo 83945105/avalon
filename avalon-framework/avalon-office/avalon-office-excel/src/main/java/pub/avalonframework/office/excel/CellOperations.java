@@ -5,7 +5,7 @@ package pub.avalonframework.office.excel;
  *
  * @author baichao
  */
-public interface CellHandler {
+public interface CellOperations {
 
     /**
      * 开始行号

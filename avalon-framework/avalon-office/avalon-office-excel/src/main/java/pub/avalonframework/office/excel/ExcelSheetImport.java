@@ -13,7 +13,7 @@ import java.util.function.Function;
  *
  * @author baichao
  */
-public interface ExcelSheetImport extends SheetImportHandler {
+public interface ExcelSheetImport extends SheetImportOperations {
 
     /**
      * 设置行游标

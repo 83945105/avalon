@@ -15,7 +15,7 @@ import java.util.function.Function;
  * @author baichao
  */
 @SuppressWarnings("unused")
-public interface SheetImportHandler extends Sheet {
+public interface SheetImportOperations extends Sheet {
 
     /**
      * 获取所属Excel工作簿
@@ -67,7 +67,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      */
     @Override
-    SheetImportHandler setRowCursor(Function<Integer, Integer> handler);
+    SheetImportOperations setRowCursor(Function<Integer, Integer> handler);
 
     /**
      * 设置列游标
@@ -76,7 +76,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      */
     @Override
-    SheetImportHandler setColCursor(Function<Integer, Integer> handler);
+    SheetImportOperations setColCursor(Function<Integer, Integer> handler);
 
     /**
      * 设置行号
@@ -85,7 +85,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      */
     @Override
-    default SheetImportHandler setRowNum(Function<Integer, Integer> handler) {
+    default SheetImportOperations setRowNum(Function<Integer, Integer> handler) {
         return this.setRowCursor(rowCursor -> handler.apply(rowCursor + 1) - 1);
     }
 
@@ -96,7 +96,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      */
     @Override
-    default SheetImportHandler setColumnNum(Function<Integer, Integer> handler) {
+    default SheetImportOperations setColumnNum(Function<Integer, Integer> handler) {
         return this.setColCursor(colCursor -> handler.apply(colCursor + 1) - 1);
     }
 
@@ -109,7 +109,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      * @throws ExcelException 解析titles类型不正确
      */
-    <T> SheetImportHandler parseTitlesJson(String titlesJson, Class<T> clazz) throws ExcelException;
+    <T> SheetImportOperations parseTitlesJson(String titlesJson, Class<T> clazz) throws ExcelException;
 
     /**
      * 解析表头json文件
@@ -121,7 +121,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws IOException    参考实现
      * @throws ExcelException 参考实现
      */
-    <T> SheetImportHandler parseTitlesJson(InputStream inputStream, Class<T> clazz) throws IOException, ExcelException;
+    <T> SheetImportOperations parseTitlesJson(InputStream inputStream, Class<T> clazz) throws IOException, ExcelException;
 
     /**
      * 解析表头json文件
@@ -133,7 +133,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws IOException    参考实现
      * @throws ExcelException 参考实现
      */
-    <T> SheetImportHandler parseTitlesJson(File file, Class<T> clazz) throws IOException, ExcelException;
+    <T> SheetImportOperations parseTitlesJson(File file, Class<T> clazz) throws IOException, ExcelException;
 
     /**
      * 设置表头
@@ -144,7 +144,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      * @throws ExcelException titles类型不正确
      */
-    <T> SheetImportHandler setTitles(BaseExcelTitleCell[][] titles, Class<T> clazz) throws ExcelException;
+    <T> SheetImportOperations setTitles(BaseExcelTitleCell[][] titles, Class<T> clazz) throws ExcelException;
 
     /**
      * 设置列对应的数据属性
@@ -155,7 +155,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      * @throws ExcelException 参考实现
      */
-    <T> SheetImportHandler setColumnFields(List<String> fields, Class<T> clazz) throws ExcelException;
+    <T> SheetImportOperations setColumnFields(List<String> fields, Class<T> clazz) throws ExcelException;
 
     /**
      * 设置列对应的数据属性
@@ -167,7 +167,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      * @throws ExcelException 参考实现
      */
-    <T> SheetImportHandler setColumnFields(int rowSpan, List<String> fields, Class<T> clazz) throws ExcelException;
+    <T> SheetImportOperations setColumnFields(int rowSpan, List<String> fields, Class<T> clazz) throws ExcelException;
 
     /**
      * 设置列值
@@ -177,7 +177,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      * @throws ExcelException 参考实现
      */
-    default SheetImportHandler setColumnFields(String... fields) throws ExcelException {
+    default SheetImportOperations setColumnFields(String... fields) throws ExcelException {
         return setColumnFields(Arrays.asList(fields), HashMap.class);
     }
 
@@ -190,7 +190,7 @@ public interface SheetImportHandler extends Sheet {
      * @return SheetImportHandler
      * @throws ExcelException 参考实现
      */
-    default SheetImportHandler setColumnFields(int rowSpan, String... fields) throws ExcelException {
+    default SheetImportOperations setColumnFields(int rowSpan, String... fields) throws ExcelException {
         return setColumnFields(rowSpan, Arrays.asList(fields), HashMap.class);
     }
 
@@ -203,7 +203,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws ExcelException 参考实现
      */
     @Override
-    default SheetImportHandler parseTitlesJson(InputStream inputStream) throws IOException, ExcelException {
+    default SheetImportOperations parseTitlesJson(InputStream inputStream) throws IOException, ExcelException {
         return parseTitlesJson(inputStream, HashMap.class);
     }
 
@@ -216,7 +216,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws ExcelException 参考实现
      */
     @Override
-    default SheetImportHandler parseTitlesJson(File file) throws IOException, ExcelException {
+    default SheetImportOperations parseTitlesJson(File file) throws IOException, ExcelException {
         return parseTitlesJson(file, HashMap.class);
     }
 
@@ -228,7 +228,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws ExcelException 参考实现
      */
     @Override
-    default SheetImportHandler parseTitlesJson(String titlesJson) throws ExcelException {
+    default SheetImportOperations parseTitlesJson(String titlesJson) throws ExcelException {
         return parseTitlesJson(titlesJson, HashMap.class);
     }
 
@@ -240,7 +240,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws ExcelException 参考实现
      */
     @Override
-    default SheetImportHandler setTitles(BaseExcelTitleCell[][] titles) throws ExcelException {
+    default SheetImportOperations setTitles(BaseExcelTitleCell[][] titles) throws ExcelException {
         return setTitles(titles, HashMap.class);
     }
 
@@ -261,7 +261,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws InstantiationException 参考实现
      * @throws IllegalAccessException 参考实现
      */
-    <T> SheetImportHandler readRows(Class<T> clazz) throws ExcelException, InstantiationException, IllegalAccessException;
+    <T> SheetImportOperations readRows(Class<T> clazz) throws ExcelException, InstantiationException, IllegalAccessException;
 
     /**
      * 读取数据
@@ -274,7 +274,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws InstantiationException 参考实现
      * @throws IllegalAccessException 参考实现
      */
-    <T> SheetImportHandler readRows(Class<T> clazz, HandlerRowA<T> handlerRow) throws ExcelException, InstantiationException, IllegalAccessException;
+    <T> SheetImportOperations readRows(Class<T> clazz, HandlerRowA<T> handlerRow) throws ExcelException, InstantiationException, IllegalAccessException;
 
     /**
      * 读取数据
@@ -287,7 +287,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws InstantiationException 参考实现
      * @throws IllegalAccessException 参考实现
      */
-    <T> SheetImportHandler readRows(Class<T> clazz, HandlerRowB<T> handlerRow) throws ExcelException, InstantiationException, IllegalAccessException;
+    <T> SheetImportOperations readRows(Class<T> clazz, HandlerRowB<T> handlerRow) throws ExcelException, InstantiationException, IllegalAccessException;
 
     /**
      * 读取数据(使用默认数据类型或者表头设置的数据类型)
@@ -297,7 +297,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws IllegalAccessException 参考实现
      * @throws InstantiationException 参考实现
      */
-    SheetImportHandler readRows() throws ExcelException, IllegalAccessException, InstantiationException;
+    SheetImportOperations readRows() throws ExcelException, IllegalAccessException, InstantiationException;
 
     /**
      * 读取数据(使用默认数据类型或者表头设置的数据类型)
@@ -308,7 +308,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws IllegalAccessException 参考实现
      * @throws InstantiationException 参考实现
      */
-    <T> SheetImportHandler readRows(HandlerRowA<T> handlerRow) throws ExcelException, IllegalAccessException, InstantiationException;
+    <T> SheetImportOperations readRows(HandlerRowA<T> handlerRow) throws ExcelException, IllegalAccessException, InstantiationException;
 
     /**
      * 读取数据(使用默认数据类型或者表头设置的数据类型)
@@ -319,7 +319,7 @@ public interface SheetImportHandler extends Sheet {
      * @throws IllegalAccessException 参考实现
      * @throws InstantiationException 参考实现
      */
-    <T> SheetImportHandler readRows(HandlerRowB<T> handlerRow) throws ExcelException, IllegalAccessException, InstantiationException;
+    <T> SheetImportOperations readRows(HandlerRowB<T> handlerRow) throws ExcelException, IllegalAccessException, InstantiationException;
 
     /**
      * 获取读到的数据

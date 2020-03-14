@@ -5,7 +5,7 @@ package pub.avalonframework.office.excel;
  *
  * @author baichao
  */
-public abstract class BaseExcelTitleCell extends BaseCell implements ExcelTitleCellHandler {
+public abstract class BaseExcelTitleCell extends BaseCell implements ExcelTitleCellOperations {
 
     /**
      * 默认表头单元格样式

@@ -4,6 +4,8 @@ import pub.avalonframework.common.utils.SortUtils;
 import pub.avalonframework.office.excel.BaseCell;
 import pub.avalonframework.office.excel.BaseExcelTitleCell;
 import pub.avalonframework.office.excel.ExcelException;
+import pub.avalonframework.office.excel.impl.ExcelTitleCellError;
+import pub.avalonframework.office.excel.impl.ExcelTitleException;
 
 import java.io.*;
 import java.util.*;
