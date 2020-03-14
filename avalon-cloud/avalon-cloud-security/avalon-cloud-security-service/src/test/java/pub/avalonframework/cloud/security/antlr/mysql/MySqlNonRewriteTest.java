@@ -74,6 +74,7 @@ public class MySqlNonRewriteTest {
         assertNonRewrite("SELECT ( SELECT * FROM USER ) FROM USER INNER JOIN ( SELECT * FROM USER ) T");
         assertNonRewrite("SELECT ( SELECT * FROM USER ) id FROM USER INNER JOIN ( SELECT * FROM USER ) T");
         assertNonRewrite("SELECT ( SELECT * FROM USER ) AS id FROM USER INNER JOIN ( SELECT * FROM USER ) T");
+        assertNonRewrite("SELECT ( SELECT * FROM USER ), ( SELECT * FROM USER ) FROM USER INNER JOIN ( SELECT * FROM USER ) T");
     }
 
     public static void main(String[] args) throws IOException {
