@@ -17,7 +17,6 @@ import pub.avalonframework.cloud.gar.dc.TemplatePut;
  * 模板接口
  *
  * @author 白超
- * @date 2018/12/7
  */
 @FeignClient(name = "${feign.gar.template-api-service-name:gar-service}", path = "${feign.gar.template-api-service-path:/api-gar-template}")
 public interface GarTemplateApi {

@@ -16,7 +16,6 @@ import pub.avalonframework.cloud.gar.dc.AutResourcePut;
  * 资源接口
  *
  * @author 白超
- * @date 2018/6/13
  */
 @FeignClient(name = "${feign.gar.resource-api-service-name:gar-service}", path = "${feign.gar.resource-api-service-path:/api-gar-resource}")
 public interface GarResourceApi {

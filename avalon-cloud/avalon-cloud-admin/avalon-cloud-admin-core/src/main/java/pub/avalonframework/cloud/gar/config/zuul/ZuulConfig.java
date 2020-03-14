@@ -10,7 +10,6 @@ import pub.avalonframework.cloud.gar.beans.DynamicRouteLocator;
 
 /**
  * @author 白超
- * @date 2018/6/19
  */
 @Configuration
 public class ZuulConfig {

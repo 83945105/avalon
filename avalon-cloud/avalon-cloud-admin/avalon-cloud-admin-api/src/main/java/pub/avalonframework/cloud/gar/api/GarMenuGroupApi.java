@@ -16,7 +16,6 @@ import pub.avalonframework.cloud.gar.dc.MenuGroupPut;
  * 菜单组接口
  *
  * @author 白超
- * @date 2018/12/7
  */
 @FeignClient(name = "${feign.gar.menu-group-api-service-name:gar-service}", path = "${feign.gar.menu-group-api-service-path:/api-gar-menu-group}")
 public interface GarMenuGroupApi {

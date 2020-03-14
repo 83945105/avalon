@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  * 支付宝二维码支付接口
  *
  * @author 白超
- * @date 2018/12/11
  */
 @FeignClient(name = "${feign.pay.alipay.qr-code-api-service-name:pay-service}",
         path = "${feign.pay.alipay.qr-code-api-service-path:/api-pay-alipay-qr-code}")

@@ -20,7 +20,6 @@ import java.util.List;
  * 路由接口
  *
  * @author 白超
- * @date 2018/12/7
  */
 @FeignClient(name = "${feign.gar.route-api-service-name:gar-service}", path = "${feign.gar.route-api-service-path:/api-gar-route}")
 public interface GarRouteApi {

@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * @author 白超
- * @date 2018/7/23
  */
 public interface GarRoleRouteViewTemplateService {
 

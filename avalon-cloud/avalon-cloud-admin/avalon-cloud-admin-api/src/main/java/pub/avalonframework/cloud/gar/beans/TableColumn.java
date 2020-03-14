@@ -4,7 +4,6 @@ package pub.avalonframework.cloud.gar.beans;
  * 对象列
  *
  * @author 白超
- * @date 2018/11/14
  */
 public class TableColumn {
 

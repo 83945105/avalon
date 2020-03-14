@@ -1,7 +1,6 @@
 package com.microservice.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -12,7 +11,6 @@ import java.time.Duration;
 
 /**
  * @author 白超
- * @date 2019/11/7
  */
 //@Configuration
 public class RedisSessionConfig {

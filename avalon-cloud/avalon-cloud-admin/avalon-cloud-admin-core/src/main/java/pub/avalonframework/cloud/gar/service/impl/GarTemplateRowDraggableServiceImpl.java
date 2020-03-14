@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * @author 白超
- * @date 2019/5/9
  */
 @Service
 public class GarTemplateRowDraggableServiceImpl implements GarTemplateRowDraggableService {

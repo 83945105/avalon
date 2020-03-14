@@ -6,7 +6,6 @@ import org.apache.shiro.authc.AuthenticationException;
  * 第三方登录异常
  *
  * @author baichao
- * @date 2018/6/22
  */
 public class ThirdPartyLoginException extends AuthenticationException {
 

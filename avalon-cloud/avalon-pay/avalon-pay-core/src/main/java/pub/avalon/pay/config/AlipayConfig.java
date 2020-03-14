@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author 白超
- * @date 2018/8/30
  */
 @Configuration
 public class AlipayConfig {

@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pub.avalon.holygrail.response.utils.DataViewUtil;
-import pub.avalon.holygrail.response.views.DataView;
 import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
 import pub.avalonframework.cloud.gar.api.GarAccountNumberApi;
@@ -24,7 +22,6 @@ import java.util.Set;
 
 /**
  * @author 白超
- * @date 2018/11/14
  */
 @RequestMapping(GarAccountNumberApi.ROOT_PATH)
 @RestController

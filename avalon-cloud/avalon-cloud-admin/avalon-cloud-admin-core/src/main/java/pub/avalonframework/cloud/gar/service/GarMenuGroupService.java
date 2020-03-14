@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * @author 白超
- * @date 2018/12/6
  */
 public interface GarMenuGroupService {
 

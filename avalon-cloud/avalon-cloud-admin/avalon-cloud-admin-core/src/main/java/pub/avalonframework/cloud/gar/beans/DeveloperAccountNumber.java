@@ -5,7 +5,6 @@ import java.util.Set;
 
 /**
  * @author baichao
- * @date 2019/11/26
  */
 public final class DeveloperAccountNumber implements AccountNumber {
 

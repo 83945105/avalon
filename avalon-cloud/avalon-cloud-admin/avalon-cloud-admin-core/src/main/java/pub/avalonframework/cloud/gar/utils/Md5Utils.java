@@ -5,7 +5,6 @@ import org.apache.shiro.util.ByteSource;
 
 /**
  * @author 白超
- * @date 2018/10/15
  */
 public class Md5Utils {
 

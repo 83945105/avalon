@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 
 /**
  * @author 白超
- * @date 2019/1/19
  */
 @Service
 public class GarRouteNodeDraggableServiceImpl implements GarRouteNodeDraggableService {

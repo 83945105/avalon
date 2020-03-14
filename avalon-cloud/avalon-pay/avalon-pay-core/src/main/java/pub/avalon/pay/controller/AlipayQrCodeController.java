@@ -38,7 +38,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author baichao
- * @date 2018/12/11
  */
 @RequestMapping("${feign.pay.alipay.qr-code-api-service-path:/api-pay-alipay-qr-code}")
 @RestController

@@ -4,7 +4,6 @@ package pub.avalon.pay.beans;
  * 支付宝异步通知
  *
  * @author baichao
- * @date 2018/12/1
  */
 public class AlipayNotify {
 

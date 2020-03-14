@@ -16,7 +16,6 @@ import pub.avalonframework.cloud.gar.dc.SubModulePut;
  * 子模块接口
  *
  * @author 白超
- * @date 2018/12/6
  */
 @FeignClient(name = "${feign.gar.sub-module-api-service-name:gar-service}", path = "${feign.gar.sub-module-api-service-path:/api-gar-sub-module}")
 public interface GarSubModuleApi {

@@ -14,7 +14,6 @@ import pub.avalonframework.cloud.gar.dc.AutObjectGet;
  * 对象接口
  *
  * @author 白超
- * @date 2018/7/24
  */
 @FeignClient(name = "${feign.gar.object-api-service-name:gar-service}", path = "${feign.gar.object-api-service-path:/api-gar-object}")
 public interface GarObjectApi {

@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author 白超
- * @date 2018/12/1
  */
 @RequestMapping("${feign.pay.alipay.pay-business-api-service-path:/api-pay-business}")
 @RestController

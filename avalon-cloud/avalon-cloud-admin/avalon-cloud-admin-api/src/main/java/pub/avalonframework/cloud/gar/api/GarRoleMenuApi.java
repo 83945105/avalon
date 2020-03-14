@@ -14,7 +14,6 @@ import pub.avalonframework.cloud.gar.dc.AutRoleMenuGet;
  * 角色菜单接口
  *
  * @author 白超
- * @date 2018/7/23
  */
 @FeignClient(name = "${feign.gar.role-menu-api-service-name:gar-service}", path = "${feign.gar.role-menu-api-service-path:/api-gar-role-menu}")
 public interface GarRoleMenuApi {

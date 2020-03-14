@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
  * 支付宝电脑网站接口
  *
  * @author 白超
- * @date 2018/12/1
  */
 @FeignClient(name = "${feign.pay.alipay.computer-website-api-service-name:pay-service}",
         path = "${feign.pay.alipay.computer-website-api-service-path:/api-pay-alipay-computer-website}")

@@ -4,7 +4,6 @@ package pub.avalon.pay.beans;
  * 交易撤销
  *
  * @author 白超
- * @date 2019/1/3
  */
 public class WeChatPayTradeCancel {
 

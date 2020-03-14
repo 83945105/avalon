@@ -4,7 +4,6 @@ import pub.avalon.holygrail.response.beans.Status;
 
 /**
  * @author baichao
- * @date 2018/7/24
  */
 public interface AutObject {
 

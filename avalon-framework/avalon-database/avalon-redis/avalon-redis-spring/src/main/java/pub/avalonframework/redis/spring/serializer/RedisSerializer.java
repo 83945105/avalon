@@ -5,7 +5,6 @@ import pub.avalonframework.core.beans.SerializationException;
 
 /**
  * @author 白超
- * @date 2019/11/19
  */
 public interface RedisSerializer<T> {
 

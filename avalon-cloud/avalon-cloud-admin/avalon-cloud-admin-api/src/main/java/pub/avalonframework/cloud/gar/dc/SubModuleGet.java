@@ -5,7 +5,6 @@ import pub.avalonframework.cloud.gar.entity.SubModule;
 
 /**
  * @author 白超
- * @date 2018/12/6
  */
 public class SubModuleGet extends SubModule {
 

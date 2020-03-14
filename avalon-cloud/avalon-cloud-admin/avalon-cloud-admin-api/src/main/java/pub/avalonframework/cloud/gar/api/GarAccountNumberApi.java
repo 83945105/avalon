@@ -14,7 +14,6 @@ import java.util.Set;
  * 账户接口
  *
  * @author 白超
- * @date 2018/11/13
  */
 @FeignClient(name = "${feign.gar.account-number-api-service-name:gar-service}", path = "${feign.gar.account-number-api-service-path:/api-gar-account-number}")
 public interface GarAccountNumberApi {

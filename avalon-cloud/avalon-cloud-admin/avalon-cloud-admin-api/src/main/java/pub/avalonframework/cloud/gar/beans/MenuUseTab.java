@@ -6,7 +6,6 @@ import pub.avalon.beans.EnumMethods;
  * 菜单是否使用选项卡功能
  *
  * @author baichao
- * @date 2018/12/10
  */
 public enum MenuUseTab implements EnumMethods {
 

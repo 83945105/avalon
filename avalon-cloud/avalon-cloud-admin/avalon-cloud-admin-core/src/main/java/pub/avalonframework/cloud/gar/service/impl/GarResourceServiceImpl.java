@@ -29,7 +29,6 @@ import java.util.function.Consumer;
 
 /**
  * @author 白超
- * @date 2018/6/13
  */
 @Service
 public class GarResourceServiceImpl implements GarResourceService {

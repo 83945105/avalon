@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 
 /**
  * @author 白超
- * @date 2018/7/23
  */
 @RestController
 @RequestMapping(GarRouteViewTemplateApi.ROOT_PATH)

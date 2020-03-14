@@ -6,7 +6,6 @@ import java.math.BigDecimal;
  * 支付宝异步通知-业务
  *
  * @author baichao
- * @date 2018/12/1
  */
 public class AlipayNotifyQrCode extends AlipayNotify {
 

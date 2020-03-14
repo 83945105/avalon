@@ -4,7 +4,6 @@ package pub.avalon.pay.beans;
  * 交易查询
  *
  * @author baichao
- * @date 2019/1/3
  */
 public class WeChatPayTradeQuery {
 

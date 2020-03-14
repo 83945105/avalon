@@ -30,7 +30,6 @@ import java.util.Map;
 
 /**
  * @author 白超
- * @date 2018/12/1
  */
 @RequestMapping("${feign.pay.alipay.computer-website-api-service-path:/api-pay-alipay-computer-website}")
 @RestController

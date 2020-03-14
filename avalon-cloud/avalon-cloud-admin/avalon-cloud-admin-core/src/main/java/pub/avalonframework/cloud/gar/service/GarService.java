@@ -4,7 +4,6 @@ import java.util.Map;
 
 /**
  * @author 白超
- * @date 2018/11/26
  */
 public interface GarService {
 

@@ -5,7 +5,6 @@ import pub.avalonframework.cloud.gar.entity.AutRoleMenu;
 
 /**
  * @author 白超
- * @date 2018/12/10
  */
 public class AutRoleMenuGet extends AutRoleMenu {
 

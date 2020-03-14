@@ -6,7 +6,6 @@ import pub.avalon.beans.EnumMethods;
  * 菜单路由关系
  *
  * @author 白超
- * @date 2018/12/13
  */
 public enum MenuRouteRelation implements EnumMethods {
 

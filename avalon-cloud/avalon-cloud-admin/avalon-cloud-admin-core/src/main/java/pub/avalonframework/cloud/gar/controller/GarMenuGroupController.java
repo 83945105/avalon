@@ -27,7 +27,6 @@ import java.util.Map;
 
 /**
  * @author 白超
- * @date 2018/12/6
  */
 @RequestMapping(GarMenuGroupApi.ROOT_PATH)
 @RestController

@@ -14,7 +14,6 @@ import pub.avalonframework.cloud.gar.dc.AutRoleResourceGet;
  * 角色资源接口
  *
  * @author 白超
- * @date 2018/7/23
  */
 @FeignClient(name = "${feign.gar.role-resource-api-service-name:gar-service}", path = "${feign.gar.role-resource-api-service-path:/api-gar-role-resource}")
 public interface GarRoleResourceApi {

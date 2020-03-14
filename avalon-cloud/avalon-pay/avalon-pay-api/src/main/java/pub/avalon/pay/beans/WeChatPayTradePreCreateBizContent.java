@@ -13,7 +13,6 @@ import java.util.Collections;
  * 微信支付支付内容
  *
  * @author baichao
- * @date 2019/1/3
  */
 @XmlRootElement
 public class WeChatPayTradePreCreateBizContent {

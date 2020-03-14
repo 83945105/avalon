@@ -6,7 +6,6 @@ import pub.avalon.beans.EnumMethods;
  * 视图类型
  *
  * @author 白超
- * @date 2018/12/7
  */
 public enum TemplateType implements EnumMethods {
     /**

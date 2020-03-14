@@ -22,7 +22,6 @@ import java.util.*;
 
 /**
  * @author 白超
- * @date 2018/7/23
  */
 @Service
 public class GarRoleResourceServiceImpl implements GarRoleResourceService {

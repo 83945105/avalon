@@ -5,7 +5,6 @@ import pub.avalonframework.cloud.gar.entity.Route;
 
 /**
  * @author 白超
- * @date 2018/12/7
  */
 public class RoutePost extends Route {
 

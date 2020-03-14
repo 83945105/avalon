@@ -18,7 +18,6 @@ import java.util.Map;
 
 /**
  * @author 白超
- * @date 2018/6/11
  */
 @RestController
 @RequestMapping(GarApi.ROOT_PATH)

@@ -12,7 +12,6 @@ import java.util.Set;
  * 资源查询
  *
  * @author 白超
- * @date 2018/6/13
  */
 public class AutResourceGet extends AutResource {
 

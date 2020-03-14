@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
  * 支付业务接口
  *
  * @author 白超
- * @date 2018/12/1
  */
 @FeignClient(name = "${feign.pay.alipay.pay-business-api-service-name:pay-service}", path = "${feign.pay.alipay.pay-business-api-service-path:/api-pay-business}")
 public interface PayBusinessApi {

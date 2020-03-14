@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  * 错误处理
  *
  * @author 白超
- * @date 2018-3-15
  */
 @RestController
 public class GlobalErrorResponseController implements ErrorController {

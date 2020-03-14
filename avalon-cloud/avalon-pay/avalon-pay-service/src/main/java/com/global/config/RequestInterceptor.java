@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author baichao
- * @date 2018/6/15
  */
 public class RequestInterceptor implements HandlerInterceptor {
 

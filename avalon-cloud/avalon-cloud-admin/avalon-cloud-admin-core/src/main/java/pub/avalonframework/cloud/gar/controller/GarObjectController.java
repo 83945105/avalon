@@ -21,7 +21,6 @@ import java.util.Collections;
 
 /**
  * @author 白超
- * @date 2018/7/24
  */
 @RestController
 @RequestMapping(GarObjectApi.ROOT_PATH)

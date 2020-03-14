@@ -2,7 +2,6 @@ package pub.avalonframework.redis.beans;
 
 /**
  * @author baichao
- * @date 2018/8/2
  */
 public class Reichu extends Pikachu {
 

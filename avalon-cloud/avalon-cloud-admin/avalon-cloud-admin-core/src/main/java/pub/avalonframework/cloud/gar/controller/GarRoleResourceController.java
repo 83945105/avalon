@@ -23,7 +23,6 @@ import java.util.Map;
 
 /**
  * @author 白超
- * @date 2018/7/23
  */
 @RestController
 @RequestMapping(GarRoleResourceApi.ROOT_PATH)

@@ -7,7 +7,6 @@ import java.util.Set;
 
 /**
  * @author 白超
- * @date 2018/11/14
  */
 public interface GarAccountNumberService {
 

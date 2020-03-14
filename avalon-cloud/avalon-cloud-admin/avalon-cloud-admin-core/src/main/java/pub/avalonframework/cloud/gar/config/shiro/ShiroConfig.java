@@ -11,7 +11,6 @@ import pub.avalonframework.security.core.api.service.ResourceAuthenticationServi
  * Shiro整合
  *
  * @author 白超
- * @date 2018/6/25
  */
 @Configuration
 public class ShiroConfig {

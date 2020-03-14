@@ -16,7 +16,6 @@ import javax.sql.DataSource;
  * 数据源配置
  *
  * @author 白超
- * @date 2018/9/10
  */
 @Configuration
 public class DataSourceConfig {

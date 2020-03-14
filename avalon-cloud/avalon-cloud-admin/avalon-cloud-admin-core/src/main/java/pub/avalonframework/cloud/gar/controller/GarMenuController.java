@@ -14,7 +14,6 @@ import pub.avalon.holygrail.response.views.DataView;
 import pub.avalon.holygrail.utils.StringUtil;
 import pub.avalon.sqlhelper.factory.MySqlDynamicEngine;
 import pub.avalon.sqlhelper.spring.beans.PageResultForBean;
-import pub.avalon.sqlhelper.spring.beans.PageResultForMap;
 import pub.avalon.sqlhelper.spring.core.SpringJdbcEngine;
 import pub.avalonframework.cloud.gar.api.GarMenuApi;
 import pub.avalonframework.cloud.gar.beans.MenuDragParams;
@@ -40,7 +39,6 @@ import java.util.stream.Collectors;
 
 /**
  * @author 白超
- * @date 2018/12/6
  */
 @RequestMapping(GarMenuApi.ROOT_PATH)
 @RestController

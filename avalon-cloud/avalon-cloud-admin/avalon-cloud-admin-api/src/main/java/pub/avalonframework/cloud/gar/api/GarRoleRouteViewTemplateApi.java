@@ -12,7 +12,6 @@ import pub.avalon.holygrail.response.views.DataView;
  * 角色路由视图模板接口
  *
  * @author 白超
- * @date 2018/7/23
  */
 @FeignClient(name = "${feign.gar.role-route-view-template-api-service-name:gar-service}", path = "${feign.gar.role-route-view-template-api-service-path:/api-gar-role-route-view-template}")
 public interface GarRoleRouteViewTemplateApi {

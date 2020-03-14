@@ -5,7 +5,6 @@ import pub.avalonframework.cloud.gar.entity.MenuGroup;
 
 /**
  * @author baichao
- * @date 2018/12/14
  */
 public class MenuGroupGet extends MenuGroup {
 

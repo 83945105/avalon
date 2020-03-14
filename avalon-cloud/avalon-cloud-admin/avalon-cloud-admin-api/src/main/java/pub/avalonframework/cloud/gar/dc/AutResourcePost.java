@@ -11,7 +11,6 @@ import java.util.Set;
  * 资源提交
  *
  * @author 白超
- * @date 2018/6/13
  */
 public class AutResourcePost extends AutResource {
 

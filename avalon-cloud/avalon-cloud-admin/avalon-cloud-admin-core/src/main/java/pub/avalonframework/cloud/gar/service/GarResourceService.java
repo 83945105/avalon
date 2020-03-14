@@ -10,7 +10,6 @@ import java.util.List;
  * 资源服务
  *
  * @author 白超
- * @date 2018/6/13
  */
 public interface GarResourceService {
 

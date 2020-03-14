@@ -10,7 +10,6 @@ import pub.avalonframework.cloud.gar.service.GarObjectService;
 
 /**
  * @author 白超
- * @date 2018/11/26
  */
 public class DefaultGarObjectServiceImpl implements GarObjectService {
 

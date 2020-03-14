@@ -4,7 +4,6 @@ import pub.avalon.beans.EnumMethods;
 
 /**
  * @author baichao
- * @date 2018/12/23
  */
 public enum WeChatPayTradeStatus implements EnumMethods {
     /**

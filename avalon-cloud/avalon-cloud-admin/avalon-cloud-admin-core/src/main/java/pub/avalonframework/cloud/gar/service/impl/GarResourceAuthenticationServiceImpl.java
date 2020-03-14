@@ -31,7 +31,6 @@ import java.util.*;
 
 /**
  * @author 白超
- * @date 2018/6/8
  */
 public class GarResourceAuthenticationServiceImpl implements ResourceAuthenticationService {
 

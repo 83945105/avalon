@@ -45,7 +45,6 @@ import java.util.Set;
 
 /**
  * @author 白超
- * @date 2018/6/7
  */
 public class GarLoginAuthenticationServiceImpl implements LoginAuthenticationService, InitializingBean {
 

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
  * 微信支付二维码支付接口
  *
  * @author 白超
- * @date 2018/12/11
  */
 @FeignClient(name = "${feign.pay.we-chat-pay.qr-code-api-service-name:pay-service}",
         path = "${feign.pay.we-chat-pay.qr-code-api-service-path:/api-pay-weChatPay-qr-code}")

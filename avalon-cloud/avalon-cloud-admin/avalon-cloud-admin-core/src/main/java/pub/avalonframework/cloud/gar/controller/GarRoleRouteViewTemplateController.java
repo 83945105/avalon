@@ -20,7 +20,6 @@ import java.util.*;
 
 /**
  * @author 白超
- * @date 2018/12/7
  */
 @RequestMapping(GarRoleRouteViewTemplateApi.ROOT_PATH)
 @RestController

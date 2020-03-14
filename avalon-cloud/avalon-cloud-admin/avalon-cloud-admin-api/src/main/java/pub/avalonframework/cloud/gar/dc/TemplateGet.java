@@ -8,7 +8,6 @@ import java.util.*;
 
 /**
  * @author 白超
- * @date 2018/12/7
  */
 public class TemplateGet extends Template {
 

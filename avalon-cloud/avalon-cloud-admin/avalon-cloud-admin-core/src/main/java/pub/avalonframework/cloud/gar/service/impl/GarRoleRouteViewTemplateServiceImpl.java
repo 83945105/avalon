@@ -26,7 +26,6 @@ import java.util.Map;
 
 /**
  * @author 白超
- * @date 2018/12/7
  */
 @Service
 public class GarRoleRouteViewTemplateServiceImpl implements GarRoleRouteViewTemplateService {

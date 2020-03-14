@@ -4,7 +4,6 @@ import pub.avalonframework.cloud.gar.entity.AutObjectRole;
 
 /**
  * @author 白超
- * @date 2018/7/25
  */
 public class AutObjectRoleGet extends AutObjectRole {
 

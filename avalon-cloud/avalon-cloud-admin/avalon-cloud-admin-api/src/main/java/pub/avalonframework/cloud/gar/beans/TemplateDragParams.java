@@ -2,7 +2,6 @@ package pub.avalonframework.cloud.gar.beans;
 
 /**
  * @author 白超
- * @date 2019/1/21
  */
 public class TemplateDragParams {
 

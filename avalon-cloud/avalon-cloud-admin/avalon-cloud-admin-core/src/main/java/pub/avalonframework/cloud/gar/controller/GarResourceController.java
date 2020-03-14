@@ -29,7 +29,6 @@ import java.util.Map;
  * 资源控制器
  *
  * @author 白超
- * @date 2018/6/13
  */
 @RestController
 @RequestMapping(GarResourceApi.ROOT_PATH)

@@ -5,7 +5,6 @@ import pub.avalonframework.cloud.gar.entity.Menu;
 
 /**
  * @author 白超
- * @date 2019/1/19
  */
 public class MenuTreeNode extends Menu implements TreeNode<MenuTreeNode> {
 

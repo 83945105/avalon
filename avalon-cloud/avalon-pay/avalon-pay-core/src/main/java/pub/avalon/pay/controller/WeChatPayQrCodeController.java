@@ -35,7 +35,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author baichao
- * @date 2019/1/7
  */
 @RequestMapping(value = "${feign.pay.we-chat-pay.qr-code-api-service-path:/api-pay-weChatPay-qr-code}")
 @RestController

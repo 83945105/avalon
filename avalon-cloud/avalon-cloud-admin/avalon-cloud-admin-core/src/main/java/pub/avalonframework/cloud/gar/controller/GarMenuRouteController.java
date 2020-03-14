@@ -23,7 +23,6 @@ import java.util.*;
 
 /**
  * @author 白超
- * @date 2018/7/23
  */
 @RestController
 @RequestMapping(GarMenuRouteApi.ROOT_PATH)

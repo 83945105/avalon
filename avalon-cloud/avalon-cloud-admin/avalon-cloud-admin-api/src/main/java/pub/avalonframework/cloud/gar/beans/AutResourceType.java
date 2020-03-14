@@ -6,7 +6,6 @@ import pub.avalon.beans.EnumMethods;
  * 资源类型
  *
  * @author 白超
- * @date 2018/11/8
  */
 public enum AutResourceType implements EnumMethods {
 

@@ -4,7 +4,6 @@ import pub.avalon.beans.EnumMethods;
 
 /**
  * @author 白超
- * @date 2018/12/14
  */
 public enum MenuGroupUse implements EnumMethods {
 

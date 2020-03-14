@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
  * 全局异常处理
  *
  * @author baichao
- * @date 2018-1-20
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {

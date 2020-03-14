@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
  * 支付
  *
  * @author 白超
- * @date 2018/12/2
  */
 public interface PayService {
 

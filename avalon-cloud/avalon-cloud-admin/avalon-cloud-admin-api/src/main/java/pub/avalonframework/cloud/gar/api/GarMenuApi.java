@@ -22,7 +22,6 @@ import java.util.List;
  * 菜单接口
  *
  * @author 白超
- * @date 2018/12/7
  */
 @FeignClient(name = "${feign.gar.menu-api-service-name:gar-service}", path = "${feign.gar.menu-api-service-path:/api-gar-menu}")
 public interface GarMenuApi {

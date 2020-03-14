@@ -6,7 +6,6 @@ import pub.avalon.beans.EnumMethods;
  * 路由视图props
  *
  * @author 白超
- * @date 2018/12/7
  */
 public enum RouteViewProps implements EnumMethods {
     /**

@@ -6,7 +6,6 @@ import pub.avalon.beans.EnumMethods;
  * 菜单组类型
  *
  * @author 白超
- * @date 2018/12/10
  */
 public enum MenuGroupType implements EnumMethods {
     /**

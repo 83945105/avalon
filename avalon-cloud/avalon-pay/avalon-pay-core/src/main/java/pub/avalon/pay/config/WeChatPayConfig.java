@@ -17,7 +17,6 @@ import java.util.Date;
 
 /**
  * @author 白超
- * @date 2019/1/4
  */
 @Configuration
 public class WeChatPayConfig {

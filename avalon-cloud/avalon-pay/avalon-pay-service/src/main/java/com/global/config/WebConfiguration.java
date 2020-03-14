@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.*;
  * web配置
  *
  * @author baichao
- * @date 2018-4-5
  */
 @Configuration
 public class WebConfiguration extends WebMvcConfigurationSupport {

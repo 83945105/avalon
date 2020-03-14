@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
  * 视图
  *
  * @author 白超
- * @date 2018-3-14
  */
 @RequestMapping("/view")
 @Controller

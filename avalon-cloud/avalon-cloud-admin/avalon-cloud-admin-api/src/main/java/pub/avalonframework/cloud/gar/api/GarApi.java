@@ -3,7 +3,6 @@ package pub.avalonframework.cloud.gar.api;
 import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pub.avalon.holygrail.response.views.DataView;
 import pub.avalonframework.web.spring.http.response.view.impl.DefaultMessageView;
 import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
 
@@ -13,7 +12,6 @@ import java.util.Map;
  * 网关权限路由接口
  *
  * @author 白超
- * @date 2018/6/11
  */
 @FeignClient(name = "${feign.gar.gar-api-service-name:gar-service}", path = "${feign.gar.gar-api-service-path:/api-gar}")
 public interface GarApi {

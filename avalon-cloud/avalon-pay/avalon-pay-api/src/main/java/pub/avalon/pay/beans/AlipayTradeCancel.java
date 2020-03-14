@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
  * 交易撤销
  *
  * @author 白超
- * @date 2018/12/17
  */
 public class AlipayTradeCancel {
 

@@ -16,7 +16,6 @@ import pub.avalonframework.cloud.gar.dc.MenuRoutePost;
  * 菜单路由接口
  *
  * @author 白超
- * @date 2018/7/23
  */
 @FeignClient(name = "${feign.gar.menu-route-api-service-name:gar-service}", path = "${feign.gar.menu-route-api-service-path:/api-gar-menu-route}")
 public interface GarMenuRouteApi {
