@@ -52,29 +52,31 @@ public class XSSFLoader {
     }
 
     public void setFont(Font font, Cell poiCell) {
-        if (font instanceof FontProxy) {
-            poiCell.getCellStyle().setFont(((FontProxy) font).getFont());
+        if (font instanceof FontWrapper) {
+            poiCell.getCellStyle().setFont(((FontWrapper) font).getFont());
             return;
         }
         if (font instanceof Font.DefaultFont) {
-            FontProxy fp = new FontProxy(this.workbook.createFont());
+            FontWrapper fp = new FontWrapper(this.workbook.createFont());
             BeanUtils.copyProperties(font, fp);
             poiCell.getCellStyle().setFont(fp.getFont());
             return;
         }
+        throw new UnsupportedFont();
     }
 
     public void setCellStyle(CellStyle cellStyle, Cell poiCell) {
-        if (cellStyle instanceof CellStyleProxy) {
-            poiCell.setCellStyle(((CellStyleProxy) cellStyle).getCellStyle());
+        if (cellStyle instanceof CellStyleWrapper) {
+            poiCell.setCellStyle(((CellStyleWrapper) cellStyle).getCellStyle());
             return;
         }
         if (cellStyle instanceof CellStyle.DefaultCellStyle) {
-            CellStyleProxy csp = new CellStyleProxy(this.workbook.createCellStyle(), new FontProxy(this.workbook.createFont()));
+            CellStyleWrapper csp = new CellStyleWrapper(this.workbook.createCellStyle(), new FontWrapper(this.workbook.createFont()));
             BeanUtils.copyProperties(cellStyle, csp);
             poiCell.setCellStyle(csp.getCellStyle());
             return;
         }
+        throw new UnsupportedCellStyle();
     }
 
     public void setValue(Object value, Cell poiCell) {

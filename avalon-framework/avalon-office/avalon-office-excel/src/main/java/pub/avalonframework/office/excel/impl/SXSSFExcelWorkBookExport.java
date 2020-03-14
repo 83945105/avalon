@@ -63,14 +63,14 @@ public class SXSSFExcelWorkBookExport extends AbstractSXSSFExcelParser implement
 
     @Override
     public CellStyle createCellStyle(int index) {
-        CellStyle cellStyle = new CellStyleProxy(this.sxssfWorkbook.createCellStyle());
+        CellStyle cellStyle = new CellStyleWrapper(this.sxssfWorkbook.createCellStyle());
         this.cellStyles.add(index, cellStyle);
         return cellStyle;
     }
 
     @Override
     public Font createFont(int index) {
-        Font font = new FontProxy(this.sxssfWorkbook.createFont());
+        Font font = new FontWrapper(this.sxssfWorkbook.createFont());
         this.fonts.add(index, font);
         return font;
     }

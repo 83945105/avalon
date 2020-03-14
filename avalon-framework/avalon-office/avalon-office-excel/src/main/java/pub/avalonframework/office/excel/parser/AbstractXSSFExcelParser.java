@@ -29,7 +29,7 @@ public abstract class AbstractXSSFExcelParser implements ExcelParser {
         XSSFTitleCell[][] rs = new XSSFTitleCell[jsonArray.size()][];
         for (int i = 0; i < jsonArray.size(); i++) {
             List<XSSFTitleCell> list = JSON.parseArray(jsonArray.get(i).toString(), XSSFTitleCell.class);
-            rs[i] = list.toArray(new XSSFTitleCell[list.size()]);
+            rs[i] = list.toArray(new XSSFTitleCell[0]);
         }
         return rs;
     }

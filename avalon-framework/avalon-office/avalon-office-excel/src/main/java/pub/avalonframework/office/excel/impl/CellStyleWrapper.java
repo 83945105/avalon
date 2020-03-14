@@ -6,17 +6,17 @@ import pub.avalonframework.office.excel.Font;
 /**
  * @author baichao
  */
-public class CellStyleProxy implements pub.avalonframework.office.excel.CellStyle {
+public class CellStyleWrapper implements pub.avalonframework.office.excel.CellStyle {
 
     private CellStyle cellStyle;
 
     private Font font;
 
-    public CellStyleProxy(CellStyle cellStyle) {
+    public CellStyleWrapper(CellStyle cellStyle) {
         this.cellStyle = cellStyle;
     }
 
-    public CellStyleProxy(CellStyle cellStyle, Font font) {
+    public CellStyleWrapper(CellStyle cellStyle, Font font) {
         this.cellStyle = cellStyle;
         this.font = font;
     }

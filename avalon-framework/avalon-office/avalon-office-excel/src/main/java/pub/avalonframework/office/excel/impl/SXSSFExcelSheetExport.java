@@ -73,7 +73,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     /**
      * 默认的单元格样式
      */
-    protected CellStyleProxy defaultCellStyle;
+    protected CellStyleWrapper defaultCellStyle;
 
     /**
      * 装载器
@@ -88,8 +88,8 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
             throw new ExportException("已经存在名为:" + sheetName + "的sheet", e);
         }
         this.ownerWorkBook = ownerWorkBook;
-        this.defaultCellStyle = new CellStyleProxy(this.ownerWorkBook.sxssfWorkbook.createCellStyle(),
-                new FontProxy(this.ownerWorkBook.sxssfWorkbook.createFont()));
+        this.defaultCellStyle = new CellStyleWrapper(this.ownerWorkBook.sxssfWorkbook.createCellStyle(),
+                new FontWrapper(this.ownerWorkBook.sxssfWorkbook.createFont()));
         this.sxssfLoader = new SXSSFLoader(this.ownerWorkBook.sxssfWorkbook);
     }
 

@@ -5,11 +5,11 @@ import org.apache.poi.ss.usermodel.Font;
 /**
  * @author baichao
  */
-public class FontProxy implements pub.avalonframework.office.excel.Font {
+public class FontWrapper implements pub.avalonframework.office.excel.Font {
 
     private Font font;
 
-    public FontProxy(Font font) {
+    public FontWrapper(Font font) {
         this.font = font;
     }
 
