@@ -3,9 +3,7 @@ package pub.avalonframework.office.excel;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -237,26 +235,4 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * @return ExcelSheetImport
      */
     <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowB<HR> handlerRow);
-
-    final class SheetRowMap extends LinkedHashMap<String, Object> {
-
-        public SheetRowMap(int initialCapacity, float loadFactor) {
-            super(initialCapacity, loadFactor);
-        }
-
-        public SheetRowMap(int initialCapacity) {
-            super(initialCapacity);
-        }
-
-        public SheetRowMap() {
-        }
-
-        public SheetRowMap(Map<? extends String, ?> m) {
-            super(m);
-        }
-
-        public SheetRowMap(int initialCapacity, float loadFactor, boolean accessOrder) {
-            super(initialCapacity, loadFactor, accessOrder);
-        }
-    }
 }

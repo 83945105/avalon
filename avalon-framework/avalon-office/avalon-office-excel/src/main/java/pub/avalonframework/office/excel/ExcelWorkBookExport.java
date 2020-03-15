@@ -18,26 +18,26 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
     /**
      * 创建工作表
      *
-     * @return 工作表对象
+     * @return ExcelSheetExport
      */
-    SheetExportOperations createSheet();
+    ExcelSheetExport createSheet();
 
     /**
      * 创建工作表
      *
      * @param sheetName 工作表表名
-     * @return 工作表对象
+     * @return ExcelSheetExport
      */
-    SheetExportOperations createSheet(String sheetName);
+    ExcelSheetExport createSheet(String sheetName);
 
     /**
      * 获取工作表
      *
      * @param index 下标
-     * @return 工作表对象
+     * @return ExcelSheetExport
      */
     @Override
-    SheetExportOperations getSheet(int index);
+    ExcelSheetExport getSheet(int index);
 
     /**
      * 获取所有表格的数据总数
@@ -90,7 +90,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
          * @param sheetIndex            当前Sheet在WorkBook中的下标
          * @param index                 当前创建的Sheet下标
          * @param totalAllSheetDataSize WorkBook中所有Sheet已经导入的数据总数
-         * @param totalSheetDataSize    本次创建的若干Sheet已经导入的数据中暑
+         * @param totalSheetDataSize    本次创建的若干Sheet已经导入的数据总数
          * @return 是否继续创建
          */
         boolean accept(SheetExportOperations sheetExportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize);
@@ -102,15 +102,12 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @param totalSheet         你要创建的Sheet总数(最大支持100)
      * @param formatterSheetName 格式化Sheet名称,需要返回你要创建的Sheet名称
      * @param handlerSheet       处理Sheet
-     * @return 当前工作簿对象
+     * @return ExcelWorkBookExport
      */
     default ExcelWorkBookExport createSheets(int totalSheet, SXSSFExcelWorkBookExport.FormatterSheetName formatterSheetName, SXSSFExcelWorkBookExport.HandlerSheetA handlerSheet) {
         createSheets(formatterSheetName, (sheet, sheetIndex, index, totalAllSheetDataSize, totalSheetDataSize) -> {
             handlerSheet.accept(sheet, sheetIndex, index, totalAllSheetDataSize, totalSheetDataSize);
-            if (index < totalSheet - 1) {
-                return true;
-            }
-            return false;
+            return index < totalSheet - 1;
         });
         return this;
     }
@@ -120,7 +117,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      *
      * @param totalSheet   你要创建的Sheet总数(最大支持100)
      * @param handlerSheet 处理Sheet
-     * @return 当前工作簿对象
+     * @return ExcelWorkBookExport
      */
     default ExcelWorkBookExport createSheets(int totalSheet, SXSSFExcelWorkBookExport.HandlerSheetA handlerSheet) {
         createSheets(totalSheet, (sheetIndex, index) -> "sheet" + sheetIndex, handlerSheet);
@@ -132,7 +129,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      *
      * @param formatterSheetName 格式化Sheet名称,需要返回你要创建的Sheet名称
      * @param handlerSheet       处理Sheet,需要返回是否继续创建,最多创建100个Sheet
-     * @return 当前工作簿对象
+     * @return ExcelWorkBookExport
      */
     default ExcelWorkBookExport createSheets(SXSSFExcelWorkBookExport.FormatterSheetName formatterSheetName, SXSSFExcelWorkBookExport.HandlerSheetB handlerSheet) {
         int totalAllSheetDataSize = getTotalSheetDataSize();
@@ -157,7 +154,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 批量创建Sheet
      *
      * @param handlerSheet 处理Sheet,需要返回是否继续创建,最多创建100个Sheet
-     * @return 当前工作簿对象
+     * @return ExcelWorkBookExport
      */
     default ExcelWorkBookExport createSheets(SXSSFExcelWorkBookExport.HandlerSheetB handlerSheet) {
         createSheets((sheetIndex, index) -> "sheet" + sheetIndex, handlerSheet);
@@ -168,7 +165,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 获取单元格样式
      *
      * @param index 已经创建的样式下标
-     * @return 单元格样式
+     * @return CellStyle
      */
     CellStyle findCellStyle(int index);
 
@@ -184,7 +181,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 创建单元格样式对象
      *
      * @param index
-     * @return 单元格样式对象
+     * @return CellStyle
      */
     CellStyle createCellStyle(int index);
 
@@ -192,7 +189,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 创建字体对象
      *
      * @param index
-     * @return 字体对象
+     * @return Font
      */
     Font createFont(int index);
 
@@ -201,7 +198,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      *
      * @param index
      * @param handler
-     * @return
+     * @return ExcelWorkBookExport
      */
     default ExcelWorkBookExport createCellStyle(int index, Consumer<CellStyle> handler) {
         handler.accept(this.createCellStyle(index));
@@ -213,7 +210,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      *
      * @param index
      * @param handler
-     * @return
+     * @return ExcelWorkBookExport
      */
     default ExcelWorkBookExport createFont(int index, Consumer<Font> handler) {
         handler.accept(this.createFont(index));
@@ -224,7 +221,6 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 导出Excel
      *
      * @param outFile 目标文件
-     * @return 当前对象
      * @throws IOException
      */
     void export(File outFile) throws IOException;
@@ -233,7 +229,6 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 导出Excel
      *
      * @param outPath 导出地址
-     * @return 当前对象
      * @throws IOException
      */
     default void export(String outPath) throws IOException {

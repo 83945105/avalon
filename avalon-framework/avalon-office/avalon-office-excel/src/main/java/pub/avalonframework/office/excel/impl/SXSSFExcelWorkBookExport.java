@@ -5,7 +5,8 @@ import pub.avalonframework.office.excel.*;
 import pub.avalonframework.office.excel.parser.AbstractSXSSFExcelParser;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * SXSSFWorkbook 导出Excel
@@ -16,11 +17,11 @@ public class SXSSFExcelWorkBookExport extends AbstractSXSSFExcelParser implement
 
     protected SXSSFWorkbook sxssfWorkbook;
 
-    protected ArrayList<SXSSFExcelSheetExport> sheets = new ArrayList<>();
+    protected List<SXSSFExcelSheetExport> sheets = new LinkedList<>();
 
-    private ArrayList<CellStyle> cellStyles = new ArrayList<>();
+    private List<CellStyle> cellStyles = new LinkedList<>();
 
-    private ArrayList<Font> fonts = new ArrayList<>();
+    private List<Font> fonts = new LinkedList<>();
 
     public SXSSFExcelWorkBookExport() {
         this.sxssfWorkbook = new SXSSFWorkbook();

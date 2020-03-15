@@ -223,6 +223,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected <T> void parseRecord(T record) {
         if (record instanceof Map) {
             this.parseMap((Map<String, Object>) record);
@@ -548,13 +549,9 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public ExcelSheetExport setColumnFields(String... fields) {
-        return null;
-    }
-
-    @Override
-    public void setColumnWidth(int columnIndex, int width) {
+    public ExcelSheetExport setColumnWidth(int columnIndex, int width) {
         this.sheet.setColumnWidth(columnIndex, width);
+        return this;
     }
 
     @Override

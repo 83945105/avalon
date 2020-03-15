@@ -1,16 +1,16 @@
 package pub.avalonframework.office.excel;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Sheet导出操作
  *
  * @author baichao
  */
-public interface SheetExportOperations extends Sheet<SheetExportOperations> {
+public interface SheetExportOperations<T extends SheetExportOperations<T>> extends Sheet<T> {
 
     /**
      * {@inheritDoc}
@@ -22,7 +22,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * {@inheritDoc}
      */
     @Override
-    default SheetExportOperations parseTitlesJson(InputStream inputStream) {
+    default T parseTitlesJson(InputStream inputStream) {
         return parseTitlesJson(inputStream, true);
     }
 
@@ -30,7 +30,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * {@inheritDoc}
      */
     @Override
-    default SheetExportOperations parseTitlesJson(File file) {
+    default T parseTitlesJson(File file) {
         return parseTitlesJson(file, true);
     }
 
@@ -38,7 +38,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * {@inheritDoc}
      */
     @Override
-    default SheetExportOperations parseTitlesJson(String titlesJson) {
+    default T parseTitlesJson(String titlesJson) {
         return parseTitlesJson(titlesJson, true);
     }
 
@@ -46,24 +46,8 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * {@inheritDoc}
      */
     @Override
-    default SheetExportOperations setTitles(BaseExcelTitleCell[][] titles) {
+    default T setTitles(BaseExcelTitleCell[][] titles) {
         return setTitles(titles, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations setRowNum(Function<Integer, Integer> handler) {
-        return Sheet.super.setRowNum(handler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations setColumnNum(Function<Integer, Integer> handler) {
-        return Sheet.super.setColumnNum(handler);
     }
 
     /**
@@ -73,7 +57,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
      */
-    SheetExportOperations parseTitlesJson(String titlesJson, boolean exportTitles);
+    T parseTitlesJson(String titlesJson, boolean exportTitles);
 
     /**
      * 解析表头json文件
@@ -82,7 +66,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
      */
-    SheetExportOperations parseTitlesJson(InputStream inputStream, boolean exportTitles);
+    T parseTitlesJson(InputStream inputStream, boolean exportTitles);
 
     /**
      * 解析表头json文件
@@ -91,7 +75,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
      */
-    SheetExportOperations parseTitlesJson(File file, boolean exportTitles);
+    T parseTitlesJson(File file, boolean exportTitles);
 
     /**
      * 设置表头
@@ -100,7 +84,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
      */
-    SheetExportOperations setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
+    T setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
 
     /**
      * 设置列属性
@@ -108,15 +92,26 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param fields 属性
      * @return ExcelWorkBookExport
      */
-    SheetExportOperations setColumnFields(List<String> fields);
+    T setColumnFields(List<String> fields);
+
+    /**
+     * 设置列对应的数据属性
+     *
+     * @param fields 属性
+     * @return ExcelWorkBookExport
+     */
+    default T setColumnFields(String... fields) {
+        return setColumnFields(Arrays.asList(fields));
+    }
 
     /**
      * 设置列宽
      *
      * @param columnIndex 列号
      * @param width       列宽
+     * @return ExcelWorkBookExport
      */
-    void setColumnWidth(int columnIndex, int width);
+    T setColumnWidth(int columnIndex, int width);
 
     /**
      * 插入图片
@@ -133,17 +128,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param row2        终止单元格行序号,从0开始计算
      * @return ExcelWorkBookExport
      */
-    SheetExportOperations insertPicture(InputStream inputStream, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2);
-
-    /**
-     * 设置列对应的数据属性
-     *
-     * @param fields 属性
-     * @return ExcelWorkBookExport
-     */
-    default SheetExportOperations setColumnFields(String... fields) {
-        return setColumnFields(Arrays.asList(fields));
-    }
+    T insertPicture(InputStream inputStream, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2);
 
     /**
      * 插入图片
@@ -160,16 +145,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param row2        终止单元格行序号,从0开始计算
      * @return ExcelWorkBookExport
      */
-    default SheetExportOperations insertPicture(File file, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return this;
-        }
-        return insertPicture(fileInputStream, pictureType, dx1, dy1, dx2, dy2, col1, row1, col2, row2);
-    }
+    T insertPicture(File file, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2);
 
     /**
      * 插入图片
@@ -186,7 +162,7 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param row2        终止单元格行序号,从0开始计算
      * @return ExcelWorkBookExport
      */
-    default SheetExportOperations insertPicture(String filePath, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
+    default T insertPicture(String filePath, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
         return insertPicture(new File(filePath), pictureType, dx1, dy1, dx2, dy2, col1, row1, col2, row2);
     }
 

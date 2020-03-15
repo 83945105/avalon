@@ -4,6 +4,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pub.avalonframework.office.excel.ExcelException;
 import pub.avalonframework.office.excel.ExcelSheetImport;
 import pub.avalonframework.office.excel.ExcelWorkBookImport;
+import pub.avalonframework.office.excel.SheetRowMap;
 import pub.avalonframework.office.excel.parser.AbstractXSSFExcelParser;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class XSSFExcelWorkBookImport extends AbstractXSSFExcelParser implements 
      */
     protected void initSheets() {
         for (int i = 0; i < xssfWorkbook.getNumberOfSheets(); i++) {
-            this.sheets.add(new XSSFExcelSheetImport<>(ExcelSheetImport.SheetRowMap.class, xssfWorkbook.getSheetAt(i), this));
+            this.sheets.add(new XSSFExcelSheetImport<>(SheetRowMap.class, xssfWorkbook.getSheetAt(i), this));
         }
     }
 
