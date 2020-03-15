@@ -34,7 +34,7 @@ public class XSSFLoader {
     }
 
 
-    public Object getValue(Cell poiCell) throws ExcelException {
+    public Object getValue(Cell poiCell) {
         switch (poiCell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
                 return poiCell.getStringCellValue();

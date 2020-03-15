@@ -101,9 +101,8 @@ public interface CellOption {
      * 获取值
      *
      * @return
-     * @throws ExcelException
      */
-    Object getValue() throws ExcelException;
+    Object getValue();
 
     /**
      * 设置值

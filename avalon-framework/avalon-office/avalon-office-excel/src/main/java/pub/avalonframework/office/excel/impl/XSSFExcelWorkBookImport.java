@@ -1,13 +1,15 @@
 package pub.avalonframework.office.excel.impl;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import pub.avalonframework.office.excel.ExcelException;
 import pub.avalonframework.office.excel.ExcelSheetImport;
 import pub.avalonframework.office.excel.ExcelWorkBookImport;
 import pub.avalonframework.office.excel.parser.AbstractXSSFExcelParser;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * XSSFExcelWorkBookImport 导入Excel
@@ -18,7 +20,7 @@ public class XSSFExcelWorkBookImport extends AbstractXSSFExcelParser implements 
 
     protected XSSFWorkbook xssfWorkbook;
 
-    protected ArrayList<XSSFExcelSheetImport> sheets = new ArrayList<>();
+    protected List<XSSFExcelSheetImport<?>> sheets = new LinkedList<>();
 
     public XSSFExcelWorkBookImport() {
         this.xssfWorkbook = new XSSFWorkbook();
@@ -30,25 +32,27 @@ public class XSSFExcelWorkBookImport extends AbstractXSSFExcelParser implements 
 
     /**
      * 初始化Sheets
-     *
-     * @return
      */
-    protected ExcelWorkBookImport initSheets() {
+    protected void initSheets() {
         for (int i = 0; i < xssfWorkbook.getNumberOfSheets(); i++) {
-            this.sheets.add(new XSSFExcelSheetImport(xssfWorkbook.getSheetAt(i), this));
+            this.sheets.add(new XSSFExcelSheetImport<>(ExcelSheetImport.SheetRowMap.class, xssfWorkbook.getSheetAt(i), this));
         }
-        return this;
     }
 
     @Override
-    public ExcelWorkBookImport parseFile(InputStream inputStream) throws IOException {
-        this.xssfWorkbook = new XSSFWorkbook(inputStream);
+    public ExcelWorkBookImport parseFile(InputStream inputStream) {
+        try {
+            this.xssfWorkbook = new XSSFWorkbook(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ExcelException(e);
+        }
         this.initSheets();
         return this;
     }
 
     @Override
-    public ExcelSheetImport getSheet(int index) {
+    public ExcelSheetImport<?> getSheet(int index) {
         return this.sheets.get(index);
     }
 

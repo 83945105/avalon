@@ -15,7 +15,7 @@ public final class BeanPropertyInfo {
 
     private boolean isBoolean;
 
-    private Class type;
+    private Class<?> type;
 
     private String getterMethodName;
 
@@ -50,7 +50,7 @@ public final class BeanPropertyInfo {
         return isBoolean;
     }
 
-    public Class getType() {
+    public Class<?> getType() {
         return type;
     }
 

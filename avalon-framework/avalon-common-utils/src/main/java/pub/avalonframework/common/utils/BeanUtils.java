@@ -24,19 +24,19 @@ public final class BeanUtils {
     private BeanUtils() {
     }
 
-    private final static ConcurrentHashMap<Class, FieldAccess> CLASS_FIELD_ACCESS_CACHE = new ConcurrentHashMap<>(64);
+    private final static ConcurrentHashMap<Class<?>, FieldAccess> CLASS_FIELD_ACCESS_CACHE = new ConcurrentHashMap<>(64);
 
-    private final static ConcurrentHashMap<Class, MethodAccess> CLASS_METHOD_ACCESS_CACHE = new ConcurrentHashMap<>(64);
+    private final static ConcurrentHashMap<Class<?>, MethodAccess> CLASS_METHOD_ACCESS_CACHE = new ConcurrentHashMap<>(64);
 
-    private final static ConcurrentHashMap<Class, Map<String, BeanPropertyInfo>> CLASS_BEAN_PROPERTY_INFO_CACHE = new ConcurrentHashMap<>(64);
+    private final static ConcurrentHashMap<Class<?>, Map<String, BeanPropertyInfo>> CLASS_BEAN_PROPERTY_INFO_CACHE = new ConcurrentHashMap<>(64);
 
-    public static List<String> getPropertyNames(Class clazz, boolean parentProperty) {
+    public static List<String> getPropertyNames(Class<?> clazz, boolean parentProperty) {
         if (clazz == null) {
             return null;
         }
         List<String> propertyNames = new ArrayList<>();
-        Class parentClass = parentProperty ? Object.class : clazz.getSuperclass();
-        for (Class cla = clazz; cla != parentClass; cla = cla.getSuperclass()) {
+        Class<?> parentClass = parentProperty ? Object.class : clazz.getSuperclass();
+        for (Class<?> cla = clazz; cla != parentClass; cla = cla.getSuperclass()) {
             Field[] fields = cla.getDeclaredFields();
             for (Field field : fields) {
                 propertyNames.add(field.getName());
@@ -45,11 +45,11 @@ public final class BeanUtils {
         return propertyNames;
     }
 
-    public static List<String> getPropertyNames(Class clazz) {
+    public static List<String> getPropertyNames(Class<?> clazz) {
         return getPropertyNames(clazz, false);
     }
 
-    public static FieldAccess getFieldAccess(Class clazz) {
+    public static FieldAccess getFieldAccess(Class<?> clazz) {
         if (clazz == null) {
             return null;
         }
@@ -61,7 +61,7 @@ public final class BeanUtils {
         return fieldAccess;
     }
 
-    public static MethodAccess getMethodAccess(Class clazz) {
+    public static MethodAccess getMethodAccess(Class<?> clazz) {
         if (clazz == null) {
             return null;
         }
@@ -73,7 +73,7 @@ public final class BeanUtils {
         return methodAccess;
     }
 
-    public static BeanPropertyInfo getBeanPropertyInfo(Class clazz, String propertyName) {
+    public static BeanPropertyInfo getBeanPropertyInfo(Class<?> clazz, String propertyName) {
         if (clazz == null || propertyName == null || propertyName.trim().length() == 0) {
             return null;
         }
@@ -147,9 +147,9 @@ public final class BeanUtils {
      */
     public static Object getPropertyValue(Object javaBean, String propertyName) {
         if (javaBean instanceof Map) {
-            return ((Map) javaBean).get(propertyName);
+            return ((Map<?, ?>) javaBean).get(propertyName);
         }
-        Class clazz = javaBean.getClass();
+        Class<?> clazz = javaBean.getClass();
         MethodAccess methodAccess = getMethodAccess(clazz);
         BeanPropertyInfo beanPropertyInfo = getBeanPropertyInfo(clazz, propertyName);
         if (beanPropertyInfo == null) {
@@ -165,13 +165,12 @@ public final class BeanUtils {
      * @param propertyName  The property name.
      * @param propertyValue The property value.
      */
-    @SuppressWarnings("unchecked")
     public static void setPropertyValue(Object javaBean, String propertyName, Object propertyValue) {
         if (javaBean instanceof Map) {
             ((Map) javaBean).put(propertyName, propertyValue);
             return;
         }
-        Class clazz = javaBean.getClass();
+        Class<?> clazz = javaBean.getClass();
         MethodAccess methodAccess = getMethodAccess(clazz);
         BeanPropertyInfo beanPropertyInfo = getBeanPropertyInfo(clazz, propertyName);
         if (beanPropertyInfo == null) {

@@ -99,7 +99,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      *
      * @param startRowNum
      */
-    protected SXSSFRow findRow(int startRowNum) throws ExcelException {
+    protected SXSSFRow findRow(int startRowNum) {
         int rowIndex = startRowNum - 1;
         SXSSFRow row = (SXSSFRow) this.sheet.getRow(rowIndex);
         if (row == null) {
@@ -119,7 +119,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      * @param row
      * @param startColumnNum
      */
-    protected org.apache.poi.xssf.streaming.SXSSFCell findCell(SXSSFRow row, int startColumnNum) throws ExcelException {
+    protected org.apache.poi.xssf.streaming.SXSSFCell findCell(SXSSFRow row, int startColumnNum) {
         int columnIndex = startColumnNum - 1;
         org.apache.poi.xssf.streaming.SXSSFCell cell = (org.apache.poi.xssf.streaming.SXSSFCell) row.getCell(columnIndex);
         if (cell == null) {
@@ -170,7 +170,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      *
      * @param cell 单元格相关信息
      */
-    protected void buildCell(BaseCell cell) throws ExcelException {
+    protected void buildCell(BaseCell cell) {
         if (!cell.isWriteEmpty() && StringUtils.isEmpty(cell.getCellValue())) {
             //不允许写入空值且当前值为空
             return;
@@ -204,11 +204,10 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      *
      * @param titles 表头单元格信息
      */
-    protected void parseExportTitles(Collection<BaseExcelTitleCell> titles) throws ExcelException {
+    protected void parseExportTitles(Collection<BaseExcelTitleCell> titles) {
         for (BaseExcelTitleCell title : titles) {
-            BaseExcelTitleCell titleCell = title;
             //开始处理表头
-            this.buildCell(titleCell);
+            this.buildCell(title);
         }
     }
 
@@ -224,7 +223,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         }
     }
 
-    protected <T> void parseRecord(T record) throws ExcelException {
+    protected <T> void parseRecord(T record) {
         if (record instanceof Map) {
             this.parseMap((Map<String, Object>) record);
             return;
@@ -256,7 +255,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @SuppressWarnings("unchecked")
-    protected <T> void parseRecord(T record, int index, FormatterCell<T> formatter) throws ExcelException {
+    protected <T> void parseRecord(T record, int index, FormatterCell<T> formatter) {
         if (record instanceof Map) {
             this.parseMap((Map<String, Object>) record, index, (FormatterCell<Map<String, Object>>) formatter);
             return;
@@ -264,7 +263,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         this.parseObject(record, index, formatter);
     }
 
-    protected void parseMap(Map<String, Object> record) throws ExcelException {
+    protected void parseMap(Map<String, Object> record) {
         int startRow = this.rowCursor + 2;
         for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
@@ -287,7 +286,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         }
     }
 
-    protected void parseMap(Map<String, Object> record, int index, FormatterCell<Map<String, Object>> formatter) throws ExcelException {
+    protected void parseMap(Map<String, Object> record, int index, FormatterCell<Map<String, Object>> formatter) {
         int startRow = this.rowCursor + 2;
         for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
@@ -322,7 +321,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         }
     }
 
-    protected <T> void parseObject(T record) throws ExcelException {
+    protected <T> void parseObject(T record) {
         int startRow = this.rowCursor + 2;
         ArrayList<Field> fs = ExcelUtils.getAllFields(record.getClass());
         for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
@@ -368,7 +367,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
         }
     }
 
-    protected <T> void parseObject(T record, int index, FormatterCell<T> formatter) throws ExcelException {
+    protected <T> void parseObject(T record, int index, FormatterCell<T> formatter) {
         int startRow = this.rowCursor + 2;
         ArrayList<Field> fs = ExcelUtils.getAllFields(record.getClass());
         for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
@@ -423,7 +422,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      * @param records 数据集合
      * @param <T>     数据类型
      */
-    protected <T> void parseExportData(Collection<T> records) throws ExcelException {
+    protected <T> void parseExportData(Collection<T> records) {
         this.totalDataSize += records.size();
         //找到了表头对应的数据
         for (T record : records) {
@@ -443,7 +442,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      * @param formatter 格式化函数,接收5个参数,分别为 当前当前数据对象record、单元格信息、当前列值、游标、当前记录下标,需要返回要设置的单元格的值
      * @param <T>       数据类型
      */
-    protected <T> void parseExportData(Collection<T> records, FormatterCell<T> formatter) throws ExcelException {
+    protected <T> void parseExportData(Collection<T> records, FormatterCell<T> formatter) {
         this.totalDataSize += records.size();
         int index = 0;
         for (T record : records) {
@@ -470,25 +469,25 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public ExcelSheetExport parseTitlesJson(String titlesJson, boolean exportTitles) throws ExcelException {
+    public ExcelSheetExport parseTitlesJson(String titlesJson, boolean exportTitles) {
         SXSSFTitleCell[][] excelTitles = this.parseCellsJson(titlesJson);
         return setTitles(excelTitles, exportTitles);
     }
 
     @Override
-    public ExcelSheetExport parseTitlesJson(InputStream inputStream, boolean exportTitles) throws IOException, ExcelException {
+    public ExcelSheetExport parseTitlesJson(InputStream inputStream, boolean exportTitles) {
         SXSSFTitleCell[][] excelTitles = (SXSSFTitleCell[][]) this.parseCellsJson(inputStream);
         return setTitles(excelTitles, exportTitles);
     }
 
     @Override
-    public ExcelSheetExport parseTitlesJson(File file, boolean exportTitles) throws IOException, ExcelException {
+    public ExcelSheetExport parseTitlesJson(File file, boolean exportTitles) {
         SXSSFTitleCell[][] excelTitles = (SXSSFTitleCell[][]) this.parseCellsJson(file);
         return setTitles(excelTitles, exportTitles);
     }
 
     @Override
-    public ExcelSheetExport setTitles(BaseExcelTitleCell[][] excelTitles, boolean exportTitles) throws ExcelException {
+    public ExcelSheetExport setTitles(BaseExcelTitleCell[][] excelTitles, boolean exportTitles) {
         if (!(excelTitles instanceof SXSSFTitleCell[][])) {
             throw new ExportException("SXSSFExcelSheetExport setTitles excelTitles类型应该为SXSSFTitleCell[][]");
         }
@@ -505,7 +504,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public ExcelSheetExport setColumnFields(List<String> fields) throws ExcelException {
+    public ExcelSheetExport setColumnFields(List<String> fields) {
         SXSSFTitleCell[][] excelTitles = new SXSSFTitleCell[1][fields.size()];
         for (int i = 0; i < fields.size(); i++) {
             excelTitles[0][i] = new SXSSFTitleCell(fields.get(i));
@@ -514,8 +513,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public ExcelSheetExport insertPicture(InputStream inputStream, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) throws IOException {
-
+    public ExcelSheetExport insertPicture(InputStream inputStream, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             BufferedImage bufferedImage;
@@ -529,7 +527,8 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
             drawing.createPicture(anchor, this.sxssfWorkbook.addPicture(byteArrayOutputStream.toByteArray(), pictureType.value));
         } catch (IOException e) {
-            throw e;
+            e.printStackTrace();
+            return this;
         } finally {
             try {
                 if (byteArrayOutputStream != null) {
@@ -546,8 +545,12 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
                 e.printStackTrace();
             }
         }
-
         return this;
+    }
+
+    @Override
+    public ExcelSheetExport setColumnFields(String... fields) {
+        return null;
     }
 
     @Override
@@ -556,13 +559,13 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public <T> ExcelSheetExport importData(Collection<T> records) throws ExcelException {
+    public <T> ExcelSheetExport importData(Collection<T> records) {
         this.parseExportData(records);
         return this;
     }
 
     @Override
-    public <T> ExcelSheetExport importData(Collection<T> records, FormatterCell<T> formatter) throws ExcelException {
+    public <T> ExcelSheetExport importData(Collection<T> records, FormatterCell<T> formatter) {
         this.parseExportData(records, formatter);
         return this;
     }

@@ -1,9 +1,6 @@
 package pub.avalonframework.office.excel;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -13,31 +10,22 @@ import java.util.function.Function;
  *
  * @author baichao
  */
-@SuppressWarnings("unused")
-public interface SheetExportOperations extends Sheet {
+public interface SheetExportOperations extends Sheet<SheetExportOperations> {
 
     /**
-     * 获取所属的工作簿
-     *
-     * @return ExcelWorkBookExport
+     * {@inheritDoc}
      */
     @Override
     ExcelWorkBookExport getOwnerWorkBook();
 
     /**
-     * 设置行游标
-     *
-     * @param handler 接收行号,返回你想设置的行号
-     * @return ExcelWorkBookExport
+     * {@inheritDoc}
      */
     @Override
     SheetExportOperations setRowCursor(Function<Integer, Integer> handler);
 
     /**
-     * 设置列游标
-     *
-     * @param handler 接收列号,返回你想设置的列号
-     * @return ExcelWorkBookExport
+     * {@inheritDoc}
      */
     @Override
     SheetExportOperations setColCursor(Function<Integer, Integer> handler);
@@ -48,9 +36,8 @@ public interface SheetExportOperations extends Sheet {
      * @param titlesJson   表头数据json
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
-     * @throws ExcelException 参考实现
      */
-    ExcelSheetExport parseTitlesJson(String titlesJson, boolean exportTitles) throws ExcelException;
+    SheetExportOperations parseTitlesJson(String titlesJson, boolean exportTitles);
 
     /**
      * 解析表头json文件
@@ -58,10 +45,8 @@ public interface SheetExportOperations extends Sheet {
      * @param inputStream  表头数据流
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
-     * @throws IOException    参考实现
-     * @throws ExcelException 参考实现
      */
-    ExcelSheetExport parseTitlesJson(InputStream inputStream, boolean exportTitles) throws IOException, ExcelException;
+    SheetExportOperations parseTitlesJson(InputStream inputStream, boolean exportTitles);
 
     /**
      * 解析表头json文件
@@ -69,10 +54,8 @@ public interface SheetExportOperations extends Sheet {
      * @param file         表头数据文件
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
-     * @throws IOException    参考实现
-     * @throws ExcelException 参考实现
      */
-    ExcelSheetExport parseTitlesJson(File file, boolean exportTitles) throws IOException, ExcelException;
+    SheetExportOperations parseTitlesJson(File file, boolean exportTitles);
 
     /**
      * 设置表头
@@ -80,18 +63,16 @@ public interface SheetExportOperations extends Sheet {
      * @param titles       表头对象
      * @param exportTitles 是否导出表头
      * @return ExcelWorkBookExport
-     * @throws ExcelException 参考实现
      */
-    ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles) throws ExcelException;
+    SheetExportOperations setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
 
     /**
      * 设置列属性
      *
      * @param fields 属性
      * @return ExcelWorkBookExport
-     * @throws ExcelException 参考实现
      */
-    ExcelSheetExport setColumnFields(List<String> fields) throws ExcelException;
+    SheetExportOperations setColumnFields(List<String> fields);
 
     /**
      * 设置列宽
@@ -115,68 +96,48 @@ public interface SheetExportOperations extends Sheet {
      * @param col2        终止单元格列序号,从0开始计算
      * @param row2        终止单元格行序号,从0开始计算
      * @return ExcelWorkBookExport
-     * @throws IOException 参考实现
      */
-    ExcelSheetExport insertPicture(InputStream inputStream, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) throws IOException;
+    SheetExportOperations insertPicture(InputStream inputStream, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2);
 
     /**
      * 设置列对应的数据属性
      *
      * @param fields 属性
      * @return ExcelWorkBookExport
-     * @throws ExcelException 参考实现
      */
-    default ExcelSheetExport setColumnFields(String... fields) throws ExcelException {
+    default SheetExportOperations setColumnFields(String... fields) {
         return setColumnFields(Arrays.asList(fields));
     }
 
     /**
-     * 解析表头json文件
-     *
-     * @param inputStream 表头数据流
-     * @return ExcelWorkBookExport
-     * @throws IOException    参考实现
-     * @throws ExcelException 参考实现
+     * {@inheritDoc}
      */
     @Override
-    default ExcelSheetExport parseTitlesJson(InputStream inputStream) throws IOException, ExcelException {
+    default SheetExportOperations parseTitlesJson(InputStream inputStream) {
         return parseTitlesJson(inputStream, true);
     }
 
     /**
-     * 解析表头json文件
-     *
-     * @param file 表头数据文件
-     * @return ExcelWorkBookExport
-     * @throws IOException    参考实现
-     * @throws ExcelException 参考实现
+     * {@inheritDoc}
      */
     @Override
-    default ExcelSheetExport parseTitlesJson(File file) throws IOException, ExcelException {
+    default SheetExportOperations parseTitlesJson(File file) {
         return parseTitlesJson(file, true);
     }
 
     /**
-     * 解析表头json数据
-     *
-     * @param titlesJson 表头数据json
-     * @return ExcelWorkBookExport
-     * @throws ExcelException 参考实现
+     * {@inheritDoc}
      */
     @Override
-    default ExcelSheetExport parseTitlesJson(String titlesJson) throws ExcelException {
+    default SheetExportOperations parseTitlesJson(String titlesJson) {
         return parseTitlesJson(titlesJson, true);
     }
 
     /**
-     * 设置表头
-     *
-     * @param titles 表头对象
-     * @return ExcelWorkBookExport
-     * @throws ExcelException 参考实现
+     * {@inheritDoc}
      */
     @Override
-    default ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles) throws ExcelException {
+    default SheetExportOperations setTitles(BaseExcelTitleCell[][] titles) {
         return setTitles(titles, true);
     }
 
@@ -196,8 +157,15 @@ public interface SheetExportOperations extends Sheet {
      * @return ExcelWorkBookExport
      * @throws IOException 参考实现
      */
-    default ExcelSheetExport insertPicture(File file, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) throws IOException {
-        return insertPicture(new FileInputStream(file), pictureType, dx1, dy1, dx2, dy2, col1, row1, col2, row2);
+    default SheetExportOperations insertPicture(File file, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return this;
+        }
+        return insertPicture(fileInputStream, pictureType, dx1, dy1, dx2, dy2, col1, row1, col2, row2);
     }
 
     /**
@@ -216,10 +184,9 @@ public interface SheetExportOperations extends Sheet {
      * @return ExcelWorkBookExport
      * @throws IOException 参考实现
      */
-    default ExcelSheetExport insertPicture(String filePath, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) throws IOException {
+    default SheetExportOperations insertPicture(String filePath, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
         return insertPicture(new File(filePath), pictureType, dx1, dy1, dx2, dy2, col1, row1, col2, row2);
     }
-
 
     /**
      * 获取表格导入的数据总数
@@ -229,24 +196,18 @@ public interface SheetExportOperations extends Sheet {
     int getTotalDataSize();
 
     /**
-     * 设置行号
-     *
-     * @param handler 接收当前行号,返回你想设置的行号
-     * @return SheetExportHandler
+     * {@inheritDoc}
      */
     @Override
     default SheetExportOperations setRowNum(Function<Integer, Integer> handler) {
-        return this.setRowCursor(rowCursor -> handler.apply(rowCursor + 1) - 1);
+        return Sheet.super.setRowNum(handler);
     }
 
     /**
-     * 设置列号
-     *
-     * @param handler 接收当前列号,返回你想设置的列号
-     * @return SheetExportHandler
+     * {@inheritDoc}
      */
     @Override
     default SheetExportOperations setColumnNum(Function<Integer, Integer> handler) {
-        return this.setColCursor(colCursor -> handler.apply(colCursor + 1) - 1);
+        return Sheet.super.setColumnNum(handler);
     }
 }

@@ -1,9 +1,6 @@
 package pub.avalonframework.office.excel;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Excel导入工作簿
@@ -16,10 +13,9 @@ public interface ExcelWorkBookImport extends ExcelWorkBook {
      * 解析文件
      *
      * @param inputStream 输入流
-     * @return
-     * @throws IOException
+     * @return ExcelWorkBookImport
      */
-    ExcelWorkBookImport parseFile(InputStream inputStream) throws IOException;
+    ExcelWorkBookImport parseFile(InputStream inputStream);
 
     /**
      * 获取工作表
@@ -28,76 +24,70 @@ public interface ExcelWorkBookImport extends ExcelWorkBook {
      * @return ExcelSheetImport
      */
     @Override
-    ExcelSheetImport getSheet(int index);
+    ExcelSheetImport<?> getSheet(int index);
 
     /**
      * 解析文件
      *
      * @param file 文件
-     * @return ExcelSheetImport
-     * @throws IOException
+     * @return ExcelWorkBookImport
      */
-    default ExcelWorkBookImport parseFile(File file) throws IOException {
-        return this.parseFile(new FileInputStream(file));
+    default ExcelWorkBookImport parseFile(File file) {
+        FileInputStream fileInputStream;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return this;
+        }
+        return this.parseFile(fileInputStream);
     }
 
     /**
      * 解析文件
      *
      * @param path 文件路径
-     * @return ExcelSheetImport
-     * @throws IOException
+     * @return ExcelWorkBookImport
      */
-    default ExcelWorkBookImport parseFile(String path) throws IOException {
+    default ExcelWorkBookImport parseFile(String path) {
         return this.parseFile(new File(path));
     }
 
     @FunctionalInterface
     interface HandlerSheetA {
+
         /**
          * 接收当前读取的Sheet
          *
          * @param sheet 读取的Sheet
          * @param index 当前Sheet下标
-         * @throws IOException
-         * @throws ExcelException
-         * @throws InstantiationException
-         * @throws IllegalAccessException
          */
-        void accept(ExcelSheetImport sheet, int index) throws IOException, ExcelException, InstantiationException, IllegalAccessException;
+        void accept(ExcelSheetImport<?> sheet, int index);
     }
 
     @FunctionalInterface
     interface HandlerSheetB {
 
         /**
-         * 接收当前读取的Sheet,返回false不继续读取
+         * 接收当前读取的Sheet
          *
          * @param sheet 读取的Sheet
          * @param index 当前Sheet下标
-         * @return
-         * @throws ExcelException
-         * @throws IllegalAccessException
-         * @throws InstantiationException
-         * @throws IOException
+         * @return true - 继续读取下一个Sheet | false - 终止读取
          */
-        boolean apply(ExcelSheetImport sheet, int index) throws ExcelException, IllegalAccessException, InstantiationException, IOException;
+        boolean apply(ExcelSheetImport<?> sheet, int index);
     }
 
     /**
      * 批量读取Sheet
      *
      * @param handlerSheet 操作读取的Sheet
-     * @return
-     * @throws IOException
-     * @throws ExcelException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
+     * @return ExcelWorkBookImport
      */
-    default ExcelWorkBookImport readSheets(HandlerSheetA handlerSheet) throws IOException, ExcelException, IllegalAccessException, InstantiationException {
+    default ExcelWorkBookImport readSheets(HandlerSheetA handlerSheet) {
         int totalSheetSize = this.getSheetSize();
         for (int i = 0; i < totalSheetSize; i++) {
-            ExcelSheetImport sheet = this.getSheet(i);
+            ExcelSheetImport<?> sheet = this.getSheet(i);
             handlerSheet.accept(sheet, i);
         }
         return this;
@@ -107,16 +97,12 @@ public interface ExcelWorkBookImport extends ExcelWorkBook {
      * 批量读取Sheet
      *
      * @param handlerSheet 操作读取的Sheet,返回false不继续读取
-     * @return
-     * @throws IOException
-     * @throws ExcelException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
+     * @return ExcelWorkBookImport
      */
-    default ExcelWorkBookImport readSheets(HandlerSheetB handlerSheet) throws IOException, ExcelException, IllegalAccessException, InstantiationException {
+    default ExcelWorkBookImport readSheets(HandlerSheetB handlerSheet) {
         int totalSheetSize = this.getSheetSize();
         for (int i = 0; i < totalSheetSize; i++) {
-            ExcelSheetImport sheet = this.getSheet(i);
+            ExcelSheetImport<?> sheet = this.getSheet(i);
             boolean goon = handlerSheet.apply(sheet, i);
             if (!goon) {
                 break;

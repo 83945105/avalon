@@ -8,6 +8,7 @@ import pub.avalonframework.office.excel.impl.ExcelTitleCellError;
 import pub.avalonframework.office.excel.impl.ExcelTitleException;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -79,9 +80,8 @@ public interface ExcelParser {
      * @param defaultSeatRow 记录位置信息初始化默认行数
      * @param defaultSeatCol 记录位置信息初始化默认列数
      * @param handler        处理单元格合并对象回调函数
-     * @throws ExcelException 参考{@link #validateExpandSeat(int[][], int[], BaseExcelTitleCell)}
      */
-    default void handlerExcelTitles(BaseExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol, Consumer<BaseExcelTitleCell> handler) throws ExcelException {
+    default void handlerExcelTitles(BaseExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol, Consumer<BaseExcelTitleCell> handler) {
         BaseExcelTitleCell[] excelTitles;
         //结束行
         int endRow;
@@ -113,19 +113,21 @@ public interface ExcelParser {
      *
      * @param inputStream json数据输入流
      * @return 表头信息二维数组
-     * @throws IOException 参考{@code br.readLine()}
      */
-    default BaseCell[][] parseCellsJson(InputStream inputStream) throws IOException {
+    default BaseCell[][] parseCellsJson(InputStream inputStream) {
         InputStreamReader reader = null;
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
         try {
-            reader = new InputStreamReader(inputStream, "UTF-8");
+            reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             br = new BufferedReader(reader);
             String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line.trim());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ExcelException(e);
         } finally {
             try {
                 if (br != null) {
@@ -157,10 +159,16 @@ public interface ExcelParser {
      *
      * @param file json数据文件
      * @return 表头信息二维数组
-     * @throws IOException 参考{@link #parseCellsJson(InputStream)}
      */
-    default BaseCell[][] parseCellsJson(File file) throws IOException {
-        return this.parseCellsJson(new FileInputStream(file));
+    default BaseCell[][] parseCellsJson(File file) {
+        FileInputStream fileInputStream;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new ExcelException(e);
+        }
+        return this.parseCellsJson(fileInputStream);
     }
 
     /**
@@ -169,9 +177,8 @@ public interface ExcelParser {
      *
      * @param titles 表头对象二维数组
      * @return 单元格合并集合
-     * @throws ExcelException 参考{@link #handlerExcelTitles(BaseExcelTitleCell[][], int, int)}
      */
-    default ArrayList<BaseExcelTitleCell> handlerExcelTitles(BaseExcelTitleCell[][] titles) throws ExcelException {
+    default ArrayList<BaseExcelTitleCell> handlerExcelTitles(BaseExcelTitleCell[][] titles) {
         return handlerExcelTitles(titles, titles.length * 2, 10);
     }
 
@@ -182,9 +189,8 @@ public interface ExcelParser {
      * @param defaultSeatRow 记录位置信息初始化默认行数
      * @param defaultSeatCol 记录位置信息初始化默认列数
      * @return 单元格合并集合
-     * @throws ExcelException 参考{@link #handlerExcelTitles(BaseExcelTitleCell[][], int, int, Consumer)}
      */
-    default ArrayList<BaseExcelTitleCell> handlerExcelTitles(BaseExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol) throws ExcelException {
+    default ArrayList<BaseExcelTitleCell> handlerExcelTitles(BaseExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol) {
         ArrayList<BaseExcelTitleCell> rs = new ArrayList<>();
         handlerExcelTitles(titles, defaultSeatRow, defaultSeatCol, rs::add);
         return rs;
@@ -218,7 +224,7 @@ public interface ExcelParser {
      * @return 校验/扩充后的位置
      * @throws ExcelTitleException 当单元格存在数据时
      */
-    default int[][] validateExpandSeat(int[][] seat, int[] startCursor, BaseExcelTitleCell excelTitle) throws ExcelTitleException {
+    default int[][] validateExpandSeat(int[][] seat, int[] startCursor, BaseExcelTitleCell excelTitle) {
         int startRow = startCursor[0];
         int endRow = startRow + excelTitle.getRowSpan() - 1;
         int startCol = startCursor[1];

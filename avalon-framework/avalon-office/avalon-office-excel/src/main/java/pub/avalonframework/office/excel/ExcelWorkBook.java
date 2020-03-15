@@ -20,7 +20,7 @@ public interface ExcelWorkBook {
      * @param index 下标
      * @return 工作表对象
      */
-    Sheet getSheet(int index);
+    Sheet<?> getSheet(int index);
 
     /**
      * 图片类型

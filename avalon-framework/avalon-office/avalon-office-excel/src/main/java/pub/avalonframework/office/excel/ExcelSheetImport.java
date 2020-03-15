@@ -1,11 +1,11 @@
 package pub.avalonframework.office.excel;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -13,109 +13,182 @@ import java.util.function.Function;
  *
  * @author baichao
  */
-public interface ExcelSheetImport extends SheetImportOperations {
+public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheetImport<R>> {
 
     /**
-     * 设置行游标
-     *
-     * @param handler 接收行号,返回你想设置的行号
-     * @return ExcelSheetImport
+     * {@inheritDoc}
      */
     @Override
-    ExcelSheetImport setRowCursor(Function<Integer, Integer> handler);
+    ExcelWorkBookImport getOwnerWorkBook();
 
     /**
-     * 设置列游标
-     *
-     * @param handler 接收列号,返回你想设置的列号
-     * @return ExcelSheetImport
+     * {@inheritDoc}
      */
     @Override
-    ExcelSheetImport setColCursor(Function<Integer, Integer> handler);
+    int getPhysicalNumberOfRows();
 
     /**
-     * 设置行号
-     *
-     * @param handler 接收当前行号,返回你想设置的行号
-     * @return ExcelSheetImport
+     * {@inheritDoc}
      */
     @Override
-    default ExcelSheetImport setRowNum(Function<Integer, Integer> handler) {
-        return this.setRowCursor(rowCursor -> handler.apply(rowCursor + 1) - 1);
+    ExcelSheetImport<R> readRows();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> readRows(HandlerRowA<R> handlerRow);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> readRows(HandlerRowB<R> handlerRow);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    List<R> getReadData();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    List<R> getReadData(int index);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    List<List<R>> getAllReadData();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> setRowCursor(Function<Integer, Integer> handler);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> setColCursor(Function<Integer, Integer> handler);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> parseTitlesJson(InputStream inputStream);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> parseTitlesJson(File file);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> parseTitlesJson(String titlesJson);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles);
+
+    /**
+     * 设置表头
+     *
+     * @param titles  表头
+     * @param rowSpan 表头占用行数
+     * @return ExcelSheetImport
+     */
+    ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int rowSpan);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default ExcelSheetImport<R> setRowNum(Function<Integer, Integer> handler) {
+        return SheetImportOperations.super.setRowNum(handler);
     }
 
     /**
-     * 设置列号
-     *
-     * @param handler 接收当前列号,返回你想设置的列号
-     * @return ExcelSheetImport
+     * {@inheritDoc}
      */
     @Override
-    default ExcelSheetImport setColumnNum(Function<Integer, Integer> handler) {
-        return this.setColCursor(colCursor -> handler.apply(colCursor + 1) - 1);
+    default ExcelSheetImport<R> setColumnNum(Function<Integer, Integer> handler) {
+        return SheetImportOperations.super.setColumnNum(handler);
     }
 
     /**
-     * 解析表头Json数据
-     *
-     * @param titlesJson 表头数据json
-     * @param clazz      数据容器
-     * @param <T>        容器类型
-     * @return ExcelSheetImport
-     * @throws ExcelException 参考实现
-     */
-    @Override
-    <T> ExcelSheetImport parseTitlesJson(String titlesJson, Class<T> clazz) throws ExcelException;
-
-    /**
-     * 解析表头数据
+     * 解析表头json文件
      *
      * @param inputStream 表头数据流
      * @param clazz       数据容器
-     * @param <T>         容器类型
      * @return ExcelSheetImport
-     * @throws IOException    参考实现
-     * @throws ExcelException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport parseTitlesJson(InputStream inputStream, Class<T> clazz) throws IOException, ExcelException;
+    <HR> ExcelSheetImport<HR> parseTitlesJson(InputStream inputStream, Class<HR> clazz);
 
     /**
-     * 解析表头文件
+     * 解析表头json文件
      *
      * @param file  表头数据文件
      * @param clazz 数据容器
-     * @param <T>   容器类型
      * @return ExcelSheetImport
-     * @throws IOException    参考实现
-     * @throws ExcelException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport parseTitlesJson(File file, Class<T> clazz) throws IOException, ExcelException;
+    <HR> ExcelSheetImport<HR> parseTitlesJson(File file, Class<HR> clazz);
+
+    /**
+     * 解析表头json数据
+     *
+     * @param titlesJson 表头数据json
+     * @param clazz      数据容器
+     * @return ExcelSheetImport
+     */
+    <HR> ExcelSheetImport<HR> parseTitlesJson(String titlesJson, Class<HR> clazz);
 
     /**
      * 设置表头
      *
      * @param titles 表头对象
      * @param clazz  数据容器
-     * @param <T>    容器类型
      * @return ExcelSheetImport
-     * @throws ExcelException titles类型不正确
      */
-    @Override
-    <T> ExcelSheetImport setTitles(BaseExcelTitleCell[][] titles, Class<T> clazz) throws ExcelException;
+    <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, Class<HR> clazz);
+
+    /**
+     * 设置表头
+     *
+     * @param titles  表头对象
+     * @param rowSpan 占用行数
+     * @param clazz   数据容器
+     * @return ExcelSheetImport
+     */
+    <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int rowSpan, Class<HR> clazz);
 
     /**
      * 设置列对应的数据属性
      *
      * @param fields 属性
      * @param clazz  数据容器
-     * @param <T>    容器类型
      * @return ExcelSheetImport
-     * @throws ExcelException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport setColumnFields(List<String> fields, Class<T> clazz) throws ExcelException;
+    <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, Class<HR> clazz);
+
+    /**
+     * 设置列值
+     * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
+     *
+     * @param fields 列对应属性
+     * @return ExcelSheetImport
+     */
+    default ExcelSheetImport<SheetRowMap> setColumnFields(String... fields) {
+        return setColumnFields(Arrays.asList(fields), SheetRowMap.class);
+    }
 
     /**
      * 设置列对应的数据属性
@@ -123,113 +196,67 @@ public interface ExcelSheetImport extends SheetImportOperations {
      * @param rowSpan 占用行数
      * @param fields  属性
      * @param clazz   数据容器
-     * @param <T>     容器类型
      * @return ExcelSheetImport
-     * @throws ExcelException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport setColumnFields(int rowSpan, List<String> fields, Class<T> clazz) throws ExcelException;
+    <HR> ExcelSheetImport<HR> setColumnFields(int rowSpan, List<String> fields, Class<HR> clazz);
 
     /**
-     * 设置列对应的数据属性
-     *
-     * @param fields 列对应属性
-     * @return ExcelSheetImport
-     * @throws ExcelException 参考实现
-     */
-    @Override
-    default ExcelSheetImport setColumnFields(String... fields) throws ExcelException {
-        return setColumnFields(Arrays.asList(fields), HashMap.class);
-    }
-
-    /**
-     * 设置列对应的数据属性
+     * 设置列值
+     * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
      *
      * @param rowSpan 占用行数
      * @param fields  列对应的属性
      * @return ExcelSheetImport
-     * @throws ExcelException 参考实现
      */
-    @Override
-    default ExcelSheetImport setColumnFields(int rowSpan, String... fields) throws ExcelException {
-        return setColumnFields(rowSpan, Arrays.asList(fields), HashMap.class);
+    default ExcelSheetImport<SheetRowMap> setColumnFields(int rowSpan, String... fields) {
+        return setColumnFields(rowSpan, Arrays.asList(fields), SheetRowMap.class);
     }
 
     /**
-     * 读取行
+     * 读取数据
      *
      * @param clazz 数据类型
-     * @param <T>   容器类型
      * @return ExcelSheetImport
-     * @throws ExcelException         参考实现
-     * @throws InstantiationException 参考实现
-     * @throws IllegalAccessException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport readRows(Class<T> clazz) throws ExcelException, InstantiationException, IllegalAccessException;
+    <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz);
 
     /**
-     * 读取行
+     * 读取数据
      *
      * @param clazz      数据类型
      * @param handlerRow 操作当前行数据
-     * @param <T>        容器类型
      * @return ExcelSheetImport
-     * @throws ExcelException         参考实现
-     * @throws InstantiationException 参考实现
-     * @throws IllegalAccessException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport readRows(Class<T> clazz, HandlerRowA<T> handlerRow) throws ExcelException, InstantiationException, IllegalAccessException;
+    <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowA<HR> handlerRow);
 
     /**
-     * 读取行
+     * 读取数据
      *
      * @param clazz      数据类型
      * @param handlerRow 操作当前行数据,返回false不继续读取下一行
-     * @param <T>        容器类型
      * @return ExcelSheetImport
-     * @throws ExcelException         参考实现
-     * @throws InstantiationException 参考实现
-     * @throws IllegalAccessException 参考实现
      */
-    @Override
-    <T> ExcelSheetImport readRows(Class<T> clazz, HandlerRowB<T> handlerRow) throws ExcelException, InstantiationException, IllegalAccessException;
+    <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowB<HR> handlerRow);
 
-    /**
-     * 读取行
-     *
-     * @return ExcelSheetImport
-     * @throws ExcelException         参考实现
-     * @throws InstantiationException 参考实现
-     * @throws IllegalAccessException 参考实现
-     */
-    @Override
-    ExcelSheetImport readRows() throws ExcelException, IllegalAccessException, InstantiationException;
+    final class SheetRowMap extends LinkedHashMap<String, Object> {
 
-    /**
-     * 读取行
-     *
-     * @param handlerRow 操作当前行数据
-     * @param <T>        容器类型
-     * @return ExcelSheetImport
-     * @throws ExcelException         参考实现
-     * @throws InstantiationException 参考实现
-     * @throws IllegalAccessException 参考实现
-     */
-    @Override
-    <T> ExcelSheetImport readRows(HandlerRowA<T> handlerRow) throws ExcelException, IllegalAccessException, InstantiationException;
+        public SheetRowMap(int initialCapacity, float loadFactor) {
+            super(initialCapacity, loadFactor);
+        }
 
-    /**
-     * 读取行
-     *
-     * @param handlerRow 操作当前行数据,返回false不继续读取下一行
-     * @param <T>        容器类型
-     * @return ExcelSheetImport
-     * @throws ExcelException         参考实现
-     * @throws InstantiationException 参考实现
-     * @throws IllegalAccessException 参考实现
-     */
-    @Override
-    <T> ExcelSheetImport readRows(HandlerRowB<T> handlerRow) throws ExcelException, IllegalAccessException, InstantiationException;
+        public SheetRowMap(int initialCapacity) {
+            super(initialCapacity);
+        }
+
+        public SheetRowMap() {
+        }
+
+        public SheetRowMap(Map<? extends String, ?> m) {
+            super(m);
+        }
+
+        public SheetRowMap(int initialCapacity, float loadFactor, boolean accessOrder) {
+            super(initialCapacity, loadFactor, accessOrder);
+        }
+    }
 }
