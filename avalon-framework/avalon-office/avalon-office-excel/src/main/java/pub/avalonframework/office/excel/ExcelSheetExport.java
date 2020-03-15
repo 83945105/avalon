@@ -119,7 +119,6 @@ public interface ExcelSheetExport extends SheetExportOperations {
      *
      * @param inputStream 表头数据流
      * @return ExcelSheetExport
-     * @throws IOException 参考实现
      */
     @Override
     default ExcelSheetExport parseTitlesJson(InputStream inputStream) {
@@ -131,7 +130,6 @@ public interface ExcelSheetExport extends SheetExportOperations {
      *
      * @param file 表头数据文件
      * @return ExcelSheetExport
-     * @throws IOException 参考实现
      */
     @Override
     default ExcelSheetExport parseTitlesJson(File file) {
@@ -183,7 +181,7 @@ public interface ExcelSheetExport extends SheetExportOperations {
      * 导出Excel
      *
      * @param outFile 目标文件
-     * @throws IOException 参考实现
+     * @throws IOException
      */
     void export(File outFile) throws IOException;
 
@@ -191,7 +189,7 @@ public interface ExcelSheetExport extends SheetExportOperations {
      * 导出Excel
      *
      * @param outPath 导出地址
-     * @throws IOException 参考实现
+     * @throws IOException
      */
     void export(String outPath) throws IOException;
 

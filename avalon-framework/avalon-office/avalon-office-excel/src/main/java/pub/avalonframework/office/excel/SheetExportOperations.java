@@ -22,13 +22,49 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * {@inheritDoc}
      */
     @Override
-    SheetExportOperations setRowCursor(Function<Integer, Integer> handler);
+    default SheetExportOperations parseTitlesJson(InputStream inputStream) {
+        return parseTitlesJson(inputStream, true);
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    SheetExportOperations setColCursor(Function<Integer, Integer> handler);
+    default SheetExportOperations parseTitlesJson(File file) {
+        return parseTitlesJson(file, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default SheetExportOperations parseTitlesJson(String titlesJson) {
+        return parseTitlesJson(titlesJson, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default SheetExportOperations setTitles(BaseExcelTitleCell[][] titles) {
+        return setTitles(titles, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default SheetExportOperations setRowNum(Function<Integer, Integer> handler) {
+        return Sheet.super.setRowNum(handler);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default SheetExportOperations setColumnNum(Function<Integer, Integer> handler) {
+        return Sheet.super.setColumnNum(handler);
+    }
 
     /**
      * 解析表头json数据
@@ -110,38 +146,6 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations parseTitlesJson(InputStream inputStream) {
-        return parseTitlesJson(inputStream, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations parseTitlesJson(File file) {
-        return parseTitlesJson(file, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations parseTitlesJson(String titlesJson) {
-        return parseTitlesJson(titlesJson, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations setTitles(BaseExcelTitleCell[][] titles) {
-        return setTitles(titles, true);
-    }
-
-    /**
      * 插入图片
      *
      * @param file        图片文件
@@ -155,7 +159,6 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param col2        终止单元格列序号,从0开始计算
      * @param row2        终止单元格行序号,从0开始计算
      * @return ExcelWorkBookExport
-     * @throws IOException 参考实现
      */
     default SheetExportOperations insertPicture(File file, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
         FileInputStream fileInputStream = null;
@@ -182,7 +185,6 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @param col2        终止单元格列序号,从0开始计算
      * @param row2        终止单元格行序号,从0开始计算
      * @return ExcelWorkBookExport
-     * @throws IOException 参考实现
      */
     default SheetExportOperations insertPicture(String filePath, ExcelWorkBook.PictureType pictureType, int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2) {
         return insertPicture(new File(filePath), pictureType, dx1, dy1, dx2, dy2, col1, row1, col2, row2);
@@ -194,20 +196,4 @@ public interface SheetExportOperations extends Sheet<SheetExportOperations> {
      * @return 数据总数
      */
     int getTotalDataSize();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations setRowNum(Function<Integer, Integer> handler) {
-        return Sheet.super.setRowNum(handler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default SheetExportOperations setColumnNum(Function<Integer, Integer> handler) {
-        return Sheet.super.setColumnNum(handler);
-    }
 }

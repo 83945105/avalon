@@ -80,7 +80,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      */
     protected SXSSFLoader sxssfLoader;
 
-    public SXSSFExcelSheetExport(String sheetName, SXSSFExcelWorkBookExport ownerWorkBook) throws ExportException {
+    public SXSSFExcelSheetExport(String sheetName, SXSSFExcelWorkBookExport ownerWorkBook) {
         super(ownerWorkBook.sxssfWorkbook);
         try {
             this.sheet = (SXSSFSheet) this.sxssfWorkbook.createSheet(sheetName);
@@ -249,9 +249,8 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
          * @param rowCursor           当前行游标
          * @param index               当前数据在数据集合中的下标
          * @return 你要设置的单元格值
-         * @throws ExportException
          */
-        Object apply(Object value, T record, ExcelCellOperations excelCellOperations, String field, int rowCursor, int index) throws ExportException;
+        Object apply(Object value, T record, ExcelCellOperations excelCellOperations, String field, int rowCursor, int index);
     }
 
     @SuppressWarnings("unchecked")

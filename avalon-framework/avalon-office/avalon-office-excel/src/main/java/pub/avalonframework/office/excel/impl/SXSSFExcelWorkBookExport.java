@@ -35,12 +35,12 @@ public class SXSSFExcelWorkBookExport extends AbstractSXSSFExcelParser implement
     }
 
     @Override
-    public ExcelSheetExport createSheet() throws ExportException {
+    public ExcelSheetExport createSheet() {
         return this.createSheet("sheet" + sheets.size());
     }
 
     @Override
-    public ExcelSheetExport createSheet(String sheetName) throws ExportException {
+    public ExcelSheetExport createSheet(String sheetName) {
         SXSSFExcelSheetExport sheet = new SXSSFExcelSheetExport(sheetName, this);
         this.sheets.add(sheet);
         return sheet;

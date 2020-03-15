@@ -222,7 +222,6 @@ public interface ExcelParser {
      * @param startCursor 起点游标
      * @param excelTitle  表头
      * @return 校验/扩充后的位置
-     * @throws ExcelTitleException 当单元格存在数据时
      */
     default int[][] validateExpandSeat(int[][] seat, int[] startCursor, BaseExcelTitleCell excelTitle) {
         int startRow = startCursor[0];

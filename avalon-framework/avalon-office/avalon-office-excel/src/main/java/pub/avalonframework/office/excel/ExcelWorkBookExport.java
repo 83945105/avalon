@@ -19,18 +19,16 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * 创建工作表
      *
      * @return 工作表对象
-     * @throws ExportException
      */
-    SheetExportOperations createSheet() throws ExportException;
+    SheetExportOperations createSheet();
 
     /**
      * 创建工作表
      *
      * @param sheetName 工作表表名
      * @return 工作表对象
-     * @throws ExportException
      */
-    SheetExportOperations createSheet(String sheetName) throws ExportException;
+    SheetExportOperations createSheet(String sheetName);
 
     /**
      * 获取工作表
@@ -78,9 +76,8 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
          * @param index                 当前创建的Sheet下标
          * @param totalAllSheetDataSize WorkBook中所有Sheet已经导入的数据总数
          * @param totalSheetDataSize    本次创建的若干Sheet已经导入的数据总数
-         * @throws IOException
          */
-        void accept(SheetExportOperations exportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize) throws IOException;
+        void accept(SheetExportOperations exportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize);
     }
 
     @FunctionalInterface
@@ -95,9 +92,8 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
          * @param totalAllSheetDataSize WorkBook中所有Sheet已经导入的数据总数
          * @param totalSheetDataSize    本次创建的若干Sheet已经导入的数据中暑
          * @return 是否继续创建
-         * @throws IOException
          */
-        boolean accept(SheetExportOperations sheetExportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize) throws IOException;
+        boolean accept(SheetExportOperations sheetExportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize);
     }
 
     /**
@@ -107,9 +103,8 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @param formatterSheetName 格式化Sheet名称,需要返回你要创建的Sheet名称
      * @param handlerSheet       处理Sheet
      * @return 当前工作簿对象
-     * @throws IOException
      */
-    default ExcelWorkBookExport createSheets(int totalSheet, SXSSFExcelWorkBookExport.FormatterSheetName formatterSheetName, SXSSFExcelWorkBookExport.HandlerSheetA handlerSheet) throws IOException {
+    default ExcelWorkBookExport createSheets(int totalSheet, SXSSFExcelWorkBookExport.FormatterSheetName formatterSheetName, SXSSFExcelWorkBookExport.HandlerSheetA handlerSheet) {
         createSheets(formatterSheetName, (sheet, sheetIndex, index, totalAllSheetDataSize, totalSheetDataSize) -> {
             handlerSheet.accept(sheet, sheetIndex, index, totalAllSheetDataSize, totalSheetDataSize);
             if (index < totalSheet - 1) {
@@ -126,9 +121,8 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @param totalSheet   你要创建的Sheet总数(最大支持100)
      * @param handlerSheet 处理Sheet
      * @return 当前工作簿对象
-     * @throws IOException
      */
-    default ExcelWorkBookExport createSheets(int totalSheet, SXSSFExcelWorkBookExport.HandlerSheetA handlerSheet) throws IOException {
+    default ExcelWorkBookExport createSheets(int totalSheet, SXSSFExcelWorkBookExport.HandlerSheetA handlerSheet) {
         createSheets(totalSheet, (sheetIndex, index) -> "sheet" + sheetIndex, handlerSheet);
         return this;
     }
@@ -139,9 +133,8 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      * @param formatterSheetName 格式化Sheet名称,需要返回你要创建的Sheet名称
      * @param handlerSheet       处理Sheet,需要返回是否继续创建,最多创建100个Sheet
      * @return 当前工作簿对象
-     * @throws IOException
      */
-    default ExcelWorkBookExport createSheets(SXSSFExcelWorkBookExport.FormatterSheetName formatterSheetName, SXSSFExcelWorkBookExport.HandlerSheetB handlerSheet) throws IOException {
+    default ExcelWorkBookExport createSheets(SXSSFExcelWorkBookExport.FormatterSheetName formatterSheetName, SXSSFExcelWorkBookExport.HandlerSheetB handlerSheet) {
         int totalAllSheetDataSize = getTotalSheetDataSize();
         int totalSheetDataSize = 0;
         boolean goon;
@@ -165,9 +158,8 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
      *
      * @param handlerSheet 处理Sheet,需要返回是否继续创建,最多创建100个Sheet
      * @return 当前工作簿对象
-     * @throws IOException
      */
-    default ExcelWorkBookExport createSheets(SXSSFExcelWorkBookExport.HandlerSheetB handlerSheet) throws IOException {
+    default ExcelWorkBookExport createSheets(SXSSFExcelWorkBookExport.HandlerSheetB handlerSheet) {
         createSheets((sheetIndex, index) -> "sheet" + sheetIndex, handlerSheet);
         return this;
     }
