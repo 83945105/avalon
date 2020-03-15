@@ -148,7 +148,7 @@ public class ExcelTest {
         for (int i = 0; i < len; i++) {
             Assertions.assertEquals(SheetRowList.class, rows01.get(i).getClass());
             Assertions.assertEquals(records.get(i).get("username").toString(), rows01.get(i).get(0).toString());
-            Assertions.assertEquals(records.get(i).get("password").toString(), rows01.get(i).get(1).toString());
+            Assertions.assertEquals(records.get(i).get("password"), Double.valueOf(rows01.get(i).get(1).toString()).intValue());
         }
 
         List<SheetRowMap> rows02 = ExcelImportFactory.buildXSSFImportExcelWorkBook()
@@ -161,7 +161,7 @@ public class ExcelTest {
         for (int i = 0; i < len; i++) {
             Assertions.assertEquals(SheetRowMap.class, rows02.get(i).getClass());
             Assertions.assertEquals(records.get(i).get("username").toString(), rows02.get(i).get("username").toString());
-            Assertions.assertEquals(records.get(i).get("password").toString(), rows02.get(i).get("password").toString());
+            Assertions.assertEquals(records.get(i).get("password"), Double.valueOf(rows02.get(i).get("password").toString()).intValue());
         }
 
         List<SheetRowMap> rows03 = ExcelImportFactory.buildXSSFImportExcelWorkBook(SheetRowMap.class)
@@ -176,7 +176,7 @@ public class ExcelTest {
             String keyNum = String.valueOf(num + 1);
             Assertions.assertEquals(SheetRowMap.class, rows03.get(i).getClass());
             Assertions.assertEquals("张三" + num, rows03.get(i).get("A" + keyNum).toString());
-            Assertions.assertEquals(num, Integer.valueOf(rows03.get(i).get("B" + keyNum).toString()));
+            Assertions.assertEquals(num, Double.valueOf(rows03.get(i).get("B" + keyNum).toString()).intValue());
         }
 
         List<LinkedHashMap<String, Object>> rows04 = ExcelImportFactory.buildXSSFImportExcelWorkBook(new TypeReference<LinkedHashMap<String, Object>>() {
@@ -192,7 +192,7 @@ public class ExcelTest {
             String keyNum = String.valueOf(num + 1);
             Assertions.assertEquals(LinkedHashMap.class, rows04.get(i).getClass());
             Assertions.assertEquals("张三" + num, rows04.get(i).get("A" + keyNum).toString());
-            Assertions.assertEquals(num, Integer.valueOf(rows04.get(i).get("B" + keyNum).toString()));
+            Assertions.assertEquals(num, Double.valueOf(rows04.get(i).get("B" + keyNum).toString()).intValue());
         }
     }
 

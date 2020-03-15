@@ -276,7 +276,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
                 }
                 try {
                     Object value = entry.getValue();
-                    cell.setValue(value == null ? "" : value.toString());
+                    cell.setValue(value == null ? "" : value);
                 } catch (Exception e) {
                     cell.setValue("");
                 }
