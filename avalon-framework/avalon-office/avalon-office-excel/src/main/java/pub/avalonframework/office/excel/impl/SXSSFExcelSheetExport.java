@@ -504,12 +504,14 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public ExcelSheetExport setColumnFields(List<String> fields) {
+    public ExcelSheetExport setColumnFields(List<String> fields, boolean exportTitles) {
         SXSSFTitleCell[][] titles = new SXSSFTitleCell[1][fields.size()];
+        String field;
         for (int i = 0; i < fields.size(); i++) {
-            titles[0][i] = new SXSSFTitleCell(fields.get(i));
+            field = fields.get(i);
+            titles[0][i] = new SXSSFTitleCell(field, field);
         }
-        return setTitles(titles, false);
+        return setTitles(titles, exportTitles);
     }
 
     @Override

@@ -50,11 +50,21 @@ public interface ExcelSheetExport extends SheetExportOperations<ExcelSheetExport
     ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
 
     @Override
-    ExcelSheetExport setColumnFields(List<String> fields);
+    default ExcelSheetExport setColumnFields(List<String> fields) {
+        return SheetExportOperations.super.setColumnFields(fields);
+    }
 
     @Override
     default ExcelSheetExport setColumnFields(String... fields) {
         return SheetExportOperations.super.setColumnFields(fields);
+    }
+
+    @Override
+    ExcelSheetExport setColumnFields(List<String> fields, boolean exportTitles);
+
+    @Override
+    default ExcelSheetExport setColumnFields(boolean exportTitles, String... fields) {
+        return SheetExportOperations.super.setColumnFields(exportTitles, fields);
     }
 
     @Override
