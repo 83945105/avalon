@@ -93,7 +93,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
          * @param totalSheetDataSize    本次创建的若干Sheet已经导入的数据总数
          * @return 是否继续创建
          */
-        boolean accept(SheetExportOperations sheetExportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize);
+        boolean accept(SheetExportOperations<?> sheetExportOperations, int sheetIndex, int index, int totalAllSheetDataSize, int totalSheetDataSize);
     }
 
     /**
@@ -137,7 +137,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
         boolean goon;
         for (int i = 0; i < MAX_BATCH_CREATE_SHEETS_NUMBER; i++) {
             int sheetIndex = getSheetSize();
-            SheetExportOperations sheetExportOperations = createSheet(formatterSheetName.apply(sheetIndex, i));
+            SheetExportOperations<?> sheetExportOperations = createSheet(formatterSheetName.apply(sheetIndex, i));
             if (i > 0) {
                 totalAllSheetDataSize += getSheet(i - 1).getTotalDataSize();
                 totalSheetDataSize += getSheet(i - 1).getTotalDataSize();

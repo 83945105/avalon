@@ -7,15 +7,15 @@ import java.io.*;
  *
  * @author baichao
  */
-public interface ExcelWorkBookImport extends ExcelWorkBook {
+public interface ExcelWorkBookImport<R> extends ExcelWorkBook {
 
     /**
      * 解析文件
      *
-     * @param inputStream 输入流
+     * @param inputStream 文件流
      * @return ExcelWorkBookImport
      */
-    ExcelWorkBookImport parseFile(InputStream inputStream);
+    ExcelWorkBookImport<R> parseFile(InputStream inputStream);
 
     /**
      * 获取工作表
@@ -24,7 +24,7 @@ public interface ExcelWorkBookImport extends ExcelWorkBook {
      * @return ExcelSheetImport
      */
     @Override
-    ExcelSheetImport<?> getSheet(int index);
+    ExcelSheetImport<R> getSheet(int index);
 
     /**
      * 解析文件
@@ -32,7 +32,7 @@ public interface ExcelWorkBookImport extends ExcelWorkBook {
      * @param file 文件
      * @return ExcelWorkBookImport
      */
-    default ExcelWorkBookImport parseFile(File file) {
+    default ExcelWorkBookImport<R> parseFile(File file) {
         FileInputStream fileInputStream;
         try {
             fileInputStream = new FileInputStream(file);
@@ -49,7 +49,7 @@ public interface ExcelWorkBookImport extends ExcelWorkBook {
      * @param path 文件路径
      * @return ExcelWorkBookImport
      */
-    default ExcelWorkBookImport parseFile(String path) {
+    default ExcelWorkBookImport<R> parseFile(String path) {
         return this.parseFile(new File(path));
     }
 

@@ -17,7 +17,7 @@ import java.util.function.Function;
  *
  * @author baichao
  */
-public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements ExcelSheetImport<R> {
+public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implements ExcelSheetImport<R> {
 
     /**
      * 上一个
@@ -27,7 +27,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
     /**
      * 行数据类型
      */
-    protected Class<R> rowType;
+    protected Class<R> defaultSheetRowType;
 
     /**
      * 当前数据表对象
@@ -37,7 +37,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
     /**
      * 所属工作簿对象
      */
-    protected XSSFExcelWorkBookImport ownerWorkBook;
+    protected XSSFExcelWorkBookImport<?> ownerWorkBook;
 
     /**
      * 表头单元格
@@ -74,22 +74,22 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
      */
     protected List<List<R>> rows = new ArrayList<>(1);
 
-    public XSSFExcelSheetImport(Class<R> rowType, XSSFSheet sheet, XSSFExcelWorkBookImport ownerWorkBook) {
-        super(ownerWorkBook.xssfWorkbook);
-        this.rowType = rowType;
+    public XSSFExcelSheetImport(Class<R> defaultSheetRowType, XSSFSheet sheet, XSSFExcelWorkBookImport<?> ownerWorkBook) {
+        super(defaultSheetRowType, ownerWorkBook.xssfWorkbook);
+        this.defaultSheetRowType = defaultSheetRowType;
         this.sheet = sheet;
         this.ownerWorkBook = ownerWorkBook;
         this.physicalNumberOfRows = this.sheet.getPhysicalNumberOfRows();
         this.xssfLoader = new XSSFLoader(this.ownerWorkBook.xssfWorkbook);
     }
 
-    public XSSFExcelSheetImport(Class<R> rowType, XSSFExcelSheetImport<?> parent) {
-        this(rowType, parent.sheet, parent.ownerWorkBook);
+    public XSSFExcelSheetImport(Class<R> defaultSheetRowType, XSSFExcelSheetImport<?> parent) {
+        this(defaultSheetRowType, parent.sheet, parent.ownerWorkBook);
         this.parent = parent;
     }
 
     @Override
-    public ExcelWorkBookImport getOwnerWorkBook() {
+    public ExcelWorkBookImport<?> getOwnerWorkBook() {
         return this.ownerWorkBook;
     }
 
@@ -100,28 +100,32 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
 
     @Override
     public ExcelSheetImport<R> readRows() {
-        List<R> rows = this.loadRows(this.rowType);
+        List<R> rows = this.loadRows(this.defaultSheetRowType);
         this.rows.add(rows);
         return this;
     }
 
     @Override
     public ExcelSheetImport<R> readRows(HandlerRowA<R> handlerRow) {
-        List<R> rows = this.loadRows(this.rowType, handlerRow);
+        List<R> rows = this.loadRows(this.defaultSheetRowType, handlerRow);
         this.rows.add(rows);
         return this;
     }
 
     @Override
     public ExcelSheetImport<R> readRows(HandlerRowB<R> handlerRow) {
-        List<R> rows = this.loadRows(this.rowType, handlerRow);
+        List<R> rows = this.loadRows(this.defaultSheetRowType, handlerRow);
         this.rows.add(rows);
         return this;
     }
 
     @Override
     public List<R> getReadData() {
-        return this.rows.get(this.rows.size() - 1);
+        int len = this.rows.size();
+        if (len <= 0) {
+            return Collections.emptyList();
+        }
+        return this.rows.get(len - 1);
     }
 
     @Override
@@ -148,60 +152,60 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
 
     @Override
     public ExcelSheetImport<R> parseTitlesJson(InputStream inputStream) {
-        XSSFTitleCell[][] excelTitles = (XSSFTitleCell[][]) this.parseCellsJson(inputStream);
-        return setTitles(excelTitles);
+        XSSFTitleCell[][] titles = (XSSFTitleCell[][]) this.parseCellsJson(inputStream);
+        return setTitles(titles);
     }
 
     @Override
     public ExcelSheetImport<R> parseTitlesJson(File file) {
-        XSSFTitleCell[][] excelTitles = (XSSFTitleCell[][]) this.parseCellsJson(file);
-        return setTitles(excelTitles);
+        XSSFTitleCell[][] titles = (XSSFTitleCell[][]) this.parseCellsJson(file);
+        return setTitles(titles);
     }
 
     @Override
     public ExcelSheetImport<R> parseTitlesJson(String titlesJson) {
-        XSSFTitleCell[][] excelTitles = this.parseCellsJson(titlesJson);
-        return setTitles(excelTitles);
+        XSSFTitleCell[][] titles = this.parseCellsJson(titlesJson);
+        return setTitles(titles);
     }
 
     @Override
     public ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles) {
         if (!(titles instanceof XSSFTitleCell[][])) {
-            throw new ExportException("SXSSFExcelSheetExport setTitles excelTitles类型应该为XSSFTitleCell[][]");
+            throw new ExportException("SXSSFExcelSheetExport setTitles titles类型应该为XSSFTitleCell[][]");
         }
         this.excelTitleCells = handlerExcelTitles(titles);
         this.dataTitleCells = this.searchDataTitleCells(this.excelTitleCells);
-        this.parseExportTitles(this.dataTitleCells);
+        this.moveCursorWithTitles(this.dataTitleCells);
         return this;
     }
 
     @Override
-    public ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int rowSpan) {
+    public ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan) {
         if (!(titles instanceof XSSFTitleCell[][])) {
-            throw new ExportException("SXSSFExcelSheetExport setTitles excelTitles类型应该为XSSFTitleCell[][]");
+            throw new ExportException("SXSSFExcelSheetExport setTitles titles类型应该为XSSFTitleCell[][]");
         }
         this.excelTitleCells = handlerExcelTitles(titles);
         this.dataTitleCells = this.searchDataTitleCells(this.excelTitleCells);
-        this.parseExportTitles(this.dataTitleCells, rowSpan);
+        this.moveCursorWithTitles(this.dataTitleCells, expectedRowSpan);
         return this;
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> parseTitlesJson(InputStream inputStream, Class<HR> clazz) {
-        XSSFTitleCell[][] excelTitles = (XSSFTitleCell[][]) this.parseCellsJson(inputStream);
-        return setTitles(excelTitles, clazz);
+        XSSFTitleCell[][] titles = (XSSFTitleCell[][]) this.parseCellsJson(inputStream);
+        return setTitles(titles, clazz);
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> parseTitlesJson(File file, Class<HR> clazz) {
-        XSSFTitleCell[][] excelTitles = (XSSFTitleCell[][]) this.parseCellsJson(file);
-        return setTitles(excelTitles, clazz);
+        XSSFTitleCell[][] titles = (XSSFTitleCell[][]) this.parseCellsJson(file);
+        return setTitles(titles, clazz);
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> parseTitlesJson(String titlesJson, Class<HR> clazz) {
-        XSSFTitleCell[][] excelTitles = this.parseCellsJson(titlesJson);
-        return setTitles(excelTitles, clazz);
+        XSSFTitleCell[][] titles = this.parseCellsJson(titlesJson);
+        return setTitles(titles, clazz);
     }
 
     @Override
@@ -212,28 +216,28 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
     }
 
     @Override
-    public <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int rowSpan, Class<HR> clazz) {
+    public <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan, Class<HR> clazz) {
         ExcelSheetImport<HR> excelSheetImport = new XSSFExcelSheetImport<>(clazz, this);
-        excelSheetImport.setTitles(titles, rowSpan);
+        excelSheetImport.setTitles(titles, expectedRowSpan);
         return excelSheetImport;
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, Class<HR> clazz) {
-        XSSFTitleCell[][] excelTitles = new XSSFTitleCell[1][fields.size()];
+        XSSFTitleCell[][] titles = new XSSFTitleCell[1][fields.size()];
         for (int i = 0; i < fields.size(); i++) {
-            excelTitles[0][i] = new XSSFTitleCell(fields.get(i));
+            titles[0][i] = new XSSFTitleCell(fields.get(i));
         }
-        return setTitles(excelTitles, clazz);
+        return setTitles(titles, clazz);
     }
 
     @Override
-    public <HR> ExcelSheetImport<HR> setColumnFields(int rowSpan, List<String> fields, Class<HR> clazz) {
-        XSSFTitleCell[][] excelTitles = new XSSFTitleCell[1][fields.size()];
+    public <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, int expectedRowSpan, Class<HR> clazz) {
+        XSSFTitleCell[][] titles = new XSSFTitleCell[1][fields.size()];
         for (int i = 0; i < fields.size(); i++) {
-            excelTitles[0][i] = new XSSFTitleCell(fields.get(i));
+            titles[0][i] = new XSSFTitleCell(fields.get(i));
         }
-        return setTitles(rowSpan, excelTitles, clazz);
+        return setTitles(titles, expectedRowSpan, clazz);
     }
 
     @Override
@@ -251,10 +255,6 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
     @Override
     public <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowB<HR> handlerRow) {
         this.loadRows(clazz, handlerRow);
-        return null;
-    }
-
-    public <HR> ExcelSheetImport<HR> setTitles(int rowSpan, BaseExcelTitleCell[][] excelTitles, Class<HR> clazz) {
         return null;
     }
 
@@ -320,6 +320,15 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
         });
     }
 
+    private <T> T instantiateClass(Class<T> clazz) {
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            throw new ExcelException(e);
+        }
+    }
+
     /**
      * 装载行
      *
@@ -332,22 +341,27 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
         //设置行游标
         this.setRowCursor(idx -> row.getRowNum());
         T rs;
-        try {
-            rs = containerClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-            throw new ExcelException(e);
-        }
         //Map集合
         if (Map.class.isAssignableFrom(containerClass)) {
+            if (containerClass.isInterface()) {
+                rs = (T) new SheetRowMap();
+            } else {
+                rs = instantiateClass(containerClass);
+            }
             this.injectMap(row, (Map<String, Object>) rs);
             return rs;
         }
         //表示使用集合去装载数据,此时不记录field
         if (Collection.class.isAssignableFrom(containerClass)) {
+            if (containerClass.isInterface()) {
+                rs = (T) new SheetRowList();
+            } else {
+                rs = instantiateClass(containerClass);
+            }
             this.injectCollection(row, (Collection<Object>) rs);
             return rs;
         }
+        rs = instantiateClass(containerClass);
         //对象
         this.injectObject(row, rs);
         return rs;
@@ -433,11 +447,11 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
     }
 
     /**
-     * 解析表头
+     * 根据表头移动游标
      *
      * @param titles 表头合并单元格信息
      */
-    protected void parseExportTitles(Collection<BaseExcelTitleCell> titles) {
+    protected void moveCursorWithTitles(Collection<BaseExcelTitleCell> titles) {
         int maxRowNum = this.rowCursor + 1;
         for (BaseExcelTitleCell title : titles) {
             XSSFTitleCell titleCell = (XSSFTitleCell) title;
@@ -451,12 +465,15 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
     }
 
     /**
-     * 解析表头
+     * 根据表头移动游标
      *
-     * @param titles  表头合并单元格信息
-     * @param rowSpan 占用行数
+     * @param titles          表头合并单元格信息
+     * @param expectedRowSpan 期望占用行数, 如果期望值小于等于0将无视表头, 如果期望值大于0则取期望与实际的最大值.
      */
-    protected void parseExportTitles(Collection<BaseExcelTitleCell> titles, int rowSpan) {
+    protected void moveCursorWithTitles(Collection<BaseExcelTitleCell> titles, int expectedRowSpan) {
+        if (expectedRowSpan <= 0) {
+            return;
+        }
         //无穷小
         double maxRowNum = Double.NEGATIVE_INFINITY;
         //无穷大
@@ -472,10 +489,10 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport implements 
         }
         //记录行号
         NumberFormat nf = NumberFormat.getInstance();
-        int finalMaxRowIndex = Integer.parseInt(nf.format(maxRowNum)) - 1;
-        int finalMinRowIndex = Integer.parseInt(nf.format(minRowNum)) - 1;
-        int index = finalMinRowIndex + rowSpan - 1;
-        setRowCursor(idx -> Math.max(finalMaxRowIndex, index));
+        int finalMaxCursorIndex = Integer.parseInt(nf.format(maxRowNum)) - 1;
+        int finalMinCursorIndex = Integer.parseInt(nf.format(minRowNum)) - 1;
+        int expectedCursorIndex = finalMinCursorIndex + expectedRowSpan - 1;
+        setRowCursor(idx -> Math.max(finalMaxCursorIndex, expectedCursorIndex));
     }
 
     @FunctionalInterface

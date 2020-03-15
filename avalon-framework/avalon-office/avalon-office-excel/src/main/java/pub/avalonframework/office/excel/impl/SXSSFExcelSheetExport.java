@@ -470,28 +470,28 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
     @Override
     public ExcelSheetExport parseTitlesJson(String titlesJson, boolean exportTitles) {
-        SXSSFTitleCell[][] excelTitles = this.parseCellsJson(titlesJson);
-        return setTitles(excelTitles, exportTitles);
+        SXSSFTitleCell[][] titles = this.parseCellsJson(titlesJson);
+        return setTitles(titles, exportTitles);
     }
 
     @Override
     public ExcelSheetExport parseTitlesJson(InputStream inputStream, boolean exportTitles) {
-        SXSSFTitleCell[][] excelTitles = (SXSSFTitleCell[][]) this.parseCellsJson(inputStream);
-        return setTitles(excelTitles, exportTitles);
+        SXSSFTitleCell[][] titles = (SXSSFTitleCell[][]) this.parseCellsJson(inputStream);
+        return setTitles(titles, exportTitles);
     }
 
     @Override
     public ExcelSheetExport parseTitlesJson(File file, boolean exportTitles) {
-        SXSSFTitleCell[][] excelTitles = (SXSSFTitleCell[][]) this.parseCellsJson(file);
-        return setTitles(excelTitles, exportTitles);
+        SXSSFTitleCell[][] titles = (SXSSFTitleCell[][]) this.parseCellsJson(file);
+        return setTitles(titles, exportTitles);
     }
 
     @Override
-    public ExcelSheetExport setTitles(BaseExcelTitleCell[][] excelTitles, boolean exportTitles) {
-        if (!(excelTitles instanceof SXSSFTitleCell[][])) {
-            throw new ExportException("SXSSFExcelSheetExport setTitles excelTitles类型应该为SXSSFTitleCell[][]");
+    public ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles) {
+        if (!(titles instanceof SXSSFTitleCell[][])) {
+            throw new ExportException("SXSSFExcelSheetExport setTitles titles类型应该为SXSSFTitleCell[][]");
         }
-        this.titleCells = handlerExcelTitles(excelTitles);
+        this.titleCells = handlerExcelTitles(titles);
         this.dataTitleCells = this.searchDataTitleCells(this.titleCells);
         //设置列宽
         for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
@@ -505,11 +505,11 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
     @Override
     public ExcelSheetExport setColumnFields(List<String> fields) {
-        SXSSFTitleCell[][] excelTitles = new SXSSFTitleCell[1][fields.size()];
+        SXSSFTitleCell[][] titles = new SXSSFTitleCell[1][fields.size()];
         for (int i = 0; i < fields.size(); i++) {
-            excelTitles[0][i] = new SXSSFTitleCell(fields.get(i));
+            titles[0][i] = new SXSSFTitleCell(fields.get(i));
         }
-        return setTitles(excelTitles, false);
+        return setTitles(titles, false);
     }
 
     @Override

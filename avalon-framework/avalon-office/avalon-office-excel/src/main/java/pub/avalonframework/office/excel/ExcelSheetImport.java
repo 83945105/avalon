@@ -100,11 +100,11 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
     /**
      * 设置表头
      *
-     * @param titles  表头
-     * @param rowSpan 表头占用行数
+     * @param titles          表头
+     * @param expectedRowSpan 期望占用行数
      * @return ExcelSheetImport
      */
-    ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int rowSpan);
+    ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan);
 
     /**
      * {@inheritDoc}
@@ -161,12 +161,12 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
     /**
      * 设置表头
      *
-     * @param titles  表头对象
-     * @param rowSpan 占用行数
-     * @param clazz   数据容器
+     * @param titles          表头对象
+     * @param expectedRowSpan 期望占用行数
+     * @param clazz           数据容器
      * @return ExcelSheetImport
      */
-    <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int rowSpan, Class<HR> clazz);
+    <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan, Class<HR> clazz);
 
     /**
      * 设置列对应的数据属性
@@ -191,23 +191,23 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
     /**
      * 设置列对应的数据属性
      *
-     * @param rowSpan 占用行数
-     * @param fields  属性
-     * @param clazz   数据容器
+     * @param fields          属性
+     * @param expectedRowSpan 期望占用行数
+     * @param clazz           数据容器
      * @return ExcelSheetImport
      */
-    <HR> ExcelSheetImport<HR> setColumnFields(int rowSpan, List<String> fields, Class<HR> clazz);
+    <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, int expectedRowSpan, Class<HR> clazz);
 
     /**
      * 设置列值
      * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
      *
-     * @param rowSpan 占用行数
-     * @param fields  列对应的属性
+     * @param expectedRowSpan 期望占用行数
+     * @param fields          列对应的属性
      * @return ExcelSheetImport
      */
-    default ExcelSheetImport<SheetRowMap> setColumnFields(int rowSpan, String... fields) {
-        return setColumnFields(rowSpan, Arrays.asList(fields), SheetRowMap.class);
+    default ExcelSheetImport<SheetRowMap> setColumnFields(int expectedRowSpan, String... fields) {
+        return setColumnFields(Arrays.asList(fields), expectedRowSpan, SheetRowMap.class);
     }
 
     /**
