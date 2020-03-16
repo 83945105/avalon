@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pub.avalonframework.office.excel.impl.SXSSFExcelTitle;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -338,23 +339,93 @@ public class ExcelTest {
         User user02 = new User();
         User user03 = new User();
         user01.setUsername("张三1");
-        user01.setPassword("666");
-        user01.setMobile(110);
+        user01.setPassword("1");
+        user01.setMobile(1);
         user02.setUsername("张三2");
-        user02.setPassword("666");
-        user02.setMobile(120);
+        user02.setPassword("2");
+        user02.setMobile(2);
         user03.setUsername("张三3");
-        user03.setPassword("666");
-        user03.setMobile(119);
+        user03.setPassword("3");
+        user03.setMobile(3);
         records.add(user01);
         records.add(user02);
         records.add(user03);
         /*模拟从数据库获取数据结束*/
+
+        // 导出
 
         ExcelExportFactory.buildSXSSFExportExcelWorkBook()
                 .createSheet()
                 .setTitles(titles)//设置标题
                 .importData(records)
                 .export(filePath);
+
+        // 导入
+
+        ExcelImportFactory.buildXSSFImportExcelWorkBook()
+                .parseFile(filePath)
+                .getSheet(0)
+                .setTitles(titles, User.class)
+                .readRows((record, list, rowNum, index) -> {
+                    int num = index + 1;
+                    Assertions.assertEquals("张三" + num, record.getUsername());
+                    Assertions.assertEquals(String.valueOf(num), record.getPassword());
+                    Assertions.assertEquals(num, record.getMobile());
+                });
+    }
+
+    @Test
+    void test05() throws IOException {
+        final String titlePath = "/Users/baichao/develop/idea_projects/avalon/avalon-framework/avalon-office/avalon-office-excel/src/test/resources/test05-title.js";
+        ExcelWorkBookExport.exportTemplateJavaScriptFile(titlePath);
+        File file = new File(titlePath);
+        Assertions.assertTrue(file.exists());
+    }
+
+    @Test
+    void test06() throws IOException {
+        final String filePath = "/Users/baichao/develop/idea_projects/avalon/avalon-framework/avalon-office/avalon-office-excel/src/test/resources/test06.xlsx";
+
+        final String titlePath = "/test06-title.js";
+
+        /*模拟从数据库获取数据开始*/
+        List<User> records = new ArrayList<>();
+        User user01 = new User();
+        User user02 = new User();
+        User user03 = new User();
+        user01.setUsername("张三1");
+        user01.setPassword("1");
+        user01.setMobile(1);
+        user02.setUsername("张三2");
+        user02.setPassword("2");
+        user02.setMobile(2);
+        user03.setUsername("张三3");
+        user03.setPassword("3");
+        user03.setMobile(3);
+        records.add(user01);
+        records.add(user02);
+        records.add(user03);
+        /*模拟从数据库获取数据结束*/
+
+        // 导出
+
+        ExcelExportFactory.buildSXSSFExportExcelWorkBook()
+                .createSheet()
+                .parseTitlesJson(this.getClass().getResourceAsStream(titlePath))//设置标题
+                .importData(records)
+                .export(filePath);
+
+        // 导入
+
+        ExcelImportFactory.buildXSSFImportExcelWorkBook()
+                .parseFile(filePath)
+                .getSheet(0)
+                .parseTitlesJson(this.getClass().getResourceAsStream(titlePath), User.class)
+                .readRows((record, list, rowNum, index) -> {
+                    int num = index + 1;
+                    Assertions.assertEquals("张三" + num, record.getUsername());
+                    Assertions.assertEquals(String.valueOf(num), record.getPassword());
+                    Assertions.assertEquals(num, record.getMobile());
+                });
     }
 }

@@ -245,7 +245,7 @@ public interface ExcelWorkBookExport extends ExcelWorkBook {
     /**
      * js模板文件路径
      */
-    String TEMPLATE_JAVASCRIPT_FILE_PATH = "classpath:template.js";
+    String TEMPLATE_JAVASCRIPT_FILE_PATH = "/pub/avalonframework/office/excel/template.js";
 
     /**
      * 导出JavaScript模板文件
