@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The excel utils.
@@ -15,36 +17,48 @@ public final class ExcelUtils {
     private ExcelUtils() {
     }
 
+    private final static ConcurrentHashMap<Class<?>, List<Field>> CLASS_LIST_FIELD_CACHE = new ConcurrentHashMap<>();
+
+    private final static ConcurrentHashMap<Class<?>, Method> CLASS_METHOD_CONCURRENT_CACHE = new ConcurrentHashMap<>();
+
     /**
      * 获取所有Field
      *
-     * @param clazz
-     * @return
+     * @param clazz 类
+     * @return 属性集合
      */
-    public static ArrayList<Field> getAllFields(Class<?> clazz) {
-        ArrayList<Field> rs = new ArrayList<>();
-        for (Class<?> cla = clazz; cla != Object.class; cla = cla.getSuperclass()) {
-            rs.addAll(Arrays.asList(cla.getDeclaredFields()));
+    public static List<Field> getAllFields(Class<?> clazz) {
+        List<Field> fields = CLASS_LIST_FIELD_CACHE.get(clazz);
+        if (fields == null) {
+            fields = new ArrayList<>();
+            for (Class<?> cla = clazz; cla != Object.class; cla = cla.getSuperclass()) {
+                fields.addAll(Arrays.asList(cla.getDeclaredFields()));
+            }
+            CLASS_LIST_FIELD_CACHE.put(clazz, fields);
         }
-        return rs;
+        return fields;
     }
 
     /**
      * 获取对象指定方法
      *
-     * @param clazz
-     * @param methodName
-     * @return
+     * @param clazz      类
+     * @param methodName 方法名
+     * @return 方法
      */
     public static Method getMethod(Class<?> clazz, String methodName) {
-        for (Class<?> cla = clazz; cla != Object.class; cla = cla.getSuperclass()) {
-            for (Method method : cla.getDeclaredMethods()) {
-                if (methodName.equals(method.getName())) {
-                    return method;
+        Method method = CLASS_METHOD_CONCURRENT_CACHE.get(clazz);
+        if (method == null) {
+            for (Class<?> cla = clazz; cla != Object.class; cla = cla.getSuperclass()) {
+                for (Method each : cla.getDeclaredMethods()) {
+                    if (methodName.equals(each.getName())) {
+                        CLASS_METHOD_CONCURRENT_CACHE.put(clazz, each);
+                        return each;
+                    }
                 }
             }
         }
-        return null;
+        return method;
     }
 
     private static final int MIN_CALCULATE_NUMBER = 2;

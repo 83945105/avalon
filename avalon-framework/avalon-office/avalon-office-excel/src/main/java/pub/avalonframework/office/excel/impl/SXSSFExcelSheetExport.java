@@ -323,7 +323,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
     protected <T> void parseObject(T record) {
         int startRow = this.rowCursor + 2;
-        ArrayList<Field> fs = ExcelUtils.getAllFields(record.getClass());
+        List<Field> fs = ExcelUtils.getAllFields(record.getClass());
         for (ExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
             SXSSFCell cell = new SXSSFCell(this.getOwnerWorkBook(), this.defaultCellStyle, startRow, titleCell.getStartColNum(), 1, titleCell.getColSpan());
@@ -369,7 +369,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
     protected <T> void parseObject(T record, int index, FormatterCell<T> formatter) {
         int startRow = this.rowCursor + 2;
-        ArrayList<Field> fs = ExcelUtils.getAllFields(record.getClass());
+        List<Field> fs = ExcelUtils.getAllFields(record.getClass());
         for (ExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
             SXSSFCell cell = new SXSSFCell(this.getOwnerWorkBook(), this.defaultCellStyle, startRow, titleCell.getStartColNum(), 1, titleCell.getColSpan());
