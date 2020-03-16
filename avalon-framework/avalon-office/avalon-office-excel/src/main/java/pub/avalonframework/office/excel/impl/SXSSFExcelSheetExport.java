@@ -48,12 +48,12 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     /**
      * 表头单元格信息
      */
-    protected List<BaseExcelTitleCell> titleCells;
+    protected List<ExcelTitleCell> titleCells;
 
     /**
      * 与数据相关的表头信息
      */
-    protected LinkedList<BaseExcelTitleCell> dataTitleCells;
+    protected LinkedList<ExcelTitleCell> dataTitleCells;
 
     /**
      * 行游标,记录每次插入数据时的总起始行号
@@ -131,7 +131,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     /**
      * 重写表头构建方法,主要关联了行游标和列游标
      *
-     * @param excelTitle
+     * @param excelTitleCell
      * @param startRow
      * @param endRow
      * @param startCol
@@ -139,16 +139,16 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      * @return
      */
     @Override
-    public BaseExcelTitleCell buildExcelTitleCell(BaseExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol) {
-        excelTitle.setStartRowNum(this.rowCursor + startRow + 1);
-        excelTitle.setStartColNum(this.colCursor + startCol + 1);
-        return excelTitle;
+    public ExcelTitleCell buildExcelTitleCell(ExcelTitleCell excelTitleCell, int startRow, int endRow, int startCol, int endCol) {
+        excelTitleCell.setStartRowNum(this.rowCursor + startRow + 1);
+        excelTitleCell.setStartColNum(this.colCursor + startCol + 1);
+        return excelTitleCell;
     }
 
     /**
      * 获取数据校验对象
      */
-    protected DataValidation getDataValidation(BaseCell cell) {
+    protected DataValidation getDataValidation(Cell cell) {
         if (cell.getCellType() == CellOption.CellType.COMBOBOX && cell.getCellOptions().length > 0) {
             DataValidationHelper helper = this.sheet.getDataValidationHelper();
             CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(cell.getStartRowNum() - 1, cell.getEndRowNum() - 1, cell.getStartColNum() - 1, cell.getEndColNum() - 1);
@@ -170,7 +170,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      *
      * @param cell 单元格相关信息
      */
-    protected void buildCell(BaseCell cell) {
+    protected void buildCell(Cell cell) {
         if (!cell.isWriteEmpty() && StringUtils.isEmpty(cell.getCellValue())) {
             //不允许写入空值且当前值为空
             return;
@@ -204,8 +204,8 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      *
      * @param titles 表头单元格信息
      */
-    protected void parseExportTitles(Collection<BaseExcelTitleCell> titles) {
-        for (BaseExcelTitleCell title : titles) {
+    protected void parseExportTitles(Collection<ExcelTitleCell> titles) {
+        for (ExcelTitleCell title : titles) {
             //开始处理表头
             this.buildCell(title);
         }
@@ -216,7 +216,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
      *
      * @param titleCell
      */
-    protected void setTitleCellColumnWidth(BaseExcelTitleCell titleCell) {
+    protected void setTitleCellColumnWidth(ExcelTitleCell titleCell) {
         int width = titleCell.getWidth() * 256 / titleCell.getColSpan();
         for (int i = titleCell.getStartColNum(); i <= titleCell.getEndColNum(); i++) {
             this.setColumnWidth(i - 1, width);
@@ -265,7 +265,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
     protected void parseMap(Map<String, Object> record) {
         int startRow = this.rowCursor + 2;
-        for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
+        for (ExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
             SXSSFCell cell = new SXSSFCell(this.getOwnerWorkBook(), this.defaultCellStyle, startRow, titleCell.getStartColNum(), 1, titleCell.getColSpan());
             cell.setField(titleCell.getField());
@@ -288,7 +288,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
 
     protected void parseMap(Map<String, Object> record, int index, FormatterCell<Map<String, Object>> formatter) {
         int startRow = this.rowCursor + 2;
-        for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
+        for (ExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
             SXSSFCell cell = new SXSSFCell(this.getOwnerWorkBook(), this.defaultCellStyle, startRow, titleCell.getStartColNum(), 1, titleCell.getColSpan());
             cell.setField(titleCell.getField());
@@ -324,7 +324,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     protected <T> void parseObject(T record) {
         int startRow = this.rowCursor + 2;
         ArrayList<Field> fs = ExcelUtils.getAllFields(record.getClass());
-        for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
+        for (ExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
             SXSSFCell cell = new SXSSFCell(this.getOwnerWorkBook(), this.defaultCellStyle, startRow, titleCell.getStartColNum(), 1, titleCell.getColSpan());
             cell.setField(titleCell.getField());
@@ -370,7 +370,7 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     protected <T> void parseObject(T record, int index, FormatterCell<T> formatter) {
         int startRow = this.rowCursor + 2;
         ArrayList<Field> fs = ExcelUtils.getAllFields(record.getClass());
-        for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
+        for (ExcelTitleCell titleCell : this.dataTitleCells) {
             //创建数据单元格,默认开始行使用当前游标+2、默认开始列与title一致，默认占用一行、占用列与title一致
             SXSSFCell cell = new SXSSFCell(this.getOwnerWorkBook(), this.defaultCellStyle, startRow, titleCell.getStartColNum(), 1, titleCell.getColSpan());
             cell.setField(titleCell.getField());
@@ -487,14 +487,14 @@ public class SXSSFExcelSheetExport extends SXSSFExcelWorkBookExport implements E
     }
 
     @Override
-    public ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles) {
+    public ExcelSheetExport setTitles(ExcelTitleCell[][] titles, boolean exportTitles) {
         if (!(titles instanceof SXSSFTitleCell[][])) {
             throw new ExportException("SXSSFExcelSheetExport setTitles titles类型应该为SXSSFTitleCell[][]");
         }
         this.titleCells = handlerExcelTitles(titles);
         this.dataTitleCells = this.searchDataTitleCells(this.titleCells);
         //设置列宽
-        for (BaseExcelTitleCell titleCell : this.dataTitleCells) {
+        for (ExcelTitleCell titleCell : this.dataTitleCells) {
             this.setTitleCellColumnWidth(titleCell);
         }
         if (exportTitles) {

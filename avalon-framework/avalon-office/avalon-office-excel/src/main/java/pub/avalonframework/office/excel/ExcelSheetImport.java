@@ -127,7 +127,7 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * {@inheritDoc}
      */
     @Override
-    ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles);
+    ExcelSheetImport<R> setTitles(ExcelTitleCell[][] titles);
 
     /**
      * 设置表头
@@ -136,7 +136,7 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * @param expectedRowSpan 期望占用行数
      * @return ExcelSheetImport
      */
-    ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan);
+    ExcelSheetImport<R> setTitles(ExcelTitleCell[][] titles, int expectedRowSpan);
 
     /**
      * {@inheritDoc}
@@ -188,7 +188,7 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * @param clazz  数据容器
      * @return ExcelSheetImport
      */
-    <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, Class<HR> clazz);
+    <HR> ExcelSheetImport<HR> setTitles(ExcelTitleCell[][] titles, Class<HR> clazz);
 
     /**
      * 设置表头
@@ -198,7 +198,7 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * @param clazz           数据容器
      * @return ExcelSheetImport
      */
-    <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan, Class<HR> clazz);
+    <HR> ExcelSheetImport<HR> setTitles(ExcelTitleCell[][] titles, int expectedRowSpan, Class<HR> clazz);
 
     /**
      * 设置列对应的数据属性

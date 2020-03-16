@@ -3,6 +3,7 @@ package pub.avalonframework.office.excel.parser;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import pub.avalonframework.office.excel.BaseExcelTitleCell;
+import pub.avalonframework.office.excel.ExcelTitleCell;
 import pub.avalonframework.office.excel.MergeCell;
 import pub.avalonframework.office.excel.impl.XSSFCell;
 import pub.avalonframework.office.excel.impl.XSSFTitleCell;
@@ -57,7 +58,7 @@ public abstract class AbstractXSSFExcelParser implements ExcelParser {
     }
 
     @Override
-    public BaseExcelTitleCell buildExcelTitleCell(BaseExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol) {
+    public ExcelTitleCell buildExcelTitleCell(ExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol) {
         excelTitle.setStartRowNum(startRow);
         excelTitle.setStartColNum(startCol);
         return excelTitle;

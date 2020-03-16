@@ -3,7 +3,7 @@ package pub.avalonframework.office.excel;
 /**
  * @author 白超
  */
-public interface ExcelTitleCellOperations extends CellOperations {
+public interface ExcelTitleCellOperations extends Cell {
 
     /**
      * 获取标题文本

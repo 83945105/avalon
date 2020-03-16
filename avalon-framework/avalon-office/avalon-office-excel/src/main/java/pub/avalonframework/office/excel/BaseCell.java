@@ -5,7 +5,7 @@ package pub.avalonframework.office.excel;
  *
  * @author baichao
  */
-public abstract class BaseCell implements CellOperations {
+public abstract class BaseCell implements Cell {
 
     public BaseCell() {
     }
@@ -162,13 +162,6 @@ public abstract class BaseCell implements CellOperations {
     public void setWriteEmpty(boolean writeEmpty) {
         this.writeEmpty = writeEmpty;
     }
-
-    /**
-     * 获取单元格内容
-     *
-     * @return
-     */
-    public abstract Object getCellValue();
 
     @Override
     public boolean isMergeCell() {

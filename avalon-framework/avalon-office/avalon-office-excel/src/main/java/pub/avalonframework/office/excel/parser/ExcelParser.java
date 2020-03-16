@@ -2,8 +2,8 @@ package pub.avalonframework.office.excel.parser;
 
 import pub.avalonframework.common.utils.SortUtils;
 import pub.avalonframework.office.excel.BaseCell;
-import pub.avalonframework.office.excel.BaseExcelTitleCell;
 import pub.avalonframework.office.excel.ExcelException;
+import pub.avalonframework.office.excel.ExcelTitleCell;
 import pub.avalonframework.office.excel.impl.ExcelTitleCellError;
 import pub.avalonframework.office.excel.impl.ExcelTitleException;
 
@@ -37,7 +37,7 @@ public interface ExcelParser {
      * @param endCol     占用结束列
      * @return 单元格合并对象
      */
-    BaseExcelTitleCell buildExcelTitleCell(BaseExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol);
+    ExcelTitleCell buildExcelTitleCell(ExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol);
 
     /**
      * 搜寻影响数据的表头合并单元格数据
@@ -46,12 +46,12 @@ public interface ExcelParser {
      * @param titles 表头合并单元格
      * @return 数据表头
      */
-    default LinkedList<BaseExcelTitleCell> searchDataTitleCells(List<BaseExcelTitleCell> titles) {
-        BaseExcelTitleCell target;
+    default LinkedList<ExcelTitleCell> searchDataTitleCells(List<ExcelTitleCell> titles) {
+        ExcelTitleCell target;
         //先把所有源放入目标
-        LinkedList<BaseExcelTitleCell> targetMergeCell = new LinkedList<>(titles);
+        LinkedList<ExcelTitleCell> targetMergeCell = new LinkedList<>(titles);
         //遍历源,用源的每一个元素去和目标进行比对位置
-        for (BaseExcelTitleCell title : titles) {
+        for (ExcelTitleCell title : titles) {
             for (int j = 0; j < targetMergeCell.size(); ) {
                 target = targetMergeCell.get(j);
                 //比对位置
@@ -79,8 +79,8 @@ public interface ExcelParser {
      * @param defaultSeatCol 记录位置信息初始化默认列数
      * @param handler        处理单元格合并对象回调函数
      */
-    default void handlerExcelTitles(BaseExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol, Consumer<BaseExcelTitleCell> handler) {
-        BaseExcelTitleCell[] excelTitles;
+    default void handlerExcelTitles(ExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol, Consumer<ExcelTitleCell> handler) {
+        ExcelTitleCell[] excelTitles;
         //结束行
         int endRow;
         //结束列
@@ -90,7 +90,7 @@ public interface ExcelParser {
         int[] cursor;//游标
         for (int i = 0; i < titles.length; i++) {
             excelTitles = titles[i];
-            for (BaseExcelTitleCell baseExcelTitleCell : excelTitles) {
+            for (ExcelTitleCell baseExcelTitleCell : excelTitles) {
                 cursor = searchStartCursor(seat, i);
                 seat = validateExpandSeat(seat, cursor, baseExcelTitleCell);
                 //将占用的位置设置为已占用
@@ -176,7 +176,7 @@ public interface ExcelParser {
      * @param titles 表头对象二维数组
      * @return 单元格合并集合
      */
-    default ArrayList<BaseExcelTitleCell> handlerExcelTitles(BaseExcelTitleCell[][] titles) {
+    default ArrayList<ExcelTitleCell> handlerExcelTitles(ExcelTitleCell[][] titles) {
         return handlerExcelTitles(titles, titles.length * 2, 10);
     }
 
@@ -188,8 +188,8 @@ public interface ExcelParser {
      * @param defaultSeatCol 记录位置信息初始化默认列数
      * @return 单元格合并集合
      */
-    default ArrayList<BaseExcelTitleCell> handlerExcelTitles(BaseExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol) {
-        ArrayList<BaseExcelTitleCell> rs = new ArrayList<>();
+    default ArrayList<ExcelTitleCell> handlerExcelTitles(ExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol) {
+        ArrayList<ExcelTitleCell> rs = new ArrayList<>();
         handlerExcelTitles(titles, defaultSeatRow, defaultSeatCol, rs::add);
         return rs;
     }
@@ -221,7 +221,7 @@ public interface ExcelParser {
      * @param excelTitle  表头
      * @return 校验/扩充后的位置
      */
-    default int[][] validateExpandSeat(int[][] seat, int[] startCursor, BaseExcelTitleCell excelTitle) {
+    default int[][] validateExpandSeat(int[][] seat, int[] startCursor, ExcelTitleCell excelTitle) {
         int startRow = startCursor[0];
         int endRow = startRow + excelTitle.getRowSpan() - 1;
         int startCol = startCursor[1];
@@ -269,9 +269,9 @@ public interface ExcelParser {
      * @param columnIndex 列下标
      * @return 对应的合并单元格, 没找到返回null
      */
-    default BaseExcelTitleCell searchTitleCell(Collection<BaseExcelTitleCell> titleCells, int columnIndex) {
+    default ExcelTitleCell searchTitleCell(Collection<ExcelTitleCell> titleCells, int columnIndex) {
         int columnNum = columnIndex + 1;
-        for (BaseExcelTitleCell titleCell : titleCells) {
+        for (ExcelTitleCell titleCell : titleCells) {
             if (columnNum >= titleCell.getStartColNum() && columnNum <= titleCell.getEndColNum()) {
                 return titleCell;
             }

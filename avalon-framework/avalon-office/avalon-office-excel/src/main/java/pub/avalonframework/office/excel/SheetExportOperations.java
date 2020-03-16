@@ -46,7 +46,7 @@ public interface SheetExportOperations<T extends SheetExportOperations<T>> exten
      * {@inheritDoc}
      */
     @Override
-    default T setTitles(BaseExcelTitleCell[][] titles) {
+    default T setTitles(ExcelTitleCell[][] titles) {
         return setTitles(titles, true);
     }
 
@@ -84,7 +84,7 @@ public interface SheetExportOperations<T extends SheetExportOperations<T>> exten
      * @param exportTitles 是否导出表头
      * @return T extends SheetExportOperations<T>
      */
-    T setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
+    T setTitles(ExcelTitleCell[][] titles, boolean exportTitles);
 
     /**
      * {@inheritDoc}

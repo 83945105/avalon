@@ -1,22 +1,22 @@
 package pub.avalonframework.office.excel.impl;
 
-import org.apache.poi.ss.usermodel.CellStyle;
+import pub.avalonframework.office.excel.CellStyle;
 import pub.avalonframework.office.excel.Font;
 
 /**
  * @author baichao
  */
-public class CellStyleWrapper implements pub.avalonframework.office.excel.CellStyle {
+public class CellStyleWrapper implements CellStyle {
 
-    private CellStyle cellStyle;
+    private org.apache.poi.ss.usermodel.CellStyle cellStyle;
 
     private Font font;
 
-    public CellStyleWrapper(CellStyle cellStyle) {
+    public CellStyleWrapper(org.apache.poi.ss.usermodel.CellStyle cellStyle) {
         this.cellStyle = cellStyle;
     }
 
-    public CellStyleWrapper(CellStyle cellStyle, Font font) {
+    public CellStyleWrapper(org.apache.poi.ss.usermodel.CellStyle cellStyle, Font font) {
         this.cellStyle = cellStyle;
         this.font = font;
     }
@@ -27,8 +27,9 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setHorizontalAlignType(HorizontalAlignType hAlignType) {
+    public CellStyle setHorizontalAlignType(HorizontalAlignType hAlignType) {
         this.cellStyle.setAlignment(hAlignType.value);
+        return this;
     }
 
     @Override
@@ -37,8 +38,9 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setVerticalAlignType(VerticalAlignType vAlignType) {
+    public CellStyle setVerticalAlignType(VerticalAlignType vAlignType) {
         this.cellStyle.setVerticalAlignment(vAlignType.value);
+        return this;
     }
 
     @Override
@@ -47,8 +49,9 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setBorderLeftStyle(BorderStyle borderLeftStyle) {
+    public pub.avalonframework.office.excel.CellStyle setBorderLeftStyle(BorderStyle borderLeftStyle) {
         this.cellStyle.setBorderLeft(borderLeftStyle.value);
+        return this;
     }
 
     @Override
@@ -57,8 +60,9 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setBorderTopStyle(BorderStyle borderTopStyle) {
+    public CellStyle setBorderTopStyle(BorderStyle borderTopStyle) {
         this.cellStyle.setBorderTop(borderTopStyle.value);
+        return this;
     }
 
     @Override
@@ -67,8 +71,9 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setBorderRightStyle(BorderStyle borderRightStyle) {
+    public CellStyle setBorderRightStyle(BorderStyle borderRightStyle) {
         this.cellStyle.setBorderRight(borderRightStyle.value);
+        return this;
     }
 
     @Override
@@ -77,8 +82,9 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setBorderBottomStyle(BorderStyle borderBottomStyle) {
+    public CellStyle setBorderBottomStyle(BorderStyle borderBottomStyle) {
         this.cellStyle.setBorderBottom(borderBottomStyle.value);
+        return this;
     }
 
     @Override
@@ -97,15 +103,16 @@ public class CellStyleWrapper implements pub.avalonframework.office.excel.CellSt
     }
 
     @Override
-    public void setFont(Font font) {
+    public CellStyle setFont(Font font) {
         this.font = font;
+        return this;
     }
 
-    public CellStyle getCellStyle() {
+    public org.apache.poi.ss.usermodel.CellStyle getCellStyle() {
         return cellStyle;
     }
 
-    public void setCellStyle(CellStyle cellStyle) {
+    public void setCellStyle(org.apache.poi.ss.usermodel.CellStyle cellStyle) {
         this.cellStyle = cellStyle;
     }
 }

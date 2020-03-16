@@ -33,7 +33,7 @@ public interface ExcelSheetExport extends SheetExportOperations<ExcelSheetExport
     }
 
     @Override
-    default ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles) {
+    default ExcelSheetExport setTitles(ExcelTitleCell[][] titles) {
         return SheetExportOperations.super.setTitles(titles);
     }
 
@@ -47,7 +47,7 @@ public interface ExcelSheetExport extends SheetExportOperations<ExcelSheetExport
     ExcelSheetExport parseTitlesJson(File file, boolean exportTitles);
 
     @Override
-    ExcelSheetExport setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
+    ExcelSheetExport setTitles(ExcelTitleCell[][] titles, boolean exportTitles);
 
     @Override
     default ExcelSheetExport setColumnFields(List<String> fields) {

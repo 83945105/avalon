@@ -38,12 +38,12 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
     /**
      * 表头单元格
      */
-    protected List<BaseExcelTitleCell> excelTitleCells;
+    protected List<ExcelTitleCell> excelTitleCells;
 
     /**
      * 与数据相关的表头信息
      */
-    protected LinkedList<BaseExcelTitleCell> dataTitleCells = new LinkedList<>();
+    protected LinkedList<ExcelTitleCell> dataTitleCells = new LinkedList<>();
 
     /**
      * 行游标,记录读取起始行号
@@ -213,7 +213,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
     }
 
     @Override
-    public ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles) {
+    public ExcelSheetImport<R> setTitles(ExcelTitleCell[][] titles) {
         if (!(titles instanceof XSSFTitleCell[][])) {
             throw new ExportException("SXSSFExcelSheetExport setTitles titles类型应该为XSSFTitleCell[][]");
         }
@@ -224,7 +224,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
     }
 
     @Override
-    public ExcelSheetImport<R> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan) {
+    public ExcelSheetImport<R> setTitles(ExcelTitleCell[][] titles, int expectedRowSpan) {
         if (!(titles instanceof XSSFTitleCell[][])) {
             throw new ExportException("SXSSFExcelSheetExport setTitles titles类型应该为XSSFTitleCell[][]");
         }
@@ -253,14 +253,14 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
     }
 
     @Override
-    public <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, Class<HR> clazz) {
+    public <HR> ExcelSheetImport<HR> setTitles(ExcelTitleCell[][] titles, Class<HR> clazz) {
         ExcelSheetImport<HR> excelSheetImport = new XSSFExcelSheetImport<>(clazz, this);
         excelSheetImport.setTitles(titles);
         return excelSheetImport;
     }
 
     @Override
-    public <HR> ExcelSheetImport<HR> setTitles(BaseExcelTitleCell[][] titles, int expectedRowSpan, Class<HR> clazz) {
+    public <HR> ExcelSheetImport<HR> setTitles(ExcelTitleCell[][] titles, int expectedRowSpan, Class<HR> clazz) {
         ExcelSheetImport<HR> excelSheetImport = new XSSFExcelSheetImport<>(clazz, this);
         excelSheetImport.setTitles(titles, expectedRowSpan);
         return excelSheetImport;
@@ -334,7 +334,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      */
     protected <M extends Map<String, Object>> void injectMap(Row row, M container) {
         this.parseRow(row, cell -> {
-            BaseExcelTitleCell titleCell = this.searchTitleCell(this.dataTitleCells, cell.getColumnIndex());
+            ExcelTitleCell titleCell = this.searchTitleCell(this.dataTitleCells, cell.getColumnIndex());
             if (titleCell == null) {
                 container.put(Sheet.getColumnName(cell.getColumnIndex() + 1) + (cell.getRowIndex() + 1), xssfLoader.getValue(cell));
             } else {
@@ -361,7 +361,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      */
     protected <O> void injectObject(Row row, O target) {
         this.parseRow(row, cell -> {
-            BaseExcelTitleCell titleCell = this.searchTitleCell(this.dataTitleCells, cell.getColumnIndex());
+            ExcelTitleCell titleCell = this.searchTitleCell(this.dataTitleCells, cell.getColumnIndex());
             if (titleCell != null) {
                 BeanUtils.setPropertyValue(target, titleCell.getField(), xssfLoader.getValue(cell));
             }
@@ -499,9 +499,9 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      *
      * @param titles 表头合并单元格信息
      */
-    protected void moveCursorWithTitles(List<BaseExcelTitleCell> titles) {
+    protected void moveCursorWithTitles(List<ExcelTitleCell> titles) {
         int maxRowNum = this.rowCursor + 1;
-        for (BaseExcelTitleCell title : titles) {
+        for (ExcelTitleCell title : titles) {
             XSSFTitleCell titleCell = (XSSFTitleCell) title;
             if (titleCell.getEndRowNum() > maxRowNum) {
                 maxRowNum = titleCell.getEndRowNum();
@@ -518,7 +518,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      * @param titles          表头合并单元格信息
      * @param expectedRowSpan 期望占用行数, 如果期望值小于等于0将无视表头, 如果期望值大于0则取期望与实际的最大值.
      */
-    protected void moveCursorWithTitles(List<BaseExcelTitleCell> titles, int expectedRowSpan) {
+    protected void moveCursorWithTitles(List<ExcelTitleCell> titles, int expectedRowSpan) {
         if (expectedRowSpan <= 0) {
             return;
         }
@@ -526,7 +526,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
         double maxRowNum = Double.NEGATIVE_INFINITY;
         //无穷大
         double minRowNum = Double.POSITIVE_INFINITY;
-        for (BaseExcelTitleCell title : titles) {
+        for (ExcelTitleCell title : titles) {
             XSSFTitleCell titleCell = (XSSFTitleCell) title;
             if (titleCell.getEndRowNum() > maxRowNum) {
                 maxRowNum = titleCell.getEndRowNum();

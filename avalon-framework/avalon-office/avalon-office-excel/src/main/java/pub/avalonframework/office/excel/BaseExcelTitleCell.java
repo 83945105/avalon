@@ -5,12 +5,7 @@ package pub.avalonframework.office.excel;
  *
  * @author baichao
  */
-public abstract class BaseExcelTitleCell extends BaseCell implements ExcelTitleCellOperations {
-
-    /**
-     * 默认表头单元格样式
-     */
-    public static CellStyle DEFAULT_TITLE_CELL_STYLE = new CellStyle.DefaultCellStyle();
+public abstract class BaseExcelTitleCell extends BaseCell implements ExcelTitleCell {
 
     /**
      * 列标题文本
@@ -25,7 +20,7 @@ public abstract class BaseExcelTitleCell extends BaseCell implements ExcelTitleC
     /**
      * 单元格样式
      */
-    protected CellStyle cellStyle = DEFAULT_TITLE_CELL_STYLE;
+    protected CellStyle cellStyle = new CellStyle.DefaultCellStyle();
 
     public BaseExcelTitleCell() {
     }

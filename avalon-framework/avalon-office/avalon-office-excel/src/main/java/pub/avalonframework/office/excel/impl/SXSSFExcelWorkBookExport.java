@@ -108,7 +108,7 @@ public class SXSSFExcelWorkBookExport extends AbstractSXSSFExcelParser implement
     }
 
     @Override
-    public BaseExcelTitleCell buildExcelTitleCell(BaseExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol) {
+    public ExcelTitleCell buildExcelTitleCell(ExcelTitleCell excelTitle, int startRow, int endRow, int startCol, int endCol) {
         excelTitle.setStartRowNum(startRow + 1);
         excelTitle.setStartColNum(startCol + 1);
         return excelTitle;

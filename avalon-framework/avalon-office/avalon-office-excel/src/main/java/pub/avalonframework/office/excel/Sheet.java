@@ -68,7 +68,7 @@ public interface Sheet<T extends Sheet<T>> {
      * @param titles 表头对象
      * @return T extends Sheet<T>
      */
-    T setTitles(BaseExcelTitleCell[][] titles);
+    T setTitles(ExcelTitleCell[][] titles);
 
     /**
      * 设置列属性

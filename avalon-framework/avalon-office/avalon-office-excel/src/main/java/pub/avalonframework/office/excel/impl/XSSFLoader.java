@@ -4,7 +4,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.springframework.beans.BeanUtils;
-import pub.avalonframework.office.excel.BaseCell;
 import pub.avalonframework.office.excel.CellStyle;
 import pub.avalonframework.office.excel.ExcelException;
 import pub.avalonframework.office.excel.Font;
@@ -27,7 +26,7 @@ public class XSSFLoader {
         this.workbook = workbook;
     }
 
-    public void loadCell(BaseCell cellData, Cell poiCell) {
+    public void loadCell(pub.avalonframework.office.excel.Cell cellData, Cell poiCell) {
         this.setValue(cellData.getCellValue(), poiCell);
         this.setCellStyle(cellData.getCellStyle(), poiCell);
         this.setFont(cellData.getCellStyle().getFont(), poiCell);
