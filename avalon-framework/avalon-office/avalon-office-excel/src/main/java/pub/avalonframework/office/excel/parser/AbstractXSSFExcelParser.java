@@ -2,7 +2,6 @@ package pub.avalonframework.office.excel.parser;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import pub.avalonframework.office.excel.BaseExcelTitleCell;
 import pub.avalonframework.office.excel.ExcelTitleCell;
 import pub.avalonframework.office.excel.MergeCell;
 import pub.avalonframework.office.excel.impl.XSSFCell;
@@ -42,8 +41,8 @@ public abstract class AbstractXSSFExcelParser implements ExcelParser {
      * @return 数据Fields
      */
     @Deprecated
-    public ArrayList<String> searchDataTitleFields(List<MergeCell> mergeCellList) {
-        ArrayList<String> fs = new ArrayList<>();
+    public List<String> searchDataTitleFields(List<MergeCell> mergeCellList) {
+        List<String> fs = new ArrayList<>();
         int start = 1;
         for (MergeCell mergeCell : mergeCellList) {
             for (int i = start; i < mergeCell.getStartColNum(); i++) {

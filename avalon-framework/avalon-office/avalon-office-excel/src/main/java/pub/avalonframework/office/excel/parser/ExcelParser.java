@@ -176,7 +176,7 @@ public interface ExcelParser {
      * @param titles 表头对象二维数组
      * @return 单元格合并集合
      */
-    default ArrayList<ExcelTitleCell> handlerExcelTitles(ExcelTitleCell[][] titles) {
+    default List<ExcelTitleCell> handlerExcelTitles(ExcelTitleCell[][] titles) {
         return handlerExcelTitles(titles, titles.length * 2, 10);
     }
 
@@ -188,8 +188,8 @@ public interface ExcelParser {
      * @param defaultSeatCol 记录位置信息初始化默认列数
      * @return 单元格合并集合
      */
-    default ArrayList<ExcelTitleCell> handlerExcelTitles(ExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol) {
-        ArrayList<ExcelTitleCell> rs = new ArrayList<>();
+    default List<ExcelTitleCell> handlerExcelTitles(ExcelTitleCell[][] titles, int defaultSeatRow, int defaultSeatCol) {
+        List<ExcelTitleCell> rs = new ArrayList<>();
         handlerExcelTitles(titles, defaultSeatRow, defaultSeatCol, rs::add);
         return rs;
     }

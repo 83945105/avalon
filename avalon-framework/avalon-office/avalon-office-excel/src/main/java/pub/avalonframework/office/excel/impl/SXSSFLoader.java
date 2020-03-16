@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
  *
  * @author baichao
  */
-public class SXSSFLoader extends XSSFLoader {
+public final class SXSSFLoader extends XSSFLoader {
 
     public SXSSFLoader(Workbook workbook) {
         super(workbook);

@@ -32,7 +32,6 @@ public class XSSFLoader {
         this.setFont(cellData.getCellStyle().getFont(), poiCell);
     }
 
-
     public Object getValue(Cell poiCell) {
         switch (poiCell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
@@ -135,7 +134,6 @@ public class XSSFLoader {
             return;
         }
         poiCell.setCellType(SXSSFCell.CELL_TYPE_STRING);
-        poiCell.setCellValue((String) value);
-        return;
+        poiCell.setCellValue(String.valueOf(value));
     }
 }
