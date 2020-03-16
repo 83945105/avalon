@@ -48,9 +48,8 @@ public interface ExcelParser {
      */
     default LinkedList<BaseExcelTitleCell> searchDataTitleCells(List<BaseExcelTitleCell> titles) {
         BaseExcelTitleCell target;
-        LinkedList<BaseExcelTitleCell> targetMergeCell = new LinkedList<>();
         //先把所有源放入目标
-        targetMergeCell.addAll(titles);
+        LinkedList<BaseExcelTitleCell> targetMergeCell = new LinkedList<>(titles);
         //遍历源,用源的每一个元素去和目标进行比对位置
         for (BaseExcelTitleCell title : titles) {
             for (int j = 0; j < targetMergeCell.size(); ) {
@@ -65,7 +64,6 @@ public interface ExcelParser {
                     //不删除的时候在进行下一个元素
                     j++;
                 }
-
             }
         }
         //排序

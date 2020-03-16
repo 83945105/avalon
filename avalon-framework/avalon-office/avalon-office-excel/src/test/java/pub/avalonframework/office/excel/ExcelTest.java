@@ -267,12 +267,17 @@ public class ExcelTest {
                 .export(filePath);
 
         // 导入
-        List<User> rows01 = ExcelImportFactory.buildXSSFImportExcelWorkBook()
+        List<List<User>> rows01 = ExcelImportFactory.buildXSSFImportExcelWorkBook()
                 .parseFile(filePath)
                 .getSheet(0)
                 // 由于未导出表头至Excel, 因此必须设置映射字段, 且设置期望占用行数为0
                 .setColumnFields(0, "username", "password")
                 .readRows(User.class)
-                .getReadData();
+                .setColumnFields(0, "mobile")
+                .getAllReadData();
+
+        for (List<User> users : rows01) {
+            Assertions.assertEquals(len, users.size());
+        }
     }
 }

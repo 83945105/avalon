@@ -72,28 +72,41 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
 
     public XSSFExcelSheetImport(Class<R> defaultSheetRowType, XSSFSheet sheet, XSSFExcelWorkBookImport<?> ownerWorkBook) {
         super(defaultSheetRowType, ownerWorkBook.xssfWorkbook);
-        this.sheet = sheet;
-        this.ownerWorkBook = ownerWorkBook;
-        this.physicalNumberOfRows = this.sheet.getPhysicalNumberOfRows();
-        this.xssfLoader = new XSSFLoader(this.ownerWorkBook.xssfWorkbook);
+        init(sheet, ownerWorkBook);
     }
 
     public XSSFExcelSheetImport(TypeReference<R> defaultSheetRowTypeReference, XSSFSheet sheet, XSSFExcelWorkBookImport<?> ownerWorkBook) {
         super(defaultSheetRowTypeReference, ownerWorkBook.xssfWorkbook);
+        init(sheet, ownerWorkBook);
+    }
+
+    public XSSFExcelSheetImport(Class<R> defaultSheetRowType, XSSFExcelSheetImport<?> parent) {
+        super(defaultSheetRowType, parent.ownerWorkBook.xssfWorkbook);
+        init(parent);
+    }
+
+    public XSSFExcelSheetImport(TypeReference<R> defaultSheetRowTypeReference, XSSFExcelSheetImport<?> parent) {
+        super(defaultSheetRowTypeReference, parent.ownerWorkBook.xssfWorkbook);
+        init(parent);
+    }
+
+    private void init(XSSFSheet sheet, XSSFExcelWorkBookImport<?> ownerWorkBook) {
         this.sheet = sheet;
         this.ownerWorkBook = ownerWorkBook;
         this.physicalNumberOfRows = this.sheet.getPhysicalNumberOfRows();
         this.xssfLoader = new XSSFLoader(this.ownerWorkBook.xssfWorkbook);
     }
 
-    public XSSFExcelSheetImport(Class<R> defaultSheetRowType, XSSFExcelSheetImport<?> parent) {
-        this(defaultSheetRowType, parent.sheet, parent.ownerWorkBook);
+    private void init(XSSFExcelSheetImport<?> parent) {
         this.parent = parent;
-    }
-
-    public XSSFExcelSheetImport(TypeReference<R> defaultSheetRowTypeReference, XSSFExcelSheetImport<?> parent) {
-        this(defaultSheetRowTypeReference, parent.sheet, parent.ownerWorkBook);
-        this.parent = parent;
+        this.sheet = parent.sheet;
+        this.ownerWorkBook = parent.ownerWorkBook;
+        this.excelTitleCells = parent.excelTitleCells;
+        this.dataTitleCells = parent.dataTitleCells;
+        this.rowCursor = parent.rowCursor;
+        this.colCursor = parent.colCursor;
+        this.physicalNumberOfRows = parent.physicalNumberOfRows;
+        this.xssfLoader = parent.xssfLoader;
     }
 
     @Override
@@ -486,7 +499,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      *
      * @param titles 表头合并单元格信息
      */
-    protected void moveCursorWithTitles(Collection<BaseExcelTitleCell> titles) {
+    protected void moveCursorWithTitles(List<BaseExcelTitleCell> titles) {
         int maxRowNum = this.rowCursor + 1;
         for (BaseExcelTitleCell title : titles) {
             XSSFTitleCell titleCell = (XSSFTitleCell) title;
@@ -505,7 +518,7 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      * @param titles          表头合并单元格信息
      * @param expectedRowSpan 期望占用行数, 如果期望值小于等于0将无视表头, 如果期望值大于0则取期望与实际的最大值.
      */
-    protected void moveCursorWithTitles(Collection<BaseExcelTitleCell> titles, int expectedRowSpan) {
+    protected void moveCursorWithTitles(List<BaseExcelTitleCell> titles, int expectedRowSpan) {
         if (expectedRowSpan <= 0) {
             return;
         }
