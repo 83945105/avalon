@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
-import pub.avalonframework.jdbc.core.spring.api.entity.SysUser;
 import pub.avalonframework.jdbc.core.spring.api.entity.dto.SysUserDTO;
 import pub.avalonframework.jdbc.core.spring.controller.SysUserController;
 import pub.avalonframework.jdbc.core.spring.dao.IDataSource;
@@ -51,7 +50,7 @@ public class SpringTest {
         public IDataSource dataSource() {
             HikariDataSource dataSource = new HikariDataSource();
             dataSource.setUsername("root");
-            dataSource.setPassword("root");
+            dataSource.setPassword("19910405");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/sqlhelper?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true");
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
             return new IDataSource(dataSource);
@@ -72,6 +71,6 @@ public class SpringTest {
 //        SysUser sysUser = testSysUserController.getSysUserById("1");
         SysUserDTO sysUserDTO = new SysUserDTO();
         sysUserDTO.setId("1");
-        testSysUserController.getPageListSysUser(sysUserDTO, 1L, 10L);
+//        testSysUserController.getPageListSysUser(sysUserDTO, 1L, 10L);
     }
 }

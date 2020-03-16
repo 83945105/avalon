@@ -10,7 +10,7 @@ spring:
     #用户名
     username: root
     #密码
-    password: root
+    password: 19910405
   thymeleaf:
     mode: HTML5
     encoding: UTF-8
