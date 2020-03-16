@@ -1,5 +1,6 @@
 package pub.avalonframework.office.excel.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -23,11 +24,6 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
      * 上一个
      */
     protected XSSFExcelSheetImport<?> parent;
-
-    /**
-     * 行数据类型
-     */
-    protected Class<R> defaultSheetRowType;
 
     /**
      * 当前数据表对象
@@ -76,7 +72,14 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
 
     public XSSFExcelSheetImport(Class<R> defaultSheetRowType, XSSFSheet sheet, XSSFExcelWorkBookImport<?> ownerWorkBook) {
         super(defaultSheetRowType, ownerWorkBook.xssfWorkbook);
-        this.defaultSheetRowType = defaultSheetRowType;
+        this.sheet = sheet;
+        this.ownerWorkBook = ownerWorkBook;
+        this.physicalNumberOfRows = this.sheet.getPhysicalNumberOfRows();
+        this.xssfLoader = new XSSFLoader(this.ownerWorkBook.xssfWorkbook);
+    }
+
+    public XSSFExcelSheetImport(TypeReference<R> defaultSheetRowTypeReference, XSSFSheet sheet, XSSFExcelWorkBookImport<?> ownerWorkBook) {
+        super(defaultSheetRowTypeReference, ownerWorkBook.xssfWorkbook);
         this.sheet = sheet;
         this.ownerWorkBook = ownerWorkBook;
         this.physicalNumberOfRows = this.sheet.getPhysicalNumberOfRows();
@@ -88,6 +91,11 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
         this.parent = parent;
     }
 
+    public XSSFExcelSheetImport(TypeReference<R> defaultSheetRowTypeReference, XSSFExcelSheetImport<?> parent) {
+        this(defaultSheetRowTypeReference, parent.sheet, parent.ownerWorkBook);
+        this.parent = parent;
+    }
+
     @Override
     public ExcelWorkBookImport<?> getOwnerWorkBook() {
         return this.ownerWorkBook;
@@ -96,6 +104,29 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
     @Override
     public int getPhysicalNumberOfRows() {
         return this.physicalNumberOfRows;
+    }
+
+    // 重写逻辑, 如果没有设置期望占用行数, 则按照实际表头占用行数位移游标
+    @Override
+    public ExcelSheetImport<R> setColumnFields(List<String> fields) {
+        XSSFTitleCell[][] titles = new XSSFTitleCell[1][fields.size()];
+        String field;
+        for (int i = 0; i < fields.size(); i++) {
+            field = fields.get(i);
+            titles[0][i] = new XSSFTitleCell(field, field);
+        }
+        return setTitles(titles);
+    }
+
+    @Override
+    public ExcelSheetImport<R> setColumnFields(List<String> fields, int expectedRowSpan) {
+        XSSFTitleCell[][] titles = new XSSFTitleCell[1][fields.size()];
+        String field;
+        for (int i = 0; i < fields.size(); i++) {
+            field = fields.get(i);
+            titles[0][i] = new XSSFTitleCell(field, field);
+        }
+        return setTitles(titles, expectedRowSpan);
     }
 
     @Override
@@ -224,38 +255,42 @@ public class XSSFExcelSheetImport<R> extends XSSFExcelWorkBookImport<R> implemen
 
     @Override
     public <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, Class<HR> clazz) {
-        XSSFTitleCell[][] titles = new XSSFTitleCell[1][fields.size()];
-        for (int i = 0; i < fields.size(); i++) {
-            titles[0][i] = new XSSFTitleCell(fields.get(i));
-        }
-        return setTitles(titles, clazz);
+        return new XSSFExcelSheetImport<>(clazz, this).setColumnFields(fields);
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, int expectedRowSpan, Class<HR> clazz) {
-        XSSFTitleCell[][] titles = new XSSFTitleCell[1][fields.size()];
-        for (int i = 0; i < fields.size(); i++) {
-            titles[0][i] = new XSSFTitleCell(fields.get(i));
-        }
-        return setTitles(titles, expectedRowSpan, clazz);
+        return new XSSFExcelSheetImport<>(clazz, this).setColumnFields(fields, expectedRowSpan);
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz) {
-        this.loadRows(clazz);
-        return null;
+        return new XSSFExcelSheetImport<>(clazz, this).readRows();
+    }
+
+    @Override
+    public <HR> ExcelSheetImport<HR> readRows(TypeReference<HR> typeReference) {
+        return new XSSFExcelSheetImport<>(typeReference, this).readRows();
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowA<HR> handlerRow) {
-        this.loadRows(clazz, handlerRow);
-        return null;
+        return new XSSFExcelSheetImport<>(clazz, this).readRows(handlerRow);
+    }
+
+    @Override
+    public <HR> ExcelSheetImport<HR> readRows(TypeReference<HR> typeReference, HandlerRowA<HR> handlerRow) {
+        return new XSSFExcelSheetImport<>(typeReference, this).readRows(handlerRow);
     }
 
     @Override
     public <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowB<HR> handlerRow) {
-        this.loadRows(clazz, handlerRow);
-        return null;
+        return new XSSFExcelSheetImport<>(clazz, this).readRows(handlerRow);
+    }
+
+    @Override
+    public <HR> ExcelSheetImport<HR> readRows(TypeReference<HR> typeReference, HandlerRowB<HR> handlerRow) {
+        return new XSSFExcelSheetImport<>(typeReference, this).readRows(handlerRow);
     }
 
     /**

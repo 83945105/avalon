@@ -87,23 +87,10 @@ public interface SheetExportOperations<T extends SheetExportOperations<T>> exten
     T setTitles(BaseExcelTitleCell[][] titles, boolean exportTitles);
 
     /**
-     * 设置列属性
-     *
-     * @param fields 属性
-     * @return T extends SheetExportOperations<T>
+     * {@inheritDoc}
      */
     default T setColumnFields(List<String> fields) {
         return setColumnFields(fields, false);
-    }
-
-    /**
-     * 设置列对应的数据属性
-     *
-     * @param fields 属性
-     * @return T extends SheetExportOperations<T>
-     */
-    default T setColumnFields(String... fields) {
-        return setColumnFields(false, fields);
     }
 
     /**

@@ -37,6 +37,7 @@ public class XSSFExcelWorkBookImport<R> extends AbstractXSSFExcelParser implemen
         this(defaultSheetRowTypeReference, new XSSFWorkbook());
     }
 
+    @SuppressWarnings("unchecked")
     public XSSFExcelWorkBookImport(TypeReference<R> defaultSheetRowTypeReference, XSSFWorkbook xssfWorkbook) {
         Type type = defaultSheetRowTypeReference.getType();
         if(type instanceof Class<?>) {

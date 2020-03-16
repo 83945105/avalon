@@ -1,5 +1,7 @@
 package pub.avalonframework.office.excel;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -17,13 +19,43 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * {@inheritDoc}
      */
     @Override
-    ExcelWorkBookImport getOwnerWorkBook();
+    ExcelWorkBookImport<?> getOwnerWorkBook();
 
     /**
      * {@inheritDoc}
      */
     @Override
     int getPhysicalNumberOfRows();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default ExcelSheetImport<R> setColumnFields(List<String> fields) {
+        return SheetImportOperations.super.setColumnFields(fields);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default ExcelSheetImport<R> setColumnFields(String... fields) {
+        return SheetImportOperations.super.setColumnFields(fields);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ExcelSheetImport<R> setColumnFields(List<String> fields, int expectedRowSpan);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default ExcelSheetImport<R> setColumnFields(int expectedRowSpan, String... fields) {
+        return SheetImportOperations.super.setColumnFields(expectedRowSpan, fields);
+    }
 
     /**
      * {@inheritDoc}
@@ -175,17 +207,19 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
      * @param clazz  数据容器
      * @return ExcelSheetImport
      */
-    <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, Class<HR> clazz);
+    default <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, Class<HR> clazz) {
+        return setColumnFields(fields, 0, clazz);
+    }
 
     /**
-     * 设置列值
-     * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
+     * 设置列对应的数据属性
      *
-     * @param fields 列对应属性
+     * @param clazz  数据容器
+     * @param fields 属性
      * @return ExcelSheetImport
      */
-    default ExcelSheetImport<SheetRowMap> setColumnFields(String... fields) {
-        return setColumnFields(Arrays.asList(fields), SheetRowMap.class);
+    default <HR> ExcelSheetImport<HR> setColumnFields(Class<HR> clazz, String... fields) {
+        return setColumnFields(Arrays.asList(fields), clazz);
     }
 
     /**
@@ -199,15 +233,15 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
     <HR> ExcelSheetImport<HR> setColumnFields(List<String> fields, int expectedRowSpan, Class<HR> clazz);
 
     /**
-     * 设置列值
-     * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
+     * 设置列对应的数据属性
      *
+     * @param clazz           数据容器
      * @param expectedRowSpan 期望占用行数
-     * @param fields          列对应的属性
+     * @param fields          属性
      * @return ExcelSheetImport
      */
-    default ExcelSheetImport<SheetRowMap> setColumnFields(int expectedRowSpan, String... fields) {
-        return setColumnFields(Arrays.asList(fields), expectedRowSpan, SheetRowMap.class);
+    default <HR> ExcelSheetImport<HR> setColumnFields(Class<HR> clazz, int expectedRowSpan, String... fields) {
+        return setColumnFields(Arrays.asList(fields), expectedRowSpan, clazz);
     }
 
     /**
@@ -221,6 +255,14 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
     /**
      * 读取数据
      *
+     * @param typeReference 数据类型
+     * @return ExcelSheetImport
+     */
+    <HR> ExcelSheetImport<HR> readRows(TypeReference<HR> typeReference);
+
+    /**
+     * 读取数据
+     *
      * @param clazz      数据类型
      * @param handlerRow 操作当前行数据
      * @return ExcelSheetImport
@@ -230,9 +272,27 @@ public interface ExcelSheetImport<R> extends SheetImportOperations<R, ExcelSheet
     /**
      * 读取数据
      *
+     * @param typeReference 数据类型
+     * @param handlerRow    操作当前行数据
+     * @return ExcelSheetImport
+     */
+    <HR> ExcelSheetImport<HR> readRows(TypeReference<HR> typeReference, HandlerRowA<HR> handlerRow);
+
+    /**
+     * 读取数据
+     *
      * @param clazz      数据类型
      * @param handlerRow 操作当前行数据,返回false不继续读取下一行
      * @return ExcelSheetImport
      */
     <HR> ExcelSheetImport<HR> readRows(Class<HR> clazz, HandlerRowB<HR> handlerRow);
+
+    /**
+     * 读取数据
+     *
+     * @param typeReference 数据类型
+     * @param handlerRow    操作当前行数据
+     * @return ExcelSheetImport
+     */
+    <HR> ExcelSheetImport<HR> readRows(TypeReference<HR> typeReference, HandlerRowB<HR> handlerRow);
 }

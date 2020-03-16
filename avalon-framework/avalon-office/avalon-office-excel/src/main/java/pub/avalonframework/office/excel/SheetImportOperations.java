@@ -1,5 +1,6 @@
 package pub.avalonframework.office.excel;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public interface SheetImportOperations<R, T extends SheetImportOperations<R, T>>
      * {@inheritDoc}
      */
     @Override
-    ExcelWorkBookImport getOwnerWorkBook();
+    ExcelWorkBookImport<?> getOwnerWorkBook();
 
     /**
      * 获取物理行数
@@ -23,27 +24,57 @@ public interface SheetImportOperations<R, T extends SheetImportOperations<R, T>>
     int getPhysicalNumberOfRows();
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    default T setColumnFields(List<String> fields) {
+        return setColumnFields(fields, 0);
+    }
+
+    /**
+     * 设置列值
+     * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
+     *
+     * @param fields          列对应的属性
+     * @param expectedRowSpan 期望占用行数
+     * @return T extends SheetImportOperations<R, T>
+     */
+    T setColumnFields(List<String> fields, int expectedRowSpan);
+
+    /**
+     * 设置列值
+     * 注意,使用该方法读取数据,设置的field应该与对应数据的列号相同
+     *
+     * @param expectedRowSpan 期望占用行数
+     * @param fields          列对应的属性
+     * @return T extends SheetImportOperations<R, T>
+     */
+    default T setColumnFields(int expectedRowSpan, String... fields) {
+        return setColumnFields(Arrays.asList(fields), expectedRowSpan);
+    }
+
+    /**
      * 读取数据(使用默认数据类型或者表头设置的数据类型)
      *
-     * @return SheetImportOperations
+     * @return T extends SheetImportOperations<R, T>
      */
-    SheetImportOperations<R, T> readRows();
+    T readRows();
 
     /**
      * 读取数据(使用默认数据类型或者表头设置的数据类型)
      *
      * @param handlerRow 操作当前行数据
-     * @return SheetImportOperations
+     * @return T extends SheetImportOperations<R, T>
      */
-    SheetImportOperations<R, T> readRows(HandlerRowA<R> handlerRow);
+    T readRows(HandlerRowA<R> handlerRow);
 
     /**
      * 读取数据(使用默认数据类型或者表头设置的数据类型)
      *
      * @param handlerRow 操作当前行数据,返回false不继续读取下一行
-     * @return SheetImportOperations
+     * @return T extends SheetImportOperations<R, T>
      */
-    SheetImportOperations<R, T> readRows(HandlerRowB<R> handlerRow);
+    T readRows(HandlerRowB<R> handlerRow);
 
     /**
      * 获取读到的数据

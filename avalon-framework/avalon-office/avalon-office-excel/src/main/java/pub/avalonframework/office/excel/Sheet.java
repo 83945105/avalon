@@ -4,6 +4,8 @@ import pub.avalonframework.office.excel.utils.ExcelUtils;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -24,7 +26,7 @@ public interface Sheet<T extends Sheet<T>> {
      * 设置行游标
      *
      * @param handler 接收行号,返回你想设置的行号
-     * @return 工作表
+     * @return T extends Sheet<T>
      */
     T setRowCursor(Function<Integer, Integer> handler);
 
@@ -32,7 +34,7 @@ public interface Sheet<T extends Sheet<T>> {
      * 设置列游标
      *
      * @param handler 接收列号,返回你想设置的列号
-     * @return 工作表
+     * @return T extends Sheet<T>
      */
     T setColCursor(Function<Integer, Integer> handler);
 
@@ -40,7 +42,7 @@ public interface Sheet<T extends Sheet<T>> {
      * 解析表头json文件
      *
      * @param inputStream 表头数据流
-     * @return 准备导出
+     * @return T extends Sheet<T>
      */
     T parseTitlesJson(InputStream inputStream);
 
@@ -48,7 +50,7 @@ public interface Sheet<T extends Sheet<T>> {
      * 解析表头json文件
      *
      * @param file 表头数据文件
-     * @return 准备导出
+     * @return T extends Sheet<T>
      */
     T parseTitlesJson(File file);
 
@@ -56,7 +58,7 @@ public interface Sheet<T extends Sheet<T>> {
      * 解析表头json数据
      *
      * @param titlesJson 表头数据json
-     * @return 准备导出
+     * @return T extends Sheet<T>
      */
     T parseTitlesJson(String titlesJson);
 
@@ -64,15 +66,33 @@ public interface Sheet<T extends Sheet<T>> {
      * 设置表头
      *
      * @param titles 表头对象
-     * @return 准备导出
+     * @return T extends Sheet<T>
      */
     T setTitles(BaseExcelTitleCell[][] titles);
+
+    /**
+     * 设置列属性
+     *
+     * @param fields 属性
+     * @return T extends Sheet<T>
+     */
+    T setColumnFields(List<String> fields);
+
+    /**
+     * 设置列对应的数据属性
+     *
+     * @param fields 属性
+     * @return T extends Sheet<T>
+     */
+    default T setColumnFields(String... fields) {
+        return setColumnFields(Arrays.asList(fields));
+    }
 
     /**
      * 设置行号
      *
      * @param handler 接收当前行号,返回你想设置的行号
-     * @return
+     * @return T extends Sheet<T>
      */
     default T setRowNum(Function<Integer, Integer> handler) {
         return this.setRowCursor(rowCursor -> handler.apply(rowCursor + 1) - 1);
@@ -82,7 +102,7 @@ public interface Sheet<T extends Sheet<T>> {
      * 设置列号
      *
      * @param handler 接收当前列号,返回你想设置的列号
-     * @return
+     * @return T extends Sheet<T>
      */
     default T setColumnNum(Function<Integer, Integer> handler) {
         return this.setColCursor(colCursor -> handler.apply(colCursor + 1) - 1);
