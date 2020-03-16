@@ -79,26 +79,29 @@ public interface Font {
     /**
      * 设置字体颜色
      *
-     * @param fontColor
+     * @param fontColor FontColor
+     * @return Font
      */
-    void setColor(FontColor fontColor);
+    Font setColor(FontColor fontColor);
 
     /**
      * 设置字体颜色
      *
-     * @param fontColorString
+     * @param fontColorString FontColor
+     * @return Font
      */
-    default void setColor(String fontColorString) {
-        this.setColor(FontColor.getFontColorByName(fontColorString));
+    default Font setColor(String fontColorString) {
+        return this.setColor(FontColor.getFontColorByName(fontColorString));
     }
 
     /**
      * 设置字体颜色
      *
-     * @param fontColorShort
+     * @param fontColorShort FontColor
+     * @return Font
      */
-    default void setColor(short fontColorShort) {
-        this.setColor(FontColor.getFontColorByValue(fontColorShort));
+    default Font setColor(short fontColorShort) {
+        return this.setColor(FontColor.getFontColorByValue(fontColorShort));
     }
 
     /**
@@ -112,8 +115,9 @@ public interface Font {
      * 设置是否有删除线
      *
      * @param strikeout
+     * @return Font
      */
-    void setStrikeout(boolean strikeout);
+    Font setStrikeout(boolean strikeout);
 
     /**
      * 获取是否有删除线
@@ -126,8 +130,9 @@ public interface Font {
      * 设置是否斜体
      *
      * @param italic
+     * @return Font
      */
-    void setItalic(boolean italic);
+    Font setItalic(boolean italic);
 
     /**
      * 获取是否斜体
@@ -140,8 +145,9 @@ public interface Font {
      * 设置字体大小
      *
      * @param size
+     * @return Font
      */
-    void setFontHeightInPoints(short size);
+    Font setFontHeightInPoints(short size);
 
     /**
      * 获取字体大小
@@ -154,8 +160,9 @@ public interface Font {
      * 设置字体名称
      *
      * @param fontName
+     * @return Font
      */
-    void setFontName(String fontName);
+    Font setFontName(String fontName);
 
     /**
      * 获取字体名称
@@ -168,8 +175,9 @@ public interface Font {
      * 设置是否粗体
      *
      * @param boldWeight
+     * @return Font
      */
-    void setBoldWeight(boolean boldWeight);
+    Font setBoldWeight(boolean boldWeight);
 
     /**
      * 获取是否粗体
@@ -202,8 +210,9 @@ public interface Font {
      * 设置下划线
      *
      * @param underLine
+     * @return Font
      */
-    void setUnderLine(UnderLine underLine);
+    Font setUnderLine(UnderLine underLine);
 
     /**
      * 获取下划线
@@ -226,8 +235,9 @@ public interface Font {
         private Font.UnderLine underLine = Font.UnderLine.NONE;
 
         @Override
-        public void setColor(FontColor fontColor) {
+        public Font setColor(FontColor fontColor) {
             this.color = fontColor;
+            return this;
         }
 
         @Override
@@ -236,8 +246,9 @@ public interface Font {
         }
 
         @Override
-        public void setStrikeout(boolean strikeout) {
+        public Font setStrikeout(boolean strikeout) {
             this.strikeout = strikeout;
+            return this;
         }
 
         @Override
@@ -246,8 +257,9 @@ public interface Font {
         }
 
         @Override
-        public void setItalic(boolean italic) {
+        public Font setItalic(boolean italic) {
             this.italic = italic;
+            return this;
         }
 
         @Override
@@ -256,8 +268,9 @@ public interface Font {
         }
 
         @Override
-        public void setFontHeightInPoints(short size) {
+        public Font setFontHeightInPoints(short size) {
             this.fontHeightInPoints = size;
+            return this;
         }
 
         @Override
@@ -266,8 +279,9 @@ public interface Font {
         }
 
         @Override
-        public void setFontName(String fontName) {
+        public Font setFontName(String fontName) {
             this.fontName = fontName;
+            return this;
         }
 
         @Override
@@ -276,8 +290,9 @@ public interface Font {
         }
 
         @Override
-        public void setBoldWeight(boolean boldWeight) {
+        public Font setBoldWeight(boolean boldWeight) {
             this.boldWeight = boldWeight;
+            return this;
         }
 
         @Override
@@ -286,8 +301,9 @@ public interface Font {
         }
 
         @Override
-        public void setUnderLine(UnderLine underLine) {
+        public Font setUnderLine(UnderLine underLine) {
             this.underLine = underLine;
+            return this;
         }
 
         @Override

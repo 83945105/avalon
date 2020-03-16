@@ -1,21 +1,22 @@
 package pub.avalonframework.office.excel.impl;
 
-import org.apache.poi.ss.usermodel.Font;
+import pub.avalonframework.office.excel.Font;
 
 /**
  * @author baichao
  */
-public class FontWrapper implements pub.avalonframework.office.excel.Font {
+public class FontWrapper implements Font {
 
-    private Font font;
+    private org.apache.poi.ss.usermodel.Font font;
 
-    public FontWrapper(Font font) {
+    public FontWrapper(org.apache.poi.ss.usermodel.Font font) {
         this.font = font;
     }
 
     @Override
-    public void setColor(FontColor fontColor) {
+    public Font setColor(FontColor fontColor) {
         this.font.setColor(fontColor.value);
+        return this;
     }
 
     @Override
@@ -24,8 +25,9 @@ public class FontWrapper implements pub.avalonframework.office.excel.Font {
     }
 
     @Override
-    public void setStrikeout(boolean strikeout) {
+    public Font setStrikeout(boolean strikeout) {
         this.font.setStrikeout(strikeout);
+        return this;
     }
 
     @Override
@@ -34,8 +36,9 @@ public class FontWrapper implements pub.avalonframework.office.excel.Font {
     }
 
     @Override
-    public void setItalic(boolean italic) {
+    public Font setItalic(boolean italic) {
         this.font.setItalic(italic);
+        return this;
     }
 
     @Override
@@ -44,8 +47,9 @@ public class FontWrapper implements pub.avalonframework.office.excel.Font {
     }
 
     @Override
-    public void setFontHeightInPoints(short size) {
+    public Font setFontHeightInPoints(short size) {
         this.font.setFontHeightInPoints(size);
+        return this;
     }
 
     @Override
@@ -54,8 +58,9 @@ public class FontWrapper implements pub.avalonframework.office.excel.Font {
     }
 
     @Override
-    public void setFontName(String fontName) {
+    public Font setFontName(String fontName) {
         this.font.setFontName(fontName);
+        return this;
     }
 
     @Override
@@ -64,18 +69,20 @@ public class FontWrapper implements pub.avalonframework.office.excel.Font {
     }
 
     @Override
-    public void setBoldWeight(boolean boldWeight) {
-        this.font.setBoldweight(boldWeight ? Font.BOLDWEIGHT_BOLD : Font.BOLDWEIGHT_NORMAL);
+    public Font setBoldWeight(boolean boldWeight) {
+        this.font.setBoldweight(boldWeight ? org.apache.poi.ss.usermodel.Font.BOLDWEIGHT_BOLD : org.apache.poi.ss.usermodel.Font.BOLDWEIGHT_NORMAL);
+        return this;
     }
 
     @Override
     public boolean isBoldWeight() {
-        return this.font.getBoldweight() == Font.BOLDWEIGHT_BOLD;
+        return this.font.getBoldweight() == org.apache.poi.ss.usermodel.Font.BOLDWEIGHT_BOLD;
     }
 
     @Override
-    public void setUnderLine(UnderLine underLine) {
+    public Font setUnderLine(UnderLine underLine) {
         this.font.setUnderline((byte) underLine.value);
+        return this;
     }
 
     @Override
@@ -96,11 +103,11 @@ public class FontWrapper implements pub.avalonframework.office.excel.Font {
         }
     }
 
-    public Font getFont() {
+    public org.apache.poi.ss.usermodel.Font getFont() {
         return font;
     }
 
-    public void setFont(Font font) {
+    public void setFont(org.apache.poi.ss.usermodel.Font font) {
         this.font = font;
     }
 }
