@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  pub.avalonframework.wechat.official.account.spring.boot.WechatOfficialAccountSpringBootConfiguration

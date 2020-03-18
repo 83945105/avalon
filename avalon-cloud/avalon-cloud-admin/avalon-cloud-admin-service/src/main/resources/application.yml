@@ -16,7 +16,7 @@ spring:
     #这个配置,表示映射路径,静态资源访问不要带上该路径
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
   profiles:
-    include: optimize,global,mybatis,avalon-security
+    include: optimize,global,mybatis,avalon-security,avalon-wechat-official-account
     active: dev
   http:
     encoding:

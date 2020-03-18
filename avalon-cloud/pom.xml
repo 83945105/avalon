@@ -97,6 +97,11 @@
                 <artifactId>avalon-shiro-spring-redis</artifactId>
                 <version>${avalon-framework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>pub.avalonframework</groupId>
+                <artifactId>avalon-wechat-official-account-spring-boot-starter</artifactId>
+                <version>${avalon-framework.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

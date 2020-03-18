@@ -22,11 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.filter.FormContentFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pub.avalonframework.security.core.api.service.WebService;
 import pub.avalonframework.shiro.service.impl.ShiroWebServiceImpl;
 import pub.avalonframework.web.spring.api.config.CorsConfiguration;
@@ -64,6 +63,7 @@ public class AvalonCloudConfiguration {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean
     public RequestInterceptor headerInterceptor() {
         return template -> {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
@@ -84,17 +84,13 @@ public class AvalonCloudConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public RequestContextListener requestContextListener() {
         return new RequestContextListener();
     }
 
-    @Bean
-    public FormContentFilter httpPutFormContentFilter() {
-        return new FormContentFilter();
-    }
-
     @Configuration
-    protected static class AvalonWebMvcConfigurationSupport extends WebMvcConfigurationSupport {
+    protected static class AvalonWebMvcConfigurationSupport implements WebMvcConfigurer {
 
         @Value("${spring.mvc.static-path-pattern:/**}")
         private String staticPathPattern;
@@ -128,7 +124,10 @@ public class AvalonCloudConfiguration {
             for (String location : staticLocations.split(sign)) {
                 registration.addResourceLocations(location);
             }
-            super.addResourceHandlers(registry);
+            registry.addResourceHandler("swagger-ui.html").addResourceLocations(
+                    "classpath:/META-INF/resources/");
+            registry.addResourceHandler("/webjars/**").addResourceLocations(
+                    "classpath:/META-INF/resources/webjars/");
         }
     }
 

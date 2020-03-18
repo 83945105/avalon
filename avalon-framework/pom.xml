@@ -20,5 +20,6 @@
         <module>avalon-security</module>
         <module>avalon-sqlhelper</module>
         <module>avalon-web</module>
+        <module>avalon-wechat</module>
     </modules>
 </project>

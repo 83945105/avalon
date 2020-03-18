@@ -1,0 +1,24 @@
+spring:
+  avalon:
+    # 微信
+    wechat:
+      # 公众号
+      official-account:
+        # 是否启用, 默认 false
+        enabled: true
+        # 第三方用户唯一凭证
+        app-id: wx395af6944120afc3
+        # 第三方用户唯一凭证密钥, 即 appsecret
+        secret: 42810b3fcc2dc044b569374b7f10d8a6
+        # 用于获取 access_token 的url
+        access-token-get-url: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${spring.avalon.wechat.official-account.app-id}&secret=${spring.avalon.wechat.official-account.secret}
+        # 是否使用自动刷新 access_token 功能, 默认 true
+        auto-refresh-access-token: true
+        # 自动刷新 access_token 间隔, 单位毫秒, 默认 7200000 即2小时
+        auto-refresh-access-token-interval: 7200000
+        # 用于对接公众号的token
+        token: WECHAT-OFFICIAL-ACCOUNT-TOKEN
+        # 入口根路径
+        entrance-root-path: /wechat/official/account
+        # 入口子路径
+        entrance-sub-path: /index
