@@ -11,7 +11,7 @@ import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthor
 import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
 import pub.avalonframework.wechat.official.account.core.yaml.swapper.impl.WebPageAuthorizationConfigurationYamlSwapper;
 import pub.avalonframework.wechat.official.account.core.yaml.swapper.impl.WechatOfficialAccountConfigurationYamlSwapper;
-import pub.avalonframework.wechat.official.account.spring.mvc.EntranceController;
+import pub.avalonframework.wechat.official.account.spring.web.EntranceController;
 
 /**
  * Wechat official account spring boot configuration.

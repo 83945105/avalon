@@ -19,9 +19,9 @@ spring:
         # 用于对接公众号的token
         token: WECHAT-OFFICIAL-ACCOUNT-TOKEN
         # 公众号入口根路径
-        entrance-root-path: /wechat/official/account
+        api-entrance-root-path: /wechat/official/account
         # 公众号入口子路径
-        entrance-sub-path: /index
+        api-entrance-sub-path: /index
         # 网页授权
         web-page-authorization:
           # 开放授权地址, 如果配置了其它属性如 redirect-uri、scope、response-type、state 会在系统内部追加到本地址上

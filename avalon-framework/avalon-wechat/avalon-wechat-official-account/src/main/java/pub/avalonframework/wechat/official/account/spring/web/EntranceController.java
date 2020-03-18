@@ -1,4 +1,4 @@
-package pub.avalonframework.wechat.official.account.spring.mvc;
+package pub.avalonframework.wechat.official.account.spring.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;

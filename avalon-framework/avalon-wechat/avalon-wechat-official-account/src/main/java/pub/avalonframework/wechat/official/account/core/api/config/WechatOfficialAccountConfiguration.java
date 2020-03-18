@@ -1,6 +1,5 @@
 package pub.avalonframework.wechat.official.account.core.api.config;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -141,9 +140,8 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
     private void autoRefreshAccessTokenRun() throws Exception {
         String accessTokenGetUrl = getAccessTokenGetUrl();
         HttpResponse httpResponse = HttpUtils.getInstance().doGet(accessTokenGetUrl);
-        HttpEntity httpEntity = httpResponse.getEntity();
-        String body = EntityUtils.toString(httpEntity);
-        AccessTokenResponse accessTokenResponse = ResponseUtils.parseAccessTokenResponse(body);
+        String response = EntityUtils.toString(httpResponse.getEntity());
+        AccessTokenResponse accessTokenResponse = ResponseUtils.parseAccessTokenResponse(response);
         setToken(accessTokenResponse.getAccess_token());
         setAutoRefreshAccessTokenInterval(accessTokenResponse.getExpires_in() * 1000L);
         LOGGER.info("Get access_token success, expires in {} seconds, access_token: {}", accessTokenResponse.getExpires_in(), accessTokenResponse.getAccess_token());
