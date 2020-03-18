@@ -3,8 +3,12 @@ package pub.avalonframework.wechat.official.account.core.api.config;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import pub.avalonframework.common.utils.HttpUtils;
+import pub.avalonframework.wechat.official.account.core.AccessTokenResponse;
+import pub.avalonframework.wechat.official.account.core.utils.ResponseUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  * @author baichao
  */
 public class WechatOfficialAccountConfiguration implements InitializingBean, Runnable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WechatOfficialAccountConfiguration.class);
 
     private Boolean enabled;
 
@@ -27,9 +33,11 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
 
     private String token;
 
-    private String entranceRootPath;
+    private String apiEntranceRootPath;
 
-    private String entranceSubPath;
+    private String apiEntranceSubPath;
+
+    private WebPageAuthorizationConfiguration webPageAuthorization;
 
     public Boolean getEnabled() {
         return enabled;
@@ -56,7 +64,19 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
     }
 
     public String getAccessTokenGetUrl() {
-        return accessTokenGetUrl;
+        StringBuilder sb = new StringBuilder(accessTokenGetUrl);
+        if (!accessTokenGetUrl.contains("?")) {
+            sb.append("?");
+        }
+        String appId = getAppId();
+        if (!accessTokenGetUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
+            sb.append("&appid=").append(appId);
+        }
+        String secret = getSecret();
+        if (!accessTokenGetUrl.contains("secret=") && secret != null && !secret.isEmpty()) {
+            sb.append("&secret=").append(secret);
+        }
+        return sb.toString();
     }
 
     public void setAccessTokenGetUrl(String accessTokenGetUrl) {
@@ -87,24 +107,32 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
         this.token = token;
     }
 
-    public String getEntranceRootPath() {
-        return entranceRootPath;
+    public String getApiEntranceRootPath() {
+        return apiEntranceRootPath;
     }
 
-    public void setEntranceRootPath(String entranceRootPath) {
-        this.entranceRootPath = entranceRootPath;
+    public void setApiEntranceRootPath(String apiEntranceRootPath) {
+        this.apiEntranceRootPath = apiEntranceRootPath;
     }
 
-    public String getEntranceSubPath() {
-        return entranceSubPath;
+    public String getApiEntranceSubPath() {
+        return apiEntranceSubPath;
     }
 
-    public void setEntranceSubPath(String entranceSubPath) {
-        this.entranceSubPath = entranceSubPath;
+    public void setApiEntranceSubPath(String apiEntranceSubPath) {
+        this.apiEntranceSubPath = apiEntranceSubPath;
+    }
+
+    public WebPageAuthorizationConfiguration getWebPageAuthorization() {
+        return webPageAuthorization;
+    }
+
+    public void setWebPageAuthorization(WebPageAuthorizationConfiguration webPageAuthorization) {
+        this.webPageAuthorization = webPageAuthorization;
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         Thread thread = new Thread(this, "AccessToken Refresh Guard Thread");
         thread.setDaemon(true);
         thread.start();
@@ -115,14 +143,16 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
         HttpResponse httpResponse = HttpUtils.getInstance().doGet(accessTokenGetUrl);
         HttpEntity httpEntity = httpResponse.getEntity();
         String body = EntityUtils.toString(httpEntity);
+        AccessTokenResponse accessTokenResponse = ResponseUtils.parseAccessTokenResponse(body);
+        setToken(accessTokenResponse.getAccess_token());
+        setAutoRefreshAccessTokenInterval(accessTokenResponse.getExpires_in() * 1000L);
+        LOGGER.info("Get access_token success, expires in {} seconds, access_token: {}", accessTokenResponse.getExpires_in(), accessTokenResponse.getAccess_token());
     }
 
     @Override
     public void run() {
         // 异常线程睡眠时间
         long exceptionSleepMilliSeconds = 10 * 1000L;
-        Long autoRefreshAccessTokenInterval = getAutoRefreshAccessTokenInterval();
-        autoRefreshAccessTokenInterval = autoRefreshAccessTokenInterval == null ? 2 * 60 * 60 * 1000L : autoRefreshAccessTokenInterval;
         while (true) {
             while (true) {
                 try {
@@ -132,6 +162,8 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
                     break;
                 }
                 try {
+                    Long autoRefreshAccessTokenInterval = getAutoRefreshAccessTokenInterval();
+                    autoRefreshAccessTokenInterval = autoRefreshAccessTokenInterval == null ? 2 * 60 * 60 * 1000L : autoRefreshAccessTokenInterval;
                     TimeUnit.MILLISECONDS.sleep(autoRefreshAccessTokenInterval);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -7,7 +7,9 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
+import pub.avalonframework.wechat.official.account.core.yaml.swapper.impl.WebPageAuthorizationConfigurationYamlSwapper;
 import pub.avalonframework.wechat.official.account.core.yaml.swapper.impl.WechatOfficialAccountConfigurationYamlSwapper;
 import pub.avalonframework.wechat.official.account.spring.mvc.EntranceController;
 
@@ -19,20 +21,32 @@ import pub.avalonframework.wechat.official.account.spring.mvc.EntranceController
 @ConditionalOnProperty(name = "spring.avalon.wechat.official-account.enabled", havingValue = "true")
 @Configuration
 @EnableConfigurationProperties({
+        SpringBootWebPageAuthorizationConfigurationProperties.class,
         SpringBootWechatOfficialAccountConfigurationProperties.class
 })
 public class WechatOfficialAccountSpringBootConfiguration implements EnvironmentAware {
 
+    private final SpringBootWebPageAuthorizationConfigurationProperties webPageAuthorizationConfigurationProperties;
+
     private final SpringBootWechatOfficialAccountConfigurationProperties wechatOfficialAccountConfigurationProperties;
 
-    public WechatOfficialAccountSpringBootConfiguration(SpringBootWechatOfficialAccountConfigurationProperties wechatOfficialAccountConfigurationProperties) {
+    public WechatOfficialAccountSpringBootConfiguration(SpringBootWebPageAuthorizationConfigurationProperties webPageAuthorizationConfigurationProperties, SpringBootWechatOfficialAccountConfigurationProperties wechatOfficialAccountConfigurationProperties) {
+        this.webPageAuthorizationConfigurationProperties = webPageAuthorizationConfigurationProperties;
         this.wechatOfficialAccountConfigurationProperties = wechatOfficialAccountConfigurationProperties;
     }
 
     @Bean
+    @ConditionalOnMissingBean(WebPageAuthorizationConfiguration.class)
+    public WebPageAuthorizationConfiguration webPageAuthorizationConfiguration() {
+        return new WebPageAuthorizationConfigurationYamlSwapper().swap(webPageAuthorizationConfigurationProperties);
+    }
+
+    @Bean
     @ConditionalOnMissingBean(WechatOfficialAccountConfiguration.class)
-    public WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration() {
-        return new WechatOfficialAccountConfigurationYamlSwapper().swap(wechatOfficialAccountConfigurationProperties);
+    public WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration(WebPageAuthorizationConfiguration webPageAuthorizationConfiguration) {
+        WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration = new WechatOfficialAccountConfigurationYamlSwapper().swap(wechatOfficialAccountConfigurationProperties);
+        wechatOfficialAccountConfiguration.setWebPageAuthorization(webPageAuthorizationConfiguration);
+        return wechatOfficialAccountConfiguration;
     }
 
     @Bean

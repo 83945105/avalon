@@ -1,7 +1,9 @@
 package pub.avalonframework.wechat.official.account.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
+import pub.avalonframework.wechat.official.account.core.yaml.config.YamlWebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.yaml.config.YamlWechatOfficialAccountConfiguration;
 
 /**
@@ -17,9 +19,9 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
 
     private final static String DEFAULT_TOKEN = "WECHAT-OFFICIAL-ACCOUNT-TOKEN";
 
-    private final static String DEFAULT_ENTRANCE_ROOT_PATH = "/wechat/official/account";
+    private final static String DEFAULT_API_ENTRANCE_ROOT_PATH = "/wechat/official/account";
 
-    private final static String DEFAULT_ENTRANCE_SUB_PATH = "/index";
+    private final static String DEFAULT_API_ENTRANCE_SUB_PATH = "/index";
 
     @Override
     public YamlWechatOfficialAccountConfiguration swap(WechatOfficialAccountConfiguration data) {
@@ -38,11 +40,13 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
         Long autoRefreshAccessTokenInterval = data.getAutoRefreshAccessTokenInterval();
         configuration.setAutoRefreshAccessTokenInterval(autoRefreshAccessTokenInterval == null ? DEFAULT_AUTO_REFRESH_ACCESS_TOKEN_INTERVAL : autoRefreshAccessTokenInterval);
         String token = data.getToken();
-        configuration.setToken(token == null ? DEFAULT_TOKEN: token);
-        String entranceRootPath = data.getEntranceRootPath();
-        configuration.setEntranceRootPath(entranceRootPath == null ? DEFAULT_ENTRANCE_ROOT_PATH : entranceRootPath);
-        String entranceSubPath = data.getEntranceSubPath();
-        configuration.setEntranceSubPath(entranceSubPath == null ? DEFAULT_ENTRANCE_SUB_PATH : entranceSubPath);
+        configuration.setToken(token == null ? DEFAULT_TOKEN : token);
+        String apiEntranceRootPath = data.getApiEntranceRootPath();
+        configuration.setApiEntranceRootPath(apiEntranceRootPath == null ? DEFAULT_API_ENTRANCE_ROOT_PATH : apiEntranceRootPath);
+        String apiEntranceSubPath = data.getApiEntranceSubPath();
+        configuration.setApiEntranceSubPath(apiEntranceSubPath == null ? DEFAULT_API_ENTRANCE_SUB_PATH : apiEntranceSubPath);
+        WebPageAuthorizationConfiguration webPageAuthorization = data.getWebPageAuthorization();
+        configuration.setWebPageAuthorization(new WebPageAuthorizationConfigurationYamlSwapper().swap(webPageAuthorization));
         return configuration;
     }
 
@@ -63,11 +67,13 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
         Long autoRefreshAccessTokenInterval = yamlConfiguration.getAutoRefreshAccessTokenInterval();
         configuration.setAutoRefreshAccessTokenInterval(autoRefreshAccessTokenInterval == null ? DEFAULT_AUTO_REFRESH_ACCESS_TOKEN_INTERVAL : autoRefreshAccessTokenInterval);
         String token = yamlConfiguration.getToken();
-        configuration.setToken(token == null ? DEFAULT_TOKEN: token);
-        String entranceRootPath = yamlConfiguration.getEntranceRootPath();
-        configuration.setEntranceRootPath(entranceRootPath == null ? DEFAULT_ENTRANCE_ROOT_PATH : entranceRootPath);
-        String entranceSubPath = yamlConfiguration.getEntranceSubPath();
-        configuration.setEntranceSubPath(entranceSubPath == null ? DEFAULT_ENTRANCE_SUB_PATH : entranceSubPath);
+        configuration.setToken(token == null ? DEFAULT_TOKEN : token);
+        String apiEntranceRootPath = yamlConfiguration.getApiEntranceRootPath();
+        configuration.setApiEntranceRootPath(apiEntranceRootPath == null ? DEFAULT_API_ENTRANCE_ROOT_PATH : apiEntranceRootPath);
+        String apiEntranceSubPath = yamlConfiguration.getApiEntranceSubPath();
+        configuration.setApiEntranceSubPath(apiEntranceSubPath == null ? DEFAULT_API_ENTRANCE_SUB_PATH : apiEntranceSubPath);
+        YamlWebPageAuthorizationConfiguration webPageAuthorization = yamlConfiguration.getWebPageAuthorization();
+        configuration.setWebPageAuthorization(new WebPageAuthorizationConfigurationYamlSwapper().swap(webPageAuthorization));
         return configuration;
     }
 }

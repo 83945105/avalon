@@ -18,7 +18,27 @@ spring:
         auto-refresh-access-token-interval: 7200000
         # 用于对接公众号的token
         token: WECHAT-OFFICIAL-ACCOUNT-TOKEN
-        # 入口根路径
+        # 公众号入口根路径
         entrance-root-path: /wechat/official/account
-        # 入口子路径
+        # 公众号入口子路径
         entrance-sub-path: /index
+        # 网页授权
+        web-page-authorization:
+          # 开放授权地址, 如果配置了其它属性如 redirect-uri、scope、response-type、state 会在系统内部追加到本地址上
+          oauth2-path: https://open.weixin.qq.com/connect/oauth2/authorize?appid=${spring.avalon.wechat.official-account.app-id}
+          # 授权后重定向的回调链接地址
+          redirect-uri:
+          # 应用授权作用域
+          scope: snsapi_base
+          # 返回类型
+          response-type: code
+          # 重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节
+          state:
+          # 用于获取网页 access_token 的url
+          access-token-get-url: https://api.weixin.qq.com/sns/oauth2/access_token?appid=${spring.avalon.wechat.official-account.app-id}&secret=${spring.avalon.wechat.official-account.secret}&grant_type=authorization_code
+          # 用于刷新网页 access_token 的url
+          access-token-refresh-url: https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=${spring.avalon.wechat.official-account.app-id}&grant_type=refresh_token
+          # 用于获取网页用户信息的url
+          user-info-get-url: https://api.weixin.qq.com/sns/userinfo?lang=zh_CN
+          # 用于校验网页 access_token 的url
+          access-token-validation-url: https://api.weixin.qq.com/sns/auth

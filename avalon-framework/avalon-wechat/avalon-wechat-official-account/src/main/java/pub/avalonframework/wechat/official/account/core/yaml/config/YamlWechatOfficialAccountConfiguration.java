@@ -21,9 +21,11 @@ public class YamlWechatOfficialAccountConfiguration implements YamlConfiguration
 
     private String token;
 
-    private String entranceRootPath;
+    private String apiEntranceRootPath;
 
-    private String entranceSubPath;
+    private String apiEntranceSubPath;
+
+    private YamlWebPageAuthorizationConfiguration webPageAuthorization;
 
     public Boolean getEnabled() {
         return enabled;
@@ -81,19 +83,27 @@ public class YamlWechatOfficialAccountConfiguration implements YamlConfiguration
         this.token = token;
     }
 
-    public String getEntranceRootPath() {
-        return entranceRootPath;
+    public String getApiEntranceRootPath() {
+        return apiEntranceRootPath;
     }
 
-    public void setEntranceRootPath(String entranceRootPath) {
-        this.entranceRootPath = entranceRootPath;
+    public void setApiEntranceRootPath(String apiEntranceRootPath) {
+        this.apiEntranceRootPath = apiEntranceRootPath;
     }
 
-    public String getEntranceSubPath() {
-        return entranceSubPath;
+    public String getApiEntranceSubPath() {
+        return apiEntranceSubPath;
     }
 
-    public void setEntranceSubPath(String entranceSubPath) {
-        this.entranceSubPath = entranceSubPath;
+    public void setApiEntranceSubPath(String apiEntranceSubPath) {
+        this.apiEntranceSubPath = apiEntranceSubPath;
+    }
+
+    public YamlWebPageAuthorizationConfiguration getWebPageAuthorization() {
+        return webPageAuthorization;
+    }
+
+    public void setWebPageAuthorization(YamlWebPageAuthorizationConfiguration webPageAuthorization) {
+        this.webPageAuthorization = webPageAuthorization;
     }
 }
