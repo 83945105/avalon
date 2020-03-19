@@ -182,4 +182,15 @@ public final class SecurityUtils {
     public static void logout(HttpServletRequest request, HttpServletResponse response) {
         securityService.logout(request, response);
     }
+
+    /**
+     * MD5 encryption with salt
+     *
+     * @param source The value.
+     * @param salt   The encryption salt.
+     * @return The encryption value.
+     */
+    public static String md5(String source, String salt) {
+        return securityService.md5(source, salt);
+    }
 }

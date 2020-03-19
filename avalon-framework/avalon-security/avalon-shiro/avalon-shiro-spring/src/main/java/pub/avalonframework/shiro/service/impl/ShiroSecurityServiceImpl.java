@@ -5,11 +5,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
+import org.apache.shiro.util.ByteSource;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.session.mgt.WebSessionKey;
 import pub.avalonframework.security.core.beans.MapPrincipal;
@@ -160,5 +162,10 @@ public class ShiroSecurityServiceImpl implements SecurityService {
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityUtils.getSubject().logout();
+    }
+
+    @Override
+    public String md5(String source, String salt) {
+        return new SimpleHash("MD5", source, ByteSource.Util.bytes(salt), 1024).toHex();
     }
 }

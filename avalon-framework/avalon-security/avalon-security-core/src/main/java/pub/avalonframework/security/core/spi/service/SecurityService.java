@@ -132,4 +132,13 @@ public interface SecurityService extends SpiService {
      * @param response The http servlet response.
      */
     void logout(HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * MD5 encryption with salt
+     *
+     * @param source The value.
+     * @param salt   The encryption salt.
+     * @return The encryption value.
+     */
+    String md5(String source, String salt);
 }
