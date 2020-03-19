@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author baichao
  */
-@RequestMapping("${spring.avalon.wechat.official-account.entrance-root-path}")
+@RequestMapping("${spring.avalon.wechat.official-account.api-entrance-root-path}")
 @RestController
 public class EntranceController {
 
@@ -42,7 +42,7 @@ public class EntranceController {
         out.close();
     }
 
-    @RequestMapping(value = "${spring.avalon.wechat.official-account.entrance-sub-path}")
+    @RequestMapping(value = "${spring.avalon.wechat.official-account.api-entrance-sub-path}")
     public void index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (HttpMethod.GET.name().equalsIgnoreCase(request.getMethod())) {
             doGet(request, response);
