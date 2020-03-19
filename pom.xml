@@ -34,7 +34,6 @@
 
         <apache.velocity.version>1.7</apache.velocity.version>
         <apache.poi.version>3.9</apache.poi.version>
-        <apache.httpclient.version>4.5.2</apache.httpclient.version>
 
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 
@@ -90,11 +89,6 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${apache.poi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${apache.httpclient.version}</version>
             </dependency>
 
             <dependency>

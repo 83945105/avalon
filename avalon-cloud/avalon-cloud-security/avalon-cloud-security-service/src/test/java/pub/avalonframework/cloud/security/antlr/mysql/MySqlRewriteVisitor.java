@@ -1,6 +1,5 @@
 package pub.avalonframework.cloud.security.antlr.mysql;
 
-import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -114,7 +113,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         TerminalNode lrBracket = ctx.LR_BRACKET();
         MySqlParser.SelectStatementContext selectStatement = ctx.selectStatement();
         TerminalNode rrBracket = ctx.RR_BRACKET();
-        if(lrBracket != null && selectStatement != null && rrBracket != null) {
+        if (lrBracket != null && selectStatement != null && rrBracket != null) {
             sqlBuilder.appendWithSpace(lrBracket);
             visit(selectStatement);
             sqlBuilder.appendWithSpace(rrBracket);
@@ -127,13 +126,55 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
     public String visitFromClause(MySqlParser.FromClauseContext ctx) {
         TerminalNode from = ctx.FROM();
         MySqlParser.TableSourcesContext tableSources = ctx.tableSources();
-        if (from != null && tableSources != null) {
-            sqlBuilder.appendWithSpace(from);
-            visit(tableSources);
-            return null;
+        if (from == null || tableSources == null) {
+            return sqlSyntaxError();
         }
-        return unsupportedSqlNode();
+        sqlBuilder.appendWithSpace(from);
+        visit(tableSources);
+        TerminalNode where = ctx.WHERE();
+        List<MySqlParser.ExpressionContext> expression = ctx.expression();
+        if (where != null) {
+            sqlBuilder.appendWithSpace(where);
+            if (expression.size() == 0) {
+                return sqlSyntaxError();
+            }
+            for (MySqlParser.ExpressionContext expressionContext : expression) {
+                visit(expressionContext);
+            }
+        }
+        TerminalNode group = ctx.GROUP();
+        TerminalNode by = ctx.BY();
+        List<MySqlParser.GroupByItemContext> groupByItem = ctx.groupByItem();
+        List<TerminalNode> comma = ctx.COMMA();
+        if (group != null) {
+            sqlBuilder.appendWithSpace(group);
+            if (by == null) {
+                return sqlSyntaxError();
+            }
+            sqlBuilder.appendWithSpace(by);
+            if (groupByItem.size() == 0) {
+                return sqlSyntaxError();
+            }
+            int len = comma.size();
+            if (len != groupByItem.size() - 1) {
+                return sqlSyntaxError();
+            }
+            for (int i = 0; i <= len; i++) {
+                visit(groupByItem.get(i));
+                if (i != len) {
+                    sqlBuilder.append(comma.get(i));
+                }
+            }
+        }
+        TerminalNode having = ctx.HAVING();
+        if(having != null) {
+            sqlBuilder.appendWithSpace(having);
+        }
+        ctx.expression();
+        return null;
     }
+
+
 
     @Override
     public String visitTableSourceBase(MySqlParser.TableSourceBaseContext ctx) {
@@ -300,30 +341,65 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
     }
 
     @Override
-    public String visitBinaryComparasionPredicate(MySqlParser.BinaryComparasionPredicateContext ctx) {
-        MySqlParser.PredicateContext left = ctx.left;
-        MySqlParser.ComparisonOperatorContext comparisonOperator = ctx.comparisonOperator();
-        MySqlParser.PredicateContext right = ctx.right;
-        if (left != null && comparisonOperator != null && right != null) {
-            //TODO sql去重
-            sqlBuilder.appendWithSpace(left).appendWithSpace(comparisonOperator).appendWithSpace(right);
-            return null;
+    public String visitIsNullPredicate(MySqlParser.IsNullPredicateContext ctx) {
+        MySqlParser.PredicateContext predicate = ctx.predicate();
+        TerminalNode is = ctx.IS();
+        MySqlParser.NullNotnullContext nullNotnullContext = ctx.nullNotnull();
+        if (predicate == null || is == null || nullNotnullContext == null) {
+            return sqlSyntaxError();
         }
-        return unsupportedSqlNode();
+        visit(predicate);
+        sqlBuilder.appendWithSpace(is);
+        visit(nullNotnullContext);
+        return null;
+    }
+
+    @Override
+    public String visitNullNotnull(MySqlParser.NullNotnullContext ctx) {
+        TerminalNode not = ctx.NOT();
+        if (not != null) {
+            sqlBuilder.appendWithSpace(not);
+        }
+        TerminalNode nullLiteral = ctx.NULL_LITERAL();
+        if (nullLiteral == null) {
+            return sqlSyntaxError();
+        }
+        sqlBuilder.appendWithSpace(nullLiteral);
+        return null;
+    }
+
+    @Override
+    public String visitBinaryComparasionPredicate(MySqlParser.BinaryComparasionPredicateContext ctx) {
+        List<MySqlParser.PredicateContext> predicate = ctx.predicate();
+        MySqlParser.ComparisonOperatorContext comparisonOperator = ctx.comparisonOperator();
+        if (predicate.size() != 2 || comparisonOperator == null) {
+            return sqlSyntaxError();
+        }
+        //TODO sql去重
+        visit(predicate.get(0));
+        sqlBuilder.appendWithSpace(comparisonOperator);
+        visit(predicate.get(1));
+        return null;
+    }
+
+    @Override
+    public String visitFullColumnNameExpressionAtom(MySqlParser.FullColumnNameExpressionAtomContext ctx) {
+        sqlBuilder.appendWithSpace(ctx.fullColumnName());
+        return null;
     }
 
     @Override
     public String visitLikePredicate(MySqlParser.LikePredicateContext ctx) {
         List<MySqlParser.PredicateContext> predicate = ctx.predicate();
         TerminalNode like = ctx.LIKE();
-        if (predicate.size() == 2 && like != null) {
-            //TODO sql去重
-            sqlBuilder.appendWithSpace(predicate.get(0))
-                    .appendWithSpace(like)
-                    .appendWithSpace(predicate.get(1));
-            return null;
+        if (predicate.size() != 2 || like == null) {
+            return sqlSyntaxError();
         }
-        return unsupportedSqlNode();
+        //TODO sql去重
+        visit(predicate.get(0));
+        sqlBuilder.appendWithSpace(like);
+        visit(predicate.get(1));
+        return null;
     }
 
     @Override
@@ -331,15 +407,15 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         TerminalNode between = ctx.BETWEEN();
         List<MySqlParser.PredicateContext> predicate = ctx.predicate();
         TerminalNode and = ctx.AND();
-        if (between != null && predicate.size() == 3 && and != null) {
-            sqlBuilder.appendWithSpace(predicate.get(0))
-                    .appendWithSpace(between)
-                    .appendWithSpace(predicate.get(1))
-                    .appendWithSpace(and)
-                    .appendWithSpace(predicate.get(2));
-            return null;
+        if (between == null || predicate.size() != 3 || and == null) {
+            return sqlSyntaxError();
         }
-        return unsupportedSqlNode();
+        visit(predicate.get(0));
+        sqlBuilder.appendWithSpace(between);
+        visit(predicate.get(1));
+        sqlBuilder.appendWithSpace(and);
+        visit(predicate.get(2));
+        return null;
     }
 
     @Override
@@ -348,8 +424,12 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         TerminalNode in = ctx.IN();
         TerminalNode lrBracket = ctx.LR_BRACKET();
         MySqlParser.ExpressionsContext expressions = ctx.expressions();
+        MySqlParser.SelectStatementContext selectStatement = ctx.selectStatement();
         TerminalNode rrBracket = ctx.RR_BRACKET();
-        if (predicate == null || in == null || lrBracket == null || expressions == null || rrBracket == null) {
+        if (predicate == null || in == null || lrBracket == null || rrBracket == null) {
+            return sqlSyntaxError();
+        }
+        if (expressions == null && selectStatement == null) {
             return sqlSyntaxError();
         }
         sqlBuilder.appendWithSpace(predicate);
@@ -359,7 +439,12 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         }
         sqlBuilder.appendWithSpace(in)
                 .appendWithSpace(lrBracket);
-        visit(expressions);
+        if (expressions != null) {
+            visit(expressions);
+        }
+        if (selectStatement != null) {
+            visit(selectStatement);
+        }
         sqlBuilder.appendWithSpace(rrBracket);
         return null;
     }
@@ -369,7 +454,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         TerminalNode lrBracket = ctx.LR_BRACKET();
         List<MySqlParser.ExpressionContext> expression = ctx.expression();
         TerminalNode rrBracket = ctx.RR_BRACKET();
-        if (lrBracket == null || expression.size() <= 0 || rrBracket == null) {
+        if (lrBracket == null || expression.size() < 1 || rrBracket == null) {
             return sqlSyntaxError();
         }
         sqlBuilder.appendWithSpace(lrBracket);
@@ -397,7 +482,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         for (int i = 0; i <= len; i++) {
             visit(expression.get(i));
             if (i < len) {
-                sqlBuilder.appendWithSpace(comma.get(i));
+                sqlBuilder.append(comma.get(i));
             }
         }
         return null;
