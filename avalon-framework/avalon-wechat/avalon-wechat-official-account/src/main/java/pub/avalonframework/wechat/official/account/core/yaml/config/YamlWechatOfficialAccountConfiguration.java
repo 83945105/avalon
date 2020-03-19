@@ -13,6 +13,8 @@ public class YamlWechatOfficialAccountConfiguration implements YamlConfiguration
 
     private String secret;
 
+    private String accessToken;
+
     private String accessTokenGetUrl;
 
     private Boolean autoRefreshAccessToken;
@@ -49,6 +51,14 @@ public class YamlWechatOfficialAccountConfiguration implements YamlConfiguration
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getAccessTokenGetUrl() {

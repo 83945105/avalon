@@ -24,6 +24,8 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
 
     private String secret;
 
+    private String accessToken;
+
     private String accessTokenGetUrl;
 
     private Boolean autoRefreshAccessToken;
@@ -60,6 +62,14 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getAccessTokenGetUrl() {
@@ -142,7 +152,7 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
         HttpResponse httpResponse = HttpUtils.getInstance().doGet(accessTokenGetUrl);
         String response = EntityUtils.toString(httpResponse.getEntity());
         AccessTokenResponse accessTokenResponse = ResponseUtils.parseAccessTokenResponse(response);
-        setToken(accessTokenResponse.getAccess_token());
+        setAccessToken(accessTokenResponse.getAccess_token());
         setAutoRefreshAccessTokenInterval(accessTokenResponse.getExpires_in() * 1000L);
         LOGGER.info("Get access_token success, expires in {} seconds, access_token: {}", accessTokenResponse.getExpires_in(), accessTokenResponse.getAccess_token());
     }

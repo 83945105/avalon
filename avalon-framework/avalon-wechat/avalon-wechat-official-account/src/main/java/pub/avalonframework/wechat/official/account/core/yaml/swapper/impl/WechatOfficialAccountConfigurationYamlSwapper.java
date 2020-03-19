@@ -33,6 +33,8 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
         configuration.setAppId(appId);
         String secret = data.getSecret();
         configuration.setSecret(secret);
+        String accessToken = data.getAccessToken();
+        configuration.setAccessToken(accessToken);
         String accessTokenGetUrl = data.getAccessTokenGetUrl();
         configuration.setAccessTokenGetUrl(accessTokenGetUrl);
         Boolean autoRefreshAccessToken = data.getAutoRefreshAccessToken();
@@ -60,6 +62,8 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
         configuration.setAppId(appId);
         String secret = yamlConfiguration.getSecret();
         configuration.setSecret(secret);
+        String accessToken = yamlConfiguration.getAccessToken();
+        configuration.setAccessToken(accessToken);
         String accessTokenGetUrl = yamlConfiguration.getAccessTokenGetUrl();
         configuration.setAccessTokenGetUrl(accessTokenGetUrl);
         Boolean autoRefreshAccessToken = yamlConfiguration.getAutoRefreshAccessToken();
