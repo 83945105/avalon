@@ -13,6 +13,7 @@
 
     <modules>
         <module>avalon-security-core</module>
+        <module>avalon-security-data</module>
         <module>avalon-security-spring-boot-starter</module>
         <module>avalon-shiro</module>
         <module>avalon-shiro-spring-boot-starter</module>

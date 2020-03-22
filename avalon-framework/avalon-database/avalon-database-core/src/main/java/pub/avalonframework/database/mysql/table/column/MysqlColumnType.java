@@ -61,4 +61,16 @@ public enum MysqlColumnType implements ColumnType {
     public String toString() {
         return this.value;
     }
+
+    public static MysqlColumnType parseMysqlColumnType(String value) {
+        if(value == null) {
+            return null;
+        }
+        for (MysqlColumnType each : MysqlColumnType.values()) {
+            if(value.equals(each.value)) {
+                return each;
+            }
+        }
+        return null;
+    }
 }

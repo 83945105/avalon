@@ -25,9 +25,9 @@ public abstract class AbstractMysqlColumn implements Column {
 
     protected Integer length;
 
-    protected Integer decimalLength;
+    protected Integer scale;
 
-    protected boolean notNull;
+    protected boolean nullable;
 
     protected String defaultValue;
 
@@ -108,29 +108,28 @@ public abstract class AbstractMysqlColumn implements Column {
     }
 
     @Override
-    public Integer getDecimalLength() {
-        return decimalLength;
+    public Integer getScale() {
+        return scale;
     }
 
-    public void setDecimalLength(Integer decimalLength) {
-        this.decimalLength = decimalLength;
+    public void setScale(Integer scale) {
+        this.scale = scale;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 
     @Override
-    public boolean isNotNull() {
-        return notNull;
-    }
-
-    public void setNotNull(boolean notNull) {
-        this.notNull = notNull;
-    }
-
-    @Override
-    public String getDefaultValue() {
+    public String getDefault() {
         return defaultValue;
     }
 
-    public void setDefaultValue(String defaultValue) {
+    public void setDefault(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 

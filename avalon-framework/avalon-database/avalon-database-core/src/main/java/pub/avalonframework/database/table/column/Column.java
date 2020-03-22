@@ -64,25 +64,25 @@ public interface Column {
     Integer getLength();
 
     /**
-     * Get column decimal length.
+     * Get column scale.
      *
-     * @return The column decimal length.
+     * @return The column scale.
      */
-    Integer getDecimalLength();
+    Integer getScale();
 
     /**
-     * Is not null.
+     * Can it be null.
      *
-     * @return Is not null.
+     * @return true | false
      */
-    boolean isNotNull();
+    boolean isNullable();
 
     /**
-     * Get default value.
+     * Get default.
      *
-     * @return The default value.
+     * @return The default.
      */
-    String getDefaultValue();
+    String getDefault();
 
     /**
      * Get comment.
