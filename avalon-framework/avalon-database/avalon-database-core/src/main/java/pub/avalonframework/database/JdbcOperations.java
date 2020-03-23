@@ -17,6 +17,13 @@ public interface JdbcOperations {
     String selectDatabaseName();
 
     /**
+     * Select database type.
+     *
+     * @return The database type.
+     */
+    DatabaseType selectDatabaseType();
+
+    /**
      * Select table names.
      *
      * @return The table name list.

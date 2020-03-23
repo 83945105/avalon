@@ -3,7 +3,7 @@ package pub.avalonframework.security.data;
 /**
  * @author baichao
  */
-public class PredicateExpression {
+public class PredicateExpression implements PredicateExpressionOperations {
 
     private String tableName;
 
@@ -24,15 +24,18 @@ public class PredicateExpression {
         this.tableAlias = tableAlias;
     }
 
+    @Override
     public void setColumnNameAlias(String columnName, String columnAlias) {
         this.columnName = columnName;
         this.columnAlias = columnAlias;
     }
 
+    @Override
     public void setComparisonType(ComparisonType comparisonType) {
         this.comparisonType = comparisonType;
     }
 
+    @Override
     public void setValue(Object value) {
         this.value = value;
         if (value instanceof PredicateExpression) {
@@ -42,15 +45,13 @@ public class PredicateExpression {
         }
     }
 
+    @Override
     public boolean hasColumn() {
         return this.columnName != null;
     }
 
+    @Override
     public boolean hasValue() {
         return this.value != null;
-    }
-
-    public enum ValueType {
-        CONSTANT, PREDICATE_EXPRESSION
     }
 }

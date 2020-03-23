@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public class ColumnRule {
+public class ColumnRule implements ColumnRuleOperations {
 
     private String tableName;
 
@@ -19,7 +19,8 @@ public class ColumnRule {
         this.tableAlias = tableAlias;
     }
 
-    public LogicExpression addLogicExpression(LogicExpression.AndOr andOr) {
+    @Override
+    public LogicExpression addLogicExpression(LogicExpressionOperations.AndOr andOr) {
         LogicExpression logicExpression = new LogicExpression(andOr, tableName, tableAlias);
         this.logicExpressions.add(logicExpression);
         return logicExpression;

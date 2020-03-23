@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public class LogicExpression {
+public class LogicExpression implements LogicExpressionOperations {
 
     private AndOr andOr;
 
@@ -24,49 +24,22 @@ public class LogicExpression {
         this.tableAlias = tableAlias;
     }
 
+    @Override
     public PredicateExpression addPredicateExpression() {
         PredicateExpression predicateExpression = new PredicateExpression(tableName, tableAlias);
         this.predicateExpressions.add(predicateExpression);
         return predicateExpression;
     }
 
+    @Override
     public LogicExpression addLogicExpression(AndOr andOr) {
         LogicExpression logicExpression = new LogicExpression(andOr, tableName, tableAlias);
         this.logicExpressions.add(logicExpression);
         return logicExpression;
     }
 
+    @Override
     public AndOr getAndOr() {
         return andOr;
-    }
-
-    public enum AndOr {
-
-        AND(new String[]{"AND"}), OR(new String[]{"OR"});
-
-        private String[] symbols;
-
-        AndOr(String[] symbols) {
-            this.symbols = symbols;
-        }
-
-        public static AndOr parseAndOr(String symbol) {
-            if (symbol == null) {
-                return null;
-            }
-            String[] symbols;
-            for (AndOr each : AndOr.values()) {
-                symbols = each.symbols;
-                if (symbols == null || symbols.length == 0) {
-                    continue;
-                }
-                for (String str : symbols) {
-                    if (symbol.equals(str)) {
-                        return each;
-                    }
-                }
-            }
-            return null;
-        }
     }
 }

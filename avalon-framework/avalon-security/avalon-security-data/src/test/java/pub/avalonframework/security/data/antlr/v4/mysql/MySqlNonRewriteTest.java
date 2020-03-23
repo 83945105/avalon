@@ -1,9 +1,9 @@
 package pub.avalonframework.security.data.antlr.v4.mysql;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pub.avalonframework.security.data.antlr.SqlRewriteBuilder;
 
 import java.io.IOException;
 
@@ -12,15 +12,15 @@ import java.io.IOException;
  */
 public class MySqlNonRewriteTest {
 
+    SqlRewriteBuilder sqlRewriteBuilder = new SqlRewriteBuilder(new HikariDataSource() {{
+        setDriverClassName("com.mysql.cj.jdbc.Driver");
+        setJdbcUrl("jdbc:mysql://localhost:3306/sql_rewrite?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false");
+        setUsername("root");
+        setPassword("19910405");
+    }});
+
     private String rewriteSql(String sql) {
-        ANTLRInputStream input = new ANTLRInputStream(sql);
-        MySqlLexer lexer = new MySqlLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        MySqlParser parser = new MySqlParser(tokens);
-        MySqlParser.RootContext tree = parser.root();
-        MySqlRewriteVisitor visitor = new MySqlRewriteVisitor();
-        visitor.visit(tree);
-        return visitor.getSql();
+        return sqlRewriteBuilder.build(sql).run();
     }
 
     private void assertNonRewrite(String sql) {
@@ -29,6 +29,7 @@ public class MySqlNonRewriteTest {
 
     @Test
     void test() {
+        assertNonRewrite("( SELECT * FROM USER )");
         assertNonRewrite("SELECT * FROM USER");
         assertNonRewrite("SELECT * FROM USER;");
         assertNonRewrite("SELECT A.* FROM USER A");
@@ -107,17 +108,17 @@ public class MySqlNonRewriteTest {
     }
 
     public static void main(String[] args) throws IOException {
-        ANTLRInputStream input = new ANTLRInputStream("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID");
-        MySqlLexer lexer = new MySqlLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        MySqlParser parser = new MySqlParser(tokens);
-        MySqlParser.RootContext tree = parser.root();
+//        ANTLRInputStream input = new ANTLRInputStream("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID");
+//        ANTLRInputStream input = new ANTLRInputStream("SELECT * FROM USER INNER JOIN ( SELECT * FROM USER ) T");
 
-        MySqlRewriteVisitor visitor = new MySqlRewriteVisitor();
+        String sql = new SqlRewriteBuilder(new HikariDataSource() {{
+            setDriverClassName("com.mysql.cj.jdbc.Driver");
+            setJdbcUrl("jdbc:mysql://localhost:3306/sql_rewrite?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false");
+            setUsername("root");
+            setPassword("19910405");
+        }}).build("SELECT * FROM USER WHERE ID IN ( SELECT ID FROM USER )").run();
 
-
-        visitor.visit(tree);
         System.out.println("\n");
-        System.out.println(visitor.getSql());
+        System.out.println(sql);
     }
 }

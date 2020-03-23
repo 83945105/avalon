@@ -1,11 +1,13 @@
 package pub.avalonframework.database.mysql;
 
 import pub.avalonframework.database.AbstractJdbcOperations;
+import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.database.mysql.table.column.MysqlColumn;
 import pub.avalonframework.database.mysql.table.column.MysqlColumnType;
 import pub.avalonframework.database.table.column.Column;
 
 import javax.sql.DataSource;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,30 @@ public class MysqlJdbcOperations extends AbstractJdbcOperations {
                 }
                 return databaseName;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return null;
+    }
+
+    @Override
+    public DatabaseType selectDatabaseType() {
+        try {
+            getConnection();
+            DatabaseMetaData dbmd = connection.getMetaData();
+            String dataBaseType = dbmd.getDatabaseProductName();
+            if (("Microsoft SQL Server").equals(dataBaseType)) {
+                return DatabaseType.SQLSERVER;
+            }
+            if (("MySQL").equals(dataBaseType)) {
+                return DatabaseType.MYSQL;
+            }
+            if (("Oracle").equals(dataBaseType)) {
+                return DatabaseType.ORACLE;
+            }
+            throw new SQLException("Unknown database type.");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

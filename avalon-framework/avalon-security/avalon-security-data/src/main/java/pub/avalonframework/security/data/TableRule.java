@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public class TableRule {
+public class TableRule implements TableRuleOperations {
 
     private String tableName;
 
@@ -21,12 +21,14 @@ public class TableRule {
         this.tableAlias = tableAlias;
     }
 
+    @Override
     public OnColumnRule addOnColumnRule() {
         OnColumnRule onColumnRule = new OnColumnRule(tableName, tableAlias);
         this.onRules.add(onColumnRule);
         return onColumnRule;
     }
 
+    @Override
     public WhereColumnRule addWhereColumnRule() {
         WhereColumnRule whereColumnRule = new WhereColumnRule(tableName, tableAlias);
         this.whereRules.add(whereColumnRule);

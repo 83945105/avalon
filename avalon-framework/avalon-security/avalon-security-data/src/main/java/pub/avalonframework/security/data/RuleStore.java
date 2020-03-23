@@ -8,12 +8,12 @@ import java.util.Map;
  */
 public class RuleStore {
 
-    private Map<String, TableRule> tableNameTableRuleMap = new LinkedHashMap<>();
+    private Map<String, TableRuleOperations> tableNameTableRuleMap = new LinkedHashMap<>();
 
-    private Map<String, TableRule> tableAliasTableRuleMap = new LinkedHashMap<>();
+    private Map<String, TableRuleOperations> tableAliasTableRuleMap = new LinkedHashMap<>();
 
-    public TableRule tableRuleForTableAlias(String tableName, String tableAlias) {
-        TableRule tableRule = tableAliasTableRuleMap.get(tableAlias);
+    public TableRuleOperations putTableRule(String tableName, String tableAlias) {
+        TableRuleOperations tableRule = tableAliasTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             tableRule = new TableRule(tableName, tableAlias);
             tableAliasTableRuleMap.put(tableAlias, tableRule);

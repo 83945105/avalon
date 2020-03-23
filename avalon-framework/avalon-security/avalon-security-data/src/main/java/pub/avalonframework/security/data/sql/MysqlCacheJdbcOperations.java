@@ -1,5 +1,6 @@
 package pub.avalonframework.security.data.sql;
 
+import pub.avalonframework.database.DatabaseType;
 import pub.avalonframework.database.mysql.MysqlJdbcOperations;
 import pub.avalonframework.database.table.column.Column;
 
@@ -17,6 +18,8 @@ public class MysqlCacheJdbcOperations extends MysqlJdbcOperations {
 
     private String databaseName;
 
+    private DatabaseType databaseType;
+
     private List<String> tableNames;
 
     private Map<String, Map<String, List<Column>>> databaseTableColumnsMap = new ConcurrentHashMap<>();
@@ -33,6 +36,14 @@ public class MysqlCacheJdbcOperations extends MysqlJdbcOperations {
             databaseName = super.selectDatabaseName();
         }
         return databaseName;
+    }
+
+    @Override
+    public DatabaseType selectDatabaseType() {
+        if (databaseType == null) {
+            databaseType = super.selectDatabaseType();
+        }
+        return databaseType;
     }
 
     @Override
