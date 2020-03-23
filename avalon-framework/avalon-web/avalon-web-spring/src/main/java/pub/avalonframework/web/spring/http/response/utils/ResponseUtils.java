@@ -46,7 +46,11 @@ public final class ResponseUtils {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T jsonToObject(String json, Class<T> clazz) {
+        if (clazz == String.class) {
+            return (T) json;
+        }
         try {
             return OBJECT_MAPPER.readValue(json, clazz);
         } catch (IOException e) {
@@ -54,7 +58,11 @@ public final class ResponseUtils {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T jsonToObject(String json, TypeReference<T> typeReference) {
+        if (typeReference.getType() == String.class) {
+            return (T) json;
+        }
         try {
             return OBJECT_MAPPER.readValue(json, typeReference);
         } catch (IOException e) {

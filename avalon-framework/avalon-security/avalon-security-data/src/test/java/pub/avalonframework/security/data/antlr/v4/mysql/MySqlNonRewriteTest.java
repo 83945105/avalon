@@ -107,7 +107,7 @@ public class MySqlNonRewriteTest {
     }
 
     public static void main(String[] args) throws IOException {
-        ANTLRInputStream input = new ANTLRInputStream("SELECT * FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID");
+        ANTLRInputStream input = new ANTLRInputStream("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID");
         MySqlLexer lexer = new MySqlLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MySqlParser parser = new MySqlParser(tokens);

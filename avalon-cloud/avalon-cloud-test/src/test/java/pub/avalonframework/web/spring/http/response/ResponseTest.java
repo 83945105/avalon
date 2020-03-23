@@ -57,4 +57,50 @@ public class ResponseTest {
         Assertions.assertEquals(userDTO.getUsername(), user.getUsername());
         Assertions.assertEquals(userDTO.getAge(), user.getAge());
     }
+
+    @Test
+    void TestGetValidationBoolean() throws Exception {
+        EntityMessageView<Boolean> view = this.testUserApi.getValidationBoolean();
+        ResultInfo resultInfo = view.getResultInfo();
+        Assertions.assertNotNull(resultInfo);
+        Assertions.assertTrue(resultInfo.isSuccess());
+        Assertions.assertFalse(resultInfo.isFail());
+        Assertions.assertFalse(resultInfo.isError());
+        Assertions.assertTrue(view.getEntity());
+    }
+
+    @Test
+    void TestGetValidationString() throws Exception {
+        EntityMessageView<String> view = testUserApi.getValidationString();
+        ResultInfo resultInfo = view.getResultInfo();
+        Assertions.assertNotNull(resultInfo);
+        Assertions.assertTrue(resultInfo.isSuccess());
+        Assertions.assertFalse(resultInfo.isFail());
+        Assertions.assertFalse(resultInfo.isError());
+        Assertions.assertEquals("OK", view.getEntity());
+    }
+
+
+    @Test
+    void TestGetValidationInteger() throws Exception {
+        EntityMessageView<Integer> view = testUserApi.getValidationInteger();
+        ResultInfo resultInfo = view.getResultInfo();
+        Assertions.assertNotNull(resultInfo);
+        Assertions.assertTrue(resultInfo.isSuccess());
+        Assertions.assertFalse(resultInfo.isFail());
+        Assertions.assertFalse(resultInfo.isError());
+        Assertions.assertEquals(1, view.getEntity());
+    }
+
+
+    @Test
+    void TestGetValidationLong() throws Exception {
+        EntityMessageView<Long> view = testUserApi.getValidationLong();
+        ResultInfo resultInfo = view.getResultInfo();
+        Assertions.assertNotNull(resultInfo);
+        Assertions.assertTrue(resultInfo.isSuccess());
+        Assertions.assertFalse(resultInfo.isFail());
+        Assertions.assertFalse(resultInfo.isError());
+        Assertions.assertEquals(1L, view.getEntity());
+    }
 }

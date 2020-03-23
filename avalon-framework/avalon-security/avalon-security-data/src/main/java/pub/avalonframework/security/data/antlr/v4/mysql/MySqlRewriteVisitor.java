@@ -334,6 +334,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         if (expression == null) {
             return sqlSyntaxError();
         }
+        this.runtimeLogicExpression = this.runtimeColumnRule.addLogicExpression(LogicExpression.AndOr.AND);
         visit(ctx.expression());
         return null;
     }
@@ -369,6 +370,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         if (expression == null) {
             return sqlSyntaxError();
         }
+        this.runtimeLogicExpression = this.runtimeColumnRule.addLogicExpression(LogicExpression.AndOr.AND);
         visit(ctx.expression());
         return null;
     }
@@ -390,16 +392,22 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
     @Override
     public String visitLogicalOperator(MySqlParser.LogicalOperatorContext ctx) {
         TerminalNode and = ctx.AND();
-        if (and != null) {
-            sqlBuilder.appendWithSpace(and);
-            return null;
-        }
         TerminalNode or = ctx.OR();
-        if (or != null) {
-            sqlBuilder.appendWithSpace(or);
-            return null;
+        if (and == null && or == null) {
+            return sqlSyntaxError();
         }
-        return unsupportedSqlNode();
+        if (and != null && or != null) {
+            return sqlSyntaxError();
+        }
+        if (and != null) {
+            String andStr = and.getText();
+            sqlBuilder.appendWithSpace(andStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
+        } else {
+            String orStr = or.getText();
+            this.runtimeLogicExpression = this.runtimeLogicExpression.addLogicExpression(LogicExpression.AndOr.OR);
+            sqlBuilder.appendWithSpace(orStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
+        }
+        return null;
     }
 
     @Override
@@ -447,11 +455,10 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         if (predicate.size() != 2 || comparisonOperator == null) {
             return sqlSyntaxError();
         }
-        this.runtimePredicateExpression = this.runtimeLogicExpression.addPredicateExpression();
         visit(predicate.get(0));//TODO 后面要删除  条件由归并后的 规则  重新生成
         String symbol = comparisonOperator.getText();
-        sqlBuilder.appendWithSpace(symbol);//TODO 后面要删除  条件由归并后的 规则  重新生成
         this.runtimePredicateExpression.setComparisonType(ComparisonType.parseComparison(symbol));
+        sqlBuilder.appendWithSpace(symbol);//TODO 后面要删除  条件由归并后的 规则  重新生成
         visit(predicate.get(1));//TODO 后面要删除  条件由归并后的 规则  重新生成
         return null;
     }
@@ -551,11 +558,14 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> {
         if (lrBracket == null || expression.size() < 1 || rrBracket == null) {
             return sqlSyntaxError();
         }
-        sqlBuilder.appendWithSpace(lrBracket);
+        if (this.runtimeLogicExpression.getAndOr() == LogicExpression.AndOr.AND) {
+            this.runtimeLogicExpression = this.runtimeLogicExpression.addLogicExpression(LogicExpression.AndOr.AND);
+        }
+        sqlBuilder.appendWithSpace(lrBracket);//TODO 后面要删除  条件由归并后的 规则  重新生成
         for (MySqlParser.ExpressionContext expressionContext : expression) {
             visit(expressionContext);
         }
-        sqlBuilder.appendWithSpace(rrBracket);
+        sqlBuilder.appendWithSpace(rrBracket);//TODO 后面要删除  条件由归并后的 规则  重新生成
         return null;
     }
 
