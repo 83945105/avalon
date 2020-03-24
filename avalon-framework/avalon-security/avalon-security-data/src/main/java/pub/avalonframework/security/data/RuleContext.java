@@ -1,9 +1,8 @@
 package pub.avalonframework.security.data;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -13,13 +12,17 @@ public class RuleContext {
 
     private RuleContext parent;
 
+    private MysqlCacheJdbcOperations jdbcOperations;
+
     private RuleContext runtimeRuleContext;
+
+    private Map<String, ColumnCache> columnAliasColumnCache = new HashMap<>();
 
     private String masterTableName;
 
     private String masterTableAlias;
 
-    private Map<String, TableAliasCache> tableAliasCacheMap = new HashMap<>(3);
+    private Map<String, TableCache> tableCacheMap = new HashMap<>(3);
 
     private RuleStore ruleStore = new RuleStore();
 
@@ -33,13 +36,21 @@ public class RuleContext {
 
     private Map<String, RuleContext> subRuleContextMap;
 
-    public RuleContext() {
+    public RuleContext(MysqlCacheJdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
         this.runtimeRuleContext = this;
     }
 
-    public RuleContext(RuleContext parent) {
-        this();
+    public RuleContext(RuleContext parent, MysqlCacheJdbcOperations jdbcOperations) {
+        this(jdbcOperations);
         this.parent = parent;
+    }
+
+    public void addRuntimeColumnAliasColumnName(String tableAlias, String columnName, String columnAlias) {
+        if (columnAliasColumnCache.containsKey(columnAlias)) {
+            throw new RuleContextException("SQL syntax error: column alias: " + columnAlias + " already exists");
+        }
+        columnAliasColumnCache.put(columnAlias, new ColumnCache(tableAlias, columnName, columnAlias));
     }
 
     public void setRuntimeMasterTableNameAlias(String tableName, String tableAlias) {
@@ -47,34 +58,80 @@ public class RuleContext {
         runtimeRuleContext.masterTableAlias = tableAlias;
     }
 
-    public void addRuntimeTableAliasTableName(String tableName, String tableAlias) {
-        if (runtimeRuleContext.tableAliasCacheMap.containsKey(tableAlias)) {
+    /**
+     * 添加运行时真实表
+     *
+     * @param tableName  表名
+     * @param tableAlias 表别名
+     */
+    public void addRuntimeRealTable(String tableName, String tableAlias) {
+        if (runtimeRuleContext.tableCacheMap.containsKey(tableAlias)) {
             throw new RuleContextException("SQL syntax error: table alias: " + tableAlias + " already exists");
         }
-        runtimeRuleContext.tableAliasCacheMap.put(tableAlias, new TableAliasCache(tableName, tableAlias));
+        if (tableName == null) {
+            throw new RuleContextException("SQL syntax error: tableName is null.");
+        }
+        List<String> columnNames = jdbcOperations.selectTableColumnNames(tableName);
+        if (columnNames.size() < 1) {
+            throw new RuleContextException("SQL syntax error: table: " + tableName + " has no column.");
+        }
+        runtimeRuleContext.tableCacheMap.put(tableAlias, new TableCache(tableName, tableAlias, columnNames));
+    }
+
+    /**
+     * 添加运行时虚拟表
+     *
+     * @param tableAlias 表别名
+     * @return 表字段注入器
+     */
+    public TableColumnNamesInjector addRuntimeVirtualTable(String tableAlias) {
+        if (runtimeRuleContext.tableCacheMap.containsKey(tableAlias)) {
+            throw new RuleContextException("SQL syntax error: table alias: " + tableAlias + " already exists");
+        }
+        TableCache tableCache = new TableCache(null, tableAlias);
+        runtimeRuleContext.tableCacheMap.put(tableAlias, tableCache);
+        return tableCache;
     }
 
     public boolean runtimeOnlyMasterTable() {
-        if (runtimeRuleContext.tableAliasCacheMap.size() == 0) {
+        if (runtimeRuleContext.tableCacheMap.size() == 0) {
             throw new RuleContextException("SQL syntax error: no primary table specified.");
         }
-        return runtimeRuleContext.tableAliasCacheMap.size() == 1;
+        return runtimeRuleContext.tableCacheMap.size() == 1;
     }
 
     public String getRuntimeTableNameByTableAlias(String tableAlias) {
-        TableAliasCache tableAliasCache = runtimeRuleContext.tableAliasCacheMap.get(tableAlias);
-        if (tableAliasCache == null) {
+        TableCache tableCache = runtimeRuleContext.tableCacheMap.get(tableAlias);
+        if (tableCache == null) {
             throw new RuleContextException("SQL syntax error: nonexistent table alias: " + tableAlias);
         }
-        return tableAliasCache.getTableName();
+        return tableCache.getTableName();
     }
 
     public Set<String> getRuntimeTableNames() {
-        return runtimeRuleContext.tableAliasCacheMap.values().stream().map(TableAliasCache::getTableName).collect(Collectors.toSet());
+        return runtimeRuleContext.tableCacheMap.values().stream().map(TableCache::getTableName).collect(Collectors.toSet());
     }
 
-    public TableRuleOperations putRuntimeTableRule(String tableName, String tableAlias) {
-        this.runtimeRuleContext.tableRule = ruleStore.putTableRule(tableName, tableAlias);
+    /**
+     * 添加运行时真实表规则
+     *
+     * @param tableName  表名
+     * @param tableAlias 表别名
+     * @return 表规则
+     */
+    public TableRuleOperations addRuntimeRealTableRule(String tableName, String tableAlias) {
+        this.runtimeRuleContext.tableRule = ruleStore.addTableRule(tableName, tableAlias);
+        return this.runtimeRuleContext.tableRule;
+    }
+
+    /**
+     * 添加运行时虚拟表规则
+     *
+     * @param tableAlias 表别名
+     * @return 表规则
+     */
+    public TableRuleOperations addRuntimeVirtualTableRule(String tableAlias) {
+        this.runtimeRuleContext.tableRule = ruleStore.addTableRule(null, tableAlias);
         return this.runtimeRuleContext.tableRule;
     }
 
@@ -131,6 +188,12 @@ public class RuleContext {
         return runtimeRuleContext.predicateExpression.hasValue();
     }
 
+    /**
+     * 添加运行时子规则上下文
+     *
+     * @param key 唯一键
+     * @return 规则上下文
+     */
     public RuleContext addRuntimeSubRuleContext(String key) {
         if (runtimeRuleContext.subRuleContextMap == null) {
             runtimeRuleContext.subRuleContextMap = new LinkedHashMap<>();
@@ -139,7 +202,28 @@ public class RuleContext {
         if (ruleContext != null) {
             throw new RuleContextException("The key: " + key + " rule context already exists.");
         }
-        ruleContext = new RuleContext(runtimeRuleContext);
+        ruleContext = new RuleContext(runtimeRuleContext, jdbcOperations);
+        runtimeRuleContext.subRuleContextMap.put(key, ruleContext);
+        this.runtimeRuleContext = ruleContext;
+        return ruleContext;
+    }
+
+    /**
+     * 添加运行时子虚拟规则上下文
+     *
+     * @param key                      唯一键
+     * @param tableColumnNamesInjector 表列名注入器
+     * @return 规则上下文
+     */
+    public RuleContext addRuntimeSubVirtualRuleContext(String key, TableColumnNamesInjector tableColumnNamesInjector) {
+        if (runtimeRuleContext.subRuleContextMap == null) {
+            runtimeRuleContext.subRuleContextMap = new LinkedHashMap<>();
+        }
+        RuleContext ruleContext = runtimeRuleContext.subRuleContextMap.get(key);
+        if (ruleContext != null) {
+            throw new RuleContextException("The key: " + key + " rule context already exists.");
+        }
+        ruleContext = new VirtualRuleContext(runtimeRuleContext, jdbcOperations, tableColumnNamesInjector);
         runtimeRuleContext.subRuleContextMap.put(key, ruleContext);
         this.runtimeRuleContext = ruleContext;
         return ruleContext;
@@ -158,21 +242,55 @@ public class RuleContext {
         return runtimeRuleContext.masterTableAlias;
     }
 
-    private final static class TableAliasCache {
+    private final static class ColumnCache {
 
         private String tableName;
 
         private String tableAlias;
 
-        private Map<String, String> columnAliasColumnNameMap;
+        private String columnName;
 
-        public TableAliasCache(String tableName, String tableAlias) {
+        private String columnAlias;
+
+        public ColumnCache(String tableAlias, String columnName, String columnAlias) {
+            this.tableAlias = tableAlias;
+            this.columnName = columnName;
+            this.columnAlias = columnAlias;
+        }
+    }
+
+    private final static class TableCache implements TableColumnNamesInjector {
+
+        private String tableName;
+
+        private String tableAlias;
+
+        private List<String> columnNames;
+
+        public TableCache(String tableName, String tableAlias) {
             this.tableName = tableName;
             this.tableAlias = tableAlias;
+        }
+
+        public TableCache(String tableName, String tableAlias, List<String> columnNames) {
+            this.tableName = tableName;
+            this.tableAlias = tableAlias;
+            this.columnNames = columnNames;
         }
 
         public String getTableName() {
             return tableName;
         }
+
+        @Override
+        public void accept(List<String> columnNames) {
+            this.columnNames = columnNames;
+        }
+    }
+
+    @FunctionalInterface
+    public interface TableColumnNamesInjector {
+
+        void accept(List<String> columnNames);
     }
 }

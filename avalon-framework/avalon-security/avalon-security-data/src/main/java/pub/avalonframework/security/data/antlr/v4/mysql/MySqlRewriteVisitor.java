@@ -21,19 +21,17 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
 
     private SqlBuilder sqlBuilder = new SqlBuilder();
 
-    private RuleContext ruleContext = new RuleContext();
+    private RuleContext ruleContext;
 
     private ParseTree parseTree;
-
-    private MysqlCacheJdbcOperations jdbcOperations;
 
     public MySqlRewriteVisitor(String sql, MysqlCacheJdbcOperations jdbcOperations) {
         ANTLRInputStream input = new ANTLRInputStream(sql);
         MySqlLexer lexer = new MySqlLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MySqlParser parser = new MySqlParser(tokens);
+        this.ruleContext = new RuleContext(jdbcOperations);
         this.parseTree = parser.root();
-        this.jdbcOperations = jdbcOperations;
     }
 
     @Override
@@ -135,19 +133,38 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
     @Override
     public String visitSelectColumnElement(MySqlParser.SelectColumnElementContext ctx) {
         MySqlParser.FullColumnNameContext fullColumnName = ctx.fullColumnName();
-        if (fullColumnName != null) {
-            sqlBuilder.appendWithSpace(fullColumnName);
-            TerminalNode as = ctx.AS();
-            if (as != null) {
-                sqlBuilder.appendWithSpace(as);
-            }
-            MySqlParser.UidContext uid = ctx.uid();
-            if (uid != null) {
-                sqlBuilder.appendWithSpace(uid);
-            }
-            return null;
+        if (fullColumnName == null) {
+            return sqlSyntaxError();
         }
-        return unsupportedSqlNode();
+        MySqlParser.UidContext uid = fullColumnName.uid();
+        if (uid == null) {
+            return sqlSyntaxError();
+        }
+        String tableAlias = null;
+        String columnName;
+        String columnAlias;
+        MySqlParser.DottedIdContext dottedId = fullColumnName.dottedId(0);
+        if (dottedId == null) {
+            // 没有表别名
+            columnName = uid.getText();
+        } else {
+            tableAlias = uid.getText();
+            columnName = dottedId.getText().substring(1);
+        }
+        sqlBuilder.appendWithSpace(fullColumnName);
+        TerminalNode as = ctx.AS();
+        if (as != null) {
+            sqlBuilder.appendWithSpace(as);
+        }
+        uid = ctx.uid();
+        if (uid != null) {
+            columnAlias = uid.getText();
+            sqlBuilder.appendWithSpace(columnAlias);
+        } else {
+            columnAlias = columnName;
+        }
+//        this.ruleContext.addRuntimeColumnAliasColumnName(tableAlias, columnName, columnAlias);
+        return null;
     }
 
     @Override
@@ -261,15 +278,24 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (selectStatement == null || uid == null) {
             return sqlSyntaxError();
         }
-        String uidStr = uid.getText();
-        this.ruleContext.addRuntimeSubRuleContext(uidStr);
+        String tableAlias = uid.getText();
+        if (!this.ruleContext.hasMasterTable()) {
+            // 设置主表信息
+            this.ruleContext.setRuntimeMasterTableNameAlias(null, tableAlias);
+        }
+        // 添加运行时虚拟表信息
+        RuleContext.TableColumnNamesInjector tableColumnNamesInjector = this.ruleContext.addRuntimeVirtualTable(tableAlias);
+        // 添加运行时虚拟表规则
+        this.ruleContext.addRuntimeVirtualTableRule(tableAlias);
+        // 切换到运行时虚拟规则上下文
+        this.ruleContext.addRuntimeSubVirtualRuleContext(tableAlias, tableColumnNamesInjector);
         visit(selectStatement);
         this.ruleContext.getParentRuleContext();
         TerminalNode as = ctx.AS();
         if (as != null) {
             sqlBuilder.appendWithSpace(as);
         }
-        sqlBuilder.appendWithSpace(uidStr);
+        sqlBuilder.appendWithSpace(tableAlias);
         return null;
     }
 
@@ -306,10 +332,13 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             sqlBuilder.appendWithSpace(tableAliasStr);
         }
         if (!this.ruleContext.hasMasterTable()) {
+            // 设置主表信息
             this.ruleContext.setRuntimeMasterTableNameAlias(tableNameStr, tableAliasStr);
         }
-        this.ruleContext.addRuntimeTableAliasTableName(tableNameStr, tableAliasStr);
-        this.ruleContext.putRuntimeTableRule(tableNameStr, tableAliasStr);
+        // 添加运行时真实表信息
+        this.ruleContext.addRuntimeRealTable(tableNameStr, tableAliasStr);
+        // 添加运行时真实表规则
+        this.ruleContext.addRuntimeRealTableRule(tableNameStr, tableAliasStr);
         return null;
     }
 
@@ -469,29 +498,45 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         return null;
     }
 
+    /**
+     * 只需要判断原生字段是否需要重写
+     * 对像子查询等虚拟字段,合并逻辑后保证条件还在即可
+     */
     @Override
     public String visitFullColumnNameExpressionAtom(MySqlParser.FullColumnNameExpressionAtomContext ctx) {
         MySqlParser.FullColumnNameContext fullColumnName = ctx.fullColumnName();
-        List<MySqlParser.DottedIdContext> dottedId = fullColumnName.dottedId();
+        if (fullColumnName == null) {
+            return sqlSyntaxError();
+        }
+        MySqlParser.UidContext uid = fullColumnName.uid();
+        if (uid == null) {
+            return sqlSyntaxError();
+        }
+        MySqlParser.DottedIdContext dottedId = fullColumnName.dottedId(0);
         String tableName;
         String tableAlias;
         String columnName;
-        if (dottedId == null || dottedId.size() == 0) {
-            // 只有字段名没有表名
-            columnName = fullColumnName.getText();
+        String columnAlias;
+        if (dottedId == null) {// 只有字段名没有表别名
+            // 对于原生字段来说, columnAlias = columnName
+            // 对于虚拟字段来说, 有可能 columnAlias == columnName 也有可能 columnAlias != columnName
+            columnAlias = uid.getText();
             if (this.ruleContext.runtimeOnlyMasterTable()) {
                 // 有且只有主表
                 tableName = this.ruleContext.getMasterTableName();
                 tableAlias = this.ruleContext.getMasterTableAlias();
+                //
             } else {
-                tableName = jdbcOperations.selectTableNameOfUniqueColumnName(this.ruleContext.getRuntimeTableNames(), columnName);
-                tableAlias = tableName;
+                //TODO 未考虑子查询的列 此时不应该去数据库查询
+//                tableName = jdbcOperations.selectTableNameOfUniqueColumnName(this.ruleContext.getRuntimeTableNames(), columnName);
+//                tableAlias = tableName;
             }
         } else {
+            tableAlias = uid.getText();
+//            tableName = this.ruleContext.getRuntimeTableNameByTableAlias(tableAlias);
 
         }
         sqlBuilder.appendWithSpace(fullColumnName);//TODO 后面要删除  条件由归并后的 规则  重新生成
-
         return null;
     }
 

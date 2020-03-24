@@ -12,7 +12,7 @@ public class RuleStore {
 
     private Map<String, TableRuleOperations> tableAliasTableRuleMap = new LinkedHashMap<>();
 
-    public TableRuleOperations putTableRule(String tableName, String tableAlias) {
+    public TableRuleOperations addTableRule(String tableName, String tableAlias) {
         TableRuleOperations tableRule = tableAliasTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             tableRule = new TableRule(tableName, tableAlias);

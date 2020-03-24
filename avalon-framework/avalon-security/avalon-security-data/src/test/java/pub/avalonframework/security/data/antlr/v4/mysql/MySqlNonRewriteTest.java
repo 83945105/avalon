@@ -105,18 +105,22 @@ public class MySqlNonRewriteTest {
         assertNonRewrite("SELECT * FROM USER LIMIT 1");
         assertNonRewrite("SELECT * FROM USER LIMIT 1, 2");
         assertNonRewrite("SELECT * FROM USER LIMIT 1 OFFSET 2");
+        assertNonRewrite("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''");
+        assertNonRewrite("SELECT ( SELECT ID FROM USER ) id FROM ( SELECT ID AS idAlias FROM USER ) T INNER JOIN ROLE INNER JOIN ( SELECT ID FROM USER ) T2 WHERE idAlias = ''");
     }
 
     public static void main(String[] args) throws IOException {
-//        ANTLRInputStream input = new ANTLRInputStream("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID");
-//        ANTLRInputStream input = new ANTLRInputStream("SELECT * FROM USER INNER JOIN ( SELECT * FROM USER ) T");
-
-        String sql = new SqlRewriteBuilder(new HikariDataSource() {{
+        SqlRewriteBuilder sqlRewriteBuilder = new SqlRewriteBuilder(new HikariDataSource() {{
             setDriverClassName("com.mysql.cj.jdbc.Driver");
             setJdbcUrl("jdbc:mysql://localhost:3306/sql_rewrite?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false");
             setUsername("root");
             setPassword("19910405");
-        }}).build("SELECT * FROM USER WHERE ID IN ( SELECT ID FROM USER )").run();
+        }});
+        long timeStart = System.nanoTime();
+//        String sql = sqlRewriteBuilder.build("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID").run();
+        String sql = sqlRewriteBuilder.build("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''").run();
+        long time = System.nanoTime() - timeStart;
+        System.out.println("用时: " + (time / 1000000) + "毫秒");
 
         System.out.println("\n");
         System.out.println(sql);
