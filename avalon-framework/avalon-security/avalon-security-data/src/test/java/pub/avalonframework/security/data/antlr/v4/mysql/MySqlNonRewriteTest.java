@@ -107,6 +107,10 @@ public class MySqlNonRewriteTest {
         assertNonRewrite("SELECT * FROM USER LIMIT 1 OFFSET 2");
         assertNonRewrite("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''");
         assertNonRewrite("SELECT ( SELECT ID FROM USER ) id FROM ( SELECT ID AS idAlias FROM USER ) T INNER JOIN ROLE INNER JOIN ( SELECT ID FROM USER ) T2 WHERE idAlias = ''");
+        assertNonRewrite("SELECT *, ID FROM USER");
+        assertNonRewrite("SELECT *, ID AS id FROM USER");
+        assertNonRewrite("SELECT *, ID AS id, NAME FROM USER");
+        assertNonRewrite("SELECT *, ID AS id, NAME, AGE FROM USER");
     }
 
     public static void main(String[] args) throws IOException {
@@ -118,7 +122,8 @@ public class MySqlNonRewriteTest {
         }});
         long timeStart = System.nanoTime();
 //        String sql = sqlRewriteBuilder.build("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID").run();
-        String sql = sqlRewriteBuilder.build("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''").run();
+//        String sql = sqlRewriteBuilder.build("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''").run();
+        String sql = sqlRewriteBuilder.build("SELECT *, ID AS id, NAME FROM USER").run();
         long time = System.nanoTime() - timeStart;
         System.out.println("用时: " + (time / 1000000) + "毫秒");
 

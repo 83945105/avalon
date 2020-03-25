@@ -16,8 +16,6 @@ public class RuleContext {
 
     private RuleContext runtimeRuleContext;
 
-    private Map<String, ColumnCache> columnAliasColumnCache = new HashMap<>();
-
     private String masterTableName;
 
     private String masterTableAlias;
@@ -46,11 +44,50 @@ public class RuleContext {
         this.parent = parent;
     }
 
-    public void addRuntimeColumnAliasColumnName(String tableAlias, String columnName, String columnAlias) {
-        if (columnAliasColumnCache.containsKey(columnAlias)) {
-            throw new RuleContextException("SQL syntax error: column alias: " + columnAlias + " already exists");
+    /**
+     * 添加运行时表所有列
+     *
+     * @param tableAlias 表别名
+     */
+    public void addRuntimeAllColumn(String tableAlias) {
+        if (tableAlias == null) {
+            throw new RuleContextException("SQL syntax error: columnAlias is null.");
         }
-        columnAliasColumnCache.put(columnAlias, new ColumnCache(tableAlias, columnName, columnAlias));
+        List<String> columnNames = getRuntimeTableColumnNames(tableAlias);
+        for (String columnName : columnNames) {
+            addRuntimeTableColumn(tableAlias, columnName, columnName);
+        }
+    }
+
+    /**
+     * 添加运行时所有表所有列 -> *
+     */
+    public void addRuntimeStarColumn() {
+        Set<String> tableNames = getRuntimeTableNames();
+        if (tableNames.size() == 0) {
+            throw new RuleContextException("SQL syntax error: no tables.");
+        }
+        for (String tableName : tableNames) {
+            addRuntimeAllColumn(tableName);
+        }
+    }
+
+    /**
+     * 添加运行时表列
+     *
+     * @param tableAlias  表别名
+     * @param columnName  列名
+     * @param columnAlias 列别名
+     */
+    public void addRuntimeTableColumn(String tableAlias, String columnName, String columnAlias) {
+        if (columnName == null || columnAlias == null) {
+            throw new RuleContextException("SQL syntax error: columnName or columnAlias is null.");
+        }
+        System.out.println("tableAlias: " + tableAlias + " columnName: " + columnName + " columnAlias: " + columnAlias);
+//        if (columnAliasColumnCache.containsKey(columnAlias)) {
+//            throw new RuleContextException("SQL syntax error: column alias: " + columnAlias + " already exists");
+//        }
+//        columnAliasColumnCache.put(columnAlias, new ColumnCache(tableAlias, columnName, columnAlias));
     }
 
     public void setRuntimeMasterTableNameAlias(String tableName, String tableAlias) {
@@ -110,6 +147,14 @@ public class RuleContext {
 
     public Set<String> getRuntimeTableNames() {
         return runtimeRuleContext.tableCacheMap.values().stream().map(TableCache::getTableName).collect(Collectors.toSet());
+    }
+
+    public List<String> getRuntimeTableColumnNames(String tableAlias) {
+        TableCache tableCache = runtimeRuleContext.tableCacheMap.get(tableAlias);
+        if (tableCache == null) {
+            throw new RuleContextException("SQL syntax error: table: " + tableAlias + " non existent.");
+        }
+        return tableCache.getColumnNames();
     }
 
     /**
@@ -242,23 +287,6 @@ public class RuleContext {
         return runtimeRuleContext.masterTableAlias;
     }
 
-    private final static class ColumnCache {
-
-        private String tableName;
-
-        private String tableAlias;
-
-        private String columnName;
-
-        private String columnAlias;
-
-        public ColumnCache(String tableAlias, String columnName, String columnAlias) {
-            this.tableAlias = tableAlias;
-            this.columnName = columnName;
-            this.columnAlias = columnAlias;
-        }
-    }
-
     private final static class TableCache implements TableColumnNamesInjector {
 
         private String tableName;
@@ -280,6 +308,14 @@ public class RuleContext {
 
         public String getTableName() {
             return tableName;
+        }
+
+        public String getTableAlias() {
+            return tableAlias;
+        }
+
+        public List<String> getColumnNames() {
+            return columnNames;
         }
 
         @Override
