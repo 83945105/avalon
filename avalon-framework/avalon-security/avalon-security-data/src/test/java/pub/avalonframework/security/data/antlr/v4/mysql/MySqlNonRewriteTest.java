@@ -50,7 +50,7 @@ public class MySqlNonRewriteTest {
         assertNonRewrite("SELECT A.*, A.NAME AS name, A.AGE AS age FROM USER A");
         assertNonRewrite("SELECT USER.* FROM USER INNER JOIN ROLE");
         assertNonRewrite("SELECT USER.* FROM USER AS USER LEFT JOIN ROLE ON ROLE.ID = ''");
-        assertNonRewrite("SELECT USER.* FROM USER AS USER RIGHT JOIN ROLE ON ROLE = ''");
+        assertNonRewrite("SELECT USER.* FROM USER AS USER RIGHT JOIN ROLE ON ROLE.ID = ''");
         assertNonRewrite("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID");
         assertNonRewrite("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID AND ROLE.ID = ''");
         assertNonRewrite("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID OR ROLE.ID = ''");
@@ -123,7 +123,7 @@ public class MySqlNonRewriteTest {
         long timeStart = System.nanoTime();
 //        String sql = sqlRewriteBuilder.build("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID").run();
 //        String sql = sqlRewriteBuilder.build("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''").run();
-        String sql = sqlRewriteBuilder.build("SELECT * FROM USER GROUP BY ID").run();
+        String sql = sqlRewriteBuilder.build("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.USER_ID IN ( '' )").run();
         long time = System.nanoTime() - timeStart;
         System.out.println("用时: " + (time / 1000000) + "毫秒");
 

@@ -51,4 +51,24 @@ public class PredicateExpression implements PredicateExpressionOperations {
     public boolean hasValue() {
         return this.value != null;
     }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public String getColumnAlias() {
+        return columnAlias;
+    }
+
+    public ComparisonType getComparisonType() {
+        return comparisonType;
+    }
 }

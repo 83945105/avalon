@@ -490,19 +490,31 @@ public class RuleContextWrapper implements RuleContextOperations {
             }
             String tableName = tableAlias;
             if (tableAlias == null) {
-                TableCache tableCache;
-                for (Map.Entry<String, TableCache> entry : tableCacheMap.entrySet()) {
-                    tableCache = entry.getValue();
-                    if (tableCache.getColumnNames().contains(columnName)) {
-                        if (tableAlias != null) {
-                            throw new RuleContextException("SQL syntax error: Column " + columnName + " in field list is ambiguous.");
+                if (runtimeOnlyMasterTable()) {
+                    // 有且只有主表
+                    tableName = getRuntimeMasterTableName();
+                    tableAlias = getRuntimeMasterTableAlias();
+                } else {
+                    TableCache tableCache;
+                    for (Map.Entry<String, TableCache> entry : tableCacheMap.entrySet()) {
+                        tableCache = entry.getValue();
+                        if (tableCache.getColumnNames().contains(columnName)) {
+                            if (tableAlias != null) {
+                                throw new RuleContextException("SQL syntax error: Column " + columnName + " in field list is ambiguous.");
+                            }
+                            tableName = tableCache.getTableName();
+                            tableAlias = tableCache.getTableAlias();
                         }
-                        tableName = tableCache.getTableName();
-                        tableAlias = tableCache.getTableAlias();
+                    }
+                    if (tableName == null || tableAlias == null) {
+                        throw new RuleContextException("SQL syntax error: Unknown column " + columnName + " in clause.");
                     }
                 }
             } else {
                 tableName = getRuntimeTableNameByTableAlias(tableAlias);
+            }
+            if (tableName == null || tableAlias == null) {
+                throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
             }
             predicateExpression.setColumn(tableName, tableAlias, columnName, columnName);
         }
@@ -519,7 +531,42 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         @Override
         public void setRuntimePredicateExpressionColumnTypeValue(String tableAlias, String columnName) {
-
+            if (columnName == null) {
+                throw new RuleContextException("SQL syntax error: columnName is null.");
+            }
+            String tableName = tableAlias;
+            if (tableAlias == null) {
+                if (runtimeOnlyMasterTable()) {
+                    // 有且只有主表
+                    tableName = getRuntimeMasterTableName();
+                    tableAlias = getRuntimeMasterTableAlias();
+                } else {
+                    TableCache tableCache;
+                    for (Map.Entry<String, TableCache> entry : tableCacheMap.entrySet()) {
+                        tableCache = entry.getValue();
+                        if (tableCache.getColumnNames().contains(columnName)) {
+                            if (tableAlias != null) {
+                                throw new RuleContextException("SQL syntax error: Column " + columnName + " in field list is ambiguous.");
+                            }
+                            tableName = tableCache.getTableName();
+                            tableAlias = tableCache.getTableAlias();
+                        }
+                    }
+                    if (tableName == null || tableAlias == null) {
+                        throw new RuleContextException("SQL syntax error: Unknown column " + columnName + " in clause.");
+                    }
+                }
+            } else {
+                tableName = getRuntimeTableNameByTableAlias(tableAlias);
+            }
+            if (tableName == null || tableAlias == null) {
+                throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
+            }
+            PredicateExpression predicateExpression = new PredicateExpression();
+            predicateExpression.setColumn(tableName, tableAlias, columnName, columnName);
+            predicateExpression.setComparisonType(predicateExpression.getComparisonType());
+            predicateExpression.setValue(this.predicateExpression);
+            setRuntimePredicateExpressionConstantTypeValue(predicateExpression);
         }
 
         @Override

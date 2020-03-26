@@ -567,10 +567,6 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             String columnName;
             if (dottedId == null) {// 只有字段名没有表别名
                 columnName = uid.getText();
-                if (this.ruleContextWrapper.runtimeOnlyMasterTable()) {
-                    // 有且只有主表
-                    tableAlias = this.ruleContextWrapper.getRuntimeMasterTableAlias();
-                }
             } else {
                 tableAlias = uid.getText();
                 columnName = dottedId.getText().substring(1);
@@ -639,6 +635,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         sqlBuilder.appendWithSpace(in)
                 .appendWithSpace(lrBracket);
         if (expressions != null) {
+            this.ruleContextWrapper.addRuntimePredicateExpression();
             sqlBuilder.append(visit(expressions));
         }
         if (selectStatement != null) {
@@ -676,8 +673,12 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (constant == null) {
             return sqlSyntaxError();
         }
+        String value = constant.getText();
+        if (this.ruleContextWrapper.runtimePredicateExpressionStage()) {
+            this.ruleContextWrapper.setRuntimePredicateExpressionConstantTypeValue(value);
+        }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        sqlBuilder.appendWithSpace(constant);
+        sqlBuilder.appendWithSpace(value);
         return sqlBuilder.toString();
     }
 
