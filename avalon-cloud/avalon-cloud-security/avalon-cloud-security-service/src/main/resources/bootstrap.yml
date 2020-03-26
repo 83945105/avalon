@@ -4,7 +4,7 @@
 #      defaultZone: http://localhost:8888/eureka/
 spring:
   application:
-    name: weique-cloud-demo-service
+    name: avalon-cloud-demo-service
   cloud:
     config:
       uri: http://localhost:8888/

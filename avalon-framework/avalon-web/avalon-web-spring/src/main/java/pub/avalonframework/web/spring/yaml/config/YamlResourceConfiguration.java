@@ -7,7 +7,17 @@ import pub.avalonframework.core.yaml.config.YamlConfiguration;
  */
 public class YamlResourceConfiguration implements YamlConfiguration {
 
+    private String accessAddress;
+
     private String uploadAddress;
+
+    public String getAccessAddress() {
+        return accessAddress;
+    }
+
+    public void setAccessAddress(String accessAddress) {
+        this.accessAddress = accessAddress;
+    }
 
     public String getUploadAddress() {
         return uploadAddress;

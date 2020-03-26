@@ -5,7 +5,7 @@ package pub.avalonframework.security.data;
  */
 public interface PredicateExpressionOperations {
 
-    void setColumnNameAlias(String columnName, String columnAlias);
+    void setColumn(String tableName, String tableAlias, String columnName, String columnAlias);
 
     void setComparisonType(ComparisonType comparisonType);
 

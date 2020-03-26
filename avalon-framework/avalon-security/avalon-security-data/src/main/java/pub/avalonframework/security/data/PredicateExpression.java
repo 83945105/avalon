@@ -19,13 +19,10 @@ public class PredicateExpression implements PredicateExpressionOperations {
 
     private ValueType valueType;
 
-    public PredicateExpression(String tableName, String tableAlias) {
+    @Override
+    public void setColumn(String tableName, String tableAlias, String columnName, String columnAlias) {
         this.tableName = tableName;
         this.tableAlias = tableAlias;
-    }
-
-    @Override
-    public void setColumnNameAlias(String columnName, String columnAlias) {
         this.columnName = columnName;
         this.columnAlias = columnAlias;
     }

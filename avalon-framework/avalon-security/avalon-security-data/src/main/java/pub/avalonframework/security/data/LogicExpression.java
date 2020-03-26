@@ -26,7 +26,7 @@ public class LogicExpression implements LogicExpressionOperations {
 
     @Override
     public PredicateExpression addPredicateExpression() {
-        PredicateExpression predicateExpression = new PredicateExpression(tableName, tableAlias);
+        PredicateExpression predicateExpression = new PredicateExpression();
         this.predicateExpressions.add(predicateExpression);
         return predicateExpression;
     }

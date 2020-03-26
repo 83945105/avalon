@@ -1,5 +1,5 @@
 spring:
-  weique:
+  avalon:
     web:
       spring:
         cors:

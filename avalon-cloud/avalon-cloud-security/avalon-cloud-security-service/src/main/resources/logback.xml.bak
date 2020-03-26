@@ -3,7 +3,7 @@
     <contextName>logback</contextName>
 
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="LOG_HOME" value="/weique/logger/weique-cloud-demo"/>
+    <property name="LOG_HOME" value="/avalon/logger/avalon-cloud-demo"/>
 
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

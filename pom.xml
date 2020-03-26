@@ -34,6 +34,8 @@
 
         <apache.velocity.version>1.7</apache.velocity.version>
         <apache.poi.version>3.9</apache.poi.version>
+        <apache.commons-lang3.version>3.9</apache.commons-lang3.version>
+        <commons-io.version>1.4</commons-io.version>
 
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 
@@ -51,6 +53,7 @@
         <esotericsoftware.reflectasm.version>1.11.3</esotericsoftware.reflectasm.version>
 
         <feign.version>10.4.0</feign.version>
+        <feign-form-spring.version>3.8.0</feign-form-spring.version>
 
         <jansi.version>1.11</jansi.version>
 
@@ -89,6 +92,17 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${apache.poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <dependency>
@@ -167,6 +181,11 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-java8</artifactId>
                 <version>${feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form-spring</artifactId>
+                <version>${feign-form-spring.version}</version>
             </dependency>
 
             <dependency>

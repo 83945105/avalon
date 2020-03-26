@@ -4,10 +4,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import pub.avalonframework.security.data.ComparisonType;
-import pub.avalonframework.security.data.LogicExpressionOperations;
-import pub.avalonframework.security.data.RuleContext;
-import pub.avalonframework.security.data.SqlRewrite;
+import pub.avalonframework.security.data.*;
 import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
 import pub.avalonframework.security.data.sql.SqlSyntaxErrorException;
 
@@ -19,7 +16,7 @@ import java.util.List;
  */
 public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implements SqlRewrite {
 
-    private RuleContext ruleContext;
+    private RuleContextWrapper ruleContextWrapper;
 
     private ParseTree parseTree;
 
@@ -28,7 +25,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         MySqlLexer lexer = new MySqlLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MySqlParser parser = new MySqlParser(tokens);
-        this.ruleContext = new RuleContext(jdbcOperations);
+        this.ruleContextWrapper = new RuleContextWrapper(new RuleContextWrapper.RuntimeRuleContext(jdbcOperations));
         this.parseTree = parser.root();
     }
 
@@ -85,6 +82,8 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         // 先解析fromClause再解析selectElements, 要先把表关联上, 再计算列信息
         String fromClauseStr = visit(fromClause);
         sqlBuilder.append(visit(selectElements));
+        // 解析完selectElements, 执行规则上下文相关方法
+        this.ruleContextWrapper.addRuntimeTableColumnFinish();
         sqlBuilder.append(fromClauseStr);
         MySqlParser.OrderByClauseContext orderByClause = ctx.orderByClause();
         if (orderByClause != null) {
@@ -107,7 +106,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         if (star != null && len < 1) {// 只有 *
-            this.ruleContext.addRuntimeStarColumn();
+            this.ruleContextWrapper.addRuntimeStarColumn();
             sqlBuilder.appendWithSpace(star);
             return sqlBuilder.toString();
         }
@@ -129,7 +128,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         // 既有 * 也有 列
-        this.ruleContext.addRuntimeStarColumn();
+        this.ruleContextWrapper.addRuntimeStarColumn();
         sqlBuilder.appendWithSpace(star);
         sqlBuilder.append(comma.get(0));
         for (int i = 0; i < len; ) {
@@ -150,7 +149,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         String tableAlias = fullId.getText();
-        this.ruleContext.addRuntimeAllColumn(tableAlias);
+        this.ruleContextWrapper.addRuntimeAllColumn(tableAlias);
         return new SqlBuilder().appendWithSpace(tableAlias).append(dot).append(star).toString();
     }
 
@@ -188,7 +187,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         } else {
             columnAlias = columnName;
         }
-        this.ruleContext.addRuntimeTableColumn(tableAlias, columnName, columnAlias);
+        this.ruleContextWrapper.addRuntimeTableColumn(tableAlias, columnName, columnAlias);
         return sqlBuilder.toString();
     }
 
@@ -221,9 +220,9 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
         sqlBuilder.appendWithSpace(lrBracket);
-        this.ruleContext.addRuntimeSubRuleContext(ctx.hashCode() + "");//TODO 临时处理
+        this.ruleContextWrapper.switchToSubRuntimeRuleContext(ctx.hashCode() + "");//TODO 临时处理
         sqlBuilder.append(visit(selectStatement));
-        this.ruleContext.getParentRuleContext();
+        this.ruleContextWrapper.switchToParentRuntimeRuleContext();
         sqlBuilder.appendWithSpace(rrBracket);
         return sqlBuilder.toString();
     }
@@ -240,13 +239,13 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         sqlBuilder.append(visit(tableSources));
         TerminalNode where = ctx.WHERE();
         if (where != null) {
-            this.ruleContext.addRuntimeWhereColumnRule();
+            this.ruleContextWrapper.addRuntimeWhereColumnRule();
             sqlBuilder.appendWithSpace(where);
             MySqlParser.ExpressionContext whereExpr = ctx.whereExpr;
             if (whereExpr == null) {
                 return sqlSyntaxError();
             }
-            this.ruleContext.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
+            this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
             sqlBuilder.append(visit(whereExpr));
         }
         TerminalNode group = ctx.GROUP();
@@ -309,18 +308,18 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
         String tableAlias = uid.getText();
-        if (!this.ruleContext.hasMasterTable()) {
-            // 设置主表信息
-            this.ruleContext.setRuntimeMasterTableNameAlias(null, tableAlias);
+        if (!this.ruleContextWrapper.hasRuntimeMasterTable()) {
+            // 设置虚拟主表信息
+            this.ruleContextWrapper.setRuntimeVirtualMasterTable(tableAlias);
         }
         // 添加运行时虚拟表信息
-        RuleContext.TableColumnNamesInjector tableColumnNamesInjector = this.ruleContext.addRuntimeVirtualTable(tableAlias);
+        RuleContextOperations.TableColumnNamesInjector tableColumnNamesInjector = this.ruleContextWrapper.addRuntimeVirtualTable(tableAlias);
         // 添加运行时虚拟表规则
-        this.ruleContext.addRuntimeVirtualTableRule(tableAlias);
+        this.ruleContextWrapper.addRuntimeVirtualTableRule(tableAlias);
         // 切换到运行时虚拟规则上下文
-        this.ruleContext.addRuntimeSubVirtualRuleContext(tableAlias, tableColumnNamesInjector);
+        this.ruleContextWrapper.switchToSubRuntimeVirtualRuleContext(tableAlias, tableColumnNamesInjector);
         sqlBuilder.append(visit(selectStatement));
-        this.ruleContext.getParentRuleContext();
+        this.ruleContextWrapper.switchToParentRuntimeRuleContext();
         TerminalNode as = ctx.AS();
         if (as != null) {
             sqlBuilder.appendWithSpace(as);
@@ -363,64 +362,71 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             tableAliasStr = uidContext.getText();
             sqlBuilder.appendWithSpace(tableAliasStr);
         }
-        if (!this.ruleContext.hasMasterTable()) {
-            // 设置主表信息
-            this.ruleContext.setRuntimeMasterTableNameAlias(tableNameStr, tableAliasStr);
+        if (!this.ruleContextWrapper.hasRuntimeMasterTable()) {
+            // 设置真实主表信息
+            this.ruleContextWrapper.setRuntimeRealMasterTable(tableNameStr, tableAliasStr);
         }
         // 添加运行时真实表信息
-        this.ruleContext.addRuntimeRealTable(tableNameStr, tableAliasStr);
+        this.ruleContextWrapper.addRuntimeRealTable(tableNameStr, tableAliasStr);
         // 添加运行时真实表规则
-        this.ruleContext.addRuntimeRealTableRule(tableNameStr, tableAliasStr);
+        this.ruleContextWrapper.addRuntimeRealTableRule(tableNameStr, tableAliasStr);
         return sqlBuilder.toString();
     }
 
     @Override
     public String visitInnerJoin(MySqlParser.InnerJoinContext ctx) {
+        TerminalNode inner = ctx.INNER();
+        if (inner == null) {
+            return sqlSyntaxError("由于sql分析的局限性, 请不要省略 'INNER' 关键字,如果你是想使用 'LEFT/RIGHT JOIN', 请使用 'AS' 给主表取个别名");
+        }
         TerminalNode join = ctx.JOIN();
-        if (join == null) {
+        MySqlParser.TableSourceItemContext tableSourceItem = ctx.tableSourceItem();
+        if (join == null || tableSourceItem == null) {
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        TerminalNode inner = ctx.INNER();
-        if (inner != null) {
-            sqlBuilder.appendWithSpace(inner);
-        }
-        sqlBuilder.appendWithSpace(join);
-        MySqlParser.TableSourceItemContext tableSourceItem = ctx.tableSourceItem();
-        if (tableSourceItem == null) {
-            return sqlSyntaxError();
-        }
-        sqlBuilder.append(visit(tableSourceItem));
+        sqlBuilder.appendWithSpace(inner)
+                .appendWithSpace(join)
+                .append(visit(tableSourceItem));
         TerminalNode on = ctx.ON();
         if (on == null) {
             return sqlBuilder.toString();
         }
         sqlBuilder.appendWithSpace(on);
-        this.ruleContext.addRuntimeOnColumnRule();
+        this.ruleContextWrapper.addRuntimeOnColumnRule();
         MySqlParser.ExpressionContext expression = ctx.expression();
         if (expression == null) {
             return sqlSyntaxError();
         }
-        this.ruleContext.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
+        this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
         sqlBuilder.append(visit(ctx.expression()));
         return sqlBuilder.toString();
     }
 
     @Override
     public String visitOuterJoin(MySqlParser.OuterJoinContext ctx) {
-        SqlBuilder sqlBuilder = new SqlBuilder();
         TerminalNode left = ctx.LEFT();
         TerminalNode right = ctx.RIGHT();
-        if (left != null) {
-            sqlBuilder.appendWithSpace(left);
-        } else if (right != null) {
-            sqlBuilder.appendWithSpace(right);
-        } else {
+        if (left == null && right == null) {
+            return unsupportedSqlNode();
+        }
+        if (left != null && right != null) {
             return unsupportedSqlNode();
         }
         TerminalNode join = ctx.JOIN();
         if (join == null) {
             return sqlSyntaxError();
+        }
+        TerminalNode on = ctx.ON();
+        MySqlParser.ExpressionContext expression = ctx.expression();
+        if (on == null || expression == null) {
+            return sqlSyntaxError("'LEFT/RIGHT JOIN' 至少要有一个 'ON' 条件");
+        }
+        SqlBuilder sqlBuilder = new SqlBuilder();
+        if (left != null) {
+            sqlBuilder.appendWithSpace(left);
+        } else {
+            sqlBuilder.appendWithSpace(right);
         }
         sqlBuilder.appendWithSpace(join);
         MySqlParser.TableSourceItemContext tableSourceItem = ctx.tableSourceItem();
@@ -428,17 +434,9 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         sqlBuilder.append(visit(tableSourceItem));
-        TerminalNode on = ctx.ON();
-        if (on == null) {
-            return sqlBuilder.toString();
-        }
         sqlBuilder.appendWithSpace(on);
-        this.ruleContext.addRuntimeOnColumnRule();
-        MySqlParser.ExpressionContext expression = ctx.expression();
-        if (expression == null) {
-            return sqlSyntaxError();
-        }
-        this.ruleContext.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
+        this.ruleContextWrapper.addRuntimeOnColumnRule();
+        this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
         sqlBuilder.append(visit(ctx.expression()));
         return sqlBuilder.toString();
     }
@@ -474,7 +472,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             sqlBuilder.appendWithSpace(andStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
         } else {
             String orStr = or.getText();
-            this.ruleContext.addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr.OR);
+            this.ruleContextWrapper.addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr.OR);
             sqlBuilder.appendWithSpace(orStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
         }
         return sqlBuilder.toString();
@@ -500,6 +498,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
+        this.ruleContextWrapper.addRuntimePredicateExpression();
         sqlBuilder.append(visit(predicate));
         sqlBuilder.appendWithSpace(is);
         sqlBuilder.append(visit(nullNotnullContext));
@@ -529,10 +528,10 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        this.ruleContext.addRuntimePredicateExpression();
+        this.ruleContextWrapper.addRuntimePredicateExpression();
         sqlBuilder.append(visit(predicate.get(0)));//TODO 后面要删除  条件由归并后的 规则  重新生成
         String symbol = comparisonOperator.getText();
-        this.ruleContext.setRuntimeComparisonType(ComparisonType.parseComparison(symbol));
+        this.ruleContextWrapper.setRuntimePredicateExpressionComparisonType(ComparisonType.parseComparison(symbol));
         sqlBuilder.appendWithSpace(symbol);//TODO 后面要删除  条件由归并后的 规则  重新生成
         sqlBuilder.append(visit(predicate.get(1)));//TODO 后面要删除  条件由归并后的 规则  重新生成
         return sqlBuilder.toString();
@@ -554,29 +553,22 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
         MySqlParser.DottedIdContext dottedId = fullColumnName.dottedId(0);
-        String tableName;
-        String tableAlias;
+        String tableAlias = null;
         String columnName;
-        String columnAlias;
         if (dottedId == null) {// 只有字段名没有表别名
-            // 对于原生字段来说, columnAlias = columnName
-            // 对于虚拟字段来说, 有可能 columnAlias == columnName 也有可能 columnAlias != columnName
-            columnAlias = uid.getText();
-            if (this.ruleContext.runtimeOnlyMasterTable()) {
+            columnName = uid.getText();
+            if (this.ruleContextWrapper.runtimeOnlyMasterTable()) {
                 // 有且只有主表
-                tableName = this.ruleContext.getMasterTableName();
-                tableAlias = this.ruleContext.getMasterTableAlias();
-                //
-            } else {
-                //TODO 未考虑子查询的列 此时不应该去数据库查询
-//                tableName = jdbcOperations.selectTableNameOfUniqueColumnName(this.ruleContext.getRuntimeTableNames(), columnName);
-//                tableAlias = tableName;
+                tableAlias = this.ruleContextWrapper.getRuntimeMasterTableAlias();
             }
         } else {
             tableAlias = uid.getText();
-//            tableName = this.ruleContext.getRuntimeTableNameByTableAlias(tableAlias);
-
+            columnName = dottedId.getText().substring(1);
         }
+        if(!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
+            this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
+        }
+
         sqlBuilder.appendWithSpace(fullColumnName);//TODO 后面要删除  条件由归并后的 规则  重新生成
         return sqlBuilder.toString();
     }
@@ -589,7 +581,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        //TODO sql去重
+        this.ruleContextWrapper.addRuntimePredicateExpression();
         sqlBuilder.append(visit(predicate.get(0)));
         sqlBuilder.appendWithSpace(like);
         sqlBuilder.append(visit(predicate.get(1)));
@@ -605,6 +597,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
+        this.ruleContextWrapper.addRuntimePredicateExpression();
         sqlBuilder.append(visit(predicate.get(0)));
         sqlBuilder.appendWithSpace(between);
         sqlBuilder.append(visit(predicate.get(1)));
@@ -639,9 +632,9 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             sqlBuilder.append(visit(expressions));
         }
         if (selectStatement != null) {
-            this.ruleContext.addRuntimeSubRuleContext(ctx.hashCode() + "");//TODO 临时处理
+            this.ruleContextWrapper.switchToSubRuntimeRuleContext(ctx.hashCode() + "");//TODO 临时处理
             sqlBuilder.append(visit(selectStatement));
-            this.ruleContext.getParentRuleContext();
+            this.ruleContextWrapper.switchToParentRuntimeRuleContext();
         }
         sqlBuilder.appendWithSpace(rrBracket);
         return sqlBuilder.toString();
@@ -656,8 +649,8 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        if (this.ruleContext.getRuntimeAndOr() == LogicExpressionOperations.AndOr.AND) {
-            this.ruleContext.addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr.AND);
+        if (this.ruleContextWrapper.getRuntimeLogicExpressionAndOr() == LogicExpressionOperations.AndOr.AND) {
+            this.ruleContextWrapper.addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr.AND);
         }
         sqlBuilder.appendWithSpace(lrBracket);//TODO 后面要删除  条件由归并后的 规则  重新生成
         for (MySqlParser.ExpressionContext expressionContext : expression) {
@@ -782,8 +775,12 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         throw new RuntimeException("暂不支持的节点");
     }
 
+    private String sqlSyntaxError(String message) {
+        throw new SqlSyntaxErrorException("SQL syntax error" + (message == null ? "" : ": " + message));
+    }
+
     private String sqlSyntaxError() {
-        throw new SqlSyntaxErrorException("Sql语法错误");
+        return sqlSyntaxError(null);
     }
 
     @Override

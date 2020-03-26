@@ -12,6 +12,8 @@ public final class ResourceConfigurationYamlSwapper implements YamlSwapper<YamlR
     public YamlResourceConfiguration swap(ResourceConfiguration data) {
         data = data == null ? new ResourceConfiguration() : data;
         YamlResourceConfiguration configuration = new YamlResourceConfiguration();
+        String accessAddress = data.getAccessAddress();
+        configuration.setAccessAddress(accessAddress);
         String uploadAddress = data.getUploadAddress();
         configuration.setUploadAddress(uploadAddress);
         return configuration;
@@ -21,6 +23,8 @@ public final class ResourceConfigurationYamlSwapper implements YamlSwapper<YamlR
     public ResourceConfiguration swap(YamlResourceConfiguration yamlConfiguration) {
         yamlConfiguration = yamlConfiguration == null ? new YamlResourceConfiguration() : yamlConfiguration;
         ResourceConfiguration configuration = new ResourceConfiguration();
+        String accessAddress = yamlConfiguration.getAccessAddress();
+        configuration.setAccessAddress(accessAddress);
         String uploadAddress = yamlConfiguration.getUploadAddress();
         configuration.setUploadAddress(uploadAddress);
         return configuration;

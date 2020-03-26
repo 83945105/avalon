@@ -1,5 +1,5 @@
 spring:
-  weique:
+  avalon:
     security:
       # 是否启用安全模块
       enabled: false
@@ -31,7 +31,7 @@ spring:
         # 登录用户密码key,一般为password
         pass-word-key: password
         # 登录请求地址
-        url: /weique/api/post/login
+        url: /avalon/api/post/login
         # 登录页面地址
         # 当未登录时访问页面,将根据访问根路径从zuul的数据库路由中进行匹配,匹配到对应微服务将重定向到对应微服务配置的登录地址
         # 如果没有匹配到对应微服务,将跳转到该地址

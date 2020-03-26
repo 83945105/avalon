@@ -5,7 +5,17 @@ package pub.avalonframework.web.spring.api.config;
  */
 public class ResourceConfiguration {
 
+    private String accessAddress;
+
     private String uploadAddress;
+
+    public String getAccessAddress() {
+        return accessAddress;
+    }
+
+    public void setAccessAddress(String accessAddress) {
+        this.accessAddress = accessAddress;
+    }
 
     public String getUploadAddress() {
         return uploadAddress;
