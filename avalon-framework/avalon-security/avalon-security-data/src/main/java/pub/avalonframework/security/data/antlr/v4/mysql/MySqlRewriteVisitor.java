@@ -80,17 +80,21 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         // 先解析fromClause再解析selectElements, 要先把表关联上, 再计算列信息
+        this.ruleContextWrapper.switchToRuntimeFromStage();// 切换至From阶段
         String fromClauseStr = visit(fromClause);
+        this.ruleContextWrapper.switchToRuntimeSelectStage();// 切换至Select阶段
         sqlBuilder.append(visit(selectElements));
         // 解析完selectElements, 执行规则上下文相关方法
         this.ruleContextWrapper.addRuntimeTableColumnFinish();
         sqlBuilder.append(fromClauseStr);
         MySqlParser.OrderByClauseContext orderByClause = ctx.orderByClause();
         if (orderByClause != null) {
+            this.ruleContextWrapper.switchToRuntimeOrderStage();// 切换至Order阶段
             sqlBuilder.append(visit(orderByClause));
         }
         MySqlParser.LimitClauseContext limitClause = ctx.limitClause();
         if (limitClause != null) {
+            this.ruleContextWrapper.switchToRuntimeLimitStage();// 切换至Limit阶段
             sqlBuilder.append(visit(limitClause));
         }
         return sqlBuilder.toString();
@@ -245,6 +249,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             if (whereExpr == null) {
                 return sqlSyntaxError();
             }
+            this.ruleContextWrapper.switchToRuntimeWhereStage();// 切换至Where阶段
             this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
             sqlBuilder.append(visit(whereExpr));
         }
@@ -265,6 +270,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             if (len != groupByItem.size() - 1) {
                 return sqlSyntaxError();
             }
+            this.ruleContextWrapper.switchToRuntimeGroupStage();// 切换至Group阶段
             for (int i = 0; i <= len; i++) {
                 sqlBuilder.append(visit(groupByItem.get(i)));
                 if (i != len) {
@@ -279,6 +285,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             if (havingExpr == null) {
                 return sqlSyntaxError();
             }
+            this.ruleContextWrapper.switchToRuntimeHavingStage();// 切换至Having阶段
             sqlBuilder.append(visit(havingExpr));
         }
         return sqlBuilder.toString();
@@ -392,6 +399,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (on == null) {
             return sqlBuilder.toString();
         }
+        this.ruleContextWrapper.switchToRuntimeOnStage();// 切换至On阶段
         sqlBuilder.appendWithSpace(on);
         this.ruleContextWrapper.addRuntimeOnColumnRule();
         MySqlParser.ExpressionContext expression = ctx.expression();
@@ -422,6 +430,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (on == null || expression == null) {
             return sqlSyntaxError("'LEFT/RIGHT JOIN' 至少要有一个 'ON' 条件");
         }
+        this.ruleContextWrapper.switchToRuntimeOnStage();// 切换至On阶段
         SqlBuilder sqlBuilder = new SqlBuilder();
         if (left != null) {
             sqlBuilder.appendWithSpace(left);
@@ -547,28 +556,29 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (fullColumnName == null) {
             return sqlSyntaxError();
         }
-        MySqlParser.UidContext uid = fullColumnName.uid();
-        if (uid == null) {
-            return sqlSyntaxError();
-        }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        MySqlParser.DottedIdContext dottedId = fullColumnName.dottedId(0);
-        String tableAlias = null;
-        String columnName;
-        if (dottedId == null) {// 只有字段名没有表别名
-            columnName = uid.getText();
-            if (this.ruleContextWrapper.runtimeOnlyMasterTable()) {
-                // 有且只有主表
-                tableAlias = this.ruleContextWrapper.getRuntimeMasterTableAlias();
+        if (ruleContextWrapper.runtimePredicateExpressionStage()) {
+            MySqlParser.UidContext uid = fullColumnName.uid();
+            if (uid == null) {
+                return sqlSyntaxError();
             }
-        } else {
-            tableAlias = uid.getText();
-            columnName = dottedId.getText().substring(1);
+            MySqlParser.DottedIdContext dottedId = fullColumnName.dottedId(0);
+            String tableAlias = null;
+            String columnName;
+            if (dottedId == null) {// 只有字段名没有表别名
+                columnName = uid.getText();
+                if (this.ruleContextWrapper.runtimeOnlyMasterTable()) {
+                    // 有且只有主表
+                    tableAlias = this.ruleContextWrapper.getRuntimeMasterTableAlias();
+                }
+            } else {
+                tableAlias = uid.getText();
+                columnName = dottedId.getText().substring(1);
+            }
+            if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
+                this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
+            }
         }
-        if(!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
-            this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
-        }
-
         sqlBuilder.appendWithSpace(fullColumnName);//TODO 后面要删除  条件由归并后的 规则  重新生成
         return sqlBuilder.toString();
     }

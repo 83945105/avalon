@@ -207,11 +207,89 @@ public class RuleContextWrapper implements RuleContextOperations {
         return runtimeRuleContext.getRuntimeMasterTableAlias();
     }
 
+    @Override
+    public Stage getRuntimeStage() {
+        return runtimeRuleContext.getRuntimeStage();
+    }
+
+    @Override
+    public void setRuntimeStage(Stage stage) {
+        runtimeRuleContext.setRuntimeStage(stage);
+    }
+
+    /**
+     * 切换至运行时Select阶段
+     */
+    public void switchToRuntimeSelectStage() {
+        setRuntimeStage(Stage.SELECT);
+    }
+
+    /**
+     * 切换至运行时From阶段
+     */
+    public void switchToRuntimeFromStage() {
+        setRuntimeStage(Stage.FROM);
+    }
+
+    /**
+     * 切换至运行时On阶段
+     */
+    public void switchToRuntimeOnStage() {
+        setRuntimeStage(Stage.ON);
+    }
+
+    /**
+     * 切换至运行时Where阶段
+     */
+    public void switchToRuntimeWhereStage() {
+        setRuntimeStage(Stage.WHERE);
+    }
+
+    /**
+     * 切换至运行时Group阶段
+     */
+    public void switchToRuntimeGroupStage() {
+        setRuntimeStage(Stage.GROUP);
+    }
+
+    /**
+     * 切换至运行时Having阶段
+     */
+    public void switchToRuntimeHavingStage() {
+        setRuntimeStage(Stage.HAVING);
+    }
+
+    /**
+     * 切换至运行时Order阶段
+     */
+    public void switchToRuntimeOrderStage() {
+        setRuntimeStage(Stage.ORDER);
+    }
+
+    /**
+     * 切换至运行时Limit阶段
+     */
+    public void switchToRuntimeLimitStage() {
+        setRuntimeStage(Stage.LIMIT);
+    }
+
+    /**
+     * 是否是谓语表达式阶段
+     *
+     * @return true | false
+     */
+    public boolean runtimePredicateExpressionStage() {
+        Stage stage = getRuntimeStage();
+        return stage == Stage.ON || stage == Stage.WHERE;
+    }
+
     public static class RuntimeRuleContext implements RuleContextOperations {
 
         private RuntimeRuleContext parent;
 
         private MysqlCacheJdbcOperations jdbcOperations;
+
+        private Stage stage;
 
         // 记录当前上下文中最终结果的 字段别名 和 字段名
         private Map<String, String> columnAliasCache = new LinkedHashMap<>();
@@ -495,6 +573,16 @@ public class RuleContextWrapper implements RuleContextOperations {
         @Override
         public String getRuntimeMasterTableAlias() {
             return masterTableAlias;
+        }
+
+        @Override
+        public Stage getRuntimeStage() {
+            return stage;
+        }
+
+        @Override
+        public void setRuntimeStage(Stage stage) {
+            this.stage = stage;
         }
     }
 

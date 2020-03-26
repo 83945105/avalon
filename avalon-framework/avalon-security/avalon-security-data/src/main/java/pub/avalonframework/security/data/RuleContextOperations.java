@@ -245,6 +245,27 @@ public interface RuleContextOperations {
      */
     String getRuntimeMasterTableAlias();
 
+    /**
+     * 获取当前阶段
+     *
+     * @return 阶段
+     */
+    Stage getRuntimeStage();
+
+    /**
+     * 设置当前阶段
+     *
+     * @param stage 阶段
+     */
+    void setRuntimeStage(Stage stage);
+
+    /**
+     * 阶段
+     */
+    enum Stage {
+        SELECT, FROM, ON, WHERE, GROUP, HAVING, ORDER, LIMIT
+    }
+
     final class TableCache implements TableColumnNamesInjector {
 
         private String tableName;
