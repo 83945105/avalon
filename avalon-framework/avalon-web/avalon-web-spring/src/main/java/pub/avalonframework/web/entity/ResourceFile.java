@@ -36,6 +36,9 @@ public class ResourceFile {
      */
     private String absoluteSavePath;
 
+    public ResourceFile() {
+    }
+
     public ResourceFile(String absoluteSavePath, String saveName, String suffix) {
         this.absoluteSavePath = absoluteSavePath;
         this.saveName = saveName;
@@ -46,7 +49,7 @@ public class ResourceFile {
         return realName;
     }
 
-    public void setRealName(String fileRealName) {
+    public void setRealName(String realName) {
         this.realName = realName;
     }
 

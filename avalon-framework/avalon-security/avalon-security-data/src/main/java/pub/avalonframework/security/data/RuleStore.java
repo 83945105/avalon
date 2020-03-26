@@ -8,16 +8,24 @@ import java.util.Map;
  */
 public class RuleStore {
 
-    private Map<String, TableRuleOperations> tableNameTableRuleMap = new LinkedHashMap<>();
+    private Map<String, TableRuleOperations> customTableRuleMap = new LinkedHashMap<>();
 
-    private Map<String, TableRuleOperations> tableAliasTableRuleMap = new LinkedHashMap<>();
+    private Map<String, TableRuleOperations> runtimeTableRuleMap = new LinkedHashMap<>();
 
-    public TableRuleOperations addTableRule(String tableName, String tableAlias) {
-        TableRuleOperations tableRule = tableAliasTableRuleMap.get(tableAlias);
+    public TableRuleOperations addRuntimeTableRule(String tableName, String tableAlias) {
+        TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             tableRule = new TableRule(tableName, tableAlias);
-            tableAliasTableRuleMap.put(tableAlias, tableRule);
+            runtimeTableRuleMap.put(tableAlias, tableRule);
         }
         return tableRule;
+    }
+
+    public Map<String, TableRuleOperations> getCustomTableRuleMap() {
+        return customTableRuleMap;
+    }
+
+    public Map<String, TableRuleOperations> getRuntimeTableRuleMap() {
+        return runtimeTableRuleMap;
     }
 }

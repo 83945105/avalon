@@ -6,4 +6,6 @@ package pub.avalonframework.security.data;
 public interface SqlRewrite {
 
     String run();
+
+    RuleStore getRuleStore();
 }

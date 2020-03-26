@@ -8,6 +8,8 @@ import pub.avalonframework.security.data.antlr.SqlRewriteBuilder;
 import java.io.IOException;
 
 /**
+ * Mysql 不重写测试
+ *
  * @author baichao
  */
 public class MySqlNonRewriteTest {

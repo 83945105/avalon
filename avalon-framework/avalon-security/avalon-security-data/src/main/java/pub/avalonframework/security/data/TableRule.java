@@ -42,4 +42,12 @@ public class TableRule implements TableRuleOperations {
     public String getTableAlias() {
         return tableAlias;
     }
+
+    public List<OnColumnRule> getOnRules() {
+        return onRules;
+    }
+
+    public List<WhereColumnRule> getWhereRules() {
+        return whereRules;
+    }
 }

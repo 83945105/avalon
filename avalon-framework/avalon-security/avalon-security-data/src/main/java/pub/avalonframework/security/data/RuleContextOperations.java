@@ -9,6 +9,13 @@ import java.util.Set;
 public interface RuleContextOperations {
 
     /**
+     * 获取运行时规则库
+     *
+     * @return RuleStore
+     */
+    RuleStore getRuntimeRuleStore();
+
+    /**
      * 添加运行时表所有列
      *
      * @param tableAlias 表别名

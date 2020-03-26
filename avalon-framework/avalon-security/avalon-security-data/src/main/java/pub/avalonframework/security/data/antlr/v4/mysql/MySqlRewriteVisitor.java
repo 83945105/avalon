@@ -799,6 +799,11 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         return visit(this.parseTree).trim();
     }
 
+    @Override
+    public RuleStore getRuleStore() {
+        return this.ruleContextWrapper.getRuntimeRuleStore();
+    }
+
     private final static class SqlBuilder implements Appendable {
 
         protected final StringBuilder sql;

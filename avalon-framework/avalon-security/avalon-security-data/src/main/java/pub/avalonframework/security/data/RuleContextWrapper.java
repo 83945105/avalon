@@ -17,6 +17,11 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
+    public RuleStore getRuntimeRuleStore() {
+        return runtimeRuleContext.getRuntimeRuleStore();
+    }
+
+    @Override
     public void addRuntimeAllColumn(String tableAlias) {
         runtimeRuleContext.addRuntimeAllColumn(tableAlias);
     }
@@ -324,6 +329,11 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
+        public RuleStore getRuntimeRuleStore() {
+            return ruleStore;
+        }
+
+        @Override
         public void addRuntimeAllColumn(String tableAlias) {
             if (tableAlias == null) {
                 throw new RuleContextException("SQL syntax error: columnAlias is null.");
@@ -445,12 +455,12 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         @Override
         public void addRuntimeRealTableRule(String tableName, String tableAlias) {
-            tableRule = ruleStore.addTableRule(tableName, tableAlias);
+            tableRule = ruleStore.addRuntimeTableRule(tableName, tableAlias);
         }
 
         @Override
         public void addRuntimeVirtualTableRule(String tableAlias) {
-            tableRule = this.ruleStore.addTableRule(null, tableAlias);
+            tableRule = this.ruleStore.addRuntimeTableRule(null, tableAlias);
         }
 
         @Override
