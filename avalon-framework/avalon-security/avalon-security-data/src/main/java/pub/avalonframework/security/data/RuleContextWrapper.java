@@ -82,6 +82,11 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
+    public Set<String> getRuntimeTableAliases() {
+        return runtimeRuleContext.getRuntimeTableAliases();
+    }
+
+    @Override
     public TableCache getRuntimeTable(String tableAlias) {
         return runtimeRuleContext.getRuntimeTable(tableAlias);
     }
@@ -182,7 +187,9 @@ public class RuleContextWrapper implements RuleContextOperations {
      * @param key 唯一键
      */
     public void switchToSubRuntimeRuleContext(String key) {
-        this.runtimeRuleContext = addSubRuntimeRuleContext(key);
+        RuntimeRuleContext runtimeRuleContext = addSubRuntimeRuleContext(key);
+        this.runtimeRuleContext.ruleStore.addRuntimeSubRuleStore(key, runtimeRuleContext.ruleStore);
+        this.runtimeRuleContext = runtimeRuleContext;
     }
 
     /**
@@ -192,7 +199,9 @@ public class RuleContextWrapper implements RuleContextOperations {
      * @param tableColumnNamesInjector 表列名注入器
      */
     public void switchToSubRuntimeVirtualRuleContext(String key, TableColumnNamesInjector tableColumnNamesInjector) {
-        this.runtimeRuleContext = addSubRuntimeVirtualRuleContext(key, tableColumnNamesInjector);
+        RuntimeRuleContext runtimeRuleContext = addSubRuntimeVirtualRuleContext(key, tableColumnNamesInjector);
+        this.runtimeRuleContext.ruleStore.addRuntimeSubRuleStore(key, runtimeRuleContext.ruleStore);
+        this.runtimeRuleContext = runtimeRuleContext;
     }
 
     /**
@@ -346,12 +355,12 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         @Override
         public void addRuntimeStarColumn() {
-            Set<String> tableNames = getRuntimeTableNames();
-            if (tableNames.size() == 0) {
+            Set<String> tableAliases = getRuntimeTableAliases();
+            if (tableAliases.size() == 0) {
                 throw new RuleContextException("SQL syntax error: no tables.");
             }
-            for (String tableName : tableNames) {
-                addRuntimeAllColumn(tableName);
+            for (String tableAlias : tableAliases) {
+                addRuntimeAllColumn(tableAlias);
             }
         }
 
@@ -436,6 +445,11 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
+        public Set<String> getRuntimeTableAliases() {
+            return tableCacheMap.keySet();
+        }
+
+        @Override
         public TableCache getRuntimeTable(String tableAlias) {
             TableCache tableCache = tableCacheMap.get(tableAlias);
             if (tableCache == null) {
@@ -455,12 +469,12 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         @Override
         public void addRuntimeRealTableRule(String tableName, String tableAlias) {
-            tableRule = ruleStore.addRuntimeTableRule(tableName, tableAlias);
+            tableRule = ruleStore.addRuntimeRealTableRule(tableName, tableAlias);
         }
 
         @Override
         public void addRuntimeVirtualTableRule(String tableAlias) {
-            tableRule = this.ruleStore.addRuntimeTableRule(null, tableAlias);
+            tableRule = ruleStore.addRuntimeVirtualTableRule(tableAlias);
         }
 
         @Override
@@ -574,7 +588,7 @@ public class RuleContextWrapper implements RuleContextOperations {
             }
             PredicateExpression predicateExpression = new PredicateExpression();
             predicateExpression.setColumn(tableName, tableAlias, columnName, columnName);
-            predicateExpression.setComparisonType(predicateExpression.getComparisonType());
+            predicateExpression.setComparisonType(this.predicateExpression.getComparisonType());
             predicateExpression.setValue(this.predicateExpression);
             setRuntimePredicateExpressionConstantTypeValue(predicateExpression);
         }

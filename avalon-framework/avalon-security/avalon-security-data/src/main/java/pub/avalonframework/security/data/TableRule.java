@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class TableRule implements TableRuleOperations {
 
+    private Type type;
+
     private String tableName;
 
     private String tableAlias;
@@ -17,7 +19,14 @@ public class TableRule implements TableRuleOperations {
     private List<WhereColumnRule> whereRules = new LinkedList<>();
 
     public TableRule(String tableName, String tableAlias) {
+        this.type = Type.REAL;
         this.tableName = tableName;
+        this.tableAlias = tableAlias;
+    }
+
+    public TableRule(Type type, String tableAlias) {
+        this.type = type;
+        this.tableName = tableAlias;
         this.tableAlias = tableAlias;
     }
 
@@ -35,18 +44,27 @@ public class TableRule implements TableRuleOperations {
         return whereColumnRule;
     }
 
+    @Override
+    public Type getType() {
+        return type;
+    }
+
+    @Override
     public String getTableName() {
         return tableName;
     }
 
+    @Override
     public String getTableAlias() {
         return tableAlias;
     }
 
+    @Override
     public List<OnColumnRule> getOnRules() {
         return onRules;
     }
 
+    @Override
     public List<WhereColumnRule> getWhereRules() {
         return whereRules;
     }

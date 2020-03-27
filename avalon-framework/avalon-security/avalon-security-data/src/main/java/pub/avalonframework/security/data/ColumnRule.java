@@ -25,4 +25,19 @@ public class ColumnRule implements ColumnRuleOperations {
         this.logicExpressions.add(logicExpression);
         return logicExpression;
     }
+
+    @Override
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    @Override
+    public List<LogicExpression> getLogicExpressions() {
+        return logicExpressions;
+    }
 }

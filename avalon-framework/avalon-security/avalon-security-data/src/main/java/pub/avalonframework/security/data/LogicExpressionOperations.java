@@ -1,5 +1,7 @@
 package pub.avalonframework.security.data;
 
+import java.util.List;
+
 /**
  * @author baichao
  */
@@ -10,6 +12,14 @@ public interface LogicExpressionOperations {
     LogicExpressionOperations addLogicExpression(AndOr andOr);
 
     AndOr getAndOr();
+
+    String getTableName();
+
+    String getTableAlias();
+
+    List<PredicateExpressionOperations> getPredicateExpressions();
+
+    List<LogicExpressionOperations> getLogicExpressions();
 
     enum AndOr {
 

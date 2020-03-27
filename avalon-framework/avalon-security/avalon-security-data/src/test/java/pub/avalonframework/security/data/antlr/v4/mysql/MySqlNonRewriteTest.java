@@ -113,6 +113,7 @@ public class MySqlNonRewriteTest {
         assertNonRewrite("SELECT *, ID AS id2 FROM USER");
         assertNonRewrite("SELECT *, ID AS id2, NAME name2 FROM USER");
         assertNonRewrite("SELECT *, ID AS id2, NAME name2, AGE age FROM USER");
+        assertNonRewrite("SELECT USER.* FROM ( SELECT * FROM USER ) USER INNER JOIN ROLE ON ROLE.ID = ''");
     }
 
     public static void main(String[] args) throws IOException {
@@ -125,7 +126,7 @@ public class MySqlNonRewriteTest {
         long timeStart = System.nanoTime();
 //        String sql = sqlRewriteBuilder.build("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID").run();
 //        String sql = sqlRewriteBuilder.build("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''").run();
-        String sql = sqlRewriteBuilder.build("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.USER_ID IN ( '' )").run();
+        String sql = sqlRewriteBuilder.build("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.ID = '' AND ROLE.USER_ID = USER.ID").run();
         long time = System.nanoTime() - timeStart;
         System.out.println("用时: " + (time / 1000000) + "毫秒");
 

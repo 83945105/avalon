@@ -14,9 +14,9 @@ public class LogicExpression implements LogicExpressionOperations {
 
     private String tableAlias;
 
-    private List<PredicateExpression> predicateExpressions = new LinkedList<>();
+    private List<PredicateExpressionOperations> predicateExpressions = new LinkedList<>();
 
-    private List<LogicExpression> logicExpressions = new LinkedList<>();
+    private List<LogicExpressionOperations> logicExpressions = new LinkedList<>();
 
     public LogicExpression(AndOr andOr, String tableName, String tableAlias) {
         this.andOr = andOr;
@@ -41,5 +41,25 @@ public class LogicExpression implements LogicExpressionOperations {
     @Override
     public AndOr getAndOr() {
         return andOr;
+    }
+
+    @Override
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    @Override
+    public List<PredicateExpressionOperations> getPredicateExpressions() {
+        return predicateExpressions;
+    }
+
+    @Override
+    public List<LogicExpressionOperations> getLogicExpressions() {
+        return logicExpressions;
     }
 }

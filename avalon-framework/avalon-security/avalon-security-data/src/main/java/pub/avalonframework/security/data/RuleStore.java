@@ -12,7 +12,9 @@ public class RuleStore {
 
     private Map<String, TableRuleOperations> runtimeTableRuleMap = new LinkedHashMap<>();
 
-    public TableRuleOperations addRuntimeTableRule(String tableName, String tableAlias) {
+    private Map<String, RuleStore> runtimeSubRuleStoreMap = new LinkedHashMap<>();
+
+    public TableRuleOperations addRuntimeRealTableRule(String tableName, String tableAlias) {
         TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             tableRule = new TableRule(tableName, tableAlias);
@@ -21,11 +23,31 @@ public class RuleStore {
         return tableRule;
     }
 
+    public TableRuleOperations addRuntimeVirtualTableRule(String tableAlias) {
+        TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
+        if (tableRule == null) {
+            tableRule = new TableRule(TableRuleOperations.Type.VIRTUAL, tableAlias);
+            runtimeTableRuleMap.put(tableAlias, tableRule);
+        }
+        return tableRule;
+    }
+
+    public void addRuntimeSubRuleStore(String key, RuleStore subRuleStore) {
+        if (runtimeSubRuleStoreMap.containsKey(key)) {
+            throw new RuleContextException();
+        }
+        runtimeSubRuleStoreMap.put(key, subRuleStore);
+    }
+
     public Map<String, TableRuleOperations> getCustomTableRuleMap() {
         return customTableRuleMap;
     }
 
     public Map<String, TableRuleOperations> getRuntimeTableRuleMap() {
         return runtimeTableRuleMap;
+    }
+
+    public Map<String, RuleStore> getRuntimeSubRuleStoreMap() {
+        return runtimeSubRuleStoreMap;
     }
 }

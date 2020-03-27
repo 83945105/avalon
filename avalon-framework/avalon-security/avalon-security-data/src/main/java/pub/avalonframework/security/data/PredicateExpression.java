@@ -52,23 +52,38 @@ public class PredicateExpression implements PredicateExpressionOperations {
         return this.value != null;
     }
 
+    @Override
     public String getTableName() {
         return tableName;
     }
 
+    @Override
     public String getTableAlias() {
         return tableAlias;
     }
 
+    @Override
     public String getColumnName() {
         return columnName;
     }
 
+    @Override
     public String getColumnAlias() {
         return columnAlias;
     }
 
+    @Override
     public ComparisonType getComparisonType() {
         return comparisonType;
+    }
+
+    @Override
+    public Object getValue() {
+        return value;
+    }
+
+    @Override
+    public ValueType getValueType() {
+        return valueType;
     }
 }

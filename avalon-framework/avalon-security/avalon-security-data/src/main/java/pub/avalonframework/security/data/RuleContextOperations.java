@@ -104,6 +104,13 @@ public interface RuleContextOperations {
     Set<String> getRuntimeTableNames();
 
     /**
+     * 获取运行时所有表别名
+     *
+     * @return 表别名集合
+     */
+    Set<String> getRuntimeTableAliases();
+
+    /**
      * 根据表别名获取运行时表信息
      *
      * @param tableAlias 表别名

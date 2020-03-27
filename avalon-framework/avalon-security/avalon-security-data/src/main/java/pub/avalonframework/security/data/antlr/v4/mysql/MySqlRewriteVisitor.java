@@ -546,10 +546,6 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         return sqlBuilder.toString();
     }
 
-    /**
-     * 只需要判断原生字段是否需要重写
-     * 对像子查询等虚拟字段,合并逻辑后保证条件还在即可
-     */
     @Override
     public String visitFullColumnNameExpressionAtom(MySqlParser.FullColumnNameExpressionAtomContext ctx) {
         MySqlParser.FullColumnNameContext fullColumnName = ctx.fullColumnName();
@@ -573,6 +569,10 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             }
             if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
                 this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
+            } else if (!ruleContextWrapper.hasRuntimePredicateExpressionValue()) {
+                this.ruleContextWrapper.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
+            } else {
+                return sqlSyntaxError();
             }
         }
         sqlBuilder.appendWithSpace(fullColumnName);//TODO 后面要删除  条件由归并后的 规则  重新生成

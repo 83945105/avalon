@@ -15,6 +15,20 @@ public interface PredicateExpressionOperations {
 
     boolean hasValue();
 
+    String getTableName();
+
+    String getTableAlias();
+
+    String getColumnName();
+
+    String getColumnAlias();
+
+    ComparisonType getComparisonType();
+
+    Object getValue();
+
+    ValueType getValueType();
+
     enum ValueType {
         CONSTANT, PREDICATE_EXPRESSION
     }
