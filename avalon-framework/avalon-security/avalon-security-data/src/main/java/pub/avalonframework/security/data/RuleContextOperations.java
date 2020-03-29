@@ -1,5 +1,8 @@
 package pub.avalonframework.security.data;
 
+import pub.avalonframework.security.data.expression.ComparisonOperator;
+import pub.avalonframework.security.data.expression.LogicOperator;
+
 import java.util.List;
 import java.util.Set;
 
@@ -154,28 +157,33 @@ public interface RuleContextOperations {
     /**
      * 添加运行时逻辑表达式
      *
-     * @param andOr and | or
+     * @param logicOperator and | or
      */
-    void addRuntimeLogicExpression(LogicExpressionOperations.AndOr andOr);
+    void addRuntimeLogicExpression(LogicOperator logicOperator);
 
     /**
-     * 添加运行时谓语表达式
+     * 添加运行时非空判断谓语表达式
      */
-    void addRuntimePredicateExpression();
+    void addRuntimeIsNullPredicate();
+
+    /**
+     * 添加运行时双边比较谓语表达式
+     */
+    void addRuntimeBinaryComparisonPredicate();
 
     /**
      * 添加运行时子逻辑表达式
      *
-     * @param andOr and | or
+     * @param logicOperator and | or
      */
-    void addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr andOr);
+    void addRuntimeSubLogicExpression(LogicOperator logicOperator);
 
     /**
      * 获取运行时逻辑表达式符号
      *
      * @return and | or
      */
-    LogicExpressionOperations.AndOr getRuntimeLogicExpressionAndOr();
+    LogicOperator getRuntimeLogicOperator();
 
     /**
      * 设置运行时谓语表达式列信息
@@ -188,9 +196,9 @@ public interface RuleContextOperations {
     /**
      * 设置运行时谓语表达式比较类型
      *
-     * @param comparisonType 比较类型
+     * @param comparisonOperator 比较运算符
      */
-    void setRuntimePredicateExpressionComparisonType(ComparisonType comparisonType);
+    void setRuntimePredicateExpressionComparisonType(ComparisonOperator comparisonOperator);
 
     /**
      * 设置运行时谓语表达式常量类型值
@@ -215,18 +223,18 @@ public interface RuleContextOperations {
     boolean hasRuntimeMasterTable();
 
     /**
-     * 运行时谓语表达式是否设置过列
+     * 运行时双边比较谓语是否设置过主谓语
      *
      * @return true | false
      */
-    boolean hasRuntimePredicateExpressionColumn();
+    boolean runtimeBinaryComparisonPredicateHasMasterPredicate();
 
     /**
-     * 运行时谓语表达式是否设置过值
+     * 运行时双边比较谓语是否设置过从谓语
      *
      * @return true | false
      */
-    boolean hasRuntimePredicateExpressionValue();
+    boolean runtimeBinaryComparisonPredicateHasSlavePredicate();
 
     /**
      * 添加运行时子规则上下文

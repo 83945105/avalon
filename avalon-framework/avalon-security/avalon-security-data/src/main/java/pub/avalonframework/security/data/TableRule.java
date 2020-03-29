@@ -1,7 +1,9 @@
 package pub.avalonframework.security.data;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author baichao
@@ -17,6 +19,8 @@ public class TableRule implements TableRuleOperations {
     private List<OnColumnRule> onRules = new LinkedList<>();
 
     private List<WhereColumnRule> whereRules = new LinkedList<>();
+
+    private Map<String, RuleStore> subRuleStoreMap = new LinkedHashMap<>();
 
     public TableRule(String tableName, String tableAlias) {
         this.type = Type.REAL;
@@ -45,6 +49,11 @@ public class TableRule implements TableRuleOperations {
     }
 
     @Override
+    public void addSubRuleStore(String key, RuleStore subRoleStore) {
+        this.subRuleStoreMap.put(key, subRoleStore);
+    }
+
+    @Override
     public Type getType() {
         return type;
     }
@@ -67,5 +76,15 @@ public class TableRule implements TableRuleOperations {
     @Override
     public List<WhereColumnRule> getWhereRules() {
         return whereRules;
+    }
+
+    @Override
+    public Map<String, RuleStore> getSubRuleStoreMap() {
+        return subRuleStoreMap;
+    }
+
+    @Override
+    public TableRuleOperations merge(TableRuleOperations target) {
+        return null;
     }
 }

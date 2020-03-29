@@ -8,8 +8,18 @@ import java.util.Map;
  */
 public class RuleStore {
 
+    /**
+     * 存储自定义表规则
+     * key - tableName
+     * value - tableRule
+     */
     private Map<String, TableRuleOperations> customTableRuleMap = new LinkedHashMap<>();
 
+    /**
+     * 运行时解析的表规则
+     * key - tableAlias
+     * value - tableRule
+     */
     private Map<String, TableRuleOperations> runtimeTableRuleMap = new LinkedHashMap<>();
 
     private Map<String, RuleStore> runtimeSubRuleStoreMap = new LinkedHashMap<>();
@@ -32,10 +42,18 @@ public class RuleStore {
         return tableRule;
     }
 
-    public void addRuntimeSubRuleStore(String key, RuleStore subRuleStore) {
+    public void addRuntimeSubRuleStore(String tableAlias, String key, RuleStore subRuleStore) {
+        if (tableAlias == null || key == null || subRuleStore == null) {
+            throw new RuleContextException();
+        }
         if (runtimeSubRuleStoreMap.containsKey(key)) {
             throw new RuleContextException();
         }
+        TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
+        if (tableRule == null) {
+            throw new RuleContextException();
+        }
+        tableRule.addSubRuleStore(key, subRuleStore);
         runtimeSubRuleStoreMap.put(key, subRuleStore);
     }
 

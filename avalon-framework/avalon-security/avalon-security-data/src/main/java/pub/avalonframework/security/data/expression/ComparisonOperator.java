@@ -1,9 +1,9 @@
-package pub.avalonframework.security.data;
+package pub.avalonframework.security.data.expression;
 
 /**
  * @author baichao
  */
-public enum ComparisonType {
+public enum ComparisonOperator {
 
     /**
      * None
@@ -20,35 +20,35 @@ public enum ComparisonType {
     /**
      * Equal to
      */
-    EQUAL(new String[]{"="}),
+    EQ(new String[]{"="}),
     /**
      * Not equal to
      */
-    NOT_EQUAL(new String[]{"!=", "<>"}),
+    NEQ(new String[]{"!=", "<>"}),
     /**
      * Greater than
      */
-    GREATER(new String[]{">"}),
+    GT(new String[]{">"}),
     /**
      * Greater than or equal to
      */
-    GREATER_EQUAL(new String[]{">="}),
+    GTE(new String[]{">="}),
     /**
      * Less than
      */
-    LESS(new String[]{"<"}),
+    LT(new String[]{"<"}),
     /**
      * Less than or equal to
      */
-    LESS_EQUAL(new String[]{"<="}),
+    LTE(new String[]{"<="}),
     /**
      * Between ... and ...
      */
-    BETWEEN(new String[]{"BETWEEN", "between"}),
+    BT(new String[]{"BETWEEN", "between"}),
     /**
      * Like
      */
-    LIKE(new String[]{"LIKE", "like"}),
+    LK(new String[]{"LIKE", "like"}),
     /**
      * In
      */
@@ -56,20 +56,20 @@ public enum ComparisonType {
     /**
      * Not in
      */
-    NOT_IN(new String[]{"NOT IN", "not in"});
+    NIN(new String[]{"NOT IN", "not in"});
 
     private String[] symbols;
 
-    ComparisonType(String[] symbols) {
+    ComparisonOperator(String[] symbols) {
         this.symbols = symbols;
     }
 
-    public static ComparisonType parseComparison(String symbol) {
+    public static ComparisonOperator parseComparison(String symbol) {
         if (symbol == null) {
             return null;
         }
         String[] symbols;
-        for (ComparisonType each : ComparisonType.values()) {
+        for (ComparisonOperator each : ComparisonOperator.values()) {
             symbols = each.symbols;
             if (symbols == null || symbols.length == 0) {
                 continue;

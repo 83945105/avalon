@@ -1,5 +1,6 @@
 package pub.avalonframework.security.data;
 
+import pub.avalonframework.security.data.expression.*;
 import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
 
 import java.util.*;
@@ -117,23 +118,28 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
-    public void addRuntimeLogicExpression(LogicExpressionOperations.AndOr andOr) {
-        runtimeRuleContext.addRuntimeLogicExpression(andOr);
+    public void addRuntimeLogicExpression(LogicOperator logicOperator) {
+        runtimeRuleContext.addRuntimeLogicExpression(logicOperator);
     }
 
     @Override
-    public void addRuntimePredicateExpression() {
-        runtimeRuleContext.addRuntimePredicateExpression();
+    public void addRuntimeIsNullPredicate() {
+        runtimeRuleContext.addRuntimeIsNullPredicate();
     }
 
     @Override
-    public void addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr andOr) {
-        runtimeRuleContext.addRuntimeSubLogicExpression(andOr);
+    public void addRuntimeBinaryComparisonPredicate() {
+        runtimeRuleContext.addRuntimeBinaryComparisonPredicate();
     }
 
     @Override
-    public LogicExpressionOperations.AndOr getRuntimeLogicExpressionAndOr() {
-        return runtimeRuleContext.getRuntimeLogicExpressionAndOr();
+    public void addRuntimeSubLogicExpression(LogicOperator logicOperator) {
+        runtimeRuleContext.addRuntimeSubLogicExpression(logicOperator);
+    }
+
+    @Override
+    public LogicOperator getRuntimeLogicOperator() {
+        return runtimeRuleContext.getRuntimeLogicOperator();
     }
 
     @Override
@@ -142,8 +148,8 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
-    public void setRuntimePredicateExpressionComparisonType(ComparisonType comparisonType) {
-        runtimeRuleContext.setRuntimePredicateExpressionComparisonType(comparisonType);
+    public void setRuntimePredicateExpressionComparisonType(ComparisonOperator comparisonOperator) {
+        runtimeRuleContext.setRuntimePredicateExpressionComparisonType(comparisonOperator);
     }
 
     @Override
@@ -162,13 +168,13 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
-    public boolean hasRuntimePredicateExpressionColumn() {
-        return runtimeRuleContext.hasRuntimePredicateExpressionColumn();
+    public boolean runtimeBinaryComparisonPredicateHasMasterPredicate() {
+        return runtimeRuleContext.runtimeBinaryComparisonPredicateHasMasterPredicate();
     }
 
     @Override
-    public boolean hasRuntimePredicateExpressionValue() {
-        return runtimeRuleContext.hasRuntimePredicateExpressionValue();
+    public boolean runtimeBinaryComparisonPredicateHasSlavePredicate() {
+        return runtimeRuleContext.runtimeBinaryComparisonPredicateHasSlavePredicate();
     }
 
     @Override
@@ -188,7 +194,7 @@ public class RuleContextWrapper implements RuleContextOperations {
      */
     public void switchToSubRuntimeRuleContext(String key) {
         RuntimeRuleContext runtimeRuleContext = addSubRuntimeRuleContext(key);
-        this.runtimeRuleContext.ruleStore.addRuntimeSubRuleStore(key, runtimeRuleContext.ruleStore);
+        this.runtimeRuleContext.ruleStore.addRuntimeSubRuleStore(getRuntimeMasterTableAlias(), key, runtimeRuleContext.ruleStore);
         this.runtimeRuleContext = runtimeRuleContext;
     }
 
@@ -200,7 +206,7 @@ public class RuleContextWrapper implements RuleContextOperations {
      */
     public void switchToSubRuntimeVirtualRuleContext(String key, TableColumnNamesInjector tableColumnNamesInjector) {
         RuntimeRuleContext runtimeRuleContext = addSubRuntimeVirtualRuleContext(key, tableColumnNamesInjector);
-        this.runtimeRuleContext.ruleStore.addRuntimeSubRuleStore(key, runtimeRuleContext.ruleStore);
+        this.runtimeRuleContext.ruleStore.addRuntimeSubRuleStore(getRuntimeMasterTableAlias(), key, runtimeRuleContext.ruleStore);
         this.runtimeRuleContext = runtimeRuleContext;
     }
 
@@ -321,9 +327,11 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         private ColumnRuleOperations columnRule;
 
-        private LogicExpressionOperations logicExpression;
+        private LogicExpression logicExpression;
 
-        private PredicateExpressionOperations predicateExpression;
+        private IsNullPredicate isNullPredicate;
+
+        private BinaryComparisonPredicate binaryComparisonPredicate;
 
         // 记录当前上下文中 包含的 子规则上下文规则 key为唯一件
         private Map<String, RuntimeRuleContext> subRuntimeRuleContextMap;
@@ -488,23 +496,31 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
-        public void addRuntimeLogicExpression(LogicExpressionOperations.AndOr andOr) {
-            logicExpression = columnRule.addLogicExpression(andOr);
+        public void addRuntimeLogicExpression(LogicOperator logicOperator) {
+            logicExpression = columnRule.addLogicExpression(logicOperator);
         }
 
         @Override
-        public void addRuntimePredicateExpression() {
-            predicateExpression = logicExpression.addPredicateExpression();
+        public void addRuntimeIsNullPredicate() {
+            isNullPredicate = new IsNullPredicate();
+            logicExpression.addPredicateExpression(isNullPredicate);
         }
 
         @Override
-        public void addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr andOr) {
-            logicExpression = logicExpression.addLogicExpression(andOr);
+        public void addRuntimeBinaryComparisonPredicate() {
+            binaryComparisonPredicate = new BinaryComparisonPredicate();
+            logicExpression.addPredicateExpression(binaryComparisonPredicate);
         }
 
         @Override
-        public LogicExpressionOperations.AndOr getRuntimeLogicExpressionAndOr() {
-            return logicExpression.getAndOr();
+        public void addRuntimeSubLogicExpression(LogicOperator logicOperator) {
+            logicExpression = new LogicExpression(logicOperator);
+            logicExpression.addLogicExpression(logicExpression);
+        }
+
+        @Override
+        public LogicOperator getRuntimeLogicOperator() {
+            return logicExpression.getLogicOperator();
         }
 
         @Override
@@ -540,17 +556,17 @@ public class RuleContextWrapper implements RuleContextOperations {
             if (tableName == null || tableAlias == null) {
                 throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
             }
-            predicateExpression.setColumn(tableName, tableAlias, columnName, columnName);
+            binaryComparisonPredicate.setMasterPredicate(new ColumnPredicate(tableName, tableAlias, columnName, columnName));
         }
 
         @Override
-        public void setRuntimePredicateExpressionComparisonType(ComparisonType comparisonType) {
-            predicateExpression.setComparisonType(comparisonType);
+        public void setRuntimePredicateExpressionComparisonType(ComparisonOperator comparisonOperator) {
+            binaryComparisonPredicate.setComparisonOperator(comparisonOperator);
         }
 
         @Override
         public void setRuntimePredicateExpressionConstantTypeValue(Object value) {
-            predicateExpression.setValue(value);
+            binaryComparisonPredicate.setSlavePredicate(new ConstantPredicate(value));
         }
 
         @Override
@@ -586,11 +602,11 @@ public class RuleContextWrapper implements RuleContextOperations {
             if (tableName == null || tableAlias == null) {
                 throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
             }
-            PredicateExpression predicateExpression = new PredicateExpression();
-            predicateExpression.setColumn(tableName, tableAlias, columnName, columnName);
-            predicateExpression.setComparisonType(this.predicateExpression.getComparisonType());
-            predicateExpression.setValue(this.predicateExpression);
-            setRuntimePredicateExpressionConstantTypeValue(predicateExpression);
+            BinaryComparisonPredicate binaryComparisonPredicate = new BinaryComparisonPredicate();
+            binaryComparisonPredicate.setMasterPredicate(new ColumnPredicate(tableName, tableAlias, columnName, columnName));
+            binaryComparisonPredicate.setComparisonOperator(this.binaryComparisonPredicate.getComparisonOperator());
+            binaryComparisonPredicate.setSlavePredicate(this.binaryComparisonPredicate.getMasterPredicate());
+            this.binaryComparisonPredicate.setSlavePredicate(binaryComparisonPredicate.getMasterPredicate());
         }
 
         @Override
@@ -599,13 +615,13 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
-        public boolean hasRuntimePredicateExpressionColumn() {
-            return predicateExpression.hasColumn();
+        public boolean runtimeBinaryComparisonPredicateHasMasterPredicate() {
+            return binaryComparisonPredicate.hasMasterPredicate();
         }
 
         @Override
-        public boolean hasRuntimePredicateExpressionValue() {
-            return predicateExpression.hasValue();
+        public boolean runtimeBinaryComparisonPredicateHasSlavePredicate() {
+            return binaryComparisonPredicate.hasSlavePredicate();
         }
 
         @Override

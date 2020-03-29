@@ -5,6 +5,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import pub.avalonframework.security.data.*;
+import pub.avalonframework.security.data.expression.ComparisonOperator;
+import pub.avalonframework.security.data.expression.LogicOperator;
 import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
 import pub.avalonframework.security.data.sql.SqlSyntaxErrorException;
 
@@ -228,6 +230,15 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         sqlBuilder.append(visit(selectStatement));
         this.ruleContextWrapper.switchToParentRuntimeRuleContext();
         sqlBuilder.appendWithSpace(rrBracket);
+        if (ruleContextWrapper.runtimePredicateExpressionStage()) {
+            if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
+//                this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
+            } else if (!ruleContextWrapper.hasRuntimePredicateExpressionValue()) {
+//                this.ruleContextWrapper.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
+            } else {
+                return sqlSyntaxError();
+            }
+        }
         return sqlBuilder.toString();
     }
 
@@ -250,7 +261,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
                 return sqlSyntaxError();
             }
             this.ruleContextWrapper.switchToRuntimeWhereStage();// 切换至Where阶段
-            this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
+            this.ruleContextWrapper.addRuntimeLogicExpression(LogicOperator.AND);
             sqlBuilder.append(visit(whereExpr));
         }
         TerminalNode group = ctx.GROUP();
@@ -406,7 +417,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (expression == null) {
             return sqlSyntaxError();
         }
-        this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
+        this.ruleContextWrapper.addRuntimeLogicExpression(LogicOperator.AND);
         sqlBuilder.append(visit(ctx.expression()));
         return sqlBuilder.toString();
     }
@@ -445,7 +456,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         sqlBuilder.append(visit(tableSourceItem));
         sqlBuilder.appendWithSpace(on);
         this.ruleContextWrapper.addRuntimeOnColumnRule();
-        this.ruleContextWrapper.addRuntimeLogicExpression(LogicExpressionOperations.AndOr.AND);
+        this.ruleContextWrapper.addRuntimeLogicExpression(LogicOperator.AND);
         sqlBuilder.append(visit(ctx.expression()));
         return sqlBuilder.toString();
     }
@@ -481,7 +492,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             sqlBuilder.appendWithSpace(andStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
         } else {
             String orStr = or.getText();
-            this.ruleContextWrapper.addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr.OR);
+            this.ruleContextWrapper.addRuntimeSubLogicExpression(LogicOperator.OR);
             sqlBuilder.appendWithSpace(orStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
         }
         return sqlBuilder.toString();
@@ -502,15 +513,15 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
     public String visitIsNullPredicate(MySqlParser.IsNullPredicateContext ctx) {
         MySqlParser.PredicateContext predicate = ctx.predicate();
         TerminalNode is = ctx.IS();
-        MySqlParser.NullNotnullContext nullNotnullContext = ctx.nullNotnull();
-        if (predicate == null || is == null || nullNotnullContext == null) {
+        MySqlParser.NullNotnullContext nullNotnull = ctx.nullNotnull();
+        if (predicate == null || is == null || nullNotnull == null) {
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        this.ruleContextWrapper.addRuntimePredicateExpression();
+        this.ruleContextWrapper.addRuntimeIsNullPredicate();
         sqlBuilder.append(visit(predicate));
         sqlBuilder.appendWithSpace(is);
-        sqlBuilder.append(visit(nullNotnullContext));
+        sqlBuilder.append(visit(nullNotnull));
         return sqlBuilder.toString();
     }
 
@@ -537,10 +548,10 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        this.ruleContextWrapper.addRuntimePredicateExpression();
+        this.ruleContextWrapper.addRuntimeBinaryComparisonPredicate();
         sqlBuilder.append(visit(predicate.get(0)));//TODO 后面要删除  条件由归并后的 规则  重新生成
         String symbol = comparisonOperator.getText();
-        this.ruleContextWrapper.setRuntimePredicateExpressionComparisonType(ComparisonType.parseComparison(symbol));
+        this.ruleContextWrapper.setRuntimePredicateExpressionComparisonType(ComparisonOperator.parseComparison(symbol));
         sqlBuilder.appendWithSpace(symbol);//TODO 后面要删除  条件由归并后的 规则  重新生成
         sqlBuilder.append(visit(predicate.get(1)));//TODO 后面要删除  条件由归并后的 规则  重新生成
         return sqlBuilder.toString();
@@ -567,9 +578,9 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
                 tableAlias = uid.getText();
                 columnName = dottedId.getText().substring(1);
             }
-            if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
+            if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasMasterPredicate()) {
                 this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
-            } else if (!ruleContextWrapper.hasRuntimePredicateExpressionValue()) {
+            } else if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasSlavePredicate()) {
                 this.ruleContextWrapper.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
             } else {
                 return sqlSyntaxError();
@@ -656,8 +667,8 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError();
         }
         SqlBuilder sqlBuilder = new SqlBuilder();
-        if (this.ruleContextWrapper.getRuntimeLogicExpressionAndOr() == LogicExpressionOperations.AndOr.AND) {
-            this.ruleContextWrapper.addRuntimeSubLogicExpression(LogicExpressionOperations.AndOr.AND);
+        if (this.ruleContextWrapper.getRuntimeLogicOperator() == LogicOperator.AND) {
+            this.ruleContextWrapper.addRuntimeSubLogicExpression(LogicOperator.AND);
         }
         sqlBuilder.appendWithSpace(lrBracket);//TODO 后面要删除  条件由归并后的 规则  重新生成
         for (MySqlParser.ExpressionContext expressionContext : expression) {

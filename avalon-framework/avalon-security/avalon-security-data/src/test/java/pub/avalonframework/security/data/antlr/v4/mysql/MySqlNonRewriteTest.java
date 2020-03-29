@@ -26,6 +26,7 @@ public class MySqlNonRewriteTest {
     }
 
     private void assertNonRewrite(String sql) {
+        System.out.println(sql);
         Assertions.assertEquals(sql, rewriteSql(sql));
     }
 
@@ -126,7 +127,7 @@ public class MySqlNonRewriteTest {
         long timeStart = System.nanoTime();
 //        String sql = sqlRewriteBuilder.build("SELECT USER.ID, USER.NAME AS name FROM USER INNER JOIN ROLE ON ROLE.USER_ID = USER.ID INNER JOIN RESOURCE ON RESOURCE.ROLE_ID = ROLE.ID").run();
 //        String sql = sqlRewriteBuilder.build("SELECT * FROM ( SELECT ID AS idAlias FROM USER ) T WHERE idAlias = ''").run();
-        String sql = sqlRewriteBuilder.build("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.ID = '' AND ROLE.USER_ID = USER.ID").run();
+        String sql = sqlRewriteBuilder.build("SELECT U.*, ( SELECT ID FROM USER LIMIT 1 ) FROM ( SELECT * FROM USER ) U INNER JOIN ( SELECT * FROM ROLE ) R ON R.ID = U.ID").run();
         long time = System.nanoTime() - timeStart;
         System.out.println("用时: " + (time / 1000000) + "毫秒");
 

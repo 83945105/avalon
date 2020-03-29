@@ -1,5 +1,8 @@
 package pub.avalonframework.security.data;
 
+import pub.avalonframework.security.data.expression.LogicExpression;
+import pub.avalonframework.security.data.expression.LogicOperator;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  */
 public interface ColumnRuleOperations {
 
-    LogicExpressionOperations addLogicExpression(LogicExpressionOperations.AndOr andOr);
+    LogicExpression addLogicExpression(LogicOperator logicOperator);
 
     String getTableName();
 

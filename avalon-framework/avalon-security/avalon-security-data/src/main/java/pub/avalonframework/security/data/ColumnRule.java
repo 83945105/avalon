@@ -1,5 +1,8 @@
 package pub.avalonframework.security.data;
 
+import pub.avalonframework.security.data.expression.LogicExpression;
+import pub.avalonframework.security.data.expression.LogicOperator;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,8 +23,8 @@ public class ColumnRule implements ColumnRuleOperations {
     }
 
     @Override
-    public LogicExpression addLogicExpression(LogicExpressionOperations.AndOr andOr) {
-        LogicExpression logicExpression = new LogicExpression(andOr, tableName, tableAlias);
+    public LogicExpression addLogicExpression(LogicOperator logicOperator) {
+        LogicExpression logicExpression = new LogicExpression(logicOperator, tableName, tableAlias);
         this.logicExpressions.add(logicExpression);
         return logicExpression;
     }
