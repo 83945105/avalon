@@ -38,11 +38,11 @@ public class WebPageAuthorizationConfiguration {
         }
         Scope scope = getScope();
         if (scope != null) {
-            sb.append("&scope").append(scope.name());
+            sb.append("&scope=").append(scope.name());
         }
         String state = getState();
         if (state != null && !state.isEmpty()) {
-            sb.append("&state").append(state);
+            sb.append("&state=").append(state);
         }
         sb.append("#wechat_redirect");
         return sb.toString();
