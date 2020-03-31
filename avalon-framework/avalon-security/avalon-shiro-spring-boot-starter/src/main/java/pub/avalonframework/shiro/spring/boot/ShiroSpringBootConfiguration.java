@@ -35,6 +35,7 @@ import pub.avalonframework.redis.core.api.config.RedisConfiguration;
 import pub.avalonframework.redis.spring.core.RedisTemplate;
 import pub.avalonframework.redis.spring.serializer.GenericToStringSerializer;
 import pub.avalonframework.redis.spring.serializer.Jackson2JsonRedisSerializer;
+import pub.avalonframework.redis.spring.utils.RedisSpringUtils;
 import pub.avalonframework.security.core.api.beans.CacheType;
 import pub.avalonframework.security.core.api.beans.IncorrectCacheTypeException;
 import pub.avalonframework.security.core.api.config.*;
@@ -132,7 +133,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
         RedisConfiguration redisConfiguration = this.securityConfiguration.getSession().getRedis();
         return new RedisTemplate<>
                 (
-                        redisConfiguration.buildRedisConnectionFactory(),
+                        RedisSpringUtils.buildRedisConnectionFactory(redisConfiguration),
                         new Jackson2JsonRedisSerializer<>(Object.class),
                         new GenericToStringSerializer<>(String.class),
                         new Jackson2JsonRedisSerializer<>(Object.class),
@@ -210,7 +211,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
         RedisConfiguration redisConfiguration = this.securityConfiguration.getAuthentication().getRedis();
         return new RedisTemplate<>
                 (
-                        redisConfiguration.buildRedisConnectionFactory(),
+                        RedisSpringUtils.buildRedisConnectionFactory(redisConfiguration),
                         new Jackson2JsonRedisSerializer<>(Object.class),
                         new GenericToStringSerializer<>(String.class),
                         new Jackson2JsonRedisSerializer<>(SimpleAuthenticationInfo.class),
@@ -223,7 +224,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
         RedisConfiguration redisConfiguration = this.securityConfiguration.getAuthorization().getRedis();
         return new RedisTemplate<>
                 (
-                        redisConfiguration.buildRedisConnectionFactory(),
+                        RedisSpringUtils.buildRedisConnectionFactory(redisConfiguration),
                         new Jackson2JsonRedisSerializer<>(Object.class),
                         new GenericToStringSerializer<>(String.class),
                         new Jackson2JsonRedisSerializer<>(SimpleAuthorizationInfo.class),

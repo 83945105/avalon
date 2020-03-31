@@ -73,6 +73,21 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
+    public boolean hasRuntimeMasterTable() {
+        return runtimeRuleContext.hasRuntimeMasterTable();
+    }
+
+    @Override
+    public String getRuntimeMasterTableName() {
+        return runtimeRuleContext.getRuntimeMasterTableName();
+    }
+
+    @Override
+    public String getRuntimeMasterTableAlias() {
+        return runtimeRuleContext.getRuntimeMasterTableAlias();
+    }
+
+    @Override
     public String getRuntimeTableNameByTableAlias(String tableAlias) {
         return runtimeRuleContext.getRuntimeTableNameByTableAlias(tableAlias);
     }
@@ -90,6 +105,11 @@ public class RuleContextWrapper implements RuleContextOperations {
     @Override
     public TableCache getRuntimeTable(String tableAlias) {
         return runtimeRuleContext.getRuntimeTable(tableAlias);
+    }
+
+    @Override
+    public List<TableCache> getRuntimeTables() {
+        return runtimeRuleContext.getRuntimeTables();
     }
 
     @Override
@@ -123,13 +143,13 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
-    public void addRuntimeIsNullPredicate() {
-        runtimeRuleContext.addRuntimeIsNullPredicate();
+    public void addRuntimePredicateExpression(PredicateExpression predicateExpression) {
+        runtimeRuleContext.addRuntimePredicateExpression(predicateExpression);
     }
 
     @Override
-    public void addRuntimeBinaryComparisonPredicate() {
-        runtimeRuleContext.addRuntimeBinaryComparisonPredicate();
+    public PredicateExpression getRuntimePredicateExpression() {
+        return runtimeRuleContext.getRuntimePredicateExpression();
     }
 
     @Override
@@ -140,41 +160,6 @@ public class RuleContextWrapper implements RuleContextOperations {
     @Override
     public LogicOperator getRuntimeLogicOperator() {
         return runtimeRuleContext.getRuntimeLogicOperator();
-    }
-
-    @Override
-    public void setRuntimePredicateExpressionColumn(String tableAlias, String columnName) {
-        runtimeRuleContext.setRuntimePredicateExpressionColumn(tableAlias, columnName);
-    }
-
-    @Override
-    public void setRuntimePredicateExpressionComparisonType(ComparisonOperator comparisonOperator) {
-        runtimeRuleContext.setRuntimePredicateExpressionComparisonType(comparisonOperator);
-    }
-
-    @Override
-    public void setRuntimePredicateExpressionConstantTypeValue(Object value) {
-        runtimeRuleContext.setRuntimePredicateExpressionConstantTypeValue(value);
-    }
-
-    @Override
-    public void setRuntimePredicateExpressionColumnTypeValue(String tableAlias, String columnName) {
-        runtimeRuleContext.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
-    }
-
-    @Override
-    public boolean hasRuntimeMasterTable() {
-        return runtimeRuleContext.hasRuntimeMasterTable();
-    }
-
-    @Override
-    public boolean runtimeBinaryComparisonPredicateHasMasterPredicate() {
-        return runtimeRuleContext.runtimeBinaryComparisonPredicateHasMasterPredicate();
-    }
-
-    @Override
-    public boolean runtimeBinaryComparisonPredicateHasSlavePredicate() {
-        return runtimeRuleContext.runtimeBinaryComparisonPredicateHasSlavePredicate();
     }
 
     @Override
@@ -215,16 +200,6 @@ public class RuleContextWrapper implements RuleContextOperations {
      */
     public void switchToParentRuntimeRuleContext() {
         this.runtimeRuleContext = runtimeRuleContext.parent;
-    }
-
-    @Override
-    public String getRuntimeMasterTableName() {
-        return runtimeRuleContext.getRuntimeMasterTableName();
-    }
-
-    @Override
-    public String getRuntimeMasterTableAlias() {
-        return runtimeRuleContext.getRuntimeMasterTableAlias();
     }
 
     @Override
@@ -329,9 +304,7 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         private LogicExpression logicExpression;
 
-        private IsNullPredicate isNullPredicate;
-
-        private BinaryComparisonPredicate binaryComparisonPredicate;
+        private PredicateExpression predicateExpression;
 
         // 记录当前上下文中 包含的 子规则上下文规则 key为唯一件
         private Map<String, RuntimeRuleContext> subRuntimeRuleContextMap;
@@ -439,6 +412,21 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
+        public boolean hasRuntimeMasterTable() {
+            return masterTableName != null;
+        }
+
+        @Override
+        public String getRuntimeMasterTableName() {
+            return masterTableName;
+        }
+
+        @Override
+        public String getRuntimeMasterTableAlias() {
+            return masterTableAlias;
+        }
+
+        @Override
         public String getRuntimeTableNameByTableAlias(String tableAlias) {
             TableCache tableCache = tableCacheMap.get(tableAlias);
             if (tableCache == null) {
@@ -464,6 +452,11 @@ public class RuleContextWrapper implements RuleContextOperations {
                 throw new RuleContextException("SQL syntax error: table: " + tableAlias + " non existent.");
             }
             return tableCache;
+        }
+
+        @Override
+        public List<TableCache> getRuntimeTables() {
+            return new ArrayList<>(tableCacheMap.values());
         }
 
         @Override
@@ -501,15 +494,14 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
-        public void addRuntimeIsNullPredicate() {
-            isNullPredicate = new IsNullPredicate();
-            logicExpression.addPredicateExpression(isNullPredicate);
+        public void addRuntimePredicateExpression(PredicateExpression predicateExpression) {
+            this.predicateExpression = predicateExpression;
+            logicExpression.addPredicateExpression(predicateExpression);
         }
 
         @Override
-        public void addRuntimeBinaryComparisonPredicate() {
-            binaryComparisonPredicate = new BinaryComparisonPredicate();
-            logicExpression.addPredicateExpression(binaryComparisonPredicate);
+        public PredicateExpression getRuntimePredicateExpression() {
+            return predicateExpression;
         }
 
         @Override
@@ -521,107 +513,6 @@ public class RuleContextWrapper implements RuleContextOperations {
         @Override
         public LogicOperator getRuntimeLogicOperator() {
             return logicExpression.getLogicOperator();
-        }
-
-        @Override
-        public void setRuntimePredicateExpressionColumn(String tableAlias, String columnName) {
-            if (columnName == null) {
-                throw new RuleContextException("SQL syntax error: columnName is null.");
-            }
-            String tableName = tableAlias;
-            if (tableAlias == null) {
-                if (runtimeOnlyMasterTable()) {
-                    // 有且只有主表
-                    tableName = getRuntimeMasterTableName();
-                    tableAlias = getRuntimeMasterTableAlias();
-                } else {
-                    TableCache tableCache;
-                    for (Map.Entry<String, TableCache> entry : tableCacheMap.entrySet()) {
-                        tableCache = entry.getValue();
-                        if (tableCache.getColumnNames().contains(columnName)) {
-                            if (tableAlias != null) {
-                                throw new RuleContextException("SQL syntax error: Column " + columnName + " in field list is ambiguous.");
-                            }
-                            tableName = tableCache.getTableName();
-                            tableAlias = tableCache.getTableAlias();
-                        }
-                    }
-                    if (tableName == null || tableAlias == null) {
-                        throw new RuleContextException("SQL syntax error: Unknown column " + columnName + " in clause.");
-                    }
-                }
-            } else {
-                tableName = getRuntimeTableNameByTableAlias(tableAlias);
-            }
-            if (tableName == null || tableAlias == null) {
-                throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
-            }
-            binaryComparisonPredicate.setMasterPredicate(new ColumnPredicate(tableName, tableAlias, columnName, columnName));
-        }
-
-        @Override
-        public void setRuntimePredicateExpressionComparisonType(ComparisonOperator comparisonOperator) {
-            binaryComparisonPredicate.setComparisonOperator(comparisonOperator);
-        }
-
-        @Override
-        public void setRuntimePredicateExpressionConstantTypeValue(Object value) {
-            binaryComparisonPredicate.setSlavePredicate(new ConstantPredicate(value));
-        }
-
-        @Override
-        public void setRuntimePredicateExpressionColumnTypeValue(String tableAlias, String columnName) {
-            if (columnName == null) {
-                throw new RuleContextException("SQL syntax error: columnName is null.");
-            }
-            String tableName = tableAlias;
-            if (tableAlias == null) {
-                if (runtimeOnlyMasterTable()) {
-                    // 有且只有主表
-                    tableName = getRuntimeMasterTableName();
-                    tableAlias = getRuntimeMasterTableAlias();
-                } else {
-                    TableCache tableCache;
-                    for (Map.Entry<String, TableCache> entry : tableCacheMap.entrySet()) {
-                        tableCache = entry.getValue();
-                        if (tableCache.getColumnNames().contains(columnName)) {
-                            if (tableAlias != null) {
-                                throw new RuleContextException("SQL syntax error: Column " + columnName + " in field list is ambiguous.");
-                            }
-                            tableName = tableCache.getTableName();
-                            tableAlias = tableCache.getTableAlias();
-                        }
-                    }
-                    if (tableName == null || tableAlias == null) {
-                        throw new RuleContextException("SQL syntax error: Unknown column " + columnName + " in clause.");
-                    }
-                }
-            } else {
-                tableName = getRuntimeTableNameByTableAlias(tableAlias);
-            }
-            if (tableName == null || tableAlias == null) {
-                throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
-            }
-            BinaryComparisonPredicate binaryComparisonPredicate = new BinaryComparisonPredicate();
-            binaryComparisonPredicate.setMasterPredicate(new ColumnPredicate(tableName, tableAlias, columnName, columnName));
-            binaryComparisonPredicate.setComparisonOperator(this.binaryComparisonPredicate.getComparisonOperator());
-            binaryComparisonPredicate.setSlavePredicate(this.binaryComparisonPredicate.getMasterPredicate());
-            this.binaryComparisonPredicate.setSlavePredicate(binaryComparisonPredicate.getMasterPredicate());
-        }
-
-        @Override
-        public boolean hasRuntimeMasterTable() {
-            return masterTableName != null;
-        }
-
-        @Override
-        public boolean runtimeBinaryComparisonPredicateHasMasterPredicate() {
-            return binaryComparisonPredicate.hasMasterPredicate();
-        }
-
-        @Override
-        public boolean runtimeBinaryComparisonPredicateHasSlavePredicate() {
-            return binaryComparisonPredicate.hasSlavePredicate();
         }
 
         @Override
@@ -650,16 +541,6 @@ public class RuleContextWrapper implements RuleContextOperations {
             runtimeRuleContext = new RuntimeVirtualRuleContext(this, jdbcOperations, tableColumnNamesInjector);
             subRuntimeRuleContextMap.put(key, runtimeRuleContext);
             return runtimeRuleContext;
-        }
-
-        @Override
-        public String getRuntimeMasterTableName() {
-            return masterTableName;
-        }
-
-        @Override
-        public String getRuntimeMasterTableAlias() {
-            return masterTableAlias;
         }
 
         @Override

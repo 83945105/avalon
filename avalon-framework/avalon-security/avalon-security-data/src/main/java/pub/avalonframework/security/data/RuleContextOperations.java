@@ -1,7 +1,6 @@
 package pub.avalonframework.security.data;
 
-import pub.avalonframework.security.data.expression.ComparisonOperator;
-import pub.avalonframework.security.data.expression.LogicOperator;
+import pub.avalonframework.security.data.expression.*;
 
 import java.util.List;
 import java.util.Set;
@@ -92,6 +91,27 @@ public interface RuleContextOperations {
     boolean runtimeOnlyMasterTable();
 
     /**
+     * 是否有运行时主表
+     *
+     * @return true | false
+     */
+    boolean hasRuntimeMasterTable();
+
+    /**
+     * 获取运行时主表名
+     *
+     * @return 主表名
+     */
+    String getRuntimeMasterTableName();
+
+    /**
+     * 获取运行时主表别名
+     *
+     * @return 主表别名
+     */
+    String getRuntimeMasterTableAlias();
+
+    /**
      * 根据表别名获取运行时表名
      *
      * @param tableAlias 表别名
@@ -120,6 +140,13 @@ public interface RuleContextOperations {
      * @return 表信息
      */
     TableCache getRuntimeTable(String tableAlias);
+
+    /**
+     * 获取运行时所有表信息
+     *
+     * @return 表信息集合
+     */
+    List<TableCache> getRuntimeTables();
 
     /**
      * 根据表别名获取表所有列名
@@ -162,14 +189,257 @@ public interface RuleContextOperations {
     void addRuntimeLogicExpression(LogicOperator logicOperator);
 
     /**
+     * 添加运行时谓语表达式
+     *
+     * @param predicateExpression 谓语表达式
+     */
+    void addRuntimePredicateExpression(PredicateExpression predicateExpression);
+
+    /**
+     * 获取运行时谓语表达式
+     *
+     * @return 谓语表达式
+     */
+    PredicateExpression getRuntimePredicateExpression();
+
+    /**
+     * 构建列谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     * @return 列谓语
+     */
+    default ColumnPredicate buildColumnPredicate(String tableAlias, String columnName) {
+        if (columnName == null) {
+            throw new RuleContextException("SQL syntax error: columnName is null.");
+        }
+        String tableName = tableAlias;
+        if (tableAlias == null) {
+            if (runtimeOnlyMasterTable()) {
+                // 有且只有主表
+                tableName = getRuntimeMasterTableName();
+                tableAlias = getRuntimeMasterTableAlias();
+            } else {
+                for (TableCache runtimeTable : getRuntimeTables()) {
+                    if (runtimeTable.getColumnNames().contains(columnName)) {
+                        if (tableAlias != null) {
+                            throw new RuleContextException("SQL syntax error: Column " + columnName + " in field list is ambiguous.");
+                        }
+                        tableName = runtimeTable.getTableName();
+                        tableAlias = runtimeTable.getTableAlias();
+                    }
+                }
+                if (tableName == null || tableAlias == null) {
+                    throw new RuleContextException("SQL syntax error: Unknown column " + columnName + " in clause.");
+                }
+            }
+        } else {
+            tableName = getRuntimeTableNameByTableAlias(tableAlias);
+        }
+        if (tableName == null || tableAlias == null) {
+            throw new RuleContextException("SQL syntax error: tableName or tableAlias is null.");
+        }
+        return new ColumnPredicate(tableName, tableAlias, columnName, columnName);
+    }
+
+    /**
      * 添加运行时非空判断谓语表达式
      */
-    void addRuntimeIsNullPredicate();
+    default void addRuntimeIsNullPredicate() {
+        addRuntimePredicateExpression(new IsNullPredicate());
+    }
+
+    /**
+     * 获取运行时非空判断谓语表达式
+     *
+     * @return 非空判断谓语表达式
+     */
+    default IsNullPredicate getRuntimeIsNullPredicate() {
+        PredicateExpression predicateExpression = getRuntimePredicateExpression();
+        if (predicateExpression instanceof IsNullPredicate) {
+            return (IsNullPredicate) predicateExpression;
+        }
+        return null;
+    }
+
+    /**
+     * 是否是运行时非空判断谓语表达式
+     *
+     * @return true | false
+     */
+    default boolean hasRuntimeIsNullPredicate() {
+        return getRuntimeIsNullPredicate() != null;
+    }
+
+    /**
+     * 运行时非空判断谓语表达式是否设置过谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeIsNullPredicateHasPredicate() {
+        IsNullPredicate isNullPredicate = getRuntimeIsNullPredicate();
+        if (isNullPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type IsNullPredicate.");
+        }
+        return isNullPredicate.hasPredicate();
+    }
+
+    /**
+     * 设置运行时非空判断谓语表达式谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeIsNullPredicatePredicate(Predicate predicate) {
+        IsNullPredicate isNullPredicate = getRuntimeIsNullPredicate();
+        if (isNullPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type IsNullPredicate.");
+        }
+        isNullPredicate.setPredicate(predicate);
+    }
+
+    /**
+     * 设置运行时非空判断谓语表达式比较运算符
+     *
+     * @param comparisonOperator 比较运算符
+     */
+    default void setRuntimeIsNullPredicateComparisonOperator(ComparisonOperator comparisonOperator) {
+        IsNullPredicate isNullPredicate = getRuntimeIsNullPredicate();
+        if (isNullPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type IsNullPredicate.");
+        }
+        isNullPredicate.setComparisonOperator(comparisonOperator);
+    }
 
     /**
      * 添加运行时双边比较谓语表达式
      */
-    void addRuntimeBinaryComparisonPredicate();
+    default void addRuntimeBinaryComparisonPredicate() {
+        addRuntimePredicateExpression(new BinaryComparisonPredicate());
+    }
+
+    /**
+     * 获取运行时双边比较谓语表达式
+     *
+     * @return 双边比较谓语表达式
+     */
+    default BinaryComparisonPredicate getRuntimeBinaryComparisonPredicate() {
+        PredicateExpression predicateExpression = getRuntimePredicateExpression();
+        if (predicateExpression instanceof BinaryComparisonPredicate) {
+            return (BinaryComparisonPredicate) predicateExpression;
+        }
+        return null;
+    }
+
+    /**
+     * 是否是运行时双边比较谓语表达式
+     *
+     * @return true | false
+     */
+    default boolean hasRuntimeBinaryComparisonPredicate() {
+        return getRuntimeBinaryComparisonPredicate() != null;
+    }
+
+    /**
+     * 运行时双边比较谓语是否设置过主谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeBinaryComparisonPredicateHasMasterPredicate() {
+        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
+        if (binaryComparisonPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
+        }
+        return binaryComparisonPredicate.hasMasterPredicate();
+    }
+
+    /**
+     * 设置运行时双边比较谓语表达式主谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeBinaryComparisonPredicateMasterPredicate(Predicate predicate) {
+        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
+        if (binaryComparisonPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
+        }
+        binaryComparisonPredicate.setMasterPredicate(predicate);
+    }
+
+    /**
+     * 设置运行时双边比较谓语表达式主谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeBinaryComparisonPredicateMasterPredicate(String tableAlias, String columnName) {
+        setRuntimeBinaryComparisonPredicateMasterPredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 设置运行时谓语表达式比较运算符
+     *
+     * @param comparisonOperator 比较运算符
+     */
+    default void setRuntimeBinaryComparisonPredicateComparisonOperator(ComparisonOperator comparisonOperator) {
+        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
+        if (binaryComparisonPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
+        }
+        binaryComparisonPredicate.setComparisonOperator(comparisonOperator);
+    }
+
+    /**
+     * 运行时双边比较谓语是否设置过从谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeBinaryComparisonPredicateHasSlavePredicate() {
+        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
+        if (binaryComparisonPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
+        }
+        return binaryComparisonPredicate.hasSlavePredicate();
+    }
+
+    /**
+     * 添加运行时双边比较谓语表达式从谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeBinaryComparisonPredicateSlavePredicate(Predicate predicate) {
+        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
+        if (binaryComparisonPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
+        }
+        binaryComparisonPredicate.setSlavePredicate(predicate);
+    }
+
+    /**
+     * 设置运行时双边比较谓语表达式从谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeBinaryComparisonPredicateSlavePredicate(String tableAlias, String columnName) {
+        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
+        if (binaryComparisonPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
+        }
+        BinaryComparisonPredicate slavePredicate = new BinaryComparisonPredicate();
+        slavePredicate.setMasterPredicate(buildColumnPredicate(tableAlias, columnName));
+        slavePredicate.setComparisonOperator(binaryComparisonPredicate.getComparisonOperator());
+        slavePredicate.setSlavePredicate(binaryComparisonPredicate.getMasterPredicate());
+        binaryComparisonPredicate.setSlavePredicate(slavePredicate.getMasterPredicate());
+    }
+
+    /**
+     * 设置运行时双边比较谓语表达式从谓语
+     *
+     * @param value 值
+     */
+    default void setRuntimeBinaryComparisonPredicateSlavePredicate(Object value) {
+        setRuntimeBinaryComparisonPredicateSlavePredicate(new ConstantPredicate(value));
+    }
 
     /**
      * 添加运行时子逻辑表达式
@@ -184,57 +454,6 @@ public interface RuleContextOperations {
      * @return and | or
      */
     LogicOperator getRuntimeLogicOperator();
-
-    /**
-     * 设置运行时谓语表达式列信息
-     *
-     * @param tableAlias 表别名
-     * @param columnName 列名
-     */
-    void setRuntimePredicateExpressionColumn(String tableAlias, String columnName);
-
-    /**
-     * 设置运行时谓语表达式比较类型
-     *
-     * @param comparisonOperator 比较运算符
-     */
-    void setRuntimePredicateExpressionComparisonType(ComparisonOperator comparisonOperator);
-
-    /**
-     * 设置运行时谓语表达式常量类型值
-     *
-     * @param value 值
-     */
-    void setRuntimePredicateExpressionConstantTypeValue(Object value);
-
-    /**
-     * 设置运行时谓语表达式列类型值
-     *
-     * @param tableAlias 表别名
-     * @param columnName 列名
-     */
-    void setRuntimePredicateExpressionColumnTypeValue(String tableAlias, String columnName);
-
-    /**
-     * 是否有运行时主表
-     *
-     * @return true | false
-     */
-    boolean hasRuntimeMasterTable();
-
-    /**
-     * 运行时双边比较谓语是否设置过主谓语
-     *
-     * @return true | false
-     */
-    boolean runtimeBinaryComparisonPredicateHasMasterPredicate();
-
-    /**
-     * 运行时双边比较谓语是否设置过从谓语
-     *
-     * @return true | false
-     */
-    boolean runtimeBinaryComparisonPredicateHasSlavePredicate();
 
     /**
      * 添加运行时子规则上下文
@@ -252,20 +471,6 @@ public interface RuleContextOperations {
      * @return 规则上下文
      */
     RuleContextOperations addSubRuntimeVirtualRuleContext(String key, TableColumnNamesInjector tableColumnNamesInjector);
-
-    /**
-     * 获取运行时主表名
-     *
-     * @return 主表名
-     */
-    String getRuntimeMasterTableName();
-
-    /**
-     * 获取运行时主表别名
-     *
-     * @return 主表别名
-     */
-    String getRuntimeMasterTableAlias();
 
     /**
      * 获取当前阶段

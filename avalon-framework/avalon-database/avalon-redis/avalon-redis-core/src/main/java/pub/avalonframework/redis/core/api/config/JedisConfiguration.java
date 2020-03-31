@@ -1,7 +1,5 @@
 package pub.avalonframework.redis.core.api.config;
 
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-
 /**
  * The jedis configuration.
  *
@@ -167,24 +165,5 @@ public class JedisConfiguration {
 
     public void setEvictionPolicyClassName(String evictionPolicyClassName) {
         this.evictionPolicyClassName = evictionPolicyClassName;
-    }
-
-    public void injectPoolConfig(GenericObjectPoolConfig poolConfig) {
-        poolConfig.setLifo(this.getLifo());
-        poolConfig.setFairness(this.getFairness());
-        poolConfig.setMaxTotal(this.getMaxTotal());
-        poolConfig.setMaxIdle(this.getMaxIdle());
-        poolConfig.setMinIdle(this.getMinIdle());
-        poolConfig.setMaxWaitMillis(this.getMaxWaitMillis());
-        poolConfig.setBlockWhenExhausted(this.getBlockWhenExhausted());
-        poolConfig.setTestOnCreate(this.getTestOnCreate());
-        poolConfig.setTestOnBorrow(this.getTestOnBorrow());
-        poolConfig.setTestOnReturn(this.getTestOnReturn());
-        poolConfig.setTestWhileIdle(this.getTestWhileIdle());
-        poolConfig.setTimeBetweenEvictionRunsMillis(this.getTimeBetweenEvictionRunsMillis());
-        poolConfig.setNumTestsPerEvictionRun(this.getNumTestsPerEvictionRun());
-        poolConfig.setMinEvictableIdleTimeMillis(this.getMinEvictableIdleTimeMillis());
-        poolConfig.setSoftMinEvictableIdleTimeMillis(this.getSoftMinEvictableIdleTimeMillis());
-        poolConfig.setEvictionPolicyClassName(this.getEvictionPolicyClassName());
     }
 }

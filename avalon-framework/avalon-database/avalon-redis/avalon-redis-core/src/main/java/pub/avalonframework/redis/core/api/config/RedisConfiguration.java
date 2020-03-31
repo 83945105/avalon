@@ -1,9 +1,5 @@
 package pub.avalonframework.redis.core.api.config;
 
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import pub.avalonframework.redis.core.api.beans.RedisImpl;
 
 /**
@@ -89,29 +85,5 @@ public class RedisConfiguration {
 
     public void setJedis(JedisConfiguration jedis) {
         this.jedis = jedis;
-    }
-
-    public void injectRedisStandaloneConfiguration(RedisStandaloneConfiguration redisStandaloneConfiguration) {
-        redisStandaloneConfiguration.setHostName(this.getHostName());
-        redisStandaloneConfiguration.setPort(this.getPort());
-        redisStandaloneConfiguration.setDatabase(this.getDatabase());
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(this.getPassword()));
-    }
-
-    public RedisConnectionFactory buildRedisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        this.injectRedisStandaloneConfiguration(redisStandaloneConfiguration);
-        RedisImpl redisImpl = this.getImpl();
-        switch (redisImpl) {
-            case JEDIS:
-                JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
-                JedisConfiguration jedisConfiguration = this.getJedis();
-                if (jedisConfiguration != null) {
-                    jedisConfiguration.injectPoolConfig(redisConnectionFactory.getPoolConfig());
-                }
-                return redisConnectionFactory;
-            default:
-                throw new UnsupportedRedisImplException(redisImpl);
-        }
     }
 }

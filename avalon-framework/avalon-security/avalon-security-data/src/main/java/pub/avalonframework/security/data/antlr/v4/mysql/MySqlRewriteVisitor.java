@@ -551,7 +551,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         this.ruleContextWrapper.addRuntimeBinaryComparisonPredicate();
         sqlBuilder.append(visit(predicate.get(0)));//TODO 后面要删除  条件由归并后的 规则  重新生成
         String symbol = comparisonOperator.getText();
-        this.ruleContextWrapper.setRuntimePredicateExpressionComparisonType(ComparisonOperator.parseComparison(symbol));
+        this.ruleContextWrapper.setRuntimeBinaryComparisonPredicateComparisonOperator(ComparisonOperator.parseComparison(symbol));
         sqlBuilder.appendWithSpace(symbol);//TODO 后面要删除  条件由归并后的 规则  重新生成
         sqlBuilder.append(visit(predicate.get(1)));//TODO 后面要删除  条件由归并后的 规则  重新生成
         return sqlBuilder.toString();
@@ -578,10 +578,16 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
                 tableAlias = uid.getText();
                 columnName = dottedId.getText().substring(1);
             }
-            if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasMasterPredicate()) {
-                this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
-            } else if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasSlavePredicate()) {
-                this.ruleContextWrapper.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
+            if (ruleContextWrapper.hasRuntimeIsNullPredicate()) {
+                //TODO
+            } else if (ruleContextWrapper.hasRuntimeBinaryComparisonPredicate()) {
+                if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasMasterPredicate()) {
+                    this.ruleContextWrapper.setRuntimeBinaryComparisonPredicateMasterPredicate(tableAlias, columnName);
+                } else if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasSlavePredicate()) {
+                    this.ruleContextWrapper.setRuntimeBinaryComparisonPredicateSlavePredicate(tableAlias, columnName);
+                } else {
+                    return sqlSyntaxError();
+                }
             } else {
                 return sqlSyntaxError();
             }
