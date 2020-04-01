@@ -203,6 +203,51 @@ public interface RuleContextOperations {
     PredicateExpression getRuntimePredicateExpression();
 
     /**
+     * 添加运行时子逻辑表达式
+     *
+     * @param logicOperator and | or
+     */
+    void addRuntimeSubLogicExpression(LogicOperator logicOperator);
+
+    /**
+     * 获取运行时逻辑表达式符号
+     *
+     * @return and | or
+     */
+    LogicOperator getRuntimeLogicOperator();
+
+    /**
+     * 添加运行时子规则上下文
+     *
+     * @param key 唯一键
+     * @return 规则上下文
+     */
+    RuleContextOperations addSubRuntimeRuleContext(String key);
+
+    /**
+     * 添加运行时子虚拟规则上下文
+     *
+     * @param key                      唯一键
+     * @param tableColumnNamesInjector 表列名注入器
+     * @return 规则上下文
+     */
+    RuleContextOperations addSubRuntimeVirtualRuleContext(String key, TableColumnNamesInjector tableColumnNamesInjector);
+
+    /**
+     * 获取当前阶段
+     *
+     * @return 阶段
+     */
+    Stage getRuntimeStage();
+
+    /**
+     * 设置当前阶段
+     *
+     * @param stage 阶段
+     */
+    void setRuntimeStage(Stage stage);
+
+    /**
      * 构建列谓语
      *
      * @param tableAlias 表别名
@@ -295,6 +340,16 @@ public interface RuleContextOperations {
             throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type IsNullPredicate.");
         }
         isNullPredicate.setPredicate(predicate);
+    }
+
+    /**
+     * 设置运行时非空判断谓语表达式谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeIsNullPredicatePredicate(String tableAlias, String columnName) {
+        setRuntimeIsNullPredicatePredicate(buildColumnPredicate(tableAlias, columnName));
     }
 
     /**
@@ -421,15 +476,7 @@ public interface RuleContextOperations {
      * @param columnName 列名
      */
     default void setRuntimeBinaryComparisonPredicateSlavePredicate(String tableAlias, String columnName) {
-        BinaryComparisonPredicate binaryComparisonPredicate = getRuntimeBinaryComparisonPredicate();
-        if (binaryComparisonPredicate == null) {
-            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BinaryComparisonPredicate.");
-        }
-        BinaryComparisonPredicate slavePredicate = new BinaryComparisonPredicate();
-        slavePredicate.setMasterPredicate(buildColumnPredicate(tableAlias, columnName));
-        slavePredicate.setComparisonOperator(binaryComparisonPredicate.getComparisonOperator());
-        slavePredicate.setSlavePredicate(binaryComparisonPredicate.getMasterPredicate());
-        binaryComparisonPredicate.setSlavePredicate(slavePredicate.getMasterPredicate());
+        setRuntimeBinaryComparisonPredicateSlavePredicate(buildColumnPredicate(tableAlias, columnName));
     }
 
     /**
@@ -442,49 +489,385 @@ public interface RuleContextOperations {
     }
 
     /**
-     * 添加运行时子逻辑表达式
-     *
-     * @param logicOperator and | or
+     * 添加运行时模糊匹配谓语表达式
      */
-    void addRuntimeSubLogicExpression(LogicOperator logicOperator);
+    default void addRuntimeLikePredicate() {
+        addRuntimePredicateExpression(new LikePredicate());
+    }
 
     /**
-     * 获取运行时逻辑表达式符号
+     * 获取运行时模糊匹配谓语表达式
      *
-     * @return and | or
+     * @return 模糊匹配谓语表达式
      */
-    LogicOperator getRuntimeLogicOperator();
+    default LikePredicate getRuntimeLikePredicate() {
+        PredicateExpression predicateExpression = getRuntimePredicateExpression();
+        if (predicateExpression instanceof LikePredicate) {
+            return (LikePredicate) predicateExpression;
+        }
+        return null;
+    }
 
     /**
-     * 添加运行时子规则上下文
+     * 是否是运行时模糊匹配谓语表达式
      *
-     * @param key 唯一键
-     * @return 规则上下文
+     * @return true | false
      */
-    RuleContextOperations addSubRuntimeRuleContext(String key);
+    default boolean hasRuntimeLikePredicate() {
+        return getRuntimeLikePredicate() != null;
+    }
 
     /**
-     * 添加运行时子虚拟规则上下文
+     * 运行时模糊匹配谓语是否设置过主谓语
      *
-     * @param key                      唯一键
-     * @param tableColumnNamesInjector 表列名注入器
-     * @return 规则上下文
+     * @return true | false
      */
-    RuleContextOperations addSubRuntimeVirtualRuleContext(String key, TableColumnNamesInjector tableColumnNamesInjector);
+    default boolean runtimeLikePredicateHasMasterPredicate() {
+        LikePredicate likePredicate = getRuntimeLikePredicate();
+        if (likePredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type LikePredicate.");
+        }
+        return likePredicate.hasMasterPredicate();
+    }
 
     /**
-     * 获取当前阶段
+     * 设置运行时模糊匹配谓语表达式主谓语
      *
-     * @return 阶段
+     * @param predicate 谓语
      */
-    Stage getRuntimeStage();
+    default void setRuntimeLikePredicateMasterPredicate(Predicate predicate) {
+        LikePredicate likePredicate = getRuntimeLikePredicate();
+        if (likePredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type LikePredicate.");
+        }
+        likePredicate.setMasterPredicate(predicate);
+    }
 
     /**
-     * 设置当前阶段
+     * 设置运行时模糊匹配谓语表达式主谓语
      *
-     * @param stage 阶段
+     * @param tableAlias 表别名
+     * @param columnName 列名
      */
-    void setRuntimeStage(Stage stage);
+    default void setRuntimeLikePredicateMasterPredicate(String tableAlias, String columnName) {
+        setRuntimeLikePredicateMasterPredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 运行时模糊匹配谓语是否设置过从谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeLikePredicateHasSlavePredicate() {
+        LikePredicate likePredicate = getRuntimeLikePredicate();
+        if (likePredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type LikePredicate.");
+        }
+        return likePredicate.hasSlavePredicate();
+    }
+
+    /**
+     * 添加运行时模糊匹配谓语表达式从谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeLikePredicateSlavePredicate(Predicate predicate) {
+        LikePredicate likePredicate = getRuntimeLikePredicate();
+        if (likePredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type LikePredicate.");
+        }
+        likePredicate.setSlavePredicate(predicate);
+    }
+
+    /**
+     * 设置运行时模糊匹配谓语表达式从谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeLikePredicateSlavePredicate(String tableAlias, String columnName) {
+        setRuntimeLikePredicateSlavePredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 设置运行时模糊匹配谓语表达式从谓语
+     *
+     * @param value 值
+     */
+    default void setRuntimeLikePredicateSlavePredicate(Object value) {
+        setRuntimeLikePredicateSlavePredicate(new ConstantPredicate(value));
+    }
+
+    /**
+     * 添加运行时介于谓语表达式
+     */
+    default void addRuntimeBetweenPredicate() {
+        addRuntimePredicateExpression(new BetweenPredicate());
+    }
+
+    /**
+     * 获取运行时介于谓语表达式
+     *
+     * @return 介于谓语表达式
+     */
+    default BetweenPredicate getRuntimeBetweenPredicate() {
+        PredicateExpression predicateExpression = getRuntimePredicateExpression();
+        if (predicateExpression instanceof BetweenPredicate) {
+            return (BetweenPredicate) predicateExpression;
+        }
+        return null;
+    }
+
+    /**
+     * 是否是运行时介于谓语表达式
+     *
+     * @return true | false
+     */
+    default boolean hasRuntimeBetweenPredicate() {
+        return getRuntimeBetweenPredicate() != null;
+    }
+
+    /**
+     * 运行时介于谓语是否设置过谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeBetweenPredicateHasPredicate() {
+        BetweenPredicate betweenPredicate = getRuntimeBetweenPredicate();
+        if (betweenPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BetweenPredicate.");
+        }
+        return betweenPredicate.hasPredicate();
+    }
+
+    /**
+     * 设置运行时介于谓语表达式谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeBetweenPredicatePredicate(Predicate predicate) {
+        BetweenPredicate betweenPredicate = getRuntimeBetweenPredicate();
+        if (betweenPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BetweenPredicate.");
+        }
+        betweenPredicate.setPredicate(predicate);
+    }
+
+    /**
+     * 设置运行时介于谓语表达式谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeBetweenPredicatePredicate(String tableAlias, String columnName) {
+        setRuntimeBetweenPredicatePredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 运行时介于谓语是否设置过主值谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeBetweenPredicateHasMasterValuePredicate() {
+        BetweenPredicate betweenPredicate = getRuntimeBetweenPredicate();
+        if (betweenPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BetweenPredicate.");
+        }
+        return betweenPredicate.hasMasterValuePredicate();
+    }
+
+    /**
+     * 添加运行时介于谓语表达式主值谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeBetweenPredicateMasterValuePredicate(Predicate predicate) {
+        BetweenPredicate betweenPredicate = getRuntimeBetweenPredicate();
+        if (betweenPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BetweenPredicate.");
+        }
+        betweenPredicate.setMasterValuePredicate(predicate);
+    }
+
+    /**
+     * 添加运行时介于谓语表达式主值谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeBetweenPredicateMasterValuePredicate(String tableAlias, String columnName) {
+        setRuntimeBetweenPredicateMasterValuePredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 添加运行时介于谓语表达式主值谓语
+     *
+     * @param value 值
+     */
+    default void setRuntimeBetweenPredicateMasterValuePredicate(Object value) {
+        setRuntimeBetweenPredicateMasterValuePredicate(new ConstantPredicate(value));
+    }
+
+    /**
+     * 运行时介于谓语是否设置过从值谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeBetweenPredicateHasSlaveValuePredicate() {
+        BetweenPredicate betweenPredicate = getRuntimeBetweenPredicate();
+        if (betweenPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BetweenPredicate.");
+        }
+        return betweenPredicate.hasSlaveValuePredicate();
+    }
+
+    /**
+     * 运行时介于谓语是否设置过从值谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeBetweenPredicateSlaveValuePredicate(Predicate predicate) {
+        BetweenPredicate betweenPredicate = getRuntimeBetweenPredicate();
+        if (betweenPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type BetweenPredicate.");
+        }
+        betweenPredicate.setSlaveValuePredicate(predicate);
+    }
+
+    /**
+     * 运行时介于谓语是否设置过从值谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeBetweenPredicateSlaveValuePredicate(String tableAlias, String columnName) {
+        setRuntimeBetweenPredicateSlaveValuePredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 运行时介于谓语是否设置过从值谓语
+     *
+     * @param value 值
+     */
+    default void setRuntimeBetweenPredicateSlaveValuePredicate(Object value) {
+        setRuntimeBetweenPredicateSlaveValuePredicate(new ConstantPredicate(value));
+    }
+
+    /**
+     * 添加运行时在...内谓语表达式
+     */
+    default void addRuntimeInPredicate() {
+        addRuntimePredicateExpression(new InPredicate());
+    }
+
+    /**
+     * 获取运行时在...内谓语表达式
+     *
+     * @return 在...内谓语表达式
+     */
+    default InPredicate getRuntimeInPredicate() {
+        PredicateExpression predicateExpression = getRuntimePredicateExpression();
+        if (predicateExpression instanceof InPredicate) {
+            return (InPredicate) predicateExpression;
+        }
+        return null;
+    }
+
+    /**
+     * 是否是运行时在...内谓语表达式
+     *
+     * @return true | false
+     */
+    default boolean hasRuntimeInPredicate() {
+        return getRuntimeInPredicate() != null;
+    }
+
+    /**
+     * 运行时在...内谓语是否设置过谓语
+     *
+     * @return true | false
+     */
+    default boolean runtimeInPredicateHasPredicate() {
+        InPredicate inPredicate = getRuntimeInPredicate();
+        if (inPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type InPredicate.");
+        }
+        return inPredicate.hasPredicate();
+    }
+
+    /**
+     * 设置运行时在...内谓语表达式谓语
+     *
+     * @param predicate 谓语
+     */
+    default void setRuntimeInPredicatePredicate(Predicate predicate) {
+        InPredicate inPredicate = getRuntimeInPredicate();
+        if (inPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type InPredicate.");
+        }
+        inPredicate.setPredicate(predicate);
+    }
+
+    /**
+     * 设置运行时在...内谓语表达式谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void setRuntimeInPredicatePredicate(String tableAlias, String columnName) {
+        setRuntimeInPredicatePredicate(buildColumnPredicate(tableAlias, columnName));
+    }
+
+    /**
+     * 设置运行时在...内谓语表达式比较运算符
+     *
+     * @param comparisonOperator 比较运算符
+     */
+    default void setRuntimeInPredicateComparisonOperator(ComparisonOperator comparisonOperator) {
+        InPredicate inPredicate = getRuntimeInPredicate();
+        if (inPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type InPredicate.");
+        }
+        inPredicate.setComparisonOperator(comparisonOperator);
+    }
+
+    /**
+     * 添加运行时在...内谓语表达式值谓语
+     *
+     * @param predicate 谓语
+     */
+    default void addRuntimeInPredicateValuePredicate(Predicate predicate) {
+        InPredicate inPredicate = getRuntimeInPredicate();
+        if (inPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type InPredicate.");
+        }
+        inPredicate.addValuePredicates(predicate);
+    }
+
+    /**
+     * 添加运行时在...内谓语表达式值谓语
+     *
+     * @param tableAlias 表别名
+     * @param columnName 列名
+     */
+    default void addRuntimeInPredicateValuePredicate(String tableAlias, String columnName) {
+        InPredicate inPredicate = getRuntimeInPredicate();
+        if (inPredicate == null) {
+            throw new RuleContextException("SQL syntax error: runtimePredicateExpression is not of type InPredicate.");
+        }
+        InPredicate slavePredicate = new InPredicate();
+        slavePredicate.setPredicate(buildColumnPredicate(tableAlias, columnName));
+        inPredicate.addValuePredicates(slavePredicate.getPredicate());
+    }
+
+    /**
+     * 添加运行时在...内谓语表达式值谓语
+     *
+     * @param value 值
+     */
+    default void addRuntimeInPredicateValuePredicate(Object value) {
+        addRuntimeInPredicateValuePredicate(new ConstantPredicate(value));
+    }
 
     /**
      * 阶段
