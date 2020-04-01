@@ -1,5 +1,7 @@
 package pub.avalonframework.wechat.official.account.core.api.config;
 
+import pub.avalonframework.core.api.config.EhCacheConfiguration;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -25,6 +27,37 @@ public class WebPageAuthorizationConfiguration {
     private String userInfoGetUrl;
 
     private String accessTokenValidationUrl;
+
+    private String apiRootPath;
+
+    private String apiGetOauth2Path;
+
+    private String apiGetWebPageAccessTokenPath;
+
+    private String apiGetUserInfoPath;
+
+    private EhCacheConfiguration apiOauth2StateCache;
+
+    public String getOauth2PathWithState(String state) {
+        StringBuilder sb = new StringBuilder(oauth2Path);
+        String redirectUri = getRedirectUri();
+        if (redirectUri != null && !redirectUri.isEmpty()) {
+            sb.append("&redirect_uri=").append(redirectUri);
+        }
+        String responseType = getResponseType();
+        if (responseType != null && !responseType.isEmpty()) {
+            sb.append("&response_type=").append(responseType);
+        }
+        Scope scope = getScope();
+        if (scope != null) {
+            sb.append("&scope=").append(scope.name());
+        }
+        if (state != null && !state.isEmpty()) {
+            sb.append("&state=").append(state);
+        }
+        sb.append("#wechat_redirect");
+        return sb.toString();
+    }
 
     public String getOauth2Path() {
         StringBuilder sb = new StringBuilder(oauth2Path);
@@ -203,5 +236,45 @@ public class WebPageAuthorizationConfiguration {
 
     public void setAccessTokenValidationUrl(String accessTokenValidationUrl) {
         this.accessTokenValidationUrl = accessTokenValidationUrl;
+    }
+
+    public String getApiRootPath() {
+        return apiRootPath;
+    }
+
+    public void setApiRootPath(String apiRootPath) {
+        this.apiRootPath = apiRootPath;
+    }
+
+    public String getApiGetOauth2Path() {
+        return apiGetOauth2Path;
+    }
+
+    public void setApiGetOauth2Path(String apiGetOauth2Path) {
+        this.apiGetOauth2Path = apiGetOauth2Path;
+    }
+
+    public String getApiGetWebPageAccessTokenPath() {
+        return apiGetWebPageAccessTokenPath;
+    }
+
+    public void setApiGetWebPageAccessTokenPath(String apiGetWebPageAccessTokenPath) {
+        this.apiGetWebPageAccessTokenPath = apiGetWebPageAccessTokenPath;
+    }
+
+    public String getApiGetUserInfoPath() {
+        return apiGetUserInfoPath;
+    }
+
+    public void setApiGetUserInfoPath(String apiGetUserInfoPath) {
+        this.apiGetUserInfoPath = apiGetUserInfoPath;
+    }
+
+    public EhCacheConfiguration getApiOauth2StateCache() {
+        return apiOauth2StateCache;
+    }
+
+    public void setApiOauth2StateCache(EhCacheConfiguration apiOauth2StateCache) {
+        this.apiOauth2StateCache = apiOauth2StateCache;
     }
 }

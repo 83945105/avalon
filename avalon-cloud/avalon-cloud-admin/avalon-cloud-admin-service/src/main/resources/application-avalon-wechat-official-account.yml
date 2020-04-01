@@ -42,3 +42,15 @@ spring:
           user-info-get-url: https://api.weixin.qq.com/sns/userinfo?lang=zh_CN
           # 用于校验网页 access_token 的url
           access-token-validation-url: https://api.weixin.qq.com/sns/auth
+          # 网页授权根路径
+          api-root-path: /wechat/official/account/web/page/authorization
+          # 获取网页授权地址, 可以传递参数state
+          api-get-oauth2-path: /get/oauth2Path
+          # 获取网页授权 access_token
+          api-get-web-page-access-token-path: /get/webPageAccessToken
+          # 获取网页授权用户信息
+          api-get-user-info-path: /get/userInfo
+          # 网页授权state缓存 用于缓存传递数据
+          api-oauth2-state-cache:
+            # 缓存别名
+            alias: WECHAT_OFFICIAL_ACCOUNT_OAUTH2_STATE

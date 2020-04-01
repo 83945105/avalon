@@ -231,13 +231,13 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         this.ruleContextWrapper.switchToParentRuntimeRuleContext();
         sqlBuilder.appendWithSpace(rrBracket);
         if (ruleContextWrapper.runtimePredicateExpressionStage()) {
-            if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
+//            if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
 //                this.ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
-            } else if (!ruleContextWrapper.hasRuntimePredicateExpressionValue()) {
+//            } else if (!ruleContextWrapper.hasRuntimePredicateExpressionValue()) {
 //                this.ruleContextWrapper.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
-            } else {
-                return sqlSyntaxError();
-            }
+//            } else {
+//                return sqlSyntaxError();
+//            }
         }
         return sqlBuilder.toString();
     }

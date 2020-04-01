@@ -24,7 +24,7 @@ public class ColumnRule implements ColumnRuleOperations {
 
     @Override
     public LogicExpression addLogicExpression(LogicOperator logicOperator) {
-        LogicExpression logicExpression = new LogicExpression(logicOperator, tableName, tableAlias);
+        LogicExpression logicExpression = new LogicExpression(logicOperator);
         this.logicExpressions.add(logicExpression);
         return logicExpression;
     }

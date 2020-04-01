@@ -3,15 +3,15 @@ package pub.avalonframework.wechat.official.account.spring.web.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
-import pub.avalonframework.common.utils.HttpUtils;
-import pub.avalonframework.web.spring.http.response.exception.impl.ErrorMessageException;
 import pub.avalonframework.wechat.official.account.core.UserInfoResponse;
 import pub.avalonframework.wechat.official.account.core.WebPageAccessTokenRefreshResponse;
 import pub.avalonframework.wechat.official.account.core.WebPageAccessTokenResponse;
 import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+import pub.avalonframework.common.utils.HttpUtils;
+import pub.avalonframework.web.spring.http.response.exception.impl.ErrorMessageException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -48,6 +48,16 @@ public final class WOAWebUtils {
      */
     public String getOAuth2Path() {
         return webPageAuthorizationConfiguration.getOauth2Path();
+    }
+
+    /**
+     * 获取开放授权地址
+     *
+     * @param state 传递的参数
+     * @return 开放授权地址
+     */
+    public String getOauth2PathWithState(String state) {
+        return webPageAuthorizationConfiguration.getOauth2PathWithState(state);
     }
 
     /**

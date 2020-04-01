@@ -58,3 +58,6 @@ spring:
         release-resources:
         # 放行静态资源
         - ${spring.mvc.static-path-pattern}
+        # 放行公众号相关接口
+        - /wechat/official/account/**
+        - /wechat/official/account/web/page/authorization/**

@@ -115,7 +115,7 @@ public class ShiroSpringBootConfiguration implements EnvironmentAware {
         SimpleCookie cookie = new SimpleCookie();
         SessionConfiguration sessionConfiguration = this.securityConfiguration.getSession();
         cookie.setName(sessionConfiguration.getSessionIdName());
-        cookie.setMaxAge(Integer.valueOf(sessionConfiguration.getCookieMaxAge() + ""));
+        cookie.setMaxAge(Integer.parseInt(sessionConfiguration.getCookieMaxAge() + ""));
         cookie.setHttpOnly(true);
         return cookie;
     }

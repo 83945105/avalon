@@ -1,14 +1,14 @@
-package pub.avalonframework.wechat.official.account.spring.web;
+package pub.avalonframework.wechat.official.account.spring.web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
 import pub.avalonframework.wechat.official.account.core.request.RequestMessageDistributor;
 import pub.avalonframework.wechat.official.account.core.response.BaseMessage;
 import pub.avalonframework.wechat.official.account.core.utils.RequestMessageUtils;
 import pub.avalonframework.wechat.official.account.core.utils.SignUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +20,9 @@ import java.util.Map;
  */
 @RequestMapping("${spring.avalon.wechat.official-account.api-entrance-root-path}")
 @RestController
-public class EntranceController {
+public class WechatOfficialAccountEntranceController {
 
-    @Autowired
+    @Autowired(required = false)
     private WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration;
 
     private void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
