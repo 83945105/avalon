@@ -489,6 +489,13 @@ public interface RuleContextOperations {
     }
 
     /**
+     * 设置运行时双边比较谓语表达式从谓语
+     */
+    default void setRuntimeBinaryComparisonPredicateSlavePredicate() {
+        setRuntimeBinaryComparisonPredicateSlavePredicate(new SubqueryPredicate());
+    }
+
+    /**
      * 添加运行时模糊匹配谓语表达式
      */
     default void addRuntimeLikePredicate() {
@@ -596,6 +603,13 @@ public interface RuleContextOperations {
      */
     default void setRuntimeLikePredicateSlavePredicate(Object value) {
         setRuntimeLikePredicateSlavePredicate(new ConstantPredicate(value));
+    }
+
+    /**
+     * 设置运行时模糊匹配谓语表达式从谓语
+     */
+    default void setRuntimeLikePredicateSlavePredicate() {
+        setRuntimeLikePredicateSlavePredicate(new SubqueryPredicate());
     }
 
     /**
@@ -709,6 +723,13 @@ public interface RuleContextOperations {
     }
 
     /**
+     * 添加运行时介于谓语表达式主值谓语
+     */
+    default void setRuntimeBetweenPredicateMasterValuePredicate() {
+        setRuntimeBetweenPredicateMasterValuePredicate(new SubqueryPredicate());
+    }
+
+    /**
      * 运行时介于谓语是否设置过从值谓语
      *
      * @return true | false
@@ -751,6 +772,13 @@ public interface RuleContextOperations {
      */
     default void setRuntimeBetweenPredicateSlaveValuePredicate(Object value) {
         setRuntimeBetweenPredicateSlaveValuePredicate(new ConstantPredicate(value));
+    }
+
+    /**
+     * 运行时介于谓语是否设置过从值谓语
+     */
+    default void setRuntimeBetweenPredicateSlaveValuePredicate() {
+        setRuntimeBetweenPredicateSlaveValuePredicate(new SubqueryPredicate());
     }
 
     /**
@@ -867,6 +895,13 @@ public interface RuleContextOperations {
      */
     default void addRuntimeInPredicateValuePredicate(Object value) {
         addRuntimeInPredicateValuePredicate(new ConstantPredicate(value));
+    }
+
+    /**
+     * 添加运行时在...内谓语表达式值谓语
+     */
+    default void addRuntimeInPredicateValuePredicate() {
+        addRuntimeInPredicateValuePredicate(new SubqueryPredicate());
     }
 
     /**

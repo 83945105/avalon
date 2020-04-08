@@ -231,14 +231,38 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         ruleContextWrapper.switchToParentRuntimeRuleContext();
         sqlBuilder.appendWithSpace(rrBracket);
         if (ruleContextWrapper.runtimePredicateExpressionStage()) {
-//            if (!ruleContextWrapper.hasRuntimePredicateExpressionColumn()) {
-//                ruleContextWrapper.setRuntimePredicateExpressionColumn(tableAlias, columnName);
-//            } else if (!ruleContextWrapper.hasRuntimePredicateExpressionValue()) {
-//                ruleContextWrapper.setRuntimePredicateExpressionColumnTypeValue(tableAlias, columnName);
-//            } else {
-//                return sqlSyntaxError();
-//            }
+            if (ruleContextWrapper.hasRuntimeBinaryComparisonPredicate()) {
+                if (!ruleContextWrapper.runtimeBinaryComparisonPredicateHasSlavePredicate()) {
+                    // TODO 临时处理
+                    ruleContextWrapper.setRuntimeBinaryComparisonPredicateSlavePredicate();
+                } else {
+                    return sqlSyntaxError();
+                }
+            } else if (ruleContextWrapper.hasRuntimeLikePredicate()) {
+                if (!ruleContextWrapper.runtimeLikePredicateHasSlavePredicate()) {
+                    // TODO 临时处理
+                    ruleContextWrapper.setRuntimeLikePredicateSlavePredicate();
+                } else {
+                    return sqlSyntaxError();
+                }
+            } else if (ruleContextWrapper.hasRuntimeBetweenPredicate()) {
+                if (!ruleContextWrapper.runtimeBetweenPredicateHasMasterValuePredicate()) {
+                    // TODO 临时处理
+                    ruleContextWrapper.setRuntimeBetweenPredicateMasterValuePredicate();
+                } else if (!ruleContextWrapper.runtimeBetweenPredicateHasSlaveValuePredicate()) {
+                    // TODO 临时处理
+                    ruleContextWrapper.setRuntimeBetweenPredicateSlaveValuePredicate();
+                } else {
+                    return sqlSyntaxError();
+                }
+            } else if (ruleContextWrapper.hasRuntimeInPredicate()) {
+                // TODO 临时处理
+                ruleContextWrapper.addRuntimeInPredicateValuePredicate();
+            } else {
+                return sqlSyntaxError();
+            }
         }
+
         return sqlBuilder.toString();
     }
 
