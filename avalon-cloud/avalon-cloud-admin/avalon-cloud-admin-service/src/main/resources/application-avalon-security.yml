@@ -4,7 +4,7 @@ spring:
       # 是否启用安全模块
       enabled: false
       # 缓存类型: EHCACHE、REDIS
-      cache-type: REDIS
+      cache-type: EHCACHE
       http:
         # 用于鉴别是否是ajax请求的请求头key
         ajax-header-identification-key: X-Requested-With
@@ -30,9 +30,8 @@ spring:
         user-name-key: username
         # 登录用户密码key,一般为password
         pass-word-key: password
-        # 登录请求地址 微服务架构需要带上微服务前缀地址如：/route-gar
-        url: /gar/api-gar/post/login
-        #  url: /route-gar/api-gar/post/login
+        # 登录请求地址
+        url: /avalon/api/post/login
         # 登录页面地址
         # 当未登录时访问页面,将根据访问根路径从zuul的数据库路由中进行匹配,匹配到对应微服务将重定向到对应微服务配置的登录地址
         # 如果没有匹配到对应微服务,将跳转到该地址
@@ -56,8 +55,8 @@ spring:
         form-filter-name: authc
         # 放行的资源
         release-resources:
-        # 放行静态资源
-        - ${spring.mvc.static-path-pattern}
-        # 放行公众号相关接口
-        - /wechat/official/account/**
-        - /wechat/official/account/web/page/authorization/**
+          # 放行静态资源
+          - ${spring.mvc.static-path-pattern}
+          # 放行公众号相关接口
+          - /wechat/official/account/**
+          - /wechat/official/account/web/page/authorization/**

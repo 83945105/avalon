@@ -1,4 +1,4 @@
-package pub.avalonframework.wechat.official.account.core;
+package pub.avalonframework.wechat.official.account.core.webpage;
 
 /**
  * @author baichao

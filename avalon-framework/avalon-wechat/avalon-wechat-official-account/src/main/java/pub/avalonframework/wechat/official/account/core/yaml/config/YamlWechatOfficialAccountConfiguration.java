@@ -29,6 +29,8 @@ public class YamlWechatOfficialAccountConfiguration implements YamlConfiguration
 
     private YamlWebPageAuthorizationConfiguration webPageAuthorization;
 
+    private YamlCustomMenuConfiguration customMenu;
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -115,5 +117,13 @@ public class YamlWechatOfficialAccountConfiguration implements YamlConfiguration
 
     public void setWebPageAuthorization(YamlWebPageAuthorizationConfiguration webPageAuthorization) {
         this.webPageAuthorization = webPageAuthorization;
+    }
+
+    public YamlCustomMenuConfiguration getCustomMenu() {
+        return customMenu;
+    }
+
+    public void setCustomMenu(YamlCustomMenuConfiguration customMenu) {
+        this.customMenu = customMenu;
     }
 }

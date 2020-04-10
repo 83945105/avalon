@@ -32,53 +32,18 @@ public class WebPageAuthorizationConfiguration {
 
     private String apiGetOauth2Path;
 
+    private String apiRedirectOauth2Path;
+
+    private String apiAcceptCodePath;
+
     private String apiGetWebPageAccessTokenPath;
 
     private String apiGetUserInfoPath;
 
     private EhCacheConfiguration apiOauth2StateCache;
 
-    public String getOauth2PathWithState(String state) {
-        StringBuilder sb = new StringBuilder(oauth2Path);
-        String redirectUri = getRedirectUri();
-        if (redirectUri != null && !redirectUri.isEmpty()) {
-            sb.append("&redirect_uri=").append(redirectUri);
-        }
-        String responseType = getResponseType();
-        if (responseType != null && !responseType.isEmpty()) {
-            sb.append("&response_type=").append(responseType);
-        }
-        Scope scope = getScope();
-        if (scope != null) {
-            sb.append("&scope=").append(scope.name());
-        }
-        if (state != null && !state.isEmpty()) {
-            sb.append("&state=").append(state);
-        }
-        sb.append("#wechat_redirect");
-        return sb.toString();
-    }
-
     public String getOauth2Path() {
-        StringBuilder sb = new StringBuilder(oauth2Path);
-        String redirectUri = getRedirectUri();
-        if (redirectUri != null && !redirectUri.isEmpty()) {
-            sb.append("&redirect_uri=").append(redirectUri);
-        }
-        String responseType = getResponseType();
-        if (responseType != null && !responseType.isEmpty()) {
-            sb.append("&response_type=").append(responseType);
-        }
-        Scope scope = getScope();
-        if (scope != null) {
-            sb.append("&scope=").append(scope.name());
-        }
-        String state = getState();
-        if (state != null && !state.isEmpty()) {
-            sb.append("&state=").append(state);
-        }
-        sb.append("#wechat_redirect");
-        return sb.toString();
+        return oauth2Path;
     }
 
     public void setOauth2Path(String oauth2Path) {
@@ -86,12 +51,7 @@ public class WebPageAuthorizationConfiguration {
     }
 
     public String getRedirectUri() {
-        try {
-            return URLEncoder.encode(redirectUri, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return redirectUri;
     }
 
     public void setRedirectUri(String redirectUri) {
@@ -126,65 +86,12 @@ public class WebPageAuthorizationConfiguration {
         return accessTokenGetUrl;
     }
 
-    public String getAccessTokenGetUrl(String code) {
-        return getAccessTokenGetUrl(null, null, code);
-    }
-
-    public String getAccessTokenGetUrl(WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration, String code) {
-        return getAccessTokenGetUrl(wechatOfficialAccountConfiguration.getAppId(), wechatOfficialAccountConfiguration.getSecret(), code);
-    }
-
-    public String getAccessTokenGetUrl(String appId, String secret, String code) {
-        StringBuilder sb = new StringBuilder(accessTokenGetUrl);
-        if (!accessTokenGetUrl.contains("?")) {
-            sb.append("?");
-        }
-        if (!accessTokenGetUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
-            sb.append("&appid=").append(appId);
-        }
-        if (!accessTokenGetUrl.contains("secret=") && secret != null && !secret.isEmpty()) {
-            sb.append("&secret=").append(secret);
-        }
-        if (!accessTokenGetUrl.contains("code=") && code != null && !code.isEmpty()) {
-            sb.append("&code=").append(code);
-        }
-        if (!accessTokenGetUrl.contains("grant_type=")) {
-            sb.append("&grant_type=").append("authorization_code");
-        }
-        return sb.toString();
-    }
-
     public void setAccessTokenGetUrl(String accessTokenGetUrl) {
         this.accessTokenGetUrl = accessTokenGetUrl;
     }
 
     public String getAccessTokenRefreshUrl() {
         return accessTokenRefreshUrl;
-    }
-
-    public String getAccessTokenRefreshUrl(String refreshToken) {
-        return getAccessTokenRefreshUrl((String) null, refreshToken);
-    }
-
-    public String getAccessTokenRefreshUrl(WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration, String refreshToken) {
-        return getAccessTokenRefreshUrl(wechatOfficialAccountConfiguration.getAppId(), refreshToken);
-    }
-
-    public String getAccessTokenRefreshUrl(String appId, String refreshToken) {
-        StringBuilder sb = new StringBuilder(accessTokenRefreshUrl);
-        if (!accessTokenRefreshUrl.contains("?")) {
-            sb.append("?");
-        }
-        if (!accessTokenRefreshUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
-            sb.append("&appid=").append(appId);
-        }
-        if (!accessTokenRefreshUrl.contains("refresh_token=") && refreshToken != null && !refreshToken.isEmpty()) {
-            sb.append("&refresh_token=").append(refreshToken);
-        }
-        if (!accessTokenRefreshUrl.contains("grant_type=")) {
-            sb.append("&grant_type=").append("refresh_token");
-        }
-        return sb.toString();
     }
 
     public void setAccessTokenRefreshUrl(String accessTokenRefreshUrl) {
@@ -195,43 +102,12 @@ public class WebPageAuthorizationConfiguration {
         return userInfoGetUrl;
     }
 
-    public String getUserInfoGetUrl(String accessToken, String openId) {
-        StringBuilder sb = new StringBuilder(userInfoGetUrl);
-        if (!userInfoGetUrl.contains("?")) {
-            sb.append("?");
-        }
-        if (!userInfoGetUrl.contains("access_token=") && accessToken != null && !accessToken.isEmpty()) {
-            sb.append("&access_token=").append(accessToken);
-        }
-        if (!userInfoGetUrl.contains("openid=") && openId != null && !openId.isEmpty()) {
-            sb.append("&openid=").append(openId);
-        }
-        if (!userInfoGetUrl.contains("lang=")) {
-            sb.append("&lang=").append("zh_CN");
-        }
-        return sb.toString();
-    }
-
     public void setUserInfoGetUrl(String userInfoGetUrl) {
         this.userInfoGetUrl = userInfoGetUrl;
     }
 
     public String getAccessTokenValidationUrl() {
         return accessTokenValidationUrl;
-    }
-
-    public String getAccessTokenValidationUrl(String accessToken, String openId) {
-        StringBuilder sb = new StringBuilder(accessTokenValidationUrl);
-        if (!accessTokenValidationUrl.contains("?")) {
-            sb.append("?");
-        }
-        if (!accessTokenValidationUrl.contains("access_token=") && accessToken != null && !accessToken.isEmpty()) {
-            sb.append("&access_token=").append(accessToken);
-        }
-        if (!accessTokenValidationUrl.contains("openid=") && openId != null && !openId.isEmpty()) {
-            sb.append("&openid=").append(openId);
-        }
-        return sb.toString();
     }
 
     public void setAccessTokenValidationUrl(String accessTokenValidationUrl) {
@@ -252,6 +128,22 @@ public class WebPageAuthorizationConfiguration {
 
     public void setApiGetOauth2Path(String apiGetOauth2Path) {
         this.apiGetOauth2Path = apiGetOauth2Path;
+    }
+
+    public String getApiRedirectOauth2Path() {
+        return apiRedirectOauth2Path;
+    }
+
+    public void setApiRedirectOauth2Path(String apiRedirectOauth2Path) {
+        this.apiRedirectOauth2Path = apiRedirectOauth2Path;
+    }
+
+    public String getApiAcceptCodePath() {
+        return apiAcceptCodePath;
+    }
+
+    public void setApiAcceptCodePath(String apiAcceptCodePath) {
+        this.apiAcceptCodePath = apiAcceptCodePath;
     }
 
     public String getApiGetWebPageAccessTokenPath() {
@@ -276,5 +168,141 @@ public class WebPageAuthorizationConfiguration {
 
     public void setApiOauth2StateCache(EhCacheConfiguration apiOauth2StateCache) {
         this.apiOauth2StateCache = apiOauth2StateCache;
+    }
+
+    public String getAutoAssembleOauth2PathWithState(String state) {
+        StringBuilder sb = new StringBuilder(oauth2Path);
+        String redirectUri = getURLEncoderRedirectUri();
+        if (redirectUri != null && !redirectUri.isEmpty()) {
+            sb.append("&redirect_uri=").append(redirectUri);
+        }
+        String responseType = getResponseType();
+        if (responseType != null && !responseType.isEmpty()) {
+            sb.append("&response_type=").append(responseType);
+        }
+        Scope scope = getScope();
+        if (scope != null) {
+            sb.append("&scope=").append(scope.name());
+        }
+        if (state != null && !state.isEmpty()) {
+            sb.append("&state=").append(state);
+        }
+        sb.append("#wechat_redirect");
+        return sb.toString();
+    }
+
+    public String getAutoAssembleOauth2Path() {
+        StringBuilder sb = new StringBuilder(oauth2Path);
+        String redirectUri = getURLEncoderRedirectUri();
+        if (redirectUri != null && !redirectUri.isEmpty()) {
+            sb.append("&redirect_uri=").append(redirectUri);
+        }
+        String responseType = getResponseType();
+        if (responseType != null && !responseType.isEmpty()) {
+            sb.append("&response_type=").append(responseType);
+        }
+        Scope scope = getScope();
+        if (scope != null) {
+            sb.append("&scope=").append(scope.name());
+        }
+        String state = getState();
+        if (state != null && !state.isEmpty()) {
+            sb.append("&state=").append(state);
+        }
+        sb.append("#wechat_redirect");
+        return sb.toString();
+    }
+
+    public String getURLEncoderRedirectUri() {
+        try {
+            return URLEncoder.encode(redirectUri, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getAutoAssembleAccessTokenGetUrlWithCode(String code) {
+        return getAutoAssembleAccessTokenGetUrlWithAppIdAndSecretAndCode(null, null, code);
+    }
+
+    public String getAutoAssembleAccessTokenGetUrlWithWechatOfficialAccountConfigurationAndCode(WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration, String code) {
+        return getAutoAssembleAccessTokenGetUrlWithAppIdAndSecretAndCode(wechatOfficialAccountConfiguration.getAppId(), wechatOfficialAccountConfiguration.getSecret(), code);
+    }
+
+    public String getAutoAssembleAccessTokenGetUrlWithAppIdAndSecretAndCode(String appId, String secret, String code) {
+        StringBuilder sb = new StringBuilder(accessTokenGetUrl);
+        if (!accessTokenGetUrl.contains("?")) {
+            sb.append("?");
+        }
+        if (!accessTokenGetUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
+            sb.append("&appid=").append(appId);
+        }
+        if (!accessTokenGetUrl.contains("secret=") && secret != null && !secret.isEmpty()) {
+            sb.append("&secret=").append(secret);
+        }
+        if (!accessTokenGetUrl.contains("code=") && code != null && !code.isEmpty()) {
+            sb.append("&code=").append(code);
+        }
+        if (!accessTokenGetUrl.contains("grant_type=")) {
+            sb.append("&grant_type=").append("authorization_code");
+        }
+        return sb.toString();
+    }
+
+    public String getAutoAssembleAccessTokenRefreshUrlWithRefreshToken(String refreshToken) {
+        return getAutoAssembleAccessTokenRefreshUrlWithAppIdAndRefreshToken(null, refreshToken);
+    }
+
+    public String getAutoAssembleAccessTokenRefreshUrlWithWechatOfficialAccountConfigurationAndRefreshToken(WechatOfficialAccountConfiguration wechatOfficialAccountConfiguration, String refreshToken) {
+        return getAutoAssembleAccessTokenRefreshUrlWithAppIdAndRefreshToken(wechatOfficialAccountConfiguration.getAppId(), refreshToken);
+    }
+
+    public String getAutoAssembleAccessTokenRefreshUrlWithAppIdAndRefreshToken(String appId, String refreshToken) {
+        StringBuilder sb = new StringBuilder(accessTokenRefreshUrl);
+        if (!accessTokenRefreshUrl.contains("?")) {
+            sb.append("?");
+        }
+        if (!accessTokenRefreshUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
+            sb.append("&appid=").append(appId);
+        }
+        if (!accessTokenRefreshUrl.contains("refresh_token=") && refreshToken != null && !refreshToken.isEmpty()) {
+            sb.append("&refresh_token=").append(refreshToken);
+        }
+        if (!accessTokenRefreshUrl.contains("grant_type=")) {
+            sb.append("&grant_type=").append("refresh_token");
+        }
+        return sb.toString();
+    }
+
+    public String getAutoAssembleUserInfoGetUrlWithAccessTokenAndOpenId(String accessToken, String openId) {
+        StringBuilder sb = new StringBuilder(userInfoGetUrl);
+        if (!userInfoGetUrl.contains("?")) {
+            sb.append("?");
+        }
+        if (!userInfoGetUrl.contains("access_token=") && accessToken != null && !accessToken.isEmpty()) {
+            sb.append("&access_token=").append(accessToken);
+        }
+        if (!userInfoGetUrl.contains("openid=") && openId != null && !openId.isEmpty()) {
+            sb.append("&openid=").append(openId);
+        }
+        if (!userInfoGetUrl.contains("lang=")) {
+            sb.append("&lang=").append("zh_CN");
+        }
+        return sb.toString();
+    }
+
+    public String getAutoAssembleAccessTokenValidationUrlWithAccessTokenAndOpenId(String accessToken, String openId) {
+        StringBuilder sb = new StringBuilder(accessTokenValidationUrl);
+        if (!accessTokenValidationUrl.contains("?")) {
+            sb.append("?");
+        }
+        if (!accessTokenValidationUrl.contains("access_token=") && accessToken != null && !accessToken.isEmpty()) {
+            sb.append("&access_token=").append(accessToken);
+        }
+        if (!accessTokenValidationUrl.contains("openid=") && openId != null && !openId.isEmpty()) {
+            sb.append("&openid=").append(openId);
+        }
+        return sb.toString();
     }
 }

@@ -4,23 +4,6 @@ import feign.FeignException;
 import feign.RequestInterceptor;
 import feign.codec.Decoder;
 import feign.optionals.OptionalDecoder;
-import pub.avalonframework.security.core.api.service.WebService;
-import pub.avalonframework.shiro.service.impl.ShiroWebServiceImpl;
-import pub.avalonframework.web.spring.api.config.CorsConfiguration;
-import pub.avalonframework.web.spring.api.config.WebSpringConfiguration;
-import pub.avalonframework.web.spring.http.response.HttpResultInfo;
-import pub.avalonframework.web.spring.http.response.exception.ResponseException;
-import pub.avalonframework.web.spring.http.response.feign.codec.ResponseViewDecoder;
-import pub.avalonframework.web.spring.http.response.view.ExceptionView;
-import pub.avalonframework.web.spring.http.response.view.MessageView;
-import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
-import pub.avalonframework.web.spring.http.response.view.impl.ExceptionMessageView;
-import pub.avalonframework.wechat.official.account.core.UserInfoResponse;
-import pub.avalonframework.wechat.official.account.core.WebPageAccessTokenResponse;
-import pub.avalonframework.wechat.official.account.spring.web.entity.WebPageAuthorizationResponse;
-import pub.avalonframework.wechat.official.account.spring.web.service.WechatOfficialAccountWebPageAuthorizationService;
-import pub.avalonframework.wechat.official.account.spring.web.service.impl.WechatOfficialAccountWebPageAuthorizationServiceImpl;
-import pub.avalonframework.wechat.official.account.spring.web.utils.WOAWebUtils;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.ObjectFactory;
@@ -43,11 +26,29 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import pub.avalonframework.security.core.api.service.WebService;
+import pub.avalonframework.shiro.service.impl.ShiroWebServiceImpl;
+import pub.avalonframework.web.spring.api.config.CorsConfiguration;
+import pub.avalonframework.web.spring.api.config.WebSpringConfiguration;
+import pub.avalonframework.web.spring.http.response.HttpResultInfo;
+import pub.avalonframework.web.spring.http.response.exception.ResponseException;
+import pub.avalonframework.web.spring.http.response.feign.codec.ResponseViewDecoder;
+import pub.avalonframework.web.spring.http.response.view.ExceptionView;
+import pub.avalonframework.web.spring.http.response.view.MessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.EntityMessageView;
+import pub.avalonframework.web.spring.http.response.view.impl.ExceptionMessageView;
+import pub.avalonframework.wechat.official.account.core.webpage.UserInfoResponse;
+import pub.avalonframework.wechat.official.account.core.webpage.WebPageAccessTokenResponse;
+import pub.avalonframework.wechat.official.account.spring.web.entity.CacheValue;
+import pub.avalonframework.wechat.official.account.spring.web.entity.WebPageAuthorizationResponse;
+import pub.avalonframework.wechat.official.account.spring.web.service.WechatOfficialAccountWebPageAuthorizationService;
+import pub.avalonframework.wechat.official.account.spring.web.service.impl.WechatOfficialAccountWebPageAuthorizationServiceImpl;
+import pub.avalonframework.wechat.official.account.spring.web.utils.WOAWebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
-import java.util.UUID;
+import java.util.Map;
 
 /**
  * Avalon cloud configuration.
@@ -194,36 +195,48 @@ public class AvalonCloudConfiguration {
     private final static class WebWechatOfficialAccountWebPageAuthorizationServiceImpl extends WechatOfficialAccountWebPageAuthorizationServiceImpl {
 
         @Override
-        public Object getOauth2Path(String state, HttpServletRequest request, HttpServletResponse response) throws Exception {
-            String oauthPath;
-            if (state == null) {
-                oauthPath = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getOAuth2Path();
+        public Object getOauth2Path(String param, Map<String, String> params, HttpServletRequest request, HttpServletResponse response) throws Exception {
+            String oauth2Path;
+            if (param == null && params == null) {
+                oauth2Path = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getAutoAssembleOauth2Path();
+            } else if (param != null && params != null) {
+                CacheValue value = new CacheValue();
+                value.setParam(param);
+                value.setParams(params);
+                String key = setCache(value);
+                oauth2Path = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getAutoAssembleOauth2PathWithState(key);
+            } else if (param != null) {
+                CacheValue value = new CacheValue();
+                value.setParam(param);
+                String key = setCache(value);
+                oauth2Path = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getAutoAssembleOauth2PathWithState(key);
             } else {
-                String stateKey = UUID.randomUUID().toString().replace("-", "");
-                oauth2StateCache.put(stateKey, state);
-                oauthPath = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getOauth2PathWithState(stateKey);
+                CacheValue value = new CacheValue();
+                value.setParams(params);
+                String key = setCache(value);
+                oauth2Path = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getAutoAssembleOauth2PathWithState(key);
             }
-            return new EntityMessageView<>(oauthPath, new HttpResultInfo(HttpStatus.OK));
+            return new EntityMessageView<>(oauth2Path, new HttpResultInfo(HttpStatus.OK));
         }
 
         @Override
-        public Object getWebPageAccessToken(String code, String stateKey, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public Object getWebPageAccessToken(String code, String key, HttpServletRequest request, HttpServletResponse response) throws Exception {
             WebPageAuthorizationResponse<WebPageAccessTokenResponse> webPageAuthorizationResponse = new WebPageAuthorizationResponse<>();
             webPageAuthorizationResponse.setResponse(WOAWebUtils.getInstance(wechatOfficialAccountConfiguration).getWebPageAccessToken(code));
-            if (stateKey != null) {
-                webPageAuthorizationResponse.setState(oauth2StateCache.get(stateKey));
+            if (key != null) {
+                webPageAuthorizationResponse.setData(getCache(key));
             }
             return new EntityMessageView<>(webPageAuthorizationResponse, new HttpResultInfo(HttpStatus.OK));
         }
 
         @Override
-        public Object getUserInfo(String code, String stateKey, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public Object getUserInfo(String code, String key, HttpServletRequest request, HttpServletResponse response) throws Exception {
             WebPageAuthorizationResponse<UserInfoResponse> webPageAuthorizationResponse = new WebPageAuthorizationResponse<>();
             WOAWebUtils woaWebUtils = WOAWebUtils.getInstance(wechatOfficialAccountConfiguration);
             WebPageAccessTokenResponse webPageAccessTokenResponse = woaWebUtils.getWebPageAccessToken(code);
             webPageAuthorizationResponse.setResponse(woaWebUtils.getUserInfo(webPageAccessTokenResponse.getAccess_token(), webPageAccessTokenResponse.getOpenid()));
-            if (stateKey != null) {
-                webPageAuthorizationResponse.setState(oauth2StateCache.get(stateKey));
+            if (key != null) {
+                webPageAuthorizationResponse.setData(getCache(key));
             }
             return new EntityMessageView<>(webPageAuthorizationResponse, new HttpResultInfo(HttpStatus.OK));
         }

@@ -31,6 +31,10 @@ public class YamlWebPageAuthorizationConfiguration implements YamlConfiguration 
 
     private String apiGetOauth2Path;
 
+    private String apiRedirectOauth2Path;
+
+    private String apiAcceptCodePath;
+
     private String apiGetWebPageAccessTokenPath;
 
     private String apiGetUserInfoPath;
@@ -123,6 +127,22 @@ public class YamlWebPageAuthorizationConfiguration implements YamlConfiguration 
 
     public void setApiGetOauth2Path(String apiGetOauth2Path) {
         this.apiGetOauth2Path = apiGetOauth2Path;
+    }
+
+    public String getApiRedirectOauth2Path() {
+        return apiRedirectOauth2Path;
+    }
+
+    public void setApiRedirectOauth2Path(String apiRedirectOauth2Path) {
+        this.apiRedirectOauth2Path = apiRedirectOauth2Path;
+    }
+
+    public String getApiAcceptCodePath() {
+        return apiAcceptCodePath;
+    }
+
+    public void setApiAcceptCodePath(String apiAcceptCodePath) {
+        this.apiAcceptCodePath = apiAcceptCodePath;
     }
 
     public String getApiGetWebPageAccessTokenPath() {

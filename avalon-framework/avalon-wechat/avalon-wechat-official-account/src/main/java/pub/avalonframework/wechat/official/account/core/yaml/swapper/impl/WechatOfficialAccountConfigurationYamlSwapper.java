@@ -1,8 +1,10 @@
 package pub.avalonframework.wechat.official.account.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.yaml.swapper.YamlSwapper;
+import pub.avalonframework.wechat.official.account.core.api.config.CustomMenuConfiguration;
 import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
+import pub.avalonframework.wechat.official.account.core.yaml.config.YamlCustomMenuConfiguration;
 import pub.avalonframework.wechat.official.account.core.yaml.config.YamlWebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.yaml.config.YamlWechatOfficialAccountConfiguration;
 
@@ -49,6 +51,8 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
         configuration.setApiEntranceSubPath(apiEntranceSubPath == null ? DEFAULT_API_ENTRANCE_SUB_PATH : apiEntranceSubPath);
         WebPageAuthorizationConfiguration webPageAuthorization = data.getWebPageAuthorization();
         configuration.setWebPageAuthorization(new WebPageAuthorizationConfigurationYamlSwapper().swap(webPageAuthorization));
+        CustomMenuConfiguration customMenu = data.getCustomMenu();
+        configuration.setCustomMenu(new CustomMenuConfigurationYamlSwapper().swap(customMenu));
         return configuration;
     }
 
@@ -78,6 +82,8 @@ public final class WechatOfficialAccountConfigurationYamlSwapper implements Yaml
         configuration.setApiEntranceSubPath(apiEntranceSubPath == null ? DEFAULT_API_ENTRANCE_SUB_PATH : apiEntranceSubPath);
         YamlWebPageAuthorizationConfiguration webPageAuthorization = yamlConfiguration.getWebPageAuthorization();
         configuration.setWebPageAuthorization(new WebPageAuthorizationConfigurationYamlSwapper().swap(webPageAuthorization));
+        YamlCustomMenuConfiguration customMenu = yamlConfiguration.getCustomMenu();
+        configuration.setCustomMenu(new CustomMenuConfigurationYamlSwapper().swap(customMenu));
         return configuration;
     }
 }

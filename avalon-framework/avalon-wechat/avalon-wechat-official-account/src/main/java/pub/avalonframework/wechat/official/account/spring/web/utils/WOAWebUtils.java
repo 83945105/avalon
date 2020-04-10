@@ -1,19 +1,17 @@
 package pub.avalonframework.wechat.official.account.spring.web.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pub.avalonframework.wechat.official.account.core.UserInfoResponse;
-import pub.avalonframework.wechat.official.account.core.WebPageAccessTokenRefreshResponse;
-import pub.avalonframework.wechat.official.account.core.WebPageAccessTokenResponse;
-import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
-import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 import pub.avalonframework.common.utils.HttpUtils;
 import pub.avalonframework.web.spring.http.response.exception.impl.ErrorMessageException;
+import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
+import pub.avalonframework.wechat.official.account.core.api.config.WechatOfficialAccountConfiguration;
+import pub.avalonframework.wechat.official.account.core.webpage.UserInfoResponse;
+import pub.avalonframework.wechat.official.account.core.webpage.WebPageAccessTokenRefreshResponse;
+import pub.avalonframework.wechat.official.account.core.webpage.WebPageAccessTokenResponse;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -42,35 +40,34 @@ public final class WOAWebUtils {
     }
 
     /**
-     * 获取开放授权地址
+     * 获取自动组装开放授权地址
      *
      * @return 开放授权地址
      */
-    public String getOAuth2Path() {
-        return webPageAuthorizationConfiguration.getOauth2Path();
+    public String getAutoAssembleOauth2Path() {
+        return webPageAuthorizationConfiguration.getAutoAssembleOauth2Path();
     }
 
     /**
-     * 获取开放授权地址
+     * 获取自动组装开放授权地址
      *
      * @param state 传递的参数
      * @return 开放授权地址
      */
-    public String getOauth2PathWithState(String state) {
-        return webPageAuthorizationConfiguration.getOauth2PathWithState(state);
+    public String getAutoAssembleOauth2PathWithState(String state) {
+        return webPageAuthorizationConfiguration.getAutoAssembleOauth2PathWithState(state);
     }
 
     /**
      * 获取网页授权 access_token
      *
      * @param code code作为换取access_token的票据，每次用户授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期。
-     * @return
-     * @throws IOException
+     * @return WebPageAccessTokenResponse
      */
-    public WebPageAccessTokenResponse getWebPageAccessToken(String code) throws IOException {
-        HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAccessTokenGetUrl(wechatOfficialAccountConfiguration, code));
-        String response = EntityUtils.toString(httpResponse.getEntity());
+    public WebPageAccessTokenResponse getWebPageAccessToken(String code) {
         try {
+            HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAutoAssembleAccessTokenGetUrlWithWechatOfficialAccountConfigurationAndCode(wechatOfficialAccountConfiguration, code));
+            String response = EntityUtils.toString(httpResponse.getEntity());
             Map<String, Object> result = OBJECT_MAPPER.readValue(response, MAP_TYPE_REFERENCE);
             Object errcodeObj = result.get("errcode");
             if (errcodeObj != null) {
@@ -89,7 +86,7 @@ public final class WOAWebUtils {
             webPageAccessTokenResponse.setOpenid(String.valueOf(openid));
             webPageAccessTokenResponse.setScope(String.valueOf(scope));
             return webPageAccessTokenResponse;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ErrorMessageException(e);
         }
@@ -98,14 +95,13 @@ public final class WOAWebUtils {
     /**
      * 刷新网页授权 access_token
      *
-     * @param refreshToken
-     * @return
-     * @throws IOException
+     * @param refreshToken 用于刷新的token
+     * @return WebPageAccessTokenRefreshResponse
      */
-    public WebPageAccessTokenRefreshResponse refreshWebPageAccessToken(String refreshToken) throws IOException {
-        HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAccessTokenRefreshUrl(wechatOfficialAccountConfiguration, refreshToken));
-        String response = EntityUtils.toString(httpResponse.getEntity());
+    public WebPageAccessTokenRefreshResponse refreshWebPageAccessToken(String refreshToken) {
         try {
+            HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAutoAssembleAccessTokenRefreshUrlWithWechatOfficialAccountConfigurationAndRefreshToken(wechatOfficialAccountConfiguration, refreshToken));
+            String response = EntityUtils.toString(httpResponse.getEntity());
             Map<String, Object> result = OBJECT_MAPPER.readValue(response, MAP_TYPE_REFERENCE);
             Object errcodeObj = result.get("errcode");
             if (errcodeObj != null) {
@@ -124,7 +120,7 @@ public final class WOAWebUtils {
             webPageAccessTokenRefreshResponse.setOpenid(String.valueOf(openid));
             webPageAccessTokenRefreshResponse.setScope(String.valueOf(scope));
             return webPageAccessTokenRefreshResponse;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ErrorMessageException(e);
         }
@@ -135,13 +131,12 @@ public final class WOAWebUtils {
      *
      * @param webPageAccessToken 网页授权 access_token
      * @param openId             微信用户openid
-     * @return
-     * @throws IOException
+     * @return UserInfoResponse
      */
-    public UserInfoResponse getUserInfo(String webPageAccessToken, String openId) throws IOException {
-        HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getUserInfoGetUrl(webPageAccessToken, openId));
-        String response = EntityUtils.toString(httpResponse.getEntity());
+    public UserInfoResponse getUserInfo(String webPageAccessToken, String openId) {
         try {
+            HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAutoAssembleUserInfoGetUrlWithAccessTokenAndOpenId(webPageAccessToken, openId));
+            String response = EntityUtils.toString(httpResponse.getEntity());
             Map<String, Object> result = OBJECT_MAPPER.readValue(response, MAP_TYPE_REFERENCE);
             Object errcodeObj = result.get("errcode");
             if (errcodeObj != null) {
@@ -168,7 +163,7 @@ public final class WOAWebUtils {
             userInfoResponse.setPrivilege(String.valueOf(privilege));
             userInfoResponse.setUnionid(String.valueOf(unionid));
             return userInfoResponse;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ErrorMessageException(e);
         }
@@ -179,13 +174,12 @@ public final class WOAWebUtils {
      *
      * @param webPageAccessToken 网页授权 access_token
      * @param openId             微信用户openid
-     * @return
-     * @throws IOException
+     * @return true | false
      */
-    public boolean validationWebPageAccessToken(String webPageAccessToken, String openId) throws IOException {
-        HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAccessTokenValidationUrl(webPageAccessToken, openId));
-        String response = EntityUtils.toString(httpResponse.getEntity());
+    public boolean validationWebPageAccessToken(String webPageAccessToken, String openId) {
         try {
+            HttpResponse httpResponse = HttpUtils.getInstance().doGet(webPageAuthorizationConfiguration.getAutoAssembleAccessTokenValidationUrlWithAccessTokenAndOpenId(webPageAccessToken, openId));
+            String response = EntityUtils.toString(httpResponse.getEntity());
             Map<String, Object> result = OBJECT_MAPPER.readValue(response, MAP_TYPE_REFERENCE);
             Object errcodeObj = result.get("errcode");
             Object errmsgObj = result.get("errmsg");
@@ -195,7 +189,7 @@ public final class WOAWebUtils {
                 }
                 throw new ErrorMessageException(Integer.parseInt(errcodeObj.toString()), errmsgObj == null ? "errmsg is null." : errmsgObj.toString());
             }
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ErrorMessageException(e);
         }

@@ -1,13 +1,13 @@
 package pub.avalonframework.wechat.official.account.core.api.config;
 
+import pub.avalonframework.common.utils.HttpUtils;
+import pub.avalonframework.wechat.official.account.core.AccessTokenResponse;
+import pub.avalonframework.wechat.official.account.core.utils.ResponseUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import pub.avalonframework.common.utils.HttpUtils;
-import pub.avalonframework.wechat.official.account.core.AccessTokenResponse;
-import pub.avalonframework.wechat.official.account.core.utils.ResponseUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +39,8 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
     private String apiEntranceSubPath;
 
     private WebPageAuthorizationConfiguration webPageAuthorization;
+
+    private CustomMenuConfiguration customMenu;
 
     public Boolean getEnabled() {
         return enabled;
@@ -73,19 +75,7 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
     }
 
     public String getAccessTokenGetUrl() {
-        StringBuilder sb = new StringBuilder(accessTokenGetUrl);
-        if (!accessTokenGetUrl.contains("?")) {
-            sb.append("?");
-        }
-        String appId = getAppId();
-        if (!accessTokenGetUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
-            sb.append("&appid=").append(appId);
-        }
-        String secret = getSecret();
-        if (!accessTokenGetUrl.contains("secret=") && secret != null && !secret.isEmpty()) {
-            sb.append("&secret=").append(secret);
-        }
-        return sb.toString();
+        return accessTokenGetUrl;
     }
 
     public void setAccessTokenGetUrl(String accessTokenGetUrl) {
@@ -140,6 +130,30 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
         this.webPageAuthorization = webPageAuthorization;
     }
 
+    public CustomMenuConfiguration getCustomMenu() {
+        return customMenu;
+    }
+
+    public void setCustomMenu(CustomMenuConfiguration customMenu) {
+        this.customMenu = customMenu;
+    }
+
+    public String getAutoAssembleAccessTokenGetUrl() {
+        StringBuilder sb = new StringBuilder(accessTokenGetUrl);
+        if (!accessTokenGetUrl.contains("?")) {
+            sb.append("?");
+        }
+        String appId = getAppId();
+        if (!accessTokenGetUrl.contains("appid=") && appId != null && !appId.isEmpty()) {
+            sb.append("&appid=").append(appId);
+        }
+        String secret = getSecret();
+        if (!accessTokenGetUrl.contains("secret=") && secret != null && !secret.isEmpty()) {
+            sb.append("&secret=").append(secret);
+        }
+        return sb.toString();
+    }
+
     @Override
     public void afterPropertiesSet() {
         Thread thread = new Thread(this, "AccessToken Refresh Guard Thread");
@@ -148,7 +162,7 @@ public class WechatOfficialAccountConfiguration implements InitializingBean, Run
     }
 
     private void autoRefreshAccessTokenRun() throws Exception {
-        String accessTokenGetUrl = getAccessTokenGetUrl();
+        String accessTokenGetUrl = getAutoAssembleAccessTokenGetUrl();
         HttpResponse httpResponse = HttpUtils.getInstance().doGet(accessTokenGetUrl);
         String response = EntityUtils.toString(httpResponse.getEntity());
         AccessTokenResponse accessTokenResponse = ResponseUtils.parseAccessTokenResponse(response);

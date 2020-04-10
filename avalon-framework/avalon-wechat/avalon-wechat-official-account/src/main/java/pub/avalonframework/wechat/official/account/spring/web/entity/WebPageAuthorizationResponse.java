@@ -7,7 +7,7 @@ public class WebPageAuthorizationResponse<T> {
 
     private T response;
 
-    private String state;
+    private CacheValue data;
 
     public T getResponse() {
         return response;
@@ -17,11 +17,11 @@ public class WebPageAuthorizationResponse<T> {
         this.response = response;
     }
 
-    public String getState() {
-        return state;
+    public CacheValue getData() {
+        return data;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setData(CacheValue data) {
+        this.data = data;
     }
 }

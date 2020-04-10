@@ -405,7 +405,6 @@ public final class DefaultMySqlDataBlockBuilderTemplate implements MySqlDataBloc
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void appendSqlWithComparisonDataBlockValueType(StringBuilder sql, List<Object> args, AbstractComparisonDataBlock<?> comparisonDataBlock) {
         ComparisonValueType valueType = comparisonDataBlock.getValueType();
         switch (valueType) {

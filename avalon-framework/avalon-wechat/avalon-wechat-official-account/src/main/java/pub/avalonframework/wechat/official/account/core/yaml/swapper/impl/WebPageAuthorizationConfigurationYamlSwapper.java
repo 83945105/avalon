@@ -2,11 +2,11 @@ package pub.avalonframework.wechat.official.account.core.yaml.swapper.impl;
 
 import pub.avalonframework.core.api.config.EhCacheConfiguration;
 import pub.avalonframework.core.yaml.config.YamlEhCacheConfiguration;
+import pub.avalonframework.core.yaml.swapper.YamlSwapper;
 import pub.avalonframework.core.yaml.swapper.impl.EhCacheConfigurationYamlSwapper;
 import pub.avalonframework.wechat.official.account.core.api.config.Scope;
 import pub.avalonframework.wechat.official.account.core.api.config.WebPageAuthorizationConfiguration;
 import pub.avalonframework.wechat.official.account.core.yaml.config.YamlWebPageAuthorizationConfiguration;
-import pub.avalonframework.core.yaml.swapper.YamlSwapper;
 
 /**
  * @author baichao
@@ -16,6 +16,10 @@ public final class WebPageAuthorizationConfigurationYamlSwapper implements YamlS
     private final static String DEFAULT_API_ROOT_PATH = "/wechat/official/account/web/page/authorization";
 
     private final static String DEFAULT_API_GET_OAUTH_2_PATH = "/get/oauth2Path";
+
+    private final static String DEFAULT_API_REDIRECT_OAUTH_2_PATH = "/redirect/oauth2Path";
+
+    private final static String DEFAULT_API_ACCEPT_CODE_PATH = "/accept/code";
 
     private final static String DEFAULT_API_GET_WEB_PAGE_ACCESS_TOKEN_PATH = "/get/webPageAccessToken";
 
@@ -47,6 +51,10 @@ public final class WebPageAuthorizationConfigurationYamlSwapper implements YamlS
         configuration.setApiRootPath(apiRootPath == null ? DEFAULT_API_ROOT_PATH : apiRootPath);
         String apiGetOauth2Path = data.getApiGetOauth2Path();
         configuration.setApiGetOauth2Path(apiGetOauth2Path == null ? DEFAULT_API_GET_OAUTH_2_PATH : apiGetOauth2Path);
+        String apiRedirectOauth2Path = data.getApiRedirectOauth2Path();
+        configuration.setApiRedirectOauth2Path(apiRedirectOauth2Path == null ? DEFAULT_API_REDIRECT_OAUTH_2_PATH : apiRedirectOauth2Path);
+        String apiAcceptCodePath = data.getApiAcceptCodePath();
+        configuration.setApiAcceptCodePath(apiAcceptCodePath == null ? DEFAULT_API_ACCEPT_CODE_PATH : apiAcceptCodePath);
         String apiGetWebPageAccessTokenPath = data.getApiGetWebPageAccessTokenPath();
         configuration.setApiGetWebPageAccessTokenPath(apiGetWebPageAccessTokenPath == null ? DEFAULT_API_GET_WEB_PAGE_ACCESS_TOKEN_PATH : apiGetWebPageAccessTokenPath);
         EhCacheConfiguration apiOauth2StateCache = data.getApiOauth2StateCache();
@@ -82,6 +90,10 @@ public final class WebPageAuthorizationConfigurationYamlSwapper implements YamlS
         configuration.setApiRootPath(apiRootPath == null ? DEFAULT_API_ROOT_PATH : apiRootPath);
         String apiGetOauth2Path = yamlConfiguration.getApiGetOauth2Path();
         configuration.setApiGetOauth2Path(apiGetOauth2Path == null ? DEFAULT_API_GET_OAUTH_2_PATH : apiGetOauth2Path);
+        String apiRedirectOauth2Path = yamlConfiguration.getApiRedirectOauth2Path();
+        configuration.setApiRedirectOauth2Path(apiRedirectOauth2Path == null ? DEFAULT_API_REDIRECT_OAUTH_2_PATH : apiRedirectOauth2Path);
+        String apiAcceptCodePath = yamlConfiguration.getApiAcceptCodePath();
+        configuration.setApiAcceptCodePath(apiAcceptCodePath == null ? DEFAULT_API_ACCEPT_CODE_PATH : apiAcceptCodePath);
         String apiGetWebPageAccessTokenPath = yamlConfiguration.getApiGetWebPageAccessTokenPath();
         configuration.setApiGetWebPageAccessTokenPath(apiGetWebPageAccessTokenPath == null ? DEFAULT_API_GET_WEB_PAGE_ACCESS_TOKEN_PATH : apiGetWebPageAccessTokenPath);
         YamlEhCacheConfiguration apiOauth2StateCache = yamlConfiguration.getApiOauth2StateCache();

@@ -68,23 +68,25 @@ public class RedisWebSessionManager extends DefaultWebSessionManager {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
                     ShiroHttpServletRequest.COOKIE_SESSION_ID_SOURCE);
         } else {
+            String sessionIdName = getSessionIdName();
             // 根据配置文件设置的Cookie Key 也就是前后端分离用于获取token的key
             // 走到这一步说明cookie中没有,那么采取第二方案从请求头中获取
-            // id = WebUtils.toHttp(request).getHeader(this.sessionIdCookie.getName());
-            // 从Get请求的地址栏参数中获取id,要求格式为?JSESSIONID=XX
-            id = this.getUriPathSegmentParamValue(request, ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+            id = WebUtils.toHttp(request).getHeader(sessionIdName);
             if (id == null) {
-                //根据配置文件设置的Cookie Key 也就是前后端分离用于获取token的key
-                //走到这一步说明cookie中没有,那么采取第二方案从请求头中获取
-                String name = getSessionIdName();
-                id = request.getParameter(name);
+                // 从Get请求的地址栏参数中获取id,要求格式为?${sessionIdName}=XX
+                id = this.getUriPathSegmentParamValue(request, sessionIdName);
                 if (id == null) {
-                    id = request.getParameter(name.toLowerCase());
+                    //根据配置文件设置的Cookie Key 也就是前后端分离用于获取token的key
+                    //走到这一步说明cookie中没有,那么采取第二方案从请求头中获取
+                    id = request.getParameter(sessionIdName);
+                    if (id == null) {
+                        id = request.getParameter(sessionIdName.toLowerCase());
+                    }
                 }
-            }
-            if (id != null) {
-                request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
-                        ShiroHttpServletRequest.URL_SESSION_ID_SOURCE);
+                if (id != null) {
+                    request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
+                            ShiroHttpServletRequest.URL_SESSION_ID_SOURCE);
+                }
             }
         }
         if (id != null) {

@@ -30,11 +30,23 @@ public class LogicExpression {
         return logicOperator;
     }
 
+    public void setLogicOperator(LogicOperator logicOperator) {
+        this.logicOperator = logicOperator;
+    }
+
     public List<PredicateExpression> getPredicateExpressions() {
         return predicateExpressions;
     }
 
+    public void setPredicateExpressions(List<PredicateExpression> predicateExpressions) {
+        this.predicateExpressions = predicateExpressions;
+    }
+
     public List<LogicExpression> getLogicExpressions() {
         return logicExpressions;
+    }
+
+    public void setLogicExpressions(List<LogicExpression> logicExpressions) {
+        this.logicExpressions = logicExpressions;
     }
 }
