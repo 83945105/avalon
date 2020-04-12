@@ -13,19 +13,19 @@ public class RuleStore {
      * key - tableName
      * value - tableRule
      */
-    private Map<String, TableRuleOperations> customTableRuleMap = new LinkedHashMap<>();
+    private Map<String, TableRule> customTableRuleMap = new LinkedHashMap<>();
 
     /**
      * 运行时解析的表规则
      * key - tableAlias
      * value - tableRule
      */
-    private Map<String, TableRuleOperations> runtimeTableRuleMap = new LinkedHashMap<>();
+    private Map<String, TableRule> runtimeTableRuleMap = new LinkedHashMap<>();
 
     private Map<String, RuleStore> runtimeSubRuleStoreMap = new LinkedHashMap<>();
 
-    public TableRuleOperations addRuntimeRealTableRule(String tableName, String tableAlias) {
-        TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
+    public TableRule addRuntimeRealTableRule(String tableName, String tableAlias) {
+        TableRule tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             tableRule = new TableRule(tableName, tableAlias);
             runtimeTableRuleMap.put(tableAlias, tableRule);
@@ -33,10 +33,10 @@ public class RuleStore {
         return tableRule;
     }
 
-    public TableRuleOperations addRuntimeVirtualTableRule(String tableAlias) {
-        TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
+    public TableRule addRuntimeVirtualTableRule(String tableAlias) {
+        TableRule tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
-            tableRule = new TableRule(TableRuleOperations.Type.VIRTUAL, tableAlias);
+            tableRule = new TableRule(TableRule.Type.VIRTUAL, tableAlias);
             runtimeTableRuleMap.put(tableAlias, tableRule);
         }
         return tableRule;
@@ -49,7 +49,7 @@ public class RuleStore {
         if (runtimeSubRuleStoreMap.containsKey(key)) {
             throw new RuleContextException();
         }
-        TableRuleOperations tableRule = runtimeTableRuleMap.get(tableAlias);
+        TableRule tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             throw new RuleContextException();
         }
@@ -57,11 +57,11 @@ public class RuleStore {
         runtimeSubRuleStoreMap.put(key, subRuleStore);
     }
 
-    public Map<String, TableRuleOperations> getCustomTableRuleMap() {
+    public Map<String, TableRule> getCustomTableRuleMap() {
         return customTableRuleMap;
     }
 
-    public Map<String, TableRuleOperations> getRuntimeTableRuleMap() {
+    public Map<String, TableRule> getRuntimeTableRuleMap() {
         return runtimeTableRuleMap;
     }
 

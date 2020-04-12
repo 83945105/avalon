@@ -1,5 +1,6 @@
 package pub.avalonframework.security.data;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * @author baichao
  */
-public class TableRule implements TableRuleOperations {
+public class TableRule implements Serializable {
 
     private Type type;
 
@@ -34,57 +35,47 @@ public class TableRule implements TableRuleOperations {
         this.tableAlias = tableAlias;
     }
 
-    @Override
     public ColumnRule addOnColumnRule() {
         ColumnRule onColumnRule = new ColumnRule(tableName, tableAlias);
         this.onRules.add(onColumnRule);
         return onColumnRule;
     }
 
-    @Override
     public ColumnRule addWhereColumnRule() {
         ColumnRule whereColumnRule = new ColumnRule(tableName, tableAlias);
         this.whereRules.add(whereColumnRule);
         return whereColumnRule;
     }
 
-    @Override
     public void addSubRuleStore(String key, RuleStore subRoleStore) {
         this.subRuleStoreMap.put(key, subRoleStore);
     }
 
-    @Override
     public Type getType() {
         return type;
     }
 
-    @Override
     public String getTableName() {
         return tableName;
     }
 
-    @Override
     public String getTableAlias() {
         return tableAlias;
     }
 
-    @Override
     public List<ColumnRule> getOnRules() {
         return onRules;
     }
 
-    @Override
     public List<ColumnRule> getWhereRules() {
         return whereRules;
     }
 
-    @Override
     public Map<String, RuleStore> getSubRuleStoreMap() {
         return subRuleStoreMap;
     }
 
-    @Override
-    public TableRuleOperations merge(TableRuleOperations target) {
+    public TableRule merge(TableRule target) {
         return null;
     }
 
@@ -93,5 +84,9 @@ public class TableRule implements TableRuleOperations {
         StringBuilder sb = new StringBuilder();
 
         return sb.toString();
+    }
+
+    public enum Type {
+        REAL, VIRTUAL
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author baichao
  */
-public class ColumnRule implements ColumnRuleOperations {
+public class ColumnRule {
 
     private String tableName;
 
@@ -22,24 +22,20 @@ public class ColumnRule implements ColumnRuleOperations {
         this.tableAlias = tableAlias;
     }
 
-    @Override
     public LogicExpression addLogicExpression(LogicOperator logicOperator) {
         LogicExpression logicExpression = new LogicExpression(logicOperator);
         this.logicExpressions.add(logicExpression);
         return logicExpression;
     }
 
-    @Override
     public String getTableName() {
         return tableName;
     }
 
-    @Override
     public String getTableAlias() {
         return tableAlias;
     }
 
-    @Override
     public List<LogicExpression> getLogicExpressions() {
         return logicExpressions;
     }

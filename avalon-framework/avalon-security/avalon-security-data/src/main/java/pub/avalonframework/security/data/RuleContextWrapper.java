@@ -298,9 +298,9 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         private RuleStore ruleStore = new RuleStore();
 
-        private TableRuleOperations tableRule;
+        private TableRule tableRule;
 
-        private ColumnRuleOperations columnRule;
+        private ColumnRule columnRule;
 
         private LogicExpression logicExpression;
 
