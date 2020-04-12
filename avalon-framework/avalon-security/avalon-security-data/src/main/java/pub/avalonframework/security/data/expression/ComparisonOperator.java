@@ -8,15 +8,15 @@ public enum ComparisonOperator {
     /**
      * None
      */
-    NONE(null),
+    NONE(new String[0]),
     /**
      * Is null
      */
-    IS_NULL(null),
+    IS_NULL(new String[]{"IS NULL", "is null"}),
     /**
      * Is not null
      */
-    IS_NOT_NULL(null),
+    IS_NOT_NULL(new String[]{"IS NOT NULL", "is not null"}),
     /**
      * Equal to
      */
@@ -62,6 +62,10 @@ public enum ComparisonOperator {
 
     ComparisonOperator(String[] symbols) {
         this.symbols = symbols;
+    }
+
+    public String getSymbol(int index) {
+        return symbols[index];
     }
 
     public static ComparisonOperator parseComparison(String symbol) {

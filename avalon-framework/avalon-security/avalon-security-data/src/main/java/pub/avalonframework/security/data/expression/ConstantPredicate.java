@@ -11,7 +11,17 @@ public final class ConstantPredicate implements Predicate {
         this.value = value;
     }
 
+    public Object getValue() {
+        return value;
+    }
+
     public String getValueString() {
-        return value == null ? null : String.valueOf(value);
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof String) {
+            return "'" + value + "'";
+        }
+        return String.valueOf(value);
     }
 }

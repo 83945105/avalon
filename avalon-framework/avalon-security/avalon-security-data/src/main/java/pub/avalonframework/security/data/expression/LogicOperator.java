@@ -5,12 +5,16 @@ package pub.avalonframework.security.data.expression;
  */
 public enum LogicOperator {
 
-    AND(new String[]{"AND"}), OR(new String[]{"OR"});
+    AND(new String[]{"AND", "and"}), OR(new String[]{"OR", "or"});
 
     private String[] symbols;
 
     LogicOperator(String[] symbols) {
         this.symbols = symbols;
+    }
+
+    public String getSymbol(int index) {
+        return symbols[index];
     }
 
     public static LogicOperator parseLogicOperator(String symbol) {

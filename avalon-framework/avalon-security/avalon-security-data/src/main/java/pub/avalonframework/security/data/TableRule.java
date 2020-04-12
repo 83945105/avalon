@@ -87,4 +87,11 @@ public class TableRule implements TableRuleOperations {
     public TableRuleOperations merge(TableRuleOperations target) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        return sb.toString();
+    }
 }

@@ -513,11 +513,11 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         SqlBuilder sqlBuilder = new SqlBuilder();
         if (and != null) {
             String andStr = and.getText();
-            sqlBuilder.appendWithSpace(andStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
+            sqlBuilder.appendWithSpace(andStr);
         } else {
             String orStr = or.getText();
             ruleContextWrapper.addRuntimeSubLogicExpression(LogicOperator.OR);
-            sqlBuilder.appendWithSpace(orStr);//TODO 后面要删除  条件由归并后的 规则  重新生成
+            sqlBuilder.appendWithSpace(orStr);
         }
         return sqlBuilder.toString();
     }
@@ -737,11 +737,11 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (ruleContextWrapper.getRuntimeLogicOperator() == LogicOperator.AND) {
             ruleContextWrapper.addRuntimeSubLogicExpression(LogicOperator.AND);
         }
-        sqlBuilder.appendWithSpace(lrBracket);//TODO 后面要删除  条件由归并后的 规则  重新生成
+        sqlBuilder.appendWithSpace(lrBracket);
         for (MySqlParser.ExpressionContext expressionContext : expression) {
             sqlBuilder.append(visit(expressionContext));
         }
-        sqlBuilder.appendWithSpace(rrBracket);//TODO 后面要删除  条件由归并后的 规则  重新生成
+        sqlBuilder.appendWithSpace(rrBracket);
         return sqlBuilder.toString();
     }
 

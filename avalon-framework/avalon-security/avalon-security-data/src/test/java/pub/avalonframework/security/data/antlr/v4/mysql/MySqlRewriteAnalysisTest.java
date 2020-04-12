@@ -495,4 +495,10 @@ public class MySqlRewriteAnalysisTest {
 
         //TODO 暂不校验 iterator 元素
     }
+
+    @Test
+    void test09() {
+        Map<String, TableRuleOperations> ruleMap = getRuntimeTableRule("SELECT * FROM USER WHERE ( ID = '1' OR ID = '2' ) OR ID = '3'");
+        Assertions.assertNotNull(ruleMap);
+    }
 }

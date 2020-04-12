@@ -1,20 +1,20 @@
 export default {
-    admin: {
-        tableRules: [{
-            table: "USER",
-            joinRules: [
+    "admin": {
+        "tableRules": [{
+            "table": "USER",
+            "joinRules": [
                 {
-                    joinType: "INNER",
-                    tableName: "ROLE",
-                    onRules: [
+                    "joinType": "INNER",
+                    "tableName": "ROLE",
+                    "onRules": [
                         {
-                            column: "USER_ID",
-                            logicExpression: {
-                                logicOperator: "AND",
-                                predicateExpressions: [
+                            "column": "USER_ID",
+                            "logicExpression": {
+                                "logicOperator": "AND",
+                                "predicateExpressions": [
                                     {
-                                        comparisonOperator: "EQ",
-                                        value: {
+                                        "comparisonOperator": "EQ",
+                                        "value": {
 
                                         }
                                     }
@@ -24,18 +24,18 @@ export default {
                     ]
                 }
             ],
-            onRules: [
+            "onRules": [
                 {
-                    column: "ID",
-                    logicExpression: {
-                        logicOperator: "AND",
-                        logicExpressions: [
+                    "column": "ID",
+                    "logicExpression": {
+                        "logicOperator": "AND",
+                        "logicExpressions": [
                             {
-                                logicOperator: "AND",
-                                predicateExpressions: [
+                                "logicOperator": "AND",
+                                "predicateExpressions": [
                                     {
-                                        comparisonOperator: "EQ",
-                                        value: 1
+                                        "comparisonOperator": "EQ",
+                                        "value": 1
                                     }
                                 ]
                             }
@@ -43,13 +43,13 @@ export default {
                     }
                 },
                 {
-                    column: "AGE",
-                    logicExpression: {
-                        logicOperator: "AND",
-                        predicateExpressions: [
+                    "column": "AGE",
+                    "logicExpression": {
+                        "logicOperator": "AND",
+                        "predicateExpressions": [
                             {
-                                comparisonOperator: "EQ",
-                                value: 1
+                                "comparisonOperator": "EQ",
+                                "value": 1
                             }
                         ]
                     }
