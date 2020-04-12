@@ -1,4 +1,4 @@
-package pub.avalonframework.security.data.utils;
+package pub.avalonframework.database.sql.utils;
 
 import pub.avalonframework.core.beans.AvalonException;
 

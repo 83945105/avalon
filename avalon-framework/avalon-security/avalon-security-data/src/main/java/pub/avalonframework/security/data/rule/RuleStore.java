@@ -1,4 +1,6 @@
-package pub.avalonframework.security.data;
+package pub.avalonframework.security.data.rule;
+
+import pub.avalonframework.database.sql.rule.TableRule;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,23 +22,23 @@ public class RuleStore {
      * key - tableAlias
      * value - tableRule
      */
-    private Map<String, TableRule> runtimeTableRuleMap = new LinkedHashMap<>();
+    private Map<String, ParsedTableRule> runtimeTableRuleMap = new LinkedHashMap<>();
 
     private Map<String, RuleStore> runtimeSubRuleStoreMap = new LinkedHashMap<>();
 
-    public TableRule addRuntimeRealTableRule(String tableName, String tableAlias) {
-        TableRule tableRule = runtimeTableRuleMap.get(tableAlias);
+    public ParsedTableRule addRuntimeRealTableRule(String tableName, String tableAlias) {
+        ParsedTableRule tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
-            tableRule = new TableRule(tableName, tableAlias);
+            tableRule = new ParsedTableRule(tableName, tableAlias);
             runtimeTableRuleMap.put(tableAlias, tableRule);
         }
         return tableRule;
     }
 
-    public TableRule addRuntimeVirtualTableRule(String tableAlias) {
-        TableRule tableRule = runtimeTableRuleMap.get(tableAlias);
+    public ParsedTableRule addRuntimeVirtualTableRule(String tableAlias) {
+        ParsedTableRule tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
-            tableRule = new TableRule(TableRule.Type.VIRTUAL, tableAlias);
+            tableRule = new ParsedTableRule(ParsedTableRule.Type.VIRTUAL, tableAlias);
             runtimeTableRuleMap.put(tableAlias, tableRule);
         }
         return tableRule;
@@ -49,7 +51,7 @@ public class RuleStore {
         if (runtimeSubRuleStoreMap.containsKey(key)) {
             throw new RuleContextException();
         }
-        TableRule tableRule = runtimeTableRuleMap.get(tableAlias);
+        ParsedTableRule tableRule = runtimeTableRuleMap.get(tableAlias);
         if (tableRule == null) {
             throw new RuleContextException();
         }
@@ -61,7 +63,7 @@ public class RuleStore {
         return customTableRuleMap;
     }
 
-    public Map<String, TableRule> getRuntimeTableRuleMap() {
+    public Map<String, ParsedTableRule> getRuntimeTableRuleMap() {
         return runtimeTableRuleMap;
     }
 

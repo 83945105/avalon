@@ -1,5 +1,8 @@
 package pub.avalonframework.security.data.expression;
 
+import pub.avalonframework.database.sql.expression.ComparisonOperator;
+import pub.avalonframework.database.sql.expression.PredicateExpression;
+
 /**
  * @author baichao
  */

@@ -1,5 +1,8 @@
 package pub.avalonframework.security.data.expression;
 
+import pub.avalonframework.database.sql.expression.ComparisonOperator;
+import pub.avalonframework.database.sql.expression.PredicateExpression;
+
 import java.util.LinkedList;
 import java.util.List;
 

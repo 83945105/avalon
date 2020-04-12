@@ -1,6 +1,8 @@
-package pub.avalonframework.security.data;
+package pub.avalonframework.security.data.rule;
 
-import pub.avalonframework.security.data.expression.*;
+import pub.avalonframework.database.sql.expression.LogicExpression;
+import pub.avalonframework.database.sql.expression.LogicOperator;
+import pub.avalonframework.database.sql.expression.PredicateExpression;
 import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
 
 import java.util.*;
@@ -298,9 +300,9 @@ public class RuleContextWrapper implements RuleContextOperations {
 
         private RuleStore ruleStore = new RuleStore();
 
-        private TableRule tableRule;
+        private ParsedTableRule tableRule;
 
-        private ColumnRule columnRule;
+        private ParsedColumnRule columnRule;
 
         private LogicExpression logicExpression;
 

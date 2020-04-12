@@ -19,9 +19,6 @@ public final class ConstantPredicate implements Predicate {
         if (value == null) {
             return null;
         }
-        if (value instanceof String) {
-            return "'" + value + "'";
-        }
         return String.valueOf(value);
     }
 }

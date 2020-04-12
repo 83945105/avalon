@@ -1,5 +1,8 @@
-package pub.avalonframework.security.data;
+package pub.avalonframework.security.data.rule;
 
+import pub.avalonframework.database.sql.expression.ComparisonOperator;
+import pub.avalonframework.database.sql.expression.LogicOperator;
+import pub.avalonframework.database.sql.expression.PredicateExpression;
 import pub.avalonframework.security.data.expression.*;
 
 import java.util.List;

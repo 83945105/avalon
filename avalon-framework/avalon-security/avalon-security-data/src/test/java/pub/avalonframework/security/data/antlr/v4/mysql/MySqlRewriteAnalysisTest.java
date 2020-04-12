@@ -3,12 +3,16 @@ package pub.avalonframework.security.data.antlr.v4.mysql;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pub.avalonframework.security.data.ColumnRule;
-import pub.avalonframework.security.data.RuleStore;
-import pub.avalonframework.security.data.SqlRewrite;
-import pub.avalonframework.security.data.TableRule;
+import pub.avalonframework.database.sql.expression.ComparisonOperator;
+import pub.avalonframework.database.sql.expression.LogicExpression;
+import pub.avalonframework.database.sql.expression.LogicOperator;
+import pub.avalonframework.database.sql.expression.PredicateExpression;
 import pub.avalonframework.security.data.antlr.SqlRewriteBuilder;
 import pub.avalonframework.security.data.expression.*;
+import pub.avalonframework.security.data.rule.ParsedColumnRule;
+import pub.avalonframework.security.data.rule.ParsedTableRule;
+import pub.avalonframework.security.data.rule.RuleStore;
+import pub.avalonframework.security.data.rule.SqlRewrite;
 
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +32,7 @@ public class MySqlRewriteAnalysisTest {
         setPassword("19910405");
     }});
 
-    private Map<String, TableRule> getRuntimeTableRule(String sql) {
+    private Map<String, ParsedTableRule> getRuntimeTableRule(String sql) {
         SqlRewrite sqlRewrite = sqlRewriteBuilder.build(sql);
         sqlRewrite.run();
         RuleStore ruleStore = sqlRewrite.getRuleStore();
@@ -37,12 +41,12 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test01() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT * FROM USER");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT * FROM USER");
         Assertions.assertNotNull(ruleMap);
         Assertions.assertEquals(1, ruleMap.size());
-        TableRule rule = ruleMap.get("USER");
+        ParsedTableRule rule = ruleMap.get("USER");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("USER", rule.getTableName());
         Assertions.assertEquals("USER", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -51,12 +55,12 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test02() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT * FROM USER U");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT * FROM USER U");
         Assertions.assertNotNull(ruleMap);
         Assertions.assertEquals(1, ruleMap.size());
-        TableRule rule = ruleMap.get("U");
+        ParsedTableRule rule = ruleMap.get("U");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("USER", rule.getTableName());
         Assertions.assertEquals("U", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -65,24 +69,24 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test03() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.ID = ''");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.ID = ''");
         Assertions.assertNotNull(ruleMap);
-        TableRule userRule = ruleMap.get("USER");
+        ParsedTableRule userRule = ruleMap.get("USER");
         Assertions.assertNotNull(userRule);
-        Assertions.assertEquals(TableRule.Type.REAL, userRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, userRule.getType());
         Assertions.assertEquals("USER", userRule.getTableName());
         Assertions.assertEquals("USER", userRule.getTableAlias());
         Assertions.assertEquals(0, userRule.getOnRules().size());
         Assertions.assertEquals(0, userRule.getWhereRules().size());
-        TableRule roleRule = ruleMap.get("ROLE");
+        ParsedTableRule roleRule = ruleMap.get("ROLE");
         Assertions.assertNotNull(roleRule);
-        Assertions.assertEquals(TableRule.Type.REAL, roleRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, roleRule.getType());
         Assertions.assertEquals("ROLE", roleRule.getTableName());
         Assertions.assertEquals("ROLE", roleRule.getTableAlias());
-        List<ColumnRule> roleRuleOnRules = roleRule.getOnRules();
+        List<ParsedColumnRule> roleRuleOnRules = roleRule.getOnRules();
         Assertions.assertEquals(1, roleRuleOnRules.size());
         Assertions.assertEquals(0, roleRule.getWhereRules().size());
-        ColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
+        ParsedColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
         Assertions.assertNotNull(roleRuleOnRule);
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableName());
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableAlias());
@@ -116,24 +120,24 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test04() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT U.* FROM USER U INNER JOIN ROLE R ON R.ID = ''");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT U.* FROM USER U INNER JOIN ROLE R ON R.ID = ''");
         Assertions.assertNotNull(ruleMap);
-        TableRule userRule = ruleMap.get("U");
+        ParsedTableRule userRule = ruleMap.get("U");
         Assertions.assertNotNull(userRule);
-        Assertions.assertEquals(TableRule.Type.REAL, userRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, userRule.getType());
         Assertions.assertEquals("USER", userRule.getTableName());
         Assertions.assertEquals("U", userRule.getTableAlias());
         Assertions.assertEquals(0, userRule.getOnRules().size());
         Assertions.assertEquals(0, userRule.getWhereRules().size());
-        TableRule roleRule = ruleMap.get("R");
+        ParsedTableRule roleRule = ruleMap.get("R");
         Assertions.assertNotNull(roleRule);
-        Assertions.assertEquals(TableRule.Type.REAL, roleRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, roleRule.getType());
         Assertions.assertEquals("ROLE", roleRule.getTableName());
         Assertions.assertEquals("R", roleRule.getTableAlias());
-        List<ColumnRule> roleRuleOnRules = roleRule.getOnRules();
+        List<ParsedColumnRule> roleRuleOnRules = roleRule.getOnRules();
         Assertions.assertEquals(1, roleRuleOnRules.size());
         Assertions.assertEquals(0, roleRule.getWhereRules().size());
-        ColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
+        ParsedColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
         Assertions.assertNotNull(roleRuleOnRule);
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableName());
         Assertions.assertEquals("R", roleRuleOnRule.getTableAlias());
@@ -167,24 +171,24 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test05() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.ID = '' AND ROLE.USER_ID = USER.ID");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT USER.* FROM USER INNER JOIN ROLE ON ROLE.ID = '' AND ROLE.USER_ID = USER.ID");
         Assertions.assertNotNull(ruleMap);
-        TableRule userRule = ruleMap.get("USER");
+        ParsedTableRule userRule = ruleMap.get("USER");
         Assertions.assertNotNull(userRule);
-        Assertions.assertEquals(TableRule.Type.REAL, userRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, userRule.getType());
         Assertions.assertEquals("USER", userRule.getTableName());
         Assertions.assertEquals("USER", userRule.getTableAlias());
         Assertions.assertEquals(0, userRule.getOnRules().size());
         Assertions.assertEquals(0, userRule.getWhereRules().size());
-        TableRule roleRule = ruleMap.get("ROLE");
+        ParsedTableRule roleRule = ruleMap.get("ROLE");
         Assertions.assertNotNull(roleRule);
-        Assertions.assertEquals(TableRule.Type.REAL, roleRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, roleRule.getType());
         Assertions.assertEquals("ROLE", roleRule.getTableName());
         Assertions.assertEquals("ROLE", roleRule.getTableAlias());
-        List<ColumnRule> roleRuleOnRules = roleRule.getOnRules();
+        List<ParsedColumnRule> roleRuleOnRules = roleRule.getOnRules();
         Assertions.assertEquals(1, roleRuleOnRules.size());
         Assertions.assertEquals(0, roleRule.getWhereRules().size());
-        ColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
+        ParsedColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
         Assertions.assertNotNull(roleRuleOnRule);
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableName());
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableAlias());
@@ -239,26 +243,26 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test06() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT USER.* FROM ( SELECT * FROM USER ) USER INNER JOIN ROLE ON ROLE.ID = ''");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT USER.* FROM ( SELECT * FROM USER ) USER INNER JOIN ROLE ON ROLE.ID = ''");
         Assertions.assertNotNull(ruleMap);
 
-        TableRule userRule = ruleMap.get("USER");
+        ParsedTableRule userRule = ruleMap.get("USER");
         Assertions.assertNotNull(userRule);
-        Assertions.assertEquals(TableRule.Type.VIRTUAL, userRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.VIRTUAL, userRule.getType());
         Assertions.assertEquals("USER", userRule.getTableName());
         Assertions.assertEquals("USER", userRule.getTableAlias());
         Assertions.assertEquals(0, userRule.getOnRules().size());
         Assertions.assertEquals(0, userRule.getWhereRules().size());
 
-        TableRule roleRule = ruleMap.get("ROLE");
+        ParsedTableRule roleRule = ruleMap.get("ROLE");
         Assertions.assertNotNull(roleRule);
-        Assertions.assertEquals(TableRule.Type.REAL, roleRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, roleRule.getType());
         Assertions.assertEquals("ROLE", roleRule.getTableName());
         Assertions.assertEquals("ROLE", roleRule.getTableAlias());
-        List<ColumnRule> roleRuleOnRules = roleRule.getOnRules();
+        List<ParsedColumnRule> roleRuleOnRules = roleRule.getOnRules();
         Assertions.assertEquals(1, roleRuleOnRules.size());
         Assertions.assertEquals(0, roleRule.getWhereRules().size());
-        ColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
+        ParsedColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
         Assertions.assertNotNull(roleRuleOnRule);
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableName());
         Assertions.assertEquals("ROLE", roleRuleOnRule.getTableAlias());
@@ -298,9 +302,9 @@ public class MySqlRewriteAnalysisTest {
         ruleMap = subRuleStore.getRuntimeTableRuleMap();
         Assertions.assertNotNull(ruleMap);
         Assertions.assertEquals(1, ruleMap.size());
-        TableRule rule = ruleMap.get("USER");
+        ParsedTableRule rule = ruleMap.get("USER");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("USER", rule.getTableName());
         Assertions.assertEquals("USER", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -309,26 +313,26 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test07() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT U.*, ( SELECT ID FROM USER LIMIT 1 ) subQuery FROM ( SELECT * FROM USER ) U INNER JOIN ( SELECT * FROM ROLE ) R ON R.ID = U.ID");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT U.*, ( SELECT ID FROM USER LIMIT 1 ) subQuery FROM ( SELECT * FROM USER ) U INNER JOIN ( SELECT * FROM ROLE ) R ON R.ID = U.ID");
         Assertions.assertNotNull(ruleMap);
 
-        TableRule userRule = ruleMap.get("U");
+        ParsedTableRule userRule = ruleMap.get("U");
         Assertions.assertNotNull(userRule);
-        Assertions.assertEquals(TableRule.Type.VIRTUAL, userRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.VIRTUAL, userRule.getType());
         Assertions.assertEquals("U", userRule.getTableName());
         Assertions.assertEquals("U", userRule.getTableAlias());
         Assertions.assertEquals(0, userRule.getOnRules().size());
         Assertions.assertEquals(0, userRule.getWhereRules().size());
 
-        TableRule roleRule = ruleMap.get("R");
+        ParsedTableRule roleRule = ruleMap.get("R");
         Assertions.assertNotNull(roleRule);
-        Assertions.assertEquals(TableRule.Type.VIRTUAL, roleRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.VIRTUAL, roleRule.getType());
         Assertions.assertEquals("R", roleRule.getTableName());
         Assertions.assertEquals("R", roleRule.getTableAlias());
-        List<ColumnRule> roleRuleOnRules = roleRule.getOnRules();
+        List<ParsedColumnRule> roleRuleOnRules = roleRule.getOnRules();
         Assertions.assertEquals(1, roleRuleOnRules.size());
         Assertions.assertEquals(0, roleRule.getWhereRules().size());
-        ColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
+        ParsedColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
         Assertions.assertNotNull(roleRuleOnRule);
         Assertions.assertEquals("R", roleRuleOnRule.getTableName());
         Assertions.assertEquals("R", roleRuleOnRule.getTableAlias());
@@ -370,9 +374,9 @@ public class MySqlRewriteAnalysisTest {
         ruleMap = subRuleStore.getRuntimeTableRuleMap();
         Assertions.assertNotNull(ruleMap);
         Assertions.assertEquals(1, ruleMap.size());
-        TableRule rule = ruleMap.get("USER");
+        ParsedTableRule rule = ruleMap.get("USER");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("USER", rule.getTableName());
         Assertions.assertEquals("USER", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -385,7 +389,7 @@ public class MySqlRewriteAnalysisTest {
         Assertions.assertEquals(1, ruleMap.size());
         rule = ruleMap.get("ROLE");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("ROLE", rule.getTableName());
         Assertions.assertEquals("ROLE", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -400,7 +404,7 @@ public class MySqlRewriteAnalysisTest {
         Assertions.assertEquals(1, ruleMap.size());
         rule = ruleMap.get("USER");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("USER", rule.getTableName());
         Assertions.assertEquals("USER", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -409,26 +413,26 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test08() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT U.*, ( SELECT ID FROM USER LIMIT 1 ) subQuery FROM ( SELECT * FROM USER ) U INNER JOIN ( SELECT * FROM ROLE ) R ON R.ID = ( SELECT ID FROM RESOURCE LIMIT 1 )");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT U.*, ( SELECT ID FROM USER LIMIT 1 ) subQuery FROM ( SELECT * FROM USER ) U INNER JOIN ( SELECT * FROM ROLE ) R ON R.ID = ( SELECT ID FROM RESOURCE LIMIT 1 )");
         Assertions.assertNotNull(ruleMap);
 
-        TableRule userRule = ruleMap.get("U");
+        ParsedTableRule userRule = ruleMap.get("U");
         Assertions.assertNotNull(userRule);
-        Assertions.assertEquals(TableRule.Type.VIRTUAL, userRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.VIRTUAL, userRule.getType());
         Assertions.assertEquals("U", userRule.getTableName());
         Assertions.assertEquals("U", userRule.getTableAlias());
         Assertions.assertEquals(0, userRule.getOnRules().size());
         Assertions.assertEquals(0, userRule.getWhereRules().size());
 
-        TableRule roleRule = ruleMap.get("R");
+        ParsedTableRule roleRule = ruleMap.get("R");
         Assertions.assertNotNull(roleRule);
-        Assertions.assertEquals(TableRule.Type.VIRTUAL, roleRule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.VIRTUAL, roleRule.getType());
         Assertions.assertEquals("R", roleRule.getTableName());
         Assertions.assertEquals("R", roleRule.getTableAlias());
-        List<ColumnRule> roleRuleOnRules = roleRule.getOnRules();
+        List<ParsedColumnRule> roleRuleOnRules = roleRule.getOnRules();
         Assertions.assertEquals(1, roleRuleOnRules.size());
         Assertions.assertEquals(0, roleRule.getWhereRules().size());
-        ColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
+        ParsedColumnRule roleRuleOnRule = roleRuleOnRules.get(0);
         Assertions.assertNotNull(roleRuleOnRule);
         Assertions.assertEquals("R", roleRuleOnRule.getTableName());
         Assertions.assertEquals("R", roleRuleOnRule.getTableAlias());
@@ -467,9 +471,9 @@ public class MySqlRewriteAnalysisTest {
         ruleMap = subRuleStore.getRuntimeTableRuleMap();
         Assertions.assertNotNull(ruleMap);
         Assertions.assertEquals(1, ruleMap.size());
-        TableRule rule = ruleMap.get("USER");
+        ParsedTableRule rule = ruleMap.get("USER");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("USER", rule.getTableName());
         Assertions.assertEquals("USER", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -482,7 +486,7 @@ public class MySqlRewriteAnalysisTest {
         Assertions.assertEquals(1, ruleMap.size());
         rule = ruleMap.get("ROLE");
         Assertions.assertNotNull(rule);
-        Assertions.assertEquals(TableRule.Type.REAL, rule.getType());
+        Assertions.assertEquals(ParsedTableRule.Type.REAL, rule.getType());
         Assertions.assertEquals("ROLE", rule.getTableName());
         Assertions.assertEquals("ROLE", rule.getTableAlias());
         Assertions.assertEquals(0, rule.getOnRules().size());
@@ -498,7 +502,7 @@ public class MySqlRewriteAnalysisTest {
 
     @Test
     void test09() {
-        Map<String, TableRule> ruleMap = getRuntimeTableRule("SELECT * FROM USER WHERE ( ID = '1' OR ID = '2' ) OR ID = '3'");
+        Map<String, ParsedTableRule> ruleMap = getRuntimeTableRule("SELECT * FROM USER WHERE ( ID = '1' OR ID = '2' ) OR ID = '3'");
         Assertions.assertNotNull(ruleMap);
     }
 }

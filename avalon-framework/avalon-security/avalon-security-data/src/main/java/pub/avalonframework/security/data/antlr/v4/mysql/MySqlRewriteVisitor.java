@@ -4,9 +4,12 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import pub.avalonframework.security.data.*;
-import pub.avalonframework.security.data.expression.ComparisonOperator;
-import pub.avalonframework.security.data.expression.LogicOperator;
+import pub.avalonframework.database.sql.expression.ComparisonOperator;
+import pub.avalonframework.database.sql.expression.LogicOperator;
+import pub.avalonframework.security.data.rule.RuleContextOperations;
+import pub.avalonframework.security.data.rule.RuleContextWrapper;
+import pub.avalonframework.security.data.rule.RuleStore;
+import pub.avalonframework.security.data.rule.SqlRewrite;
 import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
 import pub.avalonframework.security.data.sql.SqlSyntaxErrorException;
 

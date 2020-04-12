@@ -13,6 +13,7 @@
 
     <modules>
         <module>avalon-database-core</module>
+        <module>avalon-database-sql</module>
         <module>avalon-redis</module>
     </modules>
 </project>

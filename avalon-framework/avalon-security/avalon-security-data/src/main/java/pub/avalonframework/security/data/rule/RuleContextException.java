@@ -1,4 +1,4 @@
-package pub.avalonframework.security.data;
+package pub.avalonframework.security.data.rule;
 
 import pub.avalonframework.core.beans.AvalonException;
 

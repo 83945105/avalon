@@ -1,8 +1,8 @@
 package pub.avalonframework.security.data.antlr;
 
 import pub.avalonframework.database.DatabaseType;
-import pub.avalonframework.security.data.SqlRewrite;
 import pub.avalonframework.security.data.antlr.v4.mysql.MySqlRewriteVisitor;
+import pub.avalonframework.security.data.rule.SqlRewrite;
 import pub.avalonframework.security.data.sql.MysqlCacheJdbcOperations;
 
 import javax.sql.DataSource;

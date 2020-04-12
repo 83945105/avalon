@@ -1,4 +1,4 @@
-package pub.avalonframework.security.data.expression;
+package pub.avalonframework.database.sql.expression;
 
 import java.util.LinkedList;
 import java.util.List;
