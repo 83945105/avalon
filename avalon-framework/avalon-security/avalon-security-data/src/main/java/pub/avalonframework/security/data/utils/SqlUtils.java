@@ -61,14 +61,14 @@ public final class SqlUtils {
         }
         for (int i = 0; i < len; i++) {
             if (i++ > 0) {
-                sql.append(" and ");
+                sql.append(" AND ");
             }
             buildSql(sql, args, predicateExpressions.get(i));
         }
         int i = 0;
         for (PredicateExpression predicateExpression : predicateExpressions) {
             if (i++ > 0) {
-                sql.append(" and ");
+                sql.append(" AND ");
             }
             buildSql(sql, args, predicateExpression);
         }

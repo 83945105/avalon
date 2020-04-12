@@ -16,9 +16,9 @@ public class TableRule implements TableRuleOperations {
 
     private String tableAlias;
 
-    private List<OnColumnRule> onRules = new LinkedList<>();
+    private List<ColumnRule> onRules = new LinkedList<>();
 
-    private List<WhereColumnRule> whereRules = new LinkedList<>();
+    private List<ColumnRule> whereRules = new LinkedList<>();
 
     private Map<String, RuleStore> subRuleStoreMap = new LinkedHashMap<>();
 
@@ -35,15 +35,15 @@ public class TableRule implements TableRuleOperations {
     }
 
     @Override
-    public OnColumnRule addOnColumnRule() {
-        OnColumnRule onColumnRule = new OnColumnRule(tableName, tableAlias);
+    public ColumnRule addOnColumnRule() {
+        ColumnRule onColumnRule = new ColumnRule(tableName, tableAlias);
         this.onRules.add(onColumnRule);
         return onColumnRule;
     }
 
     @Override
-    public WhereColumnRule addWhereColumnRule() {
-        WhereColumnRule whereColumnRule = new WhereColumnRule(tableName, tableAlias);
+    public ColumnRule addWhereColumnRule() {
+        ColumnRule whereColumnRule = new ColumnRule(tableName, tableAlias);
         this.whereRules.add(whereColumnRule);
         return whereColumnRule;
     }
@@ -69,12 +69,12 @@ public class TableRule implements TableRuleOperations {
     }
 
     @Override
-    public List<OnColumnRule> getOnRules() {
+    public List<ColumnRule> getOnRules() {
         return onRules;
     }
 
     @Override
-    public List<WhereColumnRule> getWhereRules() {
+    public List<ColumnRule> getWhereRules() {
         return whereRules;
     }
 

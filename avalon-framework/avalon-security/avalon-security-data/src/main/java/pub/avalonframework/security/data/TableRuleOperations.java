@@ -20,9 +20,9 @@ public interface TableRuleOperations {
 
     String getTableAlias();
 
-    List<OnColumnRule> getOnRules();
+    List<ColumnRule> getOnRules();
 
-    List<WhereColumnRule> getWhereRules();
+    List<ColumnRule> getWhereRules();
 
     Map<String, RuleStore> getSubRuleStoreMap();
 
