@@ -116,6 +116,7 @@ public abstract class AbstractMysqlColumn implements Column {
         this.scale = scale;
     }
 
+    @Override
     public boolean isNullable() {
         return nullable;
     }
