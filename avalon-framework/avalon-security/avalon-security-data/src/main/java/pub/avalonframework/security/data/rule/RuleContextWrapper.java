@@ -130,18 +130,13 @@ public class RuleContextWrapper implements RuleContextOperations {
     }
 
     @Override
-    public void addRuntimeOnColumnRule() {
-        runtimeRuleContext.addRuntimeOnColumnRule();
+    public void addRuntimeOnRules() {
+        runtimeRuleContext.addRuntimeOnRules();
     }
 
     @Override
-    public void addRuntimeWhereColumnRule() {
-        runtimeRuleContext.addRuntimeWhereColumnRule();
-    }
-
-    @Override
-    public void addRuntimeLogicExpression(LogicOperator logicOperator) {
-        runtimeRuleContext.addRuntimeLogicExpression(logicOperator);
+    public void addRuntimeWhereRules() {
+        runtimeRuleContext.addRuntimeWhereRules();
     }
 
     @Override
@@ -301,8 +296,6 @@ public class RuleContextWrapper implements RuleContextOperations {
         private RuleStore ruleStore = new RuleStore();
 
         private ParsedTableRule tableRule;
-
-        private ParsedColumnRule columnRule;
 
         private LogicExpression logicExpression;
 
@@ -481,18 +474,19 @@ public class RuleContextWrapper implements RuleContextOperations {
         }
 
         @Override
-        public void addRuntimeOnColumnRule() {
-            columnRule = tableRule.addOnColumnRule();
+        public void addRuntimeOnRules() {
+            //TODO 初始默认 AND 连接, 后续改为根据配置
+            LogicExpression logicExpression = new LogicExpression(LogicOperator.AND);
+            tableRule.setOnRules(logicExpression);
+            this.logicExpression = logicExpression;
         }
 
         @Override
-        public void addRuntimeWhereColumnRule() {
-            columnRule = tableRule.addWhereColumnRule();
-        }
-
-        @Override
-        public void addRuntimeLogicExpression(LogicOperator logicOperator) {
-            logicExpression = columnRule.addLogicExpression(logicOperator);
+        public void addRuntimeWhereRules() {
+            //TODO 初始默认 AND 连接, 后续改为根据配置
+            LogicExpression logicExpression = new LogicExpression(LogicOperator.AND);
+            tableRule.setWhereRules(logicExpression);
+            this.logicExpression = logicExpression;
         }
 
         @Override

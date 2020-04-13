@@ -281,14 +281,13 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         sqlBuilder.append(visit(tableSources));
         TerminalNode where = ctx.WHERE();
         if (where != null) {
-            ruleContextWrapper.addRuntimeWhereColumnRule();
-            sqlBuilder.appendWithSpace(where);
             MySqlParser.ExpressionContext whereExpr = ctx.whereExpr;
             if (whereExpr == null) {
                 return sqlSyntaxError();
             }
-            ruleContextWrapper.switchToRuntimeWhereStage();// 切换至Where阶段
-            ruleContextWrapper.addRuntimeLogicExpression(LogicOperator.AND);
+            ruleContextWrapper.switchToRuntimeWhereStage();
+            ruleContextWrapper.addRuntimeWhereRules();
+            sqlBuilder.appendWithSpace(where);
             sqlBuilder.append(visit(whereExpr));
         }
         TerminalNode group = ctx.GROUP();
@@ -437,14 +436,13 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         if (on == null) {
             return sqlBuilder.toString();
         }
-        ruleContextWrapper.switchToRuntimeOnStage();// 切换至On阶段
-        sqlBuilder.appendWithSpace(on);
-        ruleContextWrapper.addRuntimeOnColumnRule();
         MySqlParser.ExpressionContext expression = ctx.expression();
         if (expression == null) {
             return sqlSyntaxError();
         }
-        ruleContextWrapper.addRuntimeLogicExpression(LogicOperator.AND);
+        ruleContextWrapper.switchToRuntimeOnStage();// 切换至On阶段
+        ruleContextWrapper.addRuntimeOnRules();
+        sqlBuilder.appendWithSpace(on);
         sqlBuilder.append(visit(ctx.expression()));
         return sqlBuilder.toString();
     }
@@ -454,13 +452,17 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
         TerminalNode left = ctx.LEFT();
         TerminalNode right = ctx.RIGHT();
         if (left == null && right == null) {
-            return unsupportedSqlNode();
+            return sqlSyntaxError();
         }
         if (left != null && right != null) {
-            return unsupportedSqlNode();
+            return sqlSyntaxError();
         }
         TerminalNode join = ctx.JOIN();
         if (join == null) {
+            return sqlSyntaxError();
+        }
+        MySqlParser.TableSourceItemContext tableSourceItem = ctx.tableSourceItem();
+        if (tableSourceItem == null) {
             return sqlSyntaxError();
         }
         TerminalNode on = ctx.ON();
@@ -469,6 +471,7 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             return sqlSyntaxError("'LEFT/RIGHT JOIN' 至少要有一个 'ON' 条件");
         }
         ruleContextWrapper.switchToRuntimeOnStage();// 切换至On阶段
+        ruleContextWrapper.addRuntimeOnRules();
         SqlBuilder sqlBuilder = new SqlBuilder();
         if (left != null) {
             sqlBuilder.appendWithSpace(left);
@@ -476,14 +479,8 @@ public class MySqlRewriteVisitor extends MySqlParserBaseVisitor<String> implemen
             sqlBuilder.appendWithSpace(right);
         }
         sqlBuilder.appendWithSpace(join);
-        MySqlParser.TableSourceItemContext tableSourceItem = ctx.tableSourceItem();
-        if (tableSourceItem == null) {
-            return sqlSyntaxError();
-        }
         sqlBuilder.append(visit(tableSourceItem));
         sqlBuilder.appendWithSpace(on);
-        ruleContextWrapper.addRuntimeOnColumnRule();
-        ruleContextWrapper.addRuntimeLogicExpression(LogicOperator.AND);
         sqlBuilder.append(visit(ctx.expression()));
         return sqlBuilder.toString();
     }

@@ -2,7 +2,7 @@
   "admin": {
     "tableRules": [
       {
-        "table": "USER",
+        "tableName": "USER",
         "joinRules": [
           {
             "joinType": "INNER",
@@ -16,6 +16,7 @@
                     {
                       "comparisonOperator": "EQ",
                       "value": {
+                        "tableName": "ROLE"
                       }
                     }
                   ]
@@ -24,37 +25,34 @@
             ]
           }
         ],
-        "onRules": [
-          {
-            "column": "ID",
-            "logicExpression": {
-              "logicOperator": "AND",
-              "logicExpressions": [
-                {
-                  "logicOperator": "AND",
-                  "predicateExpressions": [
-                    {
-                      "comparisonOperator": "EQ",
-                      "value": 1
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "column": "AGE",
-            "logicExpression": {
+        "onRules": {
+          "logicOperator": "AND",
+          "logicExpressions": [
+            {
               "logicOperator": "AND",
               "predicateExpressions": [
                 {
+                  "columnName": "ID",
                   "comparisonOperator": "EQ",
                   "value": 1
                 }
               ]
             }
-          }
-        ]
+          ]
+        }
+      },
+      {
+        "tableName": "ROLE",
+        "onRules": {
+          "logicOperator": "AND",
+          "predicateExpressions": [
+            {
+              "columnName": "ID",
+              "comparisonOperator": "EQ",
+              "value": 1
+            }
+          ]
+        }
       }
     ]
   }

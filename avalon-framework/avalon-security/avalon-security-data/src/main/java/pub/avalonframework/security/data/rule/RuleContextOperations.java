@@ -175,21 +175,14 @@ public interface RuleContextOperations {
     void addRuntimeVirtualTableRule(String tableAlias);
 
     /**
-     * 添加运行时 On 列规则
+     * 添加运行时 On 规则
      */
-    void addRuntimeOnColumnRule();
+    void addRuntimeOnRules();
 
     /**
-     * 添加运行时 Where 列规则
+     * 添加运行时 Where 规则
      */
-    void addRuntimeWhereColumnRule();
-
-    /**
-     * 添加运行时逻辑表达式
-     *
-     * @param logicOperator and | or
-     */
-    void addRuntimeLogicExpression(LogicOperator logicOperator);
+    void addRuntimeWhereRules();
 
     /**
      * 添加运行时谓语表达式

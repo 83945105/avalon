@@ -3,8 +3,6 @@ package pub.avalonframework.security.data.rule;
 import pub.avalonframework.database.sql.rule.TableRule;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,12 +11,6 @@ import java.util.Map;
 public final class ParsedTableRule extends TableRule {
 
     private Type type;
-
-    private String tableAlias;
-
-    private List<ParsedColumnRule> onRules = new LinkedList<>();
-
-    private List<ParsedColumnRule> whereRules = new LinkedList<>();
 
     private Map<String, RuleStore> subRuleStoreMap = new LinkedHashMap<>();
 
@@ -38,30 +30,8 @@ public final class ParsedTableRule extends TableRule {
         return type;
     }
 
-    public String getTableAlias() {
-        return tableAlias;
-    }
-
-    public ParsedColumnRule addOnColumnRule() {
-        ParsedColumnRule onColumnRule = new ParsedColumnRule(tableName, tableAlias);
-        this.onRules.add(onColumnRule);
-        return onColumnRule;
-    }
-
-    @Override
-    public List<ParsedColumnRule> getOnRules() {
-        return onRules;
-    }
-
-    public ParsedColumnRule addWhereColumnRule() {
-        ParsedColumnRule whereColumnRule = new ParsedColumnRule(tableName, tableAlias);
-        this.whereRules.add(whereColumnRule);
-        return whereColumnRule;
-    }
-
-    @Override
-    public List<ParsedColumnRule> getWhereRules() {
-        return whereRules;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public void addSubRuleStore(String key, RuleStore subRoleStore) {
@@ -70,6 +40,10 @@ public final class ParsedTableRule extends TableRule {
 
     public Map<String, RuleStore> getSubRuleStoreMap() {
         return subRuleStoreMap;
+    }
+
+    public void setSubRuleStoreMap(Map<String, RuleStore> subRuleStoreMap) {
+        this.subRuleStoreMap = subRuleStoreMap;
     }
 
     public enum Type {

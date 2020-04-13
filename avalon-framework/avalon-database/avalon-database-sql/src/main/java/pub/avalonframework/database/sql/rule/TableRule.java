@@ -1,8 +1,8 @@
 package pub.avalonframework.database.sql.rule;
 
+import pub.avalonframework.database.sql.expression.LogicExpression;
+
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author baichao
@@ -11,9 +11,11 @@ public class TableRule implements Serializable {
 
     protected String tableName;
 
-    protected List<ColumnRule> onRules = new LinkedList<>();
+    protected String tableAlias;
 
-    protected List<ColumnRule> whereRules = new LinkedList<>();
+    protected LogicExpression onRules;
+
+    protected LogicExpression whereRules;
 
     public String getTableName() {
         return tableName;
@@ -23,19 +25,27 @@ public class TableRule implements Serializable {
         this.tableName = tableName;
     }
 
-    public List<? extends ColumnRule> getOnRules() {
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    public void setTableAlias(String tableAlias) {
+        this.tableAlias = tableAlias;
+    }
+
+    public LogicExpression getOnRules() {
         return onRules;
     }
 
-    public void setOnRules(List<ColumnRule> onRules) {
+    public void setOnRules(LogicExpression onRules) {
         this.onRules = onRules;
     }
 
-    public List<? extends ColumnRule> getWhereRules() {
+    public LogicExpression getWhereRules() {
         return whereRules;
     }
 
-    public void setWhereRules(List<ColumnRule> whereRules) {
+    public void setWhereRules(LogicExpression whereRules) {
         this.whereRules = whereRules;
     }
 
